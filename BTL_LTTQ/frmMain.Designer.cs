@@ -29,7 +29,14 @@
         private void InitializeComponent()
         {
             flowLayoutPanel1 = new FlowLayoutPanel();
-            button1 = new Button();
+            btnTrangChu = new Button();
+            panelCRUD = new Panel();
+            btnDanhMucKhac = new Button();
+            btnMonHoc = new Button();
+            btnGiaoVien = new Button();
+            btnHocVien = new Button();
+            btnLopHoc = new Button();
+            btnQuanLyMenu = new Button();
             panelTraCuu = new Panel();
             btnTimGiaoVien = new Button();
             btnTimLop = new Button();
@@ -44,25 +51,18 @@
             panelThoat = new Panel();
             btnThoat = new Button();
             panelSidebar = new Panel();
-            btnQuanLyMenu = new Button();
-            btnLopHoc = new Button();
-            btnHocVien = new Button();
-            btnGiaoVien = new Button();
-            btnMonHoc = new Button();
-            button2 = new Button();
-            panelCRUD = new Panel();
             flowLayoutPanel1.SuspendLayout();
+            panelCRUD.SuspendLayout();
             panelTraCuu.SuspendLayout();
             panelBaoCao.SuspendLayout();
             panelThoat.SuspendLayout();
             panelSidebar.SuspendLayout();
-            panelCRUD.SuspendLayout();
             SuspendLayout();
             // 
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.AutoScroll = true;
-            flowLayoutPanel1.Controls.Add(button1);
+            flowLayoutPanel1.Controls.Add(btnTrangChu);
             flowLayoutPanel1.Controls.Add(panelCRUD);
             flowLayoutPanel1.Controls.Add(panelTraCuu);
             flowLayoutPanel1.Controls.Add(panelBaoCao);
@@ -74,17 +74,93 @@
             flowLayoutPanel1.TabIndex = 0;
             flowLayoutPanel1.WrapContents = false;
             // 
-            // button1
+            // btnTrangChu
             // 
-            button1.ImageAlign = ContentAlignment.BottomCenter;
-            button1.Location = new Point(3, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(152, 38);
-            button1.TabIndex = 4;
-            button1.Text = "🏠Trang chủ";
-            button1.TextAlign = ContentAlignment.MiddleLeft;
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += frmMain_Load;
+            btnTrangChu.ImageAlign = ContentAlignment.BottomCenter;
+            btnTrangChu.Location = new Point(3, 3);
+            btnTrangChu.Name = "btnTrangChu";
+            btnTrangChu.Size = new Size(152, 38);
+            btnTrangChu.TabIndex = 4;
+            btnTrangChu.Text = "🏠Trang chủ";
+            btnTrangChu.TextAlign = ContentAlignment.MiddleLeft;
+            btnTrangChu.UseVisualStyleBackColor = true;
+            btnTrangChu.Click += frmMain_Load;
+            // 
+            // panelCRUD
+            // 
+            panelCRUD.Controls.Add(btnDanhMucKhac);
+            panelCRUD.Controls.Add(btnMonHoc);
+            panelCRUD.Controls.Add(btnGiaoVien);
+            panelCRUD.Controls.Add(btnHocVien);
+            panelCRUD.Controls.Add(btnLopHoc);
+            panelCRUD.Controls.Add(btnQuanLyMenu);
+            panelCRUD.Location = new Point(3, 47);
+            panelCRUD.Name = "panelCRUD";
+            panelCRUD.Size = new Size(271, 231);
+            panelCRUD.TabIndex = 1;
+            panelCRUD.Paint += panelCRUD_Paint;
+            // 
+            // btnDanhMucKhac
+            // 
+            btnDanhMucKhac.Location = new Point(52, 178);
+            btnDanhMucKhac.Name = "btnDanhMucKhac";
+            btnDanhMucKhac.Size = new Size(120, 29);
+            btnDanhMucKhac.TabIndex = 5;
+            btnDanhMucKhac.Text = "Danh mục khác";
+            btnDanhMucKhac.TextAlign = ContentAlignment.MiddleLeft;
+            btnDanhMucKhac.UseVisualStyleBackColor = true;
+            // 
+            // btnMonHoc
+            // 
+            btnMonHoc.Location = new Point(52, 143);
+            btnMonHoc.Name = "btnMonHoc";
+            btnMonHoc.Size = new Size(86, 29);
+            btnMonHoc.TabIndex = 4;
+            btnMonHoc.Text = "Môn học";
+            btnMonHoc.TextAlign = ContentAlignment.MiddleLeft;
+            btnMonHoc.UseVisualStyleBackColor = true;
+            // 
+            // btnGiaoVien
+            // 
+            btnGiaoVien.Location = new Point(52, 108);
+            btnGiaoVien.Name = "btnGiaoVien";
+            btnGiaoVien.Size = new Size(86, 29);
+            btnGiaoVien.TabIndex = 3;
+            btnGiaoVien.Text = "Giáo viên";
+            btnGiaoVien.TextAlign = ContentAlignment.MiddleLeft;
+            btnGiaoVien.UseVisualStyleBackColor = true;
+            // 
+            // btnHocVien
+            // 
+            btnHocVien.Location = new Point(52, 73);
+            btnHocVien.Name = "btnHocVien";
+            btnHocVien.Size = new Size(86, 29);
+            btnHocVien.TabIndex = 2;
+            btnHocVien.Text = "Học viên";
+            btnHocVien.TextAlign = ContentAlignment.MiddleLeft;
+            btnHocVien.UseVisualStyleBackColor = true;
+            // 
+            // btnLopHoc
+            // 
+            btnLopHoc.Location = new Point(52, 38);
+            btnLopHoc.Name = "btnLopHoc";
+            btnLopHoc.Size = new Size(86, 29);
+            btnLopHoc.TabIndex = 1;
+            btnLopHoc.Text = "Lớp học";
+            btnLopHoc.TextAlign = ContentAlignment.MiddleLeft;
+            btnLopHoc.UseVisualStyleBackColor = true;
+            btnLopHoc.Click += btnLopHoc_Click;
+            // 
+            // btnQuanLyMenu
+            // 
+            btnQuanLyMenu.Location = new Point(9, 3);
+            btnQuanLyMenu.Name = "btnQuanLyMenu";
+            btnQuanLyMenu.Size = new Size(95, 29);
+            btnQuanLyMenu.TabIndex = 0;
+            btnQuanLyMenu.Text = "📁Quản lý";
+            btnQuanLyMenu.TextAlign = ContentAlignment.MiddleLeft;
+            btnQuanLyMenu.UseVisualStyleBackColor = true;
+            btnQuanLyMenu.Click += btnQuanLyMenu_Click;
             // 
             // panelTraCuu
             // 
@@ -227,82 +303,6 @@
             panelSidebar.Size = new Size(284, 553);
             panelSidebar.TabIndex = 0;
             // 
-            // btnQuanLyMenu
-            // 
-            btnQuanLyMenu.Location = new Point(9, 3);
-            btnQuanLyMenu.Name = "btnQuanLyMenu";
-            btnQuanLyMenu.Size = new Size(95, 29);
-            btnQuanLyMenu.TabIndex = 0;
-            btnQuanLyMenu.Text = "📁Quản lý";
-            btnQuanLyMenu.TextAlign = ContentAlignment.MiddleLeft;
-            btnQuanLyMenu.UseVisualStyleBackColor = true;
-            btnQuanLyMenu.Click += btnQuanLyMenu_Click;
-            // 
-            // btnLopHoc
-            // 
-            btnLopHoc.Location = new Point(52, 38);
-            btnLopHoc.Name = "btnLopHoc";
-            btnLopHoc.Size = new Size(86, 29);
-            btnLopHoc.TabIndex = 1;
-            btnLopHoc.Text = "Lớp học";
-            btnLopHoc.TextAlign = ContentAlignment.MiddleLeft;
-            btnLopHoc.UseVisualStyleBackColor = true;
-            btnLopHoc.Click += btnLopHoc_Click;
-            // 
-            // btnHocVien
-            // 
-            btnHocVien.Location = new Point(52, 73);
-            btnHocVien.Name = "btnHocVien";
-            btnHocVien.Size = new Size(86, 29);
-            btnHocVien.TabIndex = 2;
-            btnHocVien.Text = "Học viên";
-            btnHocVien.TextAlign = ContentAlignment.MiddleLeft;
-            btnHocVien.UseVisualStyleBackColor = true;
-            // 
-            // btnGiaoVien
-            // 
-            btnGiaoVien.Location = new Point(52, 108);
-            btnGiaoVien.Name = "btnGiaoVien";
-            btnGiaoVien.Size = new Size(86, 29);
-            btnGiaoVien.TabIndex = 3;
-            btnGiaoVien.Text = "Giáo viên";
-            btnGiaoVien.TextAlign = ContentAlignment.MiddleLeft;
-            btnGiaoVien.UseVisualStyleBackColor = true;
-            // 
-            // btnMonHoc
-            // 
-            btnMonHoc.Location = new Point(52, 143);
-            btnMonHoc.Name = "btnMonHoc";
-            btnMonHoc.Size = new Size(86, 29);
-            btnMonHoc.TabIndex = 4;
-            btnMonHoc.Text = "Môn học";
-            btnMonHoc.TextAlign = ContentAlignment.MiddleLeft;
-            btnMonHoc.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(52, 178);
-            button2.Name = "button2";
-            button2.Size = new Size(120, 29);
-            button2.TabIndex = 5;
-            button2.Text = "Danh mục khác";
-            button2.TextAlign = ContentAlignment.MiddleLeft;
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // panelCRUD
-            // 
-            panelCRUD.Controls.Add(button2);
-            panelCRUD.Controls.Add(btnMonHoc);
-            panelCRUD.Controls.Add(btnGiaoVien);
-            panelCRUD.Controls.Add(btnHocVien);
-            panelCRUD.Controls.Add(btnLopHoc);
-            panelCRUD.Controls.Add(btnQuanLyMenu);
-            panelCRUD.Location = new Point(3, 47);
-            panelCRUD.Name = "panelCRUD";
-            panelCRUD.Size = new Size(271, 231);
-            panelCRUD.TabIndex = 1;
-            panelCRUD.Paint += panelCRUD_Paint;
-            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -315,11 +315,11 @@
             Text = " Quản lý học viên lớp Tin Học và ngoại ngữ ngắn hạn";
             Load += frmMain_Load;
             flowLayoutPanel1.ResumeLayout(false);
+            panelCRUD.ResumeLayout(false);
             panelTraCuu.ResumeLayout(false);
             panelBaoCao.ResumeLayout(false);
             panelThoat.ResumeLayout(false);
             panelSidebar.ResumeLayout(false);
-            panelCRUD.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -329,7 +329,7 @@
         private Panel panelTrangChu;
         private Panel panelTraCuu;
         private Panel panelBaoCao;
-        private Button button1;
+        private Button btnTrangChu;
         private Button btnTraCuuMenu;
         private Button btnBaoCaoMenu;
         private Button btnTimGiaoVien;
@@ -342,7 +342,7 @@
         private Button btnThoat;
         private Panel panelSidebar;
         private Panel panelCRUD;
-        private Button button2;
+        private Button btnDanhMucKhac;
         private Button btnMonHoc;
         private Button btnGiaoVien;
         private Button btnHocVien;
