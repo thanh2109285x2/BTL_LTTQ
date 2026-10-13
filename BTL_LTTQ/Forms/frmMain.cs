@@ -90,5 +90,6 @@ namespace BTL_LTTQ
         {
             OpenChildForm(new frmLopHoc());
         }
+
     }
 }

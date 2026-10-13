@@ -39,6 +39,7 @@
             button1.TabIndex = 0;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // frmLopHoc
             // 
@@ -48,6 +49,7 @@
             Controls.Add(button1);
             Name = "frmLopHoc";
             Text = "frmLopHoc";
+            Load += frmLopHoc_Load;
             ResumeLayout(false);
         }
 

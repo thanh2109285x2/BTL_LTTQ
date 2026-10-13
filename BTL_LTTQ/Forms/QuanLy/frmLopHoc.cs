@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTL_LTTQ.DataAccessLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,17 @@ namespace BTL_LTTQ.Forms.QuanLy
         public frmLopHoc()
         {
             InitializeComponent();
+        }
+
+        private void frmLopHoc_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            bool ok = DbHelper.TestConnection(out string msg);
+            MessageBox.Show(msg, ok ? "OK" : "Lỗi");
         }
     }
 }

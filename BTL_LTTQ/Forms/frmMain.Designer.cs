@@ -169,7 +169,7 @@
             panelTraCuu.Controls.Add(btnTraCuuMenu);
             panelTraCuu.Location = new Point(3, 284);
             panelTraCuu.Name = "panelTraCuu";
-            panelTraCuu.Size = new Size(271, 35);
+            panelTraCuu.Size = new Size(271, 38);
             panelTraCuu.TabIndex = 2;
             // 
             // btnTimGiaoVien
@@ -210,7 +210,7 @@
             panelBaoCao.Controls.Add(btnDoanhThu);
             panelBaoCao.Controls.Add(btnBaoCaoDiem);
             panelBaoCao.Controls.Add(btnBaoCaoMenu);
-            panelBaoCao.Location = new Point(3, 325);
+            panelBaoCao.Location = new Point(3, 328);
             panelBaoCao.Name = "panelBaoCao";
             panelBaoCao.Size = new Size(271, 35);
             panelBaoCao.TabIndex = 3;
