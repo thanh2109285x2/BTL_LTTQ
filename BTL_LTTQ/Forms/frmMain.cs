@@ -1,4 +1,5 @@
 using BTL_LTTQ.Forms.QuanLy;
+using BTL_LTTQ.Forms.TraCuu;
 
 namespace BTL_LTTQ
 {
@@ -11,6 +12,7 @@ namespace BTL_LTTQ
         public frmMain()
         {
             InitializeComponent();
+            GiaoDien.ApDungMain(this);
         }
         private void CollapseAllPanels()
         {
@@ -88,8 +90,20 @@ namespace BTL_LTTQ
         }
         private void btnLopHoc_Click(object sender, EventArgs e)
         {
+            GiaoDien.DanhDauMuc(btnLopHoc);
             OpenChildForm(new frmLopHoc());
         }
 
+        private void btnTimLop_Click(object sender, EventArgs e)
+        {
+            GiaoDien.DanhDauMuc(btnTimLop);
+            OpenChildForm(new frmTimKiemLopHoc());
+        }
+
+        private void btnTimGiaoVien_Click(object sender, EventArgs e)
+        {
+            GiaoDien.DanhDauMuc(btnTimGiaoVien);
+            OpenChildForm(new frmTimKiemGiaoVien());
+        }
     }
 }
