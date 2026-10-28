@@ -3,31 +3,26 @@ using System.Windows.Forms;
 
 namespace BTL_LTTQ
 {
-    // Bảng màu đơn giản dùng chung cho cả ứng dụng.
-    // Muốn đổi màu cả app: chỉ cần sửa các hằng màu ngay dưới đây.
     public static class GiaoDien
     {
-        public static readonly Color MauChinh = Color.FromArgb(41, 98, 168);    // xanh dương (nút chính, tiêu đề bảng)
-        public static readonly Color MauChinhDam = Color.FromArgb(30, 74, 130);  // xanh đậm khi rê chuột
-        public static readonly Color MauNguyHiem = Color.FromArgb(192, 57, 43);  // đỏ (nút Xóa)
+        public static readonly Color MauChinh = Color.FromArgb(41, 98, 168);
+        public static readonly Color MauChinhDam = Color.FromArgb(30, 74, 130);
+        public static readonly Color MauNguyHiem = Color.FromArgb(192, 57, 43);
         public static readonly Color MauNguyHiemDam = Color.FromArgb(150, 40, 30);
-        public static readonly Color MauNen = Color.FromArgb(244, 247, 251);  // nền form
-        public static readonly Color MauHangLe = Color.FromArgb(234, 241, 250);  // dòng xen kẽ trong bảng
-        public static readonly Color MauChon = Color.FromArgb(200, 220, 245);  // dòng đang chọn
-        public static readonly Color MauVien = Color.FromArgb(200, 208, 220);  // viền nhạt
-        public static readonly Color MauChu = Color.FromArgb(33, 37, 41);     // chữ
-        public static readonly Color MauMucCha = Color.FromArgb(221, 227, 236);  // nền mục cha trong menu (xám xanh)
+        public static readonly Color MauNen = Color.FromArgb(244, 247, 251);
+        public static readonly Color MauHangLe = Color.FromArgb(234, 241, 250);
+        public static readonly Color MauChon = Color.FromArgb(200, 220, 245);
+        public static readonly Color MauVien = Color.FromArgb(200, 208, 220);
+        public static readonly Color MauChu = Color.FromArgb(33, 37, 41);
+        public static readonly Color MauMucCha = Color.FromArgb(221, 227, 236);
         public static readonly Color MauMucChaHover = Color.FromArgb(205, 214, 228);
 
-        // Dùng cho các form con: lớp học, tìm kiếm...
-        // Gọi sau InitializeComponent();
         public static void ApDung(Form f)
         {
             f.BackColor = MauNen;
             Duyet(f);
         }
 
-        // Dùng riêng cho form Main (menu bên trái)
         public static void ApDungMain(Form f)
         {
             f.BackColor = MauNen;
@@ -45,7 +40,7 @@ namespace BTL_LTTQ
                 else if (c is DataGridView g)
                 {
                     DinhDangBang(g);
-                    continue;   // không cần duyệt control con bên trong bảng
+                    continue;
                 }
                 else if (c is GroupBox gb)
                 {
@@ -54,7 +49,6 @@ namespace BTL_LTTQ
                 else if (c is Label || c is TextBoxBase || c is ComboBox ||
                          c is NumericUpDown || c is DateTimePicker)
                 {
-                    // đặt lại màu chữ vì GroupBox ở trên làm control con bị đổi sang xanh
                     c.ForeColor = MauChu;
                 }
 
@@ -75,15 +69,12 @@ namespace BTL_LTTQ
                 case "btnThem":
                 case "btnSua":
                 case "btnTimKiem":
-                    // nút chính: nền xanh, chữ trắng
                     nen = MauChinh; chu = Color.White; vien = MauChinh; hover = MauChinhDam;
                     break;
                 case "btnXoa":
-                    // nút xóa: nền đỏ, chữ trắng
                     nen = MauNguyHiem; chu = Color.White; vien = MauNguyHiem; hover = MauNguyHiemDam;
                     break;
                 default:
-                    // nút phụ (Làm mới, thu gọn...): nền trắng, viền xám
                     nen = Color.White; chu = MauChu; vien = MauVien; hover = MauHangLe;
                     break;
             }
@@ -130,13 +121,8 @@ namespace BTL_LTTQ
             g.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        // ===== Form Main: menu bên trái =====
-        // Nút menu giãn hết chiều ngang khung chứa, chữ canh trái, không viền,
-        // rê chuột thì đổi màu. Mục cha (có icon) in đậm, mục con thụt vào.
-
         private static Button _mucDangChon;
 
-        // Gọi trong các hàm click của mục con (Lớp học, Tìm lớp...) để tô màu mục đang mở
         public static void DanhDauMuc(Button b)
         {
             if (_mucDangChon != null && !_mucDangChon.IsDisposed)
@@ -162,7 +148,6 @@ namespace BTL_LTTQ
             }
         }
 
-        // Mục cha = nút có icon (Image) hoặc có icon/emoji ở đầu chữ, ví dụ "🏠 Trang chủ"
         private static bool LaMucCha(Button b)
         {
             if (b.Image != null || b.ImageList != null) return true;
@@ -172,13 +157,13 @@ namespace BTL_LTTQ
 
         private static void DinhDangNutMenu(Button b)
         {
-            bool laMucCha = LaMucCha(b);   // Trang chủ, Quản lý, Tra cứu, Báo cáo
+            bool laMucCha = LaMucCha(b);
             bool laThoat = b.Text.Trim() == "Thoát";
 
             b.FlatStyle = FlatStyle.Flat;
             b.UseVisualStyleBackColor = false;
             b.Cursor = Cursors.Hand;
-            b.FlatAppearance.BorderSize = 0;   // bỏ viền cho đỡ rối mắt
+            b.FlatAppearance.BorderSize = 0;
 
             if (laThoat)
             {
@@ -190,7 +175,6 @@ namespace BTL_LTTQ
             }
             else if (laMucCha)
             {
-                // mục cha: nền xám xanh đậm hơn, chữ in đậm
                 b.BackColor = MauMucCha;
                 b.ForeColor = MauChu;
                 b.Font = new Font(b.Font, FontStyle.Bold);
@@ -203,7 +187,6 @@ namespace BTL_LTTQ
             }
             else
             {
-                // mục con: nền nhạt, không viền, thụt vào sâu hơn mục cha
                 b.BackColor = MauNen;
                 b.ForeColor = MauChu;
                 b.TextAlign = ContentAlignment.MiddleLeft;
@@ -212,7 +195,6 @@ namespace BTL_LTTQ
                 b.FlatAppearance.MouseDownBackColor = MauChon;
             }
 
-            // giãn hết chiều ngang khung chứa, và tự giãn theo khi đổi kích thước form
             if (b.Parent != null)
             {
                 b.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
