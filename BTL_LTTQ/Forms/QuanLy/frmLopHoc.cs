@@ -1,4 +1,8 @@
-﻿using BTL_LTTQ.DataAccessLayer;
+﻿using BTL_LTTQ.Common;
+using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.Models;
+using BTL_LTTQ.Repositories;
+using BTL_LTTQ.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -13,16 +17,19 @@ namespace BTL_LTTQ.Forms.QuanLy
 {
     public partial class frmLopHoc : Form
     {
+        private readonly LopHocService _lopHocService = new LopHocService();
+        private readonly LookupRepository _lookupRepo = new LookupRepository();
+
         private string maLopDangChon = "";
+
         public frmLopHoc()
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
         }
 
-        private void NapComboBox(ComboBox cbo, string sql, string tenCotMa, string tenCotHienThi)
+        private void NapComboBox(ComboBox cbo, DataTable dt, string tenCotMa, string tenCotHienThi)
         {
-            DataTable dt = DbHelper.ExecuteQuery(sql);
             cbo.DataSource = dt;
             cbo.DisplayMember = tenCotHienThi;
             cbo.ValueMember = tenCotMa;
@@ -31,12 +38,17 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void NaptatcaComboBox()
         {
-            NapComboBox(cboMonHoc, "SELECT MaMon, TenMon From MonHoc", "MaMon", "TenMon");
-            NapComboBox(cboGiaoVien, "SELECT MaGV, TenGV From GiaoVien", "MaGV", "TenGV");
-            NapComboBox(cboCaHoc, "SELECT MaCa, TenCa FROM CaHoc", "MaCa", "TenCa");
-            NapComboBox(cboThoiGian, "SELECT MaThoiGian, TenThoiGian FROM ThoiGian", "MaThoiGian", "TenThoiGian");
-            NapComboBox(cboPhongHoc, "SELECT MaPhong, TenPhong FROM PhongHoc", "MaPhong", "TenPhong");
+            NapComboBox(cboMonHoc, _lookupRepo.LayMonHoc(), "MaMon", "TenMon");
+            NapComboBox(cboGiaoVien, _lookupRepo.LayGiaoVien(), "MaGV", "TenGV");
+            NapComboBox(cboCaHoc, _lookupRepo.LayCaHoc(), "MaCa", "TenCa");
+            NapComboBox(cboThoiGian, _lookupRepo.LayThoiGian(), "MaThoiGian", "TenThoiGian");
+            NapComboBox(cboPhongHoc, _lookupRepo.LayPhongHoc(), "MaPhong", "TenPhong");
+        }
 
+        private void NapDanhSachLop(string tuKhoa = "")
+        {
+            dgvLopHoc.DataSource = _lopHocService.LayDanhSach(tuKhoa);
+            DinhDangBang();
         }
 
         private void DinhDangBang()
@@ -61,64 +73,20 @@ namespace BTL_LTTQ.Forms.QuanLy
             dgvLopHoc.Columns["NgayKT"].DefaultCellStyle.Format = "dd/MM/yyyy";
         }
 
-        private void NapDanhSachLop(string tuKhoaTimKiem = "")
+        private LopHoc LayDuLieuTuForm()
         {
-            string sql = @"SELECT l.MaLop, l.TenLop, 
-                            l.MaMon, m.TenMon,
-                            l.MaGV, g.TenGV,
-                            l.NgayBD, l.NgayKT,
-                            l.MaCa, c.TenCa,
-                            l.MaThoiGian, t.TenThoiGian,
-                            l.MaPhong, p.TenPhong
-                            FROM LopHoc l
-                        LEFT JOIN MonHoc m   ON l.MaMon = m.MaMon
-                        LEFT JOIN GiaoVien g ON l.MaGV = g.MaGV
-                        LEFT JOIN CaHoc c    ON l.MaCa = c.MaCa
-                        LEFT JOIN ThoiGian t ON l.MaThoiGian = t.MaThoiGian
-                        LEFT JOIN PhongHoc p ON l.MaPhong = p.MaPhong
-                        WHERE @TuKhoa = '' OR l.TenLop COLLATE Vietnamese_CI_AI LIKE '%' + @TuKhoa + '%'
-                        ORDER BY l.NgayBD DESC";
-
-            dgvLopHoc.DataSource = DbHelper.ExecuteQuery(sql, new SqlParameter("@TuKhoa", tuKhoaTimKiem));
-            DinhDangBang();
-        }
-
-        private void frmLopHoc_Load(object sender, EventArgs e)
-        {
-            NaptatcaComboBox();
-            NapDanhSachLop();
-            LamMoi();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private int chieuCaopanelNhapLieuBanDau = 340;
-        private int chieuCaoNutThuPhong = 40;
-        private void btnThu_Click(object sender, EventArgs e)
-        {
-            panelNhapLieu.SuspendLayout();
-
-            bool dangMo = panelNoiDung.Visible;
-            panelNoiDung.Visible = !dangMo;
-            panelNhapLieu.Height = dangMo ? chieuCaoNutThuPhong : chieuCaopanelNhapLieuBanDau;
-            btnThu.Text = panelNoiDung.Visible ? "▲" : "▼";
-
-            panelTieuDe.BringToFront();
-
-            panelNhapLieu.ResumeLayout(true);
+            return new LopHoc
+            {
+                MaLop = txtMaLop.Text.Trim(),
+                TenLop = txtTenLop.Text.Trim(),
+                MaMon = cboMonHoc.SelectedValue?.ToString(),
+                MaGV = cboGiaoVien.SelectedValue?.ToString(),
+                NgayBD = dtpNgayBD.Value.Date,
+                NgayKT = dtpNgayKT.Value.Date,
+                MaCa = cboCaHoc.SelectedValue?.ToString(),
+                MaThoiGian = cboThoiGian.SelectedValue?.ToString(),
+                MaPhong = cboPhongHoc.SelectedValue?.ToString()
+            };
         }
 
         private void LamMoi()
@@ -136,96 +104,35 @@ namespace BTL_LTTQ.Forms.QuanLy
             dtpNgayKT.Value = DateTime.Today;
 
             dgvLopHoc.ClearSelection();
-            txtMaLop.Clear();
 
             maLopDangChon = "";
             txtMaLop.ReadOnly = false;
         }
+
+        private void frmLopHoc_Load(object sender, EventArgs e)
+        {
+            NaptatcaComboBox();
+            NapDanhSachLop();
+            LamMoi();
+        }
+
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
             LamMoi();
         }
 
-        private bool KiemTraDuLieu()
-        {
-            string errorM = "";
-            Control oLoiDauTien = null;
-
-            if (string.IsNullOrWhiteSpace(txtMaLop.Text))
-            {
-                errorM += "Vui lòng nhập mã lớp\n";
-                oLoiDauTien ??= txtMaLop;
-            }
-            if (string.IsNullOrWhiteSpace(txtTenLop.Text))
-            {
-                errorM += "Vui lòng nhập tên lớp\n";
-                oLoiDauTien ??= txtTenLop;
-            }
-            if (cboMonHoc.SelectedIndex == -1 || cboGiaoVien.SelectedIndex == -1 ||
-                cboCaHoc.SelectedIndex == -1 || cboThoiGian.SelectedIndex == -1 ||
-                cboPhongHoc.SelectedIndex == -1)
-            {
-                errorM += "Vui lòng chọn đầy đủ môn học, giáo viên, ca học, thời gian và phòng học\n";
-                oLoiDauTien ??= cboMonHoc;
-            }
-            if (dtpNgayKT.Value.Date < dtpNgayBD.Value.Date)
-            {
-                errorM += "Ngày kết thúc không được trước ngày bắt đầu\n";
-                oLoiDauTien ??= dtpNgayKT;
-            }
-
-            if (errorM != "")
-            {
-                MessageBox.Show(errorM, "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                oLoiDauTien?.Focus();
-                return false;
-            }
-            return true;
-        }
-
         private void btnThem_Click(object sender, EventArgs e)
         {
-            if (!KiemTraDuLieu())
+            string loi = _lopHocService.Them(LayDuLieuTuForm());
+            if (loi != "")
             {
+                MessageBox.Show(loi, "Không thêm được", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string maLop = txtMaLop.Text.Trim();
-
-            DataTable dt = DbHelper.ExecuteQuery("select * from LopHoc where MaLop = @MaLop",
-                                                new SqlParameter("@MaLop", maLop));
-            if (dt.Rows.Count > 0)
-            {
-                MessageBox.Show("Mã lớp này đã tồn tại", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtMaLop.Focus();
-                return;
-            }
-            string sql = @"INSERT INTO LopHoc (MaLop, TenLop, MaMon, MaGV, NgayBD, NgayKT, MaCa, MaThoiGian, MaPhong)
-                   VALUES (@MaLop, @TenLop, @MaMon, @MaGV, @NgayBD, @NgayKT, @MaCa, @MaThoiGian, @MaPhong)";
-            try
-            {
-                DbHelper.ExecuteNonQuery(sql,
-                new SqlParameter("@MaLop", maLop),
-                new SqlParameter("@TenLop", txtTenLop.Text.Trim()),
-                new SqlParameter("@MaMon", cboMonHoc.SelectedValue),
-                new SqlParameter("@MaGV", cboGiaoVien.SelectedValue),
-                new SqlParameter("@NgayBD", dtpNgayBD.Value.Date),
-                new SqlParameter("@NgayKT", dtpNgayKT.Value.Date),
-                new SqlParameter("@MaCa", cboCaHoc.SelectedValue),
-                new SqlParameter("@MaThoiGian", cboThoiGian.SelectedValue),
-                new SqlParameter("@MaPhong", cboPhongHoc.SelectedValue));
-
-                MessageBox.Show("Thêm lớp học thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                NapDanhSachLop();
-                LamMoi();
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Không thêm được: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-
+            MessageBox.Show("Thêm lớp học thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            NapDanhSachLop();
+            LamMoi();
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -236,41 +143,28 @@ namespace BTL_LTTQ.Forms.QuanLy
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (!KiemTraDuLieu()) return;
 
-            string sql = @"UPDATE LopHoc
-                           SET TenLop = @TenLop, MaMon = @MaMon, MaGV = @MaGV,
-                               NgayBD = @NgayBD, NgayKT = @NgayKT,
-                               MaCa = @MaCa, MaThoiGian = @MaThoiGian, MaPhong = @MaPhong
-                           WHERE MaLop = @MaLop";
-            try
-            {
-                DbHelper.ExecuteNonQuery(sql,
-                    new SqlParameter("@MaLop", maLopDangChon),
-                    new SqlParameter("@TenLop", txtTenLop.Text.Trim()),
-                    new SqlParameter("@MaMon", cboMonHoc.SelectedValue),
-                    new SqlParameter("@MaGV", cboGiaoVien.SelectedValue),
-                    new SqlParameter("@NgayBD", dtpNgayBD.Value.Date),
-                    new SqlParameter("@NgayKT", dtpNgayKT.Value.Date),
-                    new SqlParameter("@MaCa", cboCaHoc.SelectedValue),
-                    new SqlParameter("@MaThoiGian", cboThoiGian.SelectedValue),
-                    new SqlParameter("@MaPhong", cboPhongHoc.SelectedValue));
+            LopHoc lop = LayDuLieuTuForm();
+            lop.MaLop = maLopDangChon;
 
-                MessageBox.Show("Cập nhật lớp học thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                NapDanhSachLop();
-                LamMoi();
-            }
-            catch (SqlException ex)
+            string loi = _lopHocService.Sua(lop);
+            if (loi != "")
             {
-                MessageBox.Show("Không sửa được: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(loi, "Không sửa được", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            MessageBox.Show("Cập nhật lớp học thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            NapDanhSachLop();
+            LamMoi();
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
             if (maLopDangChon == "")
             {
-                MessageBox.Show("Vui lòng chọn một lớp trong danh sách để xóa.", "Chưa chọn lớp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn một lớp trong danh sách để xóa.", "Chưa chọn lớp",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -279,23 +173,16 @@ namespace BTL_LTTQ.Forms.QuanLy
                 "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (hoi != DialogResult.Yes) return;
 
-            try
+            string loi = _lopHocService.Xoa(maLopDangChon);
+            if (loi != "")
             {
-                DbHelper.ExecuteNonQuery("DELETE FROM LopHoc WHERE MaLop = @MaLop",
-                                         new SqlParameter("@MaLop", maLopDangChon));
+                MessageBox.Show(loi, "Không thể xóa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                MessageBox.Show("Đã xóa lớp học.", "Thông báo",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                NapDanhSachLop();
-                LamMoi();
-            }
-            catch (SqlException ex)
-            {
-                if (ex.Number == 547)
-                    MessageBox.Show("Lớp này đang có học viên (hoặc dữ liệu liên quan), không thể xóa", "Không thể xóa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else
-                    MessageBox.Show("Không xóa được: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            MessageBox.Show("Đã xóa lớp học.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            NapDanhSachLop();
+            LamMoi();
         }
 
         private void dgvLopHoc_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -320,24 +207,58 @@ namespace BTL_LTTQ.Forms.QuanLy
             dtpNgayKT.Value = Convert.ToDateTime(row.Cells["NgayKT"].Value);
         }
 
+        private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+
+            e.SuppressKeyPress = true;
+            NapDanhSachLop(txtTimKiem.Text.Trim());
+            LamMoi();
+
+            if (dgvLopHoc.Rows.Count == 0)
+            {
+                MessageBox.Show("Không tìm thấy lớp học nào phù hợp.", "Thông báo",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private int chieuCaopanelNhapLieuBanDau = 340;
+        private int chieuCaoNutThuPhong = 40;
+
+        private void btnThu_Click(object sender, EventArgs e)
+        {
+            panelNhapLieu.SuspendLayout();
+
+            bool dangMo = panelNoiDung.Visible;
+            panelNoiDung.Visible = !dangMo;
+            panelNhapLieu.Height = dangMo ? chieuCaoNutThuPhong : chieuCaopanelNhapLieuBanDau;
+            btnThu.Text = panelNoiDung.Visible ? "▲" : "▼";
+
+            panelTieuDe.BringToFront();
+
+            panelNhapLieu.ResumeLayout(true);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
         private void label11_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
+        private void btnXuatExcel_Click_1(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true;
-                NapDanhSachLop(txtTimKiem.Text.Trim());
-                LamMoi();
-
-                if (dgvLopHoc.Rows.Count == 0)
-                {
-                    MessageBox.Show("Không tìm thấy lớp học nào phù hợp.", "Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            ExcelHelper.XuatDataGridView(dgvLopHoc, "DANH SÁCH LỚP HỌC", "BaoCaoLopHoc");
         }
     }
 }

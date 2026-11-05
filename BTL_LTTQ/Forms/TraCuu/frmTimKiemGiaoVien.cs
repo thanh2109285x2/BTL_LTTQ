@@ -5,25 +5,24 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using BTL_LTTQ.DataAccessLayer;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Windows.Forms;
+using BTL_LTTQ.Models;
+using BTL_LTTQ.Services;
 
 namespace BTL_LTTQ.Forms.TraCuu
 {
     public partial class frmTimKiemGiaoVien : Form
     {
+        private readonly GiaoVienTraCuuService _giaoVienService = new GiaoVienTraCuuService();
+        private readonly LookupService _lookupService = new LookupService();
+
         public frmTimKiemGiaoVien()
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
         }
 
-        private void NapComboBox(ComboBox cbo, string sql, string tenCotMa, string tenCotHienThi)
+        private void NapComboBox(ComboBox cbo, DataTable dt, string tenCotMa, string tenCotHienThi)
         {
-            DataTable dt = DbHelper.ExecuteQuery(sql);
-
             DataRow dong = dt.NewRow();
             dong[tenCotMa] = DBNull.Value;
             dong[tenCotHienThi] = "-- Bỏ chọn --";
@@ -37,37 +36,32 @@ namespace BTL_LTTQ.Forms.TraCuu
 
         private void frmTimKiemGiaoVien_Load(object sender, EventArgs e)
         {
-            NapComboBox(cboTrinhDo, "SELECT MaTrinhDo, TenTrinhDo FROM TrinhDo", "MaTrinhDo", "TenTrinhDo");
-            NapComboBox(cboChuyenMon, "SELECT MaChuyenMon, TenChuyenMon FROM ChuyenMon", "MaChuyenMon", "TenChuyenMon");
-            NapComboBox(cboMonDay, "SELECT MaMon, TenMon FROM MonHoc", "MaMon", "TenMon");
+            NapComboBox(cboTrinhDo, _lookupService.LayTrinhDo(), "MaTrinhDo", "TenTrinhDo");
+            NapComboBox(cboChuyenMon, _lookupService.LayChuyenMon(), "MaChuyenMon", "TenChuyenMon");
+            NapComboBox(cboMonDay, _lookupService.LayMonHoc(), "MaMon", "TenMon");
             TimKiem();
         }
 
         private void TimKiem()
         {
-            string sql = @"SELECT g.MaGV, g.TenGV, g.DienThoai,t.TenTrinhDo, c.TenChuyenMon,
-                            (SELECT STRING_AGG(m.TenMon, ', ')
-                            FROM GiaoVien_MonHoc gm
-                            JOIN MonHoc m ON gm.MaMon = m.MaMon
-                            WHERE gm.MaGV = g.MaGV) AS MonDay
-                            FROM GiaoVien g
-                            LEFT JOIN TrinhDo t   ON g.MaTrinhDo = t.MaTrinhDo
-                            LEFT JOIN ChuyenMon c ON g.MaChuyenMon = c.MaChuyenMon
-                            WHERE (@TenGV = '' OR g.TenGV COLLATE Vietnamese_CI_AI LIKE '%' + @TenGV + '%')
-                                AND (@MaTrinhDo   IS NULL OR g.MaTrinhDo   = @MaTrinhDo)
-                                AND (@MaChuyenMon IS NULL OR g.MaChuyenMon = @MaChuyenMon)
-                                AND (@MaMon IS NULL OR EXISTS(
-                                    SELECT 1 FROM GiaoVien_MonHoc x
-                                    WHERE x.MaGV = g.MaGV AND x.MaMon = @MaMon))
-                            ORDER BY g.TenGV";
+            var tieuChi = new TimKiemGiaoVien
+            {
+                TenGV = txtTenGV.Text,
+                MaTrinhDo = LayGiaTriComboBox(cboTrinhDo),
+                MaChuyenMon = LayGiaTriComboBox(cboChuyenMon),
+                MaMon = LayGiaTriComboBox(cboMonDay)
+            };
 
-            dgvKetQua.DataSource = DbHelper.ExecuteQuery(sql,
-                new SqlParameter("@TenGV", txtTenGV.Text.Trim()),
-                new SqlParameter("@MaTrinhDo", cboTrinhDo.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@MaChuyenMon", cboChuyenMon.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@MaMon", cboMonDay.SelectedValue ?? DBNull.Value));
+            dgvKetQua.DataSource = _giaoVienService.TimKiem(tieuChi);
 
             DinhDangBang();
+        }
+
+        private static string? LayGiaTriComboBox(ComboBox cbo)
+        {
+            return cbo.SelectedValue == null || cbo.SelectedValue == DBNull.Value
+                ? null
+                : cbo.SelectedValue.ToString();
         }
 
         private void DinhDangBang()

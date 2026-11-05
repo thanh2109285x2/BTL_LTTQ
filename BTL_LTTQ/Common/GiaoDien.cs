@@ -16,6 +16,10 @@ namespace BTL_LTTQ
         public static readonly Color MauChu = Color.FromArgb(33, 37, 41);
         public static readonly Color MauMucCha = Color.FromArgb(221, 227, 236);
         public static readonly Color MauMucChaHover = Color.FromArgb(205, 214, 228);
+        public static readonly Color MauSidebar = Color.FromArgb(232, 240, 251);
+        public static readonly Color MauSidebarCha = Color.FromArgb(210, 225, 246);
+        public static readonly Color MauSidebarHover = Color.FromArgb(193, 214, 242);
+        public static readonly Color MauSidebarChu = Color.FromArgb(33, 37, 41);
 
         public static void ApDung(Form f)
         {
@@ -127,12 +131,12 @@ namespace BTL_LTTQ
         {
             if (_mucDangChon != null && !_mucDangChon.IsDisposed)
             {
-                _mucDangChon.BackColor = MauNen;
-                _mucDangChon.ForeColor = MauChu;
+                _mucDangChon.BackColor = MauSidebar;
+                _mucDangChon.ForeColor = MauSidebarChu;
             }
             _mucDangChon = b;
-            b.BackColor = MauChon;
-            b.ForeColor = MauChinh;
+            b.BackColor = MauChinh;
+            b.ForeColor = Color.White;
         }
 
         private static void DuyetMain(Control cha)
@@ -167,7 +171,7 @@ namespace BTL_LTTQ
 
             if (laThoat)
             {
-                b.BackColor = MauNen;
+                b.BackColor = MauSidebar;
                 b.ForeColor = MauNguyHiem;
                 b.TextAlign = ContentAlignment.MiddleCenter;
                 b.FlatAppearance.MouseOverBackColor = Color.FromArgb(250, 225, 222);
@@ -175,24 +179,24 @@ namespace BTL_LTTQ
             }
             else if (laMucCha)
             {
-                b.BackColor = MauMucCha;
-                b.ForeColor = MauChu;
+                b.BackColor = MauSidebarCha;
+                b.ForeColor = MauChinhDam;
                 b.Font = new Font(b.Font, FontStyle.Bold);
                 b.TextAlign = ContentAlignment.MiddleLeft;
                 b.ImageAlign = ContentAlignment.MiddleLeft;
                 b.TextImageRelation = TextImageRelation.ImageBeforeText;
                 b.Padding = new Padding(8, 0, 0, 0);
-                b.FlatAppearance.MouseOverBackColor = MauMucChaHover;
-                b.FlatAppearance.MouseDownBackColor = MauMucChaHover;
+                b.FlatAppearance.MouseOverBackColor = MauSidebarHover;
+                b.FlatAppearance.MouseDownBackColor = MauSidebarHover;
             }
             else
             {
-                b.BackColor = MauNen;
-                b.ForeColor = MauChu;
+                b.BackColor = MauSidebar;
+                b.ForeColor = MauSidebarChu;
                 b.TextAlign = ContentAlignment.MiddleLeft;
                 b.Padding = new Padding(48, 0, 0, 0);
-                b.FlatAppearance.MouseOverBackColor = MauChon;
-                b.FlatAppearance.MouseDownBackColor = MauChon;
+                b.FlatAppearance.MouseOverBackColor = MauSidebarHover;
+                b.FlatAppearance.MouseDownBackColor = MauSidebarHover;
             }
 
             if (b.Parent != null)

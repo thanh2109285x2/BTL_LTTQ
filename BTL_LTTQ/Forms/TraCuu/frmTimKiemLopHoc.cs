@@ -6,25 +6,24 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using BTL_LTTQ.DataAccessLayer;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Windows.Forms;
+using BTL_LTTQ.Models;
+using BTL_LTTQ.Services;
 
 namespace BTL_LTTQ.Forms.TraCuu
 {
     public partial class frmTimKiemLopHoc : Form
     {
+        private readonly LopHocTraCuuService _lopHocService = new LopHocTraCuuService();
+        private readonly LookupService _lookupService = new LookupService();
+
         public frmTimKiemLopHoc()
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
         }
 
-        private void NapComboBox(ComboBox cbo, string sql, string tenCotMa, string tenCotHienThi)
+        private void NapComboBox(ComboBox cbo, DataTable dt, string tenCotMa, string tenCotHienThi)
         {
-            DataTable dt = DbHelper.ExecuteQuery(sql);
-
             DataRow dong = dt.NewRow();
             dong[tenCotMa] = DBNull.Value;
             dong[tenCotHienThi] = "--Bỏ chọn--";
@@ -38,29 +37,34 @@ namespace BTL_LTTQ.Forms.TraCuu
 
         private void frmTimKiemLopHoc_Load(object sender, EventArgs e)
         {
-            NapComboBox(cboMonHoc, "SELECT MaMon, TenMon FROM MonHoc", "MaMon", "TenMon");
-            NapComboBox(cboGiaoVien, "SELECT MaGV, TenGV FROM GiaoVien", "MaGV", "TenGV");
+            NapComboBox(cboMonHoc, _lookupService.LayMonHoc(), "MaMon", "TenMon");
+            NapComboBox(cboGiaoVien, _lookupService.LayGiaoVien(), "MaGV", "TenGV");
             TimKiem();
         }
 
-        private void TimKiem()
+        private string TimKiem()
         {
-            string sql = @"SELECT * FROM(
-                            SELECT l.MaLop, l.TenLop, m.TenMon, g.TenGV, l.NgayBD, l.NgayKT,
-                                   (SELECT COUNT(*) FROM HocVien d WHERE d.MaLop = l.MaLop) AS SiSo
-                            FROM LopHoc l
-                            LEFT JOIN MonHoc m ON l.MaMon = m.MaMon
-                            LEFT JOIN GiaoVien g ON l.MaGV = g.MaGV
-                            WHERE (@MaMon IS NULL OR l.MaMon = @MaMon) AND (@MaGV IS NULL OR l.MaGV = @MaGV)) x
-                            WHERE x.SiSo BETWEEN @SiSoTu AND @SiSoDen
-                            ORDER BY x.NgayBD DESC";
+            var tieuChi = new TimKiemLopHoc
+            {
+                MaMon = LayGiaTriComboBox(cboMonHoc),
+                MaGV = LayGiaTriComboBox(cboGiaoVien),
+                SiSoTu = (int)nudSiSoTu.Value,
+                SiSoDen = (int)nudSiSoDen.Value
+            };
 
-            dgvKetQua.DataSource = DbHelper.ExecuteQuery(sql,
-                new SqlParameter("@MaMon", cboMonHoc.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@MaGV", cboGiaoVien.SelectedValue ?? DBNull.Value),
-                new SqlParameter("@SiSoTu", (int)nudSiSoTu.Value),
-                new SqlParameter("@SiSoDen", (int)nudSiSoDen.Value));
+            string loi = _lopHocService.TimKiem(tieuChi, out DataTable ketQua);
+            if (loi != "") return loi;
+
+            dgvKetQua.DataSource = ketQua;
             DinhDangBang();
+            return "";
+        }
+
+        private static string? LayGiaTriComboBox(ComboBox cbo)
+        {
+            return cbo.SelectedValue == null || cbo.SelectedValue == DBNull.Value
+                ? null
+                : cbo.SelectedValue.ToString();
         }
 
         private void DinhDangBang()
@@ -78,14 +82,13 @@ namespace BTL_LTTQ.Forms.TraCuu
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
-            if (nudSiSoTu.Value > nudSiSoDen.Value)
+            string loi = TimKiem();
+            if (loi != "")
             {
-                MessageBox.Show("Sĩ số 'từ' không được lớn hơn sĩ số 'đến'.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(loi, "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 nudSiSoTu.Focus();
                 return;
             }
-
-            TimKiem();
 
             if (dgvKetQua.Rows.Count == 0)
                 MessageBox.Show("Không tìm thấy lớp học nào phù hợp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
