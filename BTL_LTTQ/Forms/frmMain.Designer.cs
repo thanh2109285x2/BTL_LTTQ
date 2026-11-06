@@ -49,6 +49,7 @@
             btnBaoCaoMenu = new Button();
             panelContent = new Panel();
             panelThoat = new Panel();
+            btnXuatExcel = new Button();
             btnThoat = new Button();
             panelSidebar = new Panel();
             flowLayoutPanel1.SuspendLayout();
@@ -70,7 +71,7 @@
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(284, 496);
+            flowLayoutPanel1.Size = new Size(284, 439);
             flowLayoutPanel1.TabIndex = 0;
             flowLayoutPanel1.WrapContents = false;
             // 
@@ -96,7 +97,7 @@
             panelCRUD.Controls.Add(btnQuanLyMenu);
             panelCRUD.Location = new Point(3, 47);
             panelCRUD.Name = "panelCRUD";
-            panelCRUD.Size = new Size(271, 231);
+            panelCRUD.Size = new Size(271, 39);
             panelCRUD.TabIndex = 1;
             panelCRUD.Paint += panelCRUD_Paint;
             // 
@@ -167,9 +168,9 @@
             panelTraCuu.Controls.Add(btnTimGiaoVien);
             panelTraCuu.Controls.Add(btnTimLop);
             panelTraCuu.Controls.Add(btnTraCuuMenu);
-            panelTraCuu.Location = new Point(3, 284);
+            panelTraCuu.Location = new Point(3, 92);
             panelTraCuu.Name = "panelTraCuu";
-            panelTraCuu.Size = new Size(271, 111);
+            panelTraCuu.Size = new Size(271, 37);
             panelTraCuu.TabIndex = 2;
             // 
             // btnTimGiaoVien
@@ -212,9 +213,9 @@
             panelBaoCao.Controls.Add(btnDoanhThu);
             panelBaoCao.Controls.Add(btnBaoCaoDiem);
             panelBaoCao.Controls.Add(btnBaoCaoMenu);
-            panelBaoCao.Location = new Point(3, 401);
+            panelBaoCao.Location = new Point(3, 135);
             panelBaoCao.Name = "panelBaoCao";
-            panelBaoCao.Size = new Size(271, 154);
+            panelBaoCao.Size = new Size(271, 37);
             panelBaoCao.TabIndex = 3;
             // 
             // btnLopTheoPhong
@@ -278,16 +279,27 @@
             // 
             // panelThoat
             // 
+            panelThoat.Controls.Add(btnXuatExcel);
             panelThoat.Controls.Add(btnThoat);
             panelThoat.Dock = DockStyle.Bottom;
-            panelThoat.Location = new Point(0, 496);
+            panelThoat.Location = new Point(0, 439);
             panelThoat.Name = "panelThoat";
-            panelThoat.Size = new Size(284, 57);
+            panelThoat.Size = new Size(284, 114);
             panelThoat.TabIndex = 5;
+            // 
+            // btnXuatExcel
+            // 
+            btnXuatExcel.Location = new Point(55, 6);
+            btnXuatExcel.Name = "btnXuatExcel";
+            btnXuatExcel.Size = new Size(157, 38);
+            btnXuatExcel.TabIndex = 1;
+            btnXuatExcel.Text = "Xuất File &Excel";
+            btnXuatExcel.UseVisualStyleBackColor = true;
+            btnXuatExcel.Click += btnXuatExcel_Click;
             // 
             // btnThoat
             // 
-            btnThoat.Location = new Point(183, 13);
+            btnThoat.Location = new Point(98, 70);
             btnThoat.Name = "btnThoat";
             btnThoat.Size = new Size(95, 32);
             btnThoat.TabIndex = 0;
@@ -349,5 +361,6 @@
         private Button btnHocVien;
         private Button btnLopHoc;
         private Button btnQuanLyMenu;
+        private Button btnXuatExcel;
     }
 }

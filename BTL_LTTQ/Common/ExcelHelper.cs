@@ -1,17 +1,74 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace BTL_LTTQ.Common
 {
+    public interface IXuatExcel
+    {
+        DataGridView LuoiXuat { get; }
+        string TieuDeXuat { get; }
+    }
+
     public static class ExcelHelper
     {
+        //Xuất bảng của đúng trang (form con) đang mở
+        public static void XuatTrangHienTai(Form form)
+        {
+            var luoi = TimLuoi(form);
+            if (luoi == null)
+            {
+                MessageBox.Show("Trang hiện tại không có dữ liệu để xuất.", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string tieuDe = (form is IXuatExcel x && !string.IsNullOrWhiteSpace(x.TieuDeXuat))
+                            ? x.TieuDeXuat : form.Text;
+            tieuDe = tieuDe.Trim().ToUpper();
+            XuatDataGridView(luoi, tieuDe, TenFile(tieuDe));
+        }
+
+        //Tìm bảng cần xuất trong form
+        public static DataGridView TimLuoi(Form form)
+        {
+            if (form == null) return null;
+            if (form is IXuatExcel x && x.LuoiXuat != null) return x.LuoiXuat;
+
+            DataGridView tot = null;
+            void Duyet(Control cha)
+            {
+                foreach (Control c in cha.Controls)
+                {
+                    if (c is DataGridView g && g.Visible && (tot == null || g.Rows.Count > tot.Rows.Count))
+                        tot = g;
+                    if (c.HasChildren) Duyet(c);
+                }
+            }
+            Duyet(form);
+            return tot;
+        }
+        private static string TenFile(string s)
+        {
+            var sb = new StringBuilder();
+            foreach (char ch in s.Normalize(NormalizationForm.FormD))
+                if (CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark)
+                    sb.Append(ch);
+            string bo = sb.ToString().Replace('Đ', 'D').Replace('đ', 'd');
+            var tu = bo.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                       .Select(w => new string(w.Where(char.IsLetterOrDigit).ToArray()))
+                       .Where(w => w.Length > 0)
+                       .Select(w => char.ToUpper(w[0]) + w.Substring(1).ToLower());
+            string kq = string.Concat(tu);
+            return kq.Length > 0 ? kq : "BaoCao";
+        }
+
         public static void XuatDataGridView(DataGridView dgv, string tieuDe, string tenFileMacDinh = "BaoCao")
         {
             if (dgv == null || dgv.Rows.Cast<DataGridViewRow>().All(r => r.IsNewRow))
@@ -47,10 +104,7 @@ namespace BTL_LTTQ.Common
             }
         }
 
-        private enum Kieu 
-        { 
-            Chu, So, Ngay 
-        }
+        private enum Kieu { Chu, So, Ngay }
 
         private static Excel.Range O(Excel.Worksheet ws, int dong, int cot)
         {
@@ -106,6 +160,7 @@ namespace BTL_LTTQ.Common
                 rHeader.Font.Bold = true;
                 rHeader.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
 
+                // Xác định kiểu từng cột, đặt định dạng ô để Excel hiển thị đúng (ngày, số, chữ)
                 var kieu = new Kieu[soCot];
                 for (int i = 0; i < soCot; i++)
                 {
@@ -155,7 +210,7 @@ namespace BTL_LTTQ.Common
                 Excel.Range vung = ws.Range[O(ws, dongDau, 1), O(ws, dongCuoi, soCot)];
                 vung.Value2 = data;
 
-                // Viền + tự giãn cột
+                // Viền + giãn cột
                 Excel.Range bang = ws.Range[O(ws, dongHeader, 1), O(ws, dongCuoi, soCot)];
                 bang.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
                 bang.Columns.AutoFit();

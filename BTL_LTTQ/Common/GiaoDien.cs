@@ -177,6 +177,15 @@ namespace BTL_LTTQ
                 b.FlatAppearance.MouseOverBackColor = Color.FromArgb(250, 225, 222);
                 b.FlatAppearance.MouseDownBackColor = Color.FromArgb(250, 225, 222);
             }
+            else if (b.Name == "btnXuatExcel")
+            {
+                b.BackColor = MauSidebar;
+                b.ForeColor = MauChinh;
+                b.TextAlign = ContentAlignment.MiddleCenter;
+                b.Padding = new Padding(0);
+                b.FlatAppearance.MouseOverBackColor = MauSidebarHover;
+                b.FlatAppearance.MouseDownBackColor = MauSidebarHover;
+            }
             else if (laMucCha)
             {
                 b.BackColor = MauSidebarCha;

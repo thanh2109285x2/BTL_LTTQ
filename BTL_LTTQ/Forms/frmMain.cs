@@ -1,3 +1,4 @@
+using BTL_LTTQ.Common;
 using BTL_LTTQ.Forms.QuanLy;
 using BTL_LTTQ.Forms.TraCuu;
 
@@ -23,6 +24,7 @@ namespace BTL_LTTQ
         private void frmMain_Load(object sender, EventArgs e)
         {
             CollapseAllPanels();
+            btnXuatExcel.Enabled = false;
         }
         private void TogglePanel(Panel panelToToggle, int expandedHeight)
         {
@@ -87,6 +89,8 @@ namespace BTL_LTTQ
             panelContent.Controls.Add(childForm);
             childForm.BringToFront();
             childForm.Show();
+
+            btnXuatExcel.Enabled = ExcelHelper.TimLuoi(childForm) != null;
         }
         private void btnLopHoc_Click(object sender, EventArgs e)
         {
@@ -104,6 +108,11 @@ namespace BTL_LTTQ
         {
             GiaoDien.DanhDauMuc(btnTimGiaoVien);
             OpenChildForm(new frmTimKiemGiaoVien());
+        }
+
+        private void btnXuatExcel_Click(object sender, EventArgs e)
+        {
+            ExcelHelper.XuatTrangHienTai(activeForm);
         }
     }
 }

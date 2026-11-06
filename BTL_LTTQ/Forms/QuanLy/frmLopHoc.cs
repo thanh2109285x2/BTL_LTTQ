@@ -255,10 +255,5 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
 
         }
-
-        private void btnXuatExcel_Click_1(object sender, EventArgs e)
-        {
-            ExcelHelper.XuatDataGridView(dgvLopHoc, "DANH SÁCH LỚP HỌC", "BaoCaoLopHoc");
-        }
     }
 }

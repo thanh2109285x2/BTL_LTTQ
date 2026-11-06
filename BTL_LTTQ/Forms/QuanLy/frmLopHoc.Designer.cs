@@ -32,7 +32,6 @@
             panelNoiDung = new Panel();
             groupBox1 = new GroupBox();
             panelNut = new Panel();
-            btnXuatExcel = new Button();
             btnLamMoi = new Button();
             btnXoa = new Button();
             btnSua = new Button();
@@ -122,7 +121,6 @@
             // 
             // panelNut
             // 
-            panelNut.Controls.Add(btnXuatExcel);
             panelNut.Controls.Add(btnLamMoi);
             panelNut.Controls.Add(btnXoa);
             panelNut.Controls.Add(btnSua);
@@ -132,16 +130,6 @@
             panelNut.Name = "panelNut";
             panelNut.Size = new Size(1294, 60);
             panelNut.TabIndex = 1;
-            // 
-            // btnXuatExcel
-            // 
-            btnXuatExcel.Location = new Point(760, 7);
-            btnXuatExcel.Name = "btnXuatExcel";
-            btnXuatExcel.Size = new Size(105, 42);
-            btnXuatExcel.TabIndex = 4;
-            btnXuatExcel.Text = "Xuất excel";
-            btnXuatExcel.UseVisualStyleBackColor = true;
-            btnXuatExcel.Click += btnXuatExcel_Click_1;
             // 
             // btnLamMoi
             // 
@@ -473,6 +461,5 @@
         private Panel panelDanhSach;
         private TextBox txtTimKiem;
         private Label label11;
-        private Button btnXuatExcel;
     }
 }
