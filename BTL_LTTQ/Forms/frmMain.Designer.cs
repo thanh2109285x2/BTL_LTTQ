@@ -41,6 +41,7 @@
             btnTimGiaoVien = new Button();
             btnTimLop = new Button();
             btnTraCuuMenu = new Button();
+            btnTimHocVien = new Button();
             panelBaoCao = new Panel();
             btnLopTheoPhong = new Button();
             btnTop3 = new Button();
@@ -140,6 +141,7 @@
             btnHocVien.Text = "Học viên";
             btnHocVien.TextAlign = ContentAlignment.MiddleLeft;
             btnHocVien.UseVisualStyleBackColor = true;
+            btnHocVien.Click += btnHocVien_Click;
             // 
             // btnLopHoc
             // 
@@ -166,6 +168,7 @@
             // panelTraCuu
             // 
             panelTraCuu.Controls.Add(btnTimGiaoVien);
+            panelTraCuu.Controls.Add(btnTimHocVien);
             panelTraCuu.Controls.Add(btnTimLop);
             panelTraCuu.Controls.Add(btnTraCuuMenu);
             panelTraCuu.Location = new Point(3, 92);
@@ -183,6 +186,15 @@
             btnTimGiaoVien.TextAlign = ContentAlignment.MiddleLeft;
             btnTimGiaoVien.UseVisualStyleBackColor = true;
             btnTimGiaoVien.Click += btnTimGiaoVien_Click;
+            // btnTimHocVien
+            btnTimHocVien.Location = new Point(52, 108);
+            btnTimHocVien.Name = "btnTimHocVien";
+            btnTimHocVien.Size = new Size(120, 29);
+            btnTimHocVien.TabIndex = 4;
+            btnTimHocVien.Text = "Tìm học viên";
+            btnTimHocVien.TextAlign = ContentAlignment.MiddleLeft;
+            btnTimHocVien.UseVisualStyleBackColor = true;
+            btnTimHocVien.Click += btnTimHocVien_Click;
             // 
             // btnTimLop
             // 
@@ -247,6 +259,7 @@
             btnDoanhThu.Text = "Doanh thu";
             btnDoanhThu.TextAlign = ContentAlignment.MiddleLeft;
             btnDoanhThu.UseVisualStyleBackColor = true;
+            btnDoanhThu.Click += btnDoanhThu_Click;
             // 
             // btnBaoCaoDiem
             // 
@@ -257,6 +270,7 @@
             btnBaoCaoDiem.Text = "Báo cáo điểm";
             btnBaoCaoDiem.TextAlign = ContentAlignment.MiddleLeft;
             btnBaoCaoDiem.UseVisualStyleBackColor = true;
+            btnBaoCaoDiem.Click += btnBaoCaoDiem_Click;
             // 
             // btnBaoCaoMenu
             // 
@@ -346,6 +360,7 @@
         private Button btnTraCuuMenu;
         private Button btnBaoCaoMenu;
         private Button btnTimGiaoVien;
+        private Button btnTimHocVien;
         private Button btnTimLop;
         private Button btnTop3;
         private Button btnDoanhThu;
