@@ -1,4 +1,5 @@
-﻿using BTL_LTTQ.Models;
+﻿using BTL_LTTQ.Common;
+using BTL_LTTQ.Models;
 using BTL_LTTQ.Services;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         private readonly MonHocService _monHocService = new MonHocService();
 
         private string maMonDangChon = "";
+        private bool _chiXem;
 
         public frmMonHoc()
         {
@@ -83,20 +85,42 @@ namespace BTL_LTTQ.Forms.QuanLy
             dgvMonHoc.ClearSelection();
 
             maMonDangChon = "";
-            txtMaMon.ReadOnly = false;
+            txtMaMon.ReadOnly = _chiXem;
 
             txtMaMon.Focus();
         }
 
         private void frmMonHoc_Load(object sender, EventArgs e)
         {
+            bool coQuyenThem = PermissionService.Can(ChucNangConst.MONHOC_THEM);
+            bool coQuyenSua = PermissionService.Can(ChucNangConst.MONHOC_SUA);
+            _chiXem = !coQuyenThem && !coQuyenSua;
+            PhanQuyenUi.AnNutThemSuaXoa(
+                btnThem, btnSua, btnXoa,
+                ChucNangConst.MONHOC_THEM, ChucNangConst.MONHOC_SUA, ChucNangConst.MONHOC_XOA);
+
             NapDanhSach();
             LamMoi();
+            ApDungCheDoChiXem();
 
+        }
+
+        private void ApDungCheDoChiXem()
+        {
+            txtMaMon.ReadOnly = _chiXem;
+            txtTenMon.ReadOnly = _chiXem;
+            textHocPhi.ReadOnly = _chiXem;
         }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.MONHOC_THEM))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (!LayDuLieuTuForm(out MonHoc monHoc, out string loiNhap))
             {
                 MessageBox.Show(loiNhap, "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -118,6 +142,13 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void btnSua_Click(object sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.MONHOC_SUA))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (maMonDangChon == "")
             {
                 MessageBox.Show("Vui lòng chọn một môn học trong danh sách để sửa.", "Chưa chọn môn học",
@@ -148,6 +179,13 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.MONHOC_XOA))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (maMonDangChon == "")
             {
                 MessageBox.Show("Vui lòng chọn một môn học trong danh sách để xóa.", "Chưa chọn môn học",
