@@ -63,6 +63,19 @@ namespace BTL_LTTQ.Forms.HeThong
                 dong["MaGV"] == DBNull.Value ? null : dong["MaGV"].ToString(),
                 dong["MaHocVien"] == DBNull.Value ? null : dong["MaHocVien"].ToString());
 
+            try
+            {
+                PermissionService.Load();
+            }
+            catch (Exception ex)
+            {
+                PermissionService.Clear();
+                CurrentUser.Xoa();
+                MessageBox.Show("Không thể tải quyền truy cập, đăng nhập bị từ chối.\n" + ex.Message,
+                    "Lỗi phân quyền", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             DialogResult = DialogResult.OK;
         }
 
