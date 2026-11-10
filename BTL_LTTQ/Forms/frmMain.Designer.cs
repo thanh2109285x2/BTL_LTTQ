@@ -120,6 +120,7 @@
             btnMonHoc.Text = "Môn học";
             btnMonHoc.TextAlign = ContentAlignment.MiddleLeft;
             btnMonHoc.UseVisualStyleBackColor = true;
+            btnMonHoc.Click += btnMonHoc_Click;
             // 
             // btnGiaoVien
             // 

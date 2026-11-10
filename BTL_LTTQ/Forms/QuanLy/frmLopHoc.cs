@@ -255,5 +255,15 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
 
         }
+
+        private void panelDanhSach_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dgvLopHoc_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

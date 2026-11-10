@@ -98,6 +98,12 @@ namespace BTL_LTTQ
             OpenChildForm(new frmLopHoc());
         }
 
+        private void btnMonHoc_Click(object sender, EventArgs e)
+        {
+            GiaoDien.DanhDauMuc(btnMonHoc);
+            OpenChildForm(new frmMonHoc());
+        }
+
         private void btnTimLop_Click(object sender, EventArgs e)
         {
             GiaoDien.DanhDauMuc(btnTimLop);
