@@ -24,6 +24,17 @@ namespace BTL_LTTQ.DataAccessLayer
             }
         }
 
+        public static object? ExecuteScalar(string sql, params SqlParameter[] parameters)
+        {
+            using (var conn = new SqlConnection(_connectDBStr))
+            using (var cmd = new SqlCommand(sql, conn))
+            {
+                if (parameters != null) cmd.Parameters.AddRange(parameters);
+                conn.Open();
+                return cmd.ExecuteScalar();
+            }
+        }
+
         //dung cho cac lenh khac
         public static int ExecuteNonQuery(string sql, params SqlParameter[] parameters)
         {

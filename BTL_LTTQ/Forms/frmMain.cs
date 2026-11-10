@@ -21,10 +21,20 @@ namespace BTL_LTTQ
             panelTraCuu.Height = PANEL_COLLAPSED_HEIGHT;
             panelBaoCao.Height = PANEL_COLLAPSED_HEIGHT;
         }
+
+        private void HienThiTrangChu()
+        {
+            panelContent.Controls.Clear();
+
+            lblChao.Text = $"Chào mừng bạn trở lại, {CurrentUser.TenDangNhap}!\nVai trò hệ thống: {CurrentUser.VaiTro}";
+
+            panelContent.Controls.Add(lblChao);
+        }
         private void frmMain_Load(object sender, EventArgs e)
         {
             CollapseAllPanels();
             btnXuatExcel.Enabled = false;
+            HienThiTrangChu();
         }
         private void TogglePanel(Panel panelToToggle, int expandedHeight)
         {
