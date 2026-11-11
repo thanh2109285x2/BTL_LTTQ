@@ -47,6 +47,36 @@ namespace BTL_LTTQ.DataAccessLayer
             }
         }
 
+        public static void ExecuteTransaction(Action<SqlConnection, SqlTransaction> action)
+        {
+            ArgumentNullException.ThrowIfNull(action);
+
+            using (var conn = new SqlConnection(_connectDBStr))
+            {
+                conn.Open();
+                using (SqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        action(conn, transaction);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            transaction.Rollback();
+                        }
+                        catch
+                        {
+                        }
+
+                        throw;
+                    }
+                }
+            }
+        }
+
         public static bool TestConnection(out string message)
         {
             try

@@ -1,4 +1,5 @@
 using BTL_LTTQ.Common;
+using BTL_LTTQ.Forms.HeThong;
 using BTL_LTTQ.Forms.QuanLy;
 using BTL_LTTQ.Forms.TraCuu;
 
@@ -17,6 +18,7 @@ namespace BTL_LTTQ
             panelCRUD.Height = PANEL_COLLAPSED_HEIGHT;
             panelTraCuu.Height = PANEL_COLLAPSED_HEIGHT;
             panelBaoCao.Height = PANEL_COLLAPSED_HEIGHT;
+            panelHeThong.Height = PANEL_COLLAPSED_HEIGHT;
         }
 
         private void HienThiTrangChu()
@@ -64,6 +66,32 @@ namespace BTL_LTTQ
                 (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
                 (btnTop3, ChucNangConst.BC_XEPHANG),
                 (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG));
+
+            bool coQuyenPhanQuyen = PermissionService.Can(ChucNangConst.PHANQUYEN);
+            btnPhanQuyen.Visible = coQuyenPhanQuyen;
+            btnHeThong.Visible = coQuyenPhanQuyen;
+            panelHeThong.Visible = coQuyenPhanQuyen;
+            panelHeThong.Height = coQuyenPhanQuyen ? PANEL_COLLAPSED_HEIGHT + 35 : PANEL_COLLAPSED_HEIGHT;
+        }
+
+        private void btnHeThong_Click(object? sender, EventArgs e)
+        {
+            panelHeThong.Height = panelHeThong.Height == PANEL_COLLAPSED_HEIGHT
+                ? PANEL_COLLAPSED_HEIGHT + 35
+                : PANEL_COLLAPSED_HEIGHT;
+        }
+
+        private void btnPhanQuyen_Click(object? sender, EventArgs e)
+        {
+            if (!PhanQuyenUi.CoQuyenMo(ChucNangConst.PHANQUYEN))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var form = new frmPhanQuyen();
+            form.ShowDialog(this);
         }
 
         private static bool SapXepMenu(Panel panel, params (Button Nut, string MaChucNang)[] muc)

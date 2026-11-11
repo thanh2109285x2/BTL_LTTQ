@@ -47,6 +47,9 @@
             btnDoanhThu = new Button();
             btnBaoCaoDiem = new Button();
             btnBaoCaoMenu = new Button();
+            panelHeThong = new Panel();
+            btnPhanQuyen = new Button();
+            btnHeThong = new Button();
             panelContent = new Panel();
             lblChao = new Label();
             panelThoat = new Panel();
@@ -69,6 +72,7 @@
             flowLayoutPanel1.Controls.Add(panelCRUD);
             flowLayoutPanel1.Controls.Add(panelTraCuu);
             flowLayoutPanel1.Controls.Add(panelBaoCao);
+            flowLayoutPanel1.Controls.Add(panelHeThong);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(0, 0);
@@ -272,6 +276,40 @@
             btnBaoCaoMenu.UseVisualStyleBackColor = true;
             btnBaoCaoMenu.Click += btnBaoCaoMenu_Click;
             // 
+            // panelHeThong
+            // 
+            panelHeThong.Controls.Add(btnPhanQuyen);
+            panelHeThong.Controls.Add(btnHeThong);
+            panelHeThong.Location = new Point(3, 590);
+            panelHeThong.Name = "panelHeThong";
+            panelHeThong.Size = new Size(271, 71);
+            panelHeThong.TabIndex = 4;
+            panelHeThong.Visible = false;
+            // 
+            // btnPhanQuyen
+            // 
+            btnPhanQuyen.Location = new Point(52, 38);
+            btnPhanQuyen.Name = "btnPhanQuyen";
+            btnPhanQuyen.Size = new Size(120, 29);
+            btnPhanQuyen.TabIndex = 2;
+            btnPhanQuyen.Text = "Phân quyền";
+            btnPhanQuyen.TextAlign = ContentAlignment.MiddleLeft;
+            btnPhanQuyen.UseVisualStyleBackColor = true;
+            btnPhanQuyen.Visible = false;
+            btnPhanQuyen.Click += btnPhanQuyen_Click;
+            // 
+            // btnHeThong
+            // 
+            btnHeThong.Location = new Point(9, 3);
+            btnHeThong.Name = "btnHeThong";
+            btnHeThong.Size = new Size(95, 29);
+            btnHeThong.TabIndex = 1;
+            btnHeThong.Text = "Hệ thống";
+            btnHeThong.TextAlign = ContentAlignment.MiddleLeft;
+            btnHeThong.UseVisualStyleBackColor = true;
+            btnHeThong.Visible = false;
+            btnHeThong.Click += btnHeThong_Click;
+            // 
             // panelContent
             // 
             panelContent.Controls.Add(lblChao);
@@ -348,6 +386,7 @@
             panelCRUD.ResumeLayout(false);
             panelTraCuu.ResumeLayout(false);
             panelBaoCao.ResumeLayout(false);
+            panelHeThong.ResumeLayout(false);
             panelContent.ResumeLayout(false);
             panelContent.PerformLayout();
             panelThoat.ResumeLayout(false);
@@ -360,9 +399,12 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panelTraCuu;
         private Panel panelBaoCao;
+        private Panel panelHeThong;
         private Button btnTrangChu;
         private Button btnTraCuuMenu;
         private Button btnBaoCaoMenu;
+        private Button btnHeThong;
+        private Button btnPhanQuyen;
         private Button btnTimGiaoVien;
         private Button btnTimLop;
         private Button btnTop3;

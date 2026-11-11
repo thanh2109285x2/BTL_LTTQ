@@ -22,6 +22,7 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private string maLopDangChon = "";
         private bool _chiXem;
+        private bool _chiSuaLopCuaMinh;
 
         public frmLopHoc()
         {
@@ -108,12 +109,14 @@ namespace BTL_LTTQ.Forms.QuanLy
 
             maLopDangChon = "";
             txtMaLop.ReadOnly = _chiXem;
+            ApDungCheDoChiXem();
         }
 
         private void frmLopHoc_Load(object sender, EventArgs e)
         {
             bool coQuyenThem = PermissionService.Can(ChucNangConst.LOPHOC_THEM);
             bool coQuyenSua = PermissionService.Can(ChucNangConst.LOPHOC_SUA);
+            _chiSuaLopCuaMinh = coQuyenSua && PermissionService.ChiCuaMinh(ChucNangConst.LOPHOC_SUA);
             _chiXem = !coQuyenThem && !coQuyenSua;
             PhanQuyenUi.AnNutThemSuaXoa(
                 btnThem, btnSua, btnXoa,
@@ -127,10 +130,10 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void ApDungCheDoChiXem()
         {
-            txtMaLop.ReadOnly = _chiXem;
+            txtMaLop.ReadOnly = _chiXem || maLopDangChon != "";
             txtTenLop.ReadOnly = _chiXem;
             cboMonHoc.Enabled = !_chiXem;
-            cboGiaoVien.Enabled = !_chiXem;
+            cboGiaoVien.Enabled = !_chiXem && !_chiSuaLopCuaMinh;
             cboCaHoc.Enabled = !_chiXem;
             cboThoiGian.Enabled = !_chiXem;
             cboPhongHoc.Enabled = !_chiXem;
@@ -248,6 +251,7 @@ namespace BTL_LTTQ.Forms.QuanLy
 
             dtpNgayBD.Value = Convert.ToDateTime(row.Cells["NgayBD"].Value);
             dtpNgayKT.Value = Convert.ToDateTime(row.Cells["NgayKT"].Value);
+            ApDungCheDoChiXem();
         }
 
         private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
