@@ -536,9 +536,9 @@
             btnXuatExcel.Font = new Font("Segoe UI", 9F);
             btnXuatExcel.ForeColor = Color.FromArgb(41, 98, 168);
             btnXuatExcel.Kieu = KieuNut.MenuTienIch;
-            btnXuatExcel.Location = new Point(55, 6);
+            btnXuatExcel.Location = new Point(32, 3);
             btnXuatExcel.Name = "btnXuatExcel";
-            btnXuatExcel.Size = new Size(157, 38);
+            btnXuatExcel.Size = new Size(219, 38);
             btnXuatExcel.TabIndex = 1;
             btnXuatExcel.Text = "Xuất File &Excel";
             btnXuatExcel.UseVisualStyleBackColor = false;
@@ -555,9 +555,9 @@
             btnDangXuat.Font = new Font("Segoe UI", 9F);
             btnDangXuat.ForeColor = Color.FromArgb(41, 98, 168);
             btnDangXuat.Kieu = KieuNut.MenuTienIch;
-            btnDangXuat.Location = new Point(55, 94);
+            btnDangXuat.Location = new Point(32, 91);
             btnDangXuat.Name = "btnDangXuat";
-            btnDangXuat.Size = new Size(157, 38);
+            btnDangXuat.Size = new Size(219, 38);
             btnDangXuat.TabIndex = 3;
             btnDangXuat.Text = "Đăng xuất";
             btnDangXuat.UseVisualStyleBackColor = false;
@@ -574,9 +574,9 @@
             btnDoiMatKhau.Font = new Font("Segoe UI", 9F);
             btnDoiMatKhau.ForeColor = Color.FromArgb(41, 98, 168);
             btnDoiMatKhau.Kieu = KieuNut.MenuTienIch;
-            btnDoiMatKhau.Location = new Point(55, 50);
+            btnDoiMatKhau.Location = new Point(32, 47);
             btnDoiMatKhau.Name = "btnDoiMatKhau";
-            btnDoiMatKhau.Size = new Size(157, 38);
+            btnDoiMatKhau.Size = new Size(219, 38);
             btnDoiMatKhau.TabIndex = 2;
             btnDoiMatKhau.Text = "Đổi mật khẩu";
             btnDoiMatKhau.UseVisualStyleBackColor = false;
@@ -593,9 +593,9 @@
             btnThoat.Font = new Font("Segoe UI", 9F);
             btnThoat.ForeColor = Color.FromArgb(192, 57, 43);
             btnThoat.Kieu = KieuNut.MenuThoat;
-            btnThoat.Location = new Point(55, 139);
+            btnThoat.Location = new Point(32, 136);
             btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(156, 32);
+            btnThoat.Size = new Size(219, 32);
             btnThoat.TabIndex = 0;
             btnThoat.Text = "Thoát";
             btnThoat.UseVisualStyleBackColor = false;
