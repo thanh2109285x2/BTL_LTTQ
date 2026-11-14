@@ -9,6 +9,9 @@ namespace BTL_LTTQ
     public partial class frmMain : Form
     {
         private const int PANEL_COLLAPSED_HEIGHT = 35;
+        public bool DangXuat { get; private set; }
+        private Form? activeForm;
+
         public frmMain()
         {
             InitializeComponent();
@@ -34,8 +37,6 @@ namespace BTL_LTTQ
         {
             ApDungQuyenMenu();
             CollapseAllPanels();
-            btnTrangChu.Visible = true;
-            btnThoat.Visible = true;
             HienThiTrangChu();
         }
 
@@ -129,6 +130,33 @@ namespace BTL_LTTQ
             }
         }
 
+        private void btnDoiMatKhau_Click(object? sender, EventArgs e)
+        {
+            using var form = new frmDoiMatKhau();
+            form.ShowDialog(this);
+        }
+
+        private void btnDangXuat_Click(object? sender, EventArgs e)
+        {
+            DialogResult check = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (check != DialogResult.Yes)
+                return;
+
+            if (activeForm != null)
+            {
+                activeForm.Close();
+                activeForm.Dispose();
+                activeForm = null;
+            }
+            panelContent.Controls.Clear();
+
+            PermissionService.Clear();
+            CurrentUser.Xoa();
+            DangXuat = true;
+            Close();
+        }
+
         private void btnQuanLyMenu_Click(object sender, EventArgs e)
         {
             TogglePanel(panelCRUD,
@@ -170,7 +198,6 @@ namespace BTL_LTTQ
         }
 
         //Xu li form con
-        private Form activeForm = null;
         private void OpenChildForm(Func<Form> taoForm, Button mucMenu, string maChucNang)
         {
             if (!PhanQuyenUi.CoQuyenMo(maChucNang))
@@ -237,9 +264,7 @@ namespace BTL_LTTQ
 
         private void CapNhatNutXuatExcel()
         {
-            DataGridView? luoi = activeForm == null || activeForm.Parent != panelContent
-                ? null
-                : ExcelHelper.TimLuoi(activeForm);
+            DataGridView? luoi = activeForm == null || activeForm.Parent != panelContent? null: ExcelHelper.TimLuoi(activeForm);
             bool coDuLieu = luoi != null && luoi.Rows.Cast<DataGridViewRow>().Any(row => !row.IsNewRow);
             btnXuatExcel.Enabled = PermissionService.Can(ChucNangConst.XUAT_EXCEL) && coDuLieu;
         }
@@ -320,11 +345,8 @@ namespace BTL_LTTQ
 
         private void btnXuatExcel_Click(object sender, EventArgs e)
         {
-            DataGridView? luoi = activeForm == null || activeForm.Parent != panelContent
-                ? null
-                : ExcelHelper.TimLuoi(activeForm);
-            if (!PermissionService.Can(ChucNangConst.XUAT_EXCEL) || luoi == null ||
-                !luoi.Rows.Cast<DataGridViewRow>().Any(row => !row.IsNewRow))
+            DataGridView? luoi = activeForm == null || activeForm.Parent != panelContent ? null : ExcelHelper.TimLuoi(activeForm);
+            if (!PermissionService.Can(ChucNangConst.XUAT_EXCEL) || luoi == null || !luoi.Rows.Cast<DataGridViewRow>().Any(row => !row.IsNewRow))
                 return;
 
             ExcelHelper.XuatTrangHienTai(activeForm);

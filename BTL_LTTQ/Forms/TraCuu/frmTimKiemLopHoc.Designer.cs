@@ -1,4 +1,6 @@
-﻿namespace BTL_LTTQ.Forms.TraCuu
+﻿using BTL_LTTQ;
+
+namespace BTL_LTTQ.Forms.TraCuu
 {
     partial class frmTimKiemLopHoc
     {
@@ -38,8 +40,8 @@
             lblSiSoDen = new System.Windows.Forms.Label();
             nudSiSoDen = new System.Windows.Forms.NumericUpDown();
             panelNut = new System.Windows.Forms.Panel();
-            btnTimKiem = new System.Windows.Forms.Button();
-            btnLamMoi = new System.Windows.Forms.Button();
+            btnTimKiem = new AppButton { Kieu = KieuNut.Chinh };
+            btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
             grpKetQua = new System.Windows.Forms.GroupBox();
             dgvKetQua = new System.Windows.Forms.DataGridView();
             grpDieuKien.SuspendLayout();
@@ -233,8 +235,8 @@
         private System.Windows.Forms.Label lblSiSoDen;
         private System.Windows.Forms.NumericUpDown nudSiSoDen;
         private System.Windows.Forms.Panel panelNut;
-        private System.Windows.Forms.Button btnTimKiem;
-        private System.Windows.Forms.Button btnLamMoi;
+        private AppButton btnTimKiem;
+        private AppButton btnLamMoi;
         private System.Windows.Forms.GroupBox grpKetQua;
         private System.Windows.Forms.DataGridView dgvKetQua;
     }
