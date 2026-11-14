@@ -1,4 +1,5 @@
 using BTL_LTTQ.DataAccessLayer;
+using System;
 using System.Data;
 
 namespace BTL_LTTQ.Common
@@ -32,7 +33,7 @@ namespace BTL_LTTQ.Common
             foreach (var quyen in quyenMoi)
                 _quyen[quyen.Key] = quyen.Value;
         }
-
+         
         //Xóa các quyền đã nạp; không có dòng = không có quyền.
         public static void Clear()
         {
@@ -56,6 +57,14 @@ namespace BTL_LTTQ.Common
                 return false;
 
             return quyen.CoQuyen;
+        }
+
+        //Chặn thao tác khi vai trò hiện tại không có quyền.
+        //Dùng ở tầng repository làm lớp bảo vệ cuối, không phụ thuộc vào việc ẩn nút trên giao diện.
+        public static void YeuCau(string maChucNang, string thongBao)
+        {
+            if (!Can(maChucNang))
+                throw new UnauthorizedAccessException(thongBao);
         }
 
         //Kiểm tra giới hạn dữ liệu của chính mình; không có dòng = không có quyền.

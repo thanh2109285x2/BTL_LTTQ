@@ -10,6 +10,9 @@ namespace BTL_LTTQ.Common
         {
             KiemTraAlias(aliasBang);
 
+            if (!PermissionService.Can(maChucNang))
+                return TuChoiTatCa();
+
             if (!PermissionService.ChiCuaMinh(maChucNang))
                 return DieuKienRong();
 
@@ -34,7 +37,7 @@ namespace BTL_LTTQ.Common
                 if (string.IsNullOrWhiteSpace(CurrentUser.MaHocVien))
                     return TuChoiTatCa();
 
-                return ($"EXISTS (SELECT 1 FROM HocVien pv_h WHERE pv_h.MaHocVien = @PV_MaHocVien AND pv_h.MaLop = {aliasBang}.MaLop)", new[]
+                return ($"EXISTS (SELECT 1 FROM DangKy pv_dk WHERE pv_dk.MaHocVien = @PV_MaHocVien AND pv_dk.MaLop = {aliasBang}.MaLop)", new[]
                 {
                     new SqlParameter("@PV_MaHocVien", SqlDbType.VarChar, 20) { Value = CurrentUser.MaHocVien }
                 });
@@ -46,6 +49,9 @@ namespace BTL_LTTQ.Common
         public static (string DieuKienSql, SqlParameter[] ThamSo) ChoHocVien(string maChucNang, string aliasBang)
         {
             KiemTraAlias(aliasBang);
+
+            if (!PermissionService.Can(maChucNang))
+                return TuChoiTatCa();
 
             if (!PermissionService.ChiCuaMinh(maChucNang))
                 return DieuKienRong();

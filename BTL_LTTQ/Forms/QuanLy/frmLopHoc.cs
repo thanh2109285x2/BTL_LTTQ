@@ -70,6 +70,9 @@ namespace BTL_LTTQ.Forms.QuanLy
             dgvLopHoc.Columns["TenCa"].HeaderText = "Ca học";
             dgvLopHoc.Columns["TenThoiGian"].HeaderText = "Thời gian";
             dgvLopHoc.Columns["TenPhong"].HeaderText = "Phòng học";
+            dgvLopHoc.Columns["SiSo"].HeaderText = "Đã đăng ký";
+            dgvLopHoc.Columns["SiSoToiDa"].HeaderText = "Sĩ số tối đa";
+            dgvLopHoc.Columns["SoBuoiTuan"].HeaderText = "Số buổi/tuần";
 
             dgvLopHoc.Columns["NgayBD"].DefaultCellStyle.Format = "dd/MM/yyyy";
             dgvLopHoc.Columns["NgayKT"].DefaultCellStyle.Format = "dd/MM/yyyy";
@@ -87,7 +90,9 @@ namespace BTL_LTTQ.Forms.QuanLy
                 NgayKT = dtpNgayKT.Value.Date,
                 MaCa = cboCaHoc.SelectedValue?.ToString(),
                 MaThoiGian = cboThoiGian.SelectedValue?.ToString(),
-                MaPhong = cboPhongHoc.SelectedValue?.ToString()
+                MaPhong = cboPhongHoc.SelectedValue?.ToString(),
+                SiSoToiDa = (int)numSiSoToiDa.Value,
+                SoBuoiTuan = (int)numSoBuoiTuan.Value
             };
         }
 
@@ -104,6 +109,9 @@ namespace BTL_LTTQ.Forms.QuanLy
 
             dtpNgayBD.Value = DateTime.Today;
             dtpNgayKT.Value = DateTime.Today;
+
+            numSiSoToiDa.Value = 30;
+            numSoBuoiTuan.Value = 3;
 
             dgvLopHoc.ClearSelection();
 
@@ -139,6 +147,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             cboPhongHoc.Enabled = !_chiXem;
             dtpNgayBD.Enabled = !_chiXem;
             dtpNgayKT.Enabled = !_chiXem;
+            numSiSoToiDa.Enabled = !_chiXem;
+            numSoBuoiTuan.Enabled = !_chiXem;
         }
 
         private void btnLamMoi_Click(object sender, EventArgs e)
@@ -251,6 +261,9 @@ namespace BTL_LTTQ.Forms.QuanLy
 
             dtpNgayBD.Value = Convert.ToDateTime(row.Cells["NgayBD"].Value);
             dtpNgayKT.Value = Convert.ToDateTime(row.Cells["NgayKT"].Value);
+
+            numSiSoToiDa.Value = Convert.ToInt32(row.Cells["SiSoToiDa"].Value);
+            numSoBuoiTuan.Value = Convert.ToInt32(row.Cells["SoBuoiTuan"].Value);
             ApDungCheDoChiXem();
         }
 

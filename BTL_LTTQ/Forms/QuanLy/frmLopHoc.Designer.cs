@@ -40,6 +40,10 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnThem = new AppButton { Kieu = KieuNut.Chinh };
             cboThoiGian = new ComboBox();
             cboCaHoc = new ComboBox();
+            numSoBuoiTuan = new NumericUpDown();
+            numSiSoToiDa = new NumericUpDown();
+            label12 = new Label();
+            label13 = new Label();
             dtpNgayKT = new DateTimePicker();
             dtpNgayBD = new DateTimePicker();
             label10 = new Label();
@@ -72,6 +76,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             panelDanhSach.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLopHoc).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numSoBuoiTuan).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numSiSoToiDa).BeginInit();
             SuspendLayout();
             // 
             // panelNhapLieu
@@ -98,6 +104,10 @@ namespace BTL_LTTQ.Forms.QuanLy
             groupBox1.Controls.Add(panelNut);
             groupBox1.Controls.Add(cboThoiGian);
             groupBox1.Controls.Add(cboCaHoc);
+            groupBox1.Controls.Add(numSoBuoiTuan);
+            groupBox1.Controls.Add(numSiSoToiDa);
+            groupBox1.Controls.Add(label12);
+            groupBox1.Controls.Add(label13);
             groupBox1.Controls.Add(dtpNgayKT);
             groupBox1.Controls.Add(dtpNgayBD);
             groupBox1.Controls.Add(label10);
@@ -188,6 +198,44 @@ namespace BTL_LTTQ.Forms.QuanLy
             cboCaHoc.Name = "cboCaHoc";
             cboCaHoc.Size = new Size(156, 28);
             cboCaHoc.TabIndex = 15;
+            // 
+            // numSoBuoiTuan
+            // 
+            numSoBuoiTuan.Location = new Point(604, 172);
+            numSoBuoiTuan.Maximum = new decimal(new int[] { 7, 0, 0, 0 });
+            numSoBuoiTuan.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numSoBuoiTuan.Name = "numSoBuoiTuan";
+            numSoBuoiTuan.Size = new Size(80, 27);
+            numSoBuoiTuan.TabIndex = 17;
+            numSoBuoiTuan.Value = new decimal(new int[] { 3, 0, 0, 0 });
+            // 
+            // numSiSoToiDa
+            // 
+            numSiSoToiDa.Location = new Point(604, 206);
+            numSiSoToiDa.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
+            numSiSoToiDa.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numSiSoToiDa.Name = "numSiSoToiDa";
+            numSiSoToiDa.Size = new Size(80, 27);
+            numSiSoToiDa.TabIndex = 18;
+            numSiSoToiDa.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(475, 176);
+            label12.Name = "label12";
+            label12.Size = new Size(87, 20);
+            label12.TabIndex = 19;
+            label12.Text = "Số buổi/tuần";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(475, 210);
+            label13.Name = "label13";
+            label13.Size = new Size(85, 20);
+            label13.TabIndex = 20;
+            label13.Text = "Sĩ số tối đa";
             // 
             // dtpNgayKT
             // 
@@ -424,6 +472,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             panelDanhSach.PerformLayout();
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvLopHoc).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numSoBuoiTuan).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numSiSoToiDa).EndInit();
             ResumeLayout(false);
         }
 
@@ -463,5 +513,9 @@ namespace BTL_LTTQ.Forms.QuanLy
         private Panel panelDanhSach;
         private TextBox txtTimKiem;
         private Label label11;
+        private NumericUpDown numSoBuoiTuan;
+        private NumericUpDown numSiSoToiDa;
+        private Label label12;
+        private Label label13;
     }
 }
