@@ -32,7 +32,11 @@ namespace BTL_LTTQ.Forms.HeThong
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
-            string tenDangNhap = txtTenDangNhap.Text.Trim();
+            DangNhap(txtTenDangNhap.Text.Trim());
+        }
+
+        private void DangNhap(string tenDangNhap)
+        {
             DataTable taiKhoan = _taiKhoanDAL.LayTheoTenDangNhap(tenDangNhap);
 
             if (taiKhoan.Rows.Count == 0)

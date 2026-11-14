@@ -181,6 +181,7 @@
             btnGiaoVien.Text = "Giáo viên";
             btnGiaoVien.TextAlign = ContentAlignment.MiddleLeft;
             btnGiaoVien.UseVisualStyleBackColor = false;
+            btnGiaoVien.Click += btnGiaoVien_Click;
             // 
             // btnHocVien
             // 
@@ -352,6 +353,7 @@
             btnLopTheoPhong.Text = "Lớp học theo phòng";
             btnLopTheoPhong.TextAlign = ContentAlignment.MiddleLeft;
             btnLopTheoPhong.UseVisualStyleBackColor = false;
+            btnLopTheoPhong.Click += btnLopTheoPhong_Click;
             // 
             // btnTop3
             // 
@@ -372,6 +374,7 @@
             btnTop3.Text = "Bảng xếp hạng hv";
             btnTop3.TextAlign = ContentAlignment.MiddleLeft;
             btnTop3.UseVisualStyleBackColor = false;
+            btnTop3.Click += btnTop3_Click;
             // 
             // btnDoanhThu
             // 
