@@ -1,6 +1,8 @@
+using BTL_LTTQ.Common;
 using BTL_LTTQ.DataAccessLayer;
 using BTL_LTTQ.Models;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Data;
 
 namespace BTL_LTTQ.Repositories
@@ -9,6 +11,10 @@ namespace BTL_LTTQ.Repositories
     {
         public DataTable LayDanhSach(string tuKhoa = "")
         {
+            //Không có quyền xem thì trả bảng rỗng thay vì lộ dữ liệu
+            if (!PermissionService.Can(ChucNangConst.MONHOC_XEM))
+                return new DataTable();
+
             string sql = @"SELECT MaMon, TenMon, HocPhi
                            FROM MonHoc
                            WHERE @TuKhoa = ''
@@ -29,6 +35,8 @@ namespace BTL_LTTQ.Repositories
 
         public void Them(MonHoc m)
         {
+            PermissionService.YeuCau(ChucNangConst.MONHOC_THEM, "Bạn không có quyền thêm môn học.");
+
             string sql = @"INSERT INTO MonHoc (MaMon, TenMon, HocPhi)
                            VALUES (@MaMon, @TenMon, @HocPhi)";
             DbHelper.ExecuteNonQuery(sql, ThamSo(m));
@@ -36,6 +44,8 @@ namespace BTL_LTTQ.Repositories
 
         public void Sua(MonHoc m)
         {
+            PermissionService.YeuCau(ChucNangConst.MONHOC_SUA, "Bạn không có quyền sửa môn học.");
+
             string sql = @"UPDATE MonHoc
                            SET TenMon = @TenMon, HocPhi = @HocPhi
                            WHERE MaMon = @MaMon";
@@ -44,6 +54,8 @@ namespace BTL_LTTQ.Repositories
 
         public void Xoa(string maMon)
         {
+            PermissionService.YeuCau(ChucNangConst.MONHOC_XOA, "Bạn không có quyền xóa môn học.");
+
             DbHelper.ExecuteNonQuery("DELETE FROM MonHoc WHERE MaMon = @MaMon",
                                      new SqlParameter("@MaMon", maMon));
         }

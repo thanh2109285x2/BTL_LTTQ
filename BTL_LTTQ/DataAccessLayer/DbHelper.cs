@@ -11,6 +11,9 @@ namespace BTL_LTTQ.DataAccessLayer
     {
         private static readonly string _connectDBStr = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
+        /// <summary>Chuỗi kết nối đang dùng, cho các thành phần cần tự mở connection.</summary>
+        public static string ConnectionString => _connectDBStr;
+
         //dugn cho select
         public static DataTable ExecuteQuery(string sql, params SqlParameter[] parameters)
         {

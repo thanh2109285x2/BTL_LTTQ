@@ -29,9 +29,9 @@ namespace BTL_LTTQ.Services
                 _repo.Them(m);
                 return "";
             }
-            catch (SqlException ex)
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException)
             {
-                return "Không thêm được: " + ex.Message;
+                return ex is SqlException ? "Không thêm được: " + ex.Message : ex.Message;
             }
         }
 
@@ -47,9 +47,9 @@ namespace BTL_LTTQ.Services
                 _repo.Sua(m);
                 return "";
             }
-            catch (SqlException ex)
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException)
             {
-                return "Không sửa được: " + ex.Message;
+                return ex is SqlException ? "Không sửa được: " + ex.Message : ex.Message;
             }
         }
 
@@ -61,6 +61,10 @@ namespace BTL_LTTQ.Services
             {
                 _repo.Xoa(maMon);
                 return "";
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return ex.Message;
             }
             catch (SqlException ex)
             {

@@ -36,10 +36,13 @@
             btnGiaoVien = new Button();
             btnHocVien = new Button();
             btnLopHoc = new Button();
+            btnDangKyLop = new Button();
+            btnNhapDuLieu = new Button();
             btnQuanLyMenu = new Button();
             panelTraCuu = new Panel();
             btnTimGiaoVien = new Button();
             btnTimLop = new Button();
+            btnThoiKhoaBieu = new Button();
             btnTraCuuMenu = new Button();
             panelBaoCao = new Panel();
             btnLopTheoPhong = new Button();
@@ -47,6 +50,13 @@
             btnDoanhThu = new Button();
             btnBaoCaoDiem = new Button();
             btnBaoCaoMenu = new Button();
+<<<<<<< Updated upstream
+=======
+            panelHeThong = new Panel();
+            btnPhanQuyen = new Button();
+            btnTuDongHoa = new Button();
+            btnHeThong = new Button();
+>>>>>>> Stashed changes
             panelContent = new Panel();
             panelThoat = new Panel();
             btnXuatExcel = new Button();
@@ -94,10 +104,16 @@
             panelCRUD.Controls.Add(btnGiaoVien);
             panelCRUD.Controls.Add(btnHocVien);
             panelCRUD.Controls.Add(btnLopHoc);
+            panelCRUD.Controls.Add(btnDangKyLop);
+            panelCRUD.Controls.Add(btnNhapDuLieu);
             panelCRUD.Controls.Add(btnQuanLyMenu);
             panelCRUD.Location = new Point(3, 47);
             panelCRUD.Name = "panelCRUD";
+<<<<<<< Updated upstream
             panelCRUD.Size = new Size(271, 39);
+=======
+            panelCRUD.Size = new Size(271, 280);
+>>>>>>> Stashed changes
             panelCRUD.TabIndex = 1;
             panelCRUD.Paint += panelCRUD_Paint;
             // 
@@ -153,6 +169,28 @@
             btnLopHoc.UseVisualStyleBackColor = true;
             btnLopHoc.Click += btnLopHoc_Click;
             // 
+            // btnDangKyLop
+            // 
+            btnDangKyLop.Location = new Point(52, 213);
+            btnDangKyLop.Name = "btnDangKyLop";
+            btnDangKyLop.Size = new Size(130, 29);
+            btnDangKyLop.TabIndex = 6;
+            btnDangKyLop.Text = "Đăng ký lớp";
+            btnDangKyLop.TextAlign = ContentAlignment.MiddleLeft;
+            btnDangKyLop.UseVisualStyleBackColor = true;
+            btnDangKyLop.Click += btnDangKyLop_Click;
+            // 
+            // btnNhapDuLieu
+            // 
+            btnNhapDuLieu.Location = new Point(52, 248);
+            btnNhapDuLieu.Name = "btnNhapDuLieu";
+            btnNhapDuLieu.Size = new Size(150, 29);
+            btnNhapDuLieu.TabIndex = 7;
+            btnNhapDuLieu.Text = "Nhập dữ liệu hàng loạt";
+            btnNhapDuLieu.TextAlign = ContentAlignment.MiddleLeft;
+            btnNhapDuLieu.UseVisualStyleBackColor = true;
+            btnNhapDuLieu.Click += btnNhapDuLieu_Click;
+            // 
             // btnQuanLyMenu
             // 
             btnQuanLyMenu.Location = new Point(9, 3);
@@ -168,6 +206,7 @@
             // 
             panelTraCuu.Controls.Add(btnTimGiaoVien);
             panelTraCuu.Controls.Add(btnTimLop);
+            panelTraCuu.Controls.Add(btnThoiKhoaBieu);
             panelTraCuu.Controls.Add(btnTraCuuMenu);
             panelTraCuu.Location = new Point(3, 92);
             panelTraCuu.Name = "panelTraCuu";
@@ -195,6 +234,17 @@
             btnTimLop.TextAlign = ContentAlignment.MiddleLeft;
             btnTimLop.UseVisualStyleBackColor = true;
             btnTimLop.Click += btnTimLop_Click;
+            // 
+            // btnThoiKhoaBieu
+            // 
+            btnThoiKhoaBieu.Location = new Point(52, 108);
+            btnThoiKhoaBieu.Name = "btnThoiKhoaBieu";
+            btnThoiKhoaBieu.Size = new Size(150, 29);
+            btnThoiKhoaBieu.TabIndex = 4;
+            btnThoiKhoaBieu.Text = "Thời khóa biểu";
+            btnThoiKhoaBieu.TextAlign = ContentAlignment.MiddleLeft;
+            btnThoiKhoaBieu.UseVisualStyleBackColor = true;
+            btnThoiKhoaBieu.Click += btnThoiKhoaBieu_Click;
             // 
             // btnTraCuuMenu
             // 
@@ -270,6 +320,56 @@
             btnBaoCaoMenu.UseVisualStyleBackColor = true;
             btnBaoCaoMenu.Click += btnBaoCaoMenu_Click;
             // 
+<<<<<<< Updated upstream
+=======
+            // panelHeThong
+            // 
+            panelHeThong.Controls.Add(btnPhanQuyen);
+            panelHeThong.Controls.Add(btnTuDongHoa);
+            panelHeThong.Controls.Add(btnHeThong);
+            panelHeThong.Location = new Point(3, 590);
+            panelHeThong.Name = "panelHeThong";
+            panelHeThong.Size = new Size(271, 105);
+            panelHeThong.TabIndex = 4;
+            panelHeThong.Visible = false;
+            // 
+            // btnPhanQuyen
+            // 
+            btnPhanQuyen.Location = new Point(52, 38);
+            btnPhanQuyen.Name = "btnPhanQuyen";
+            btnPhanQuyen.Size = new Size(120, 29);
+            btnPhanQuyen.TabIndex = 2;
+            btnPhanQuyen.Text = "Phân quyền";
+            btnPhanQuyen.TextAlign = ContentAlignment.MiddleLeft;
+            btnPhanQuyen.UseVisualStyleBackColor = true;
+            btnPhanQuyen.Visible = false;
+            btnPhanQuyen.Click += btnPhanQuyen_Click;
+            // 
+            // btnTuDongHoa
+            // 
+            btnTuDongHoa.Location = new Point(52, 73);
+            btnTuDongHoa.Name = "btnTuDongHoa";
+            btnTuDongHoa.Size = new Size(150, 29);
+            btnTuDongHoa.TabIndex = 3;
+            btnTuDongHoa.Text = "Tự động hóa";
+            btnTuDongHoa.TextAlign = ContentAlignment.MiddleLeft;
+            btnTuDongHoa.UseVisualStyleBackColor = true;
+            btnTuDongHoa.Visible = false;
+            btnTuDongHoa.Click += btnTuDongHoa_Click;
+            // 
+            // btnHeThong
+            // 
+            btnHeThong.Location = new Point(9, 3);
+            btnHeThong.Name = "btnHeThong";
+            btnHeThong.Size = new Size(95, 29);
+            btnHeThong.TabIndex = 1;
+            btnHeThong.Text = "Hệ thống";
+            btnHeThong.TextAlign = ContentAlignment.MiddleLeft;
+            btnHeThong.UseVisualStyleBackColor = true;
+            btnHeThong.Visible = false;
+            btnHeThong.Click += btnHeThong_Click;
+            // 
+>>>>>>> Stashed changes
             // panelContent
             // 
             panelContent.Dock = DockStyle.Fill;
@@ -346,8 +446,15 @@
         private Button btnTrangChu;
         private Button btnTraCuuMenu;
         private Button btnBaoCaoMenu;
+<<<<<<< Updated upstream
+=======
+        private Button btnHeThong;
+        private Button btnPhanQuyen;
+        private Button btnTuDongHoa;
+>>>>>>> Stashed changes
         private Button btnTimGiaoVien;
         private Button btnTimLop;
+        private Button btnThoiKhoaBieu;
         private Button btnTop3;
         private Button btnDoanhThu;
         private Button btnBaoCaoDiem;
@@ -361,6 +468,8 @@
         private Button btnGiaoVien;
         private Button btnHocVien;
         private Button btnLopHoc;
+        private Button btnDangKyLop;
+        private Button btnNhapDuLieu;
         private Button btnQuanLyMenu;
         private Button btnXuatExcel;
     }
