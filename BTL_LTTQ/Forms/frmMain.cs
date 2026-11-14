@@ -1,10 +1,7 @@
 using BTL_LTTQ.Common;
-<<<<<<< Updated upstream
-=======
 using BTL_LTTQ.Forms.Automation;
 using BTL_LTTQ.Forms.HeThong;
 using BTL_LTTQ.Forms.Import;
->>>>>>> Stashed changes
 using BTL_LTTQ.Forms.QuanLy;
 using BTL_LTTQ.Forms.TraCuu;
 
@@ -13,15 +10,9 @@ namespace BTL_LTTQ
     public partial class frmMain : Form
     {
         private const int PANEL_COLLAPSED_HEIGHT = 35;
-<<<<<<< Updated upstream
-        private const int PANEL_CRUD_EXPANDED = PANEL_COLLAPSED_HEIGHT + (5 * 35);
-        private const int PANEL_TRACUU_EXPANDED = PANEL_COLLAPSED_HEIGHT + (2 * 35);
-        private const int PANEL_BAOCAO_EXPANDED = PANEL_COLLAPSED_HEIGHT + (4 * 35);
-=======
 
         /// <summary>Số mục đang hiển thị trong nhóm "Hệ thống" (dùng để tính chiều cao panel).</summary>
         private int _soMucHeThong;
->>>>>>> Stashed changes
         public frmMain()
         {
             InitializeComponent();
@@ -32,19 +23,25 @@ namespace BTL_LTTQ
             panelCRUD.Height = PANEL_COLLAPSED_HEIGHT;
             panelTraCuu.Height = PANEL_COLLAPSED_HEIGHT;
             panelBaoCao.Height = PANEL_COLLAPSED_HEIGHT;
+            panelHeThong.Height = PANEL_COLLAPSED_HEIGHT;
+        }
+
+        private void HienThiTrangChu()
+        {
+            panelContent.Controls.Clear();
+
+            lblChao.Text = $"Chào mừng bạn trở lại, {CurrentUser.TenDangNhap}!\nVai trò hệ thống: {CurrentUser.VaiTro}";
+
+            panelContent.Controls.Add(lblChao);
         }
         private void frmMain_Load(object sender, EventArgs e)
         {
+            ApDungQuyenMenu();
             CollapseAllPanels();
-            btnXuatExcel.Enabled = false;
+            btnTrangChu.Visible = true;
+            btnThoat.Visible = true;
+            HienThiTrangChu();
         }
-<<<<<<< Updated upstream
-        private void TogglePanel(Panel panelToToggle, int expandedHeight)
-        {
-            if (panelToToggle.Height == PANEL_COLLAPSED_HEIGHT)
-            {
-                panelToToggle.Height = expandedHeight;
-=======
 
         private void ApDungQuyenMenu()
         {
@@ -162,7 +159,6 @@ namespace BTL_LTTQ
             {
                 panelToToggle.Height = PANEL_COLLAPSED_HEIGHT +
                     (muc.Count(m => (m.MaChucNang == null || PermissionService.Can(m.MaChucNang)) && m.Nut.Visible) * 35);
->>>>>>> Stashed changes
             }
             else
             {
@@ -172,9 +168,6 @@ namespace BTL_LTTQ
 
         private void btnQuanLyMenu_Click(object sender, EventArgs e)
         {
-<<<<<<< Updated upstream
-            TogglePanel(panelCRUD, PANEL_CRUD_EXPANDED);
-=======
             TogglePanel(panelCRUD,
                 (btnLopHoc, ChucNangConst.LOPHOC_XEM),
                 (btnHocVien, ChucNangConst.HOCVIEN_XEM),
@@ -183,24 +176,23 @@ namespace BTL_LTTQ
                 (btnDanhMucKhac, ChucNangConst.DANHMUC_KHAC),
                 (btnDangKyLop, ChucNangConst.DANGKYLOP),
                 (btnNhapDuLieu, null));
->>>>>>> Stashed changes
         }
 
         private void btnTraCuuMenu_Click(object sender, EventArgs e)
         {
-<<<<<<< Updated upstream
-            TogglePanel(panelTraCuu, PANEL_TRACUU_EXPANDED);
-=======
             TogglePanel(panelTraCuu,
                 (btnTimLop, ChucNangConst.TIM_LOP),
                 (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
                 (btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM));
->>>>>>> Stashed changes
         }
 
         private void btnBaoCaoMenu_Click(object sender, EventArgs e)
         {
-            TogglePanel(panelBaoCao, PANEL_BAOCAO_EXPANDED);
+            TogglePanel(panelBaoCao,
+                (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
+                (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
+                (btnTop3, ChucNangConst.BC_XEPHANG),
+                (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG));
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -219,10 +211,6 @@ namespace BTL_LTTQ
 
         //Xu li form con
         private Form activeForm = null;
-<<<<<<< Updated upstream
-        private void OpenChildForm(Form childForm)
-        {
-=======
         private void OpenChildForm(Func<Form> taoForm, Button mucMenu, string? maChucNang)
         {
             if (maChucNang != null && !PhanQuyenUi.CoQuyenMo(maChucNang))
@@ -234,7 +222,6 @@ namespace BTL_LTTQ
 
             GiaoDien.DanhDauMuc(mucMenu);
             Form childForm = taoForm();
->>>>>>> Stashed changes
             if (childForm == null)
             {
                 MessageBox.Show("Chua tao form con", "Loi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -251,21 +238,60 @@ namespace BTL_LTTQ
             childForm.Dock = DockStyle.Fill; // fill toan bo panelContent
 
             panelContent.Controls.Add(childForm);
+            GanSuKienBang(childForm);
             childForm.BringToFront();
             childForm.Show();
-
-            btnXuatExcel.Enabled = ExcelHelper.TimLuoi(childForm) != null;
+            CapNhatNutXuatExcel();
         }
+
+        private void GanSuKienBang(Control cha)
+        {
+            foreach (Control control in cha.Controls)
+            {
+                if (control is DataGridView luoi)
+                {
+                    luoi.DataBindingComplete += Luoi_DataBindingComplete;
+                    luoi.RowsAdded += Luoi_RowsAdded;
+                    luoi.RowsRemoved += Luoi_RowsRemoved;
+                }
+
+                if (control.HasChildren)
+                    GanSuKienBang(control);
+            }
+        }
+
+        private void Luoi_DataBindingComplete(object? sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            CapNhatNutXuatExcel();
+        }
+
+        private void Luoi_RowsAdded(object? sender, DataGridViewRowsAddedEventArgs e)
+        {
+            CapNhatNutXuatExcel();
+        }
+
+        private void Luoi_RowsRemoved(object? sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            CapNhatNutXuatExcel();
+        }
+
+        private void CapNhatNutXuatExcel()
+        {
+            DataGridView? luoi = activeForm == null || activeForm.Parent != panelContent
+                ? null
+                : ExcelHelper.TimLuoi(activeForm);
+            bool coDuLieu = luoi != null && luoi.Rows.Cast<DataGridViewRow>().Any(row => !row.IsNewRow);
+            btnXuatExcel.Enabled = PermissionService.Can(ChucNangConst.XUAT_EXCEL) && coDuLieu;
+        }
+
         private void btnLopHoc_Click(object sender, EventArgs e)
         {
-            GiaoDien.DanhDauMuc(btnLopHoc);
-            OpenChildForm(new frmLopHoc());
+            OpenChildForm(() => new frmLopHoc(), btnLopHoc, ChucNangConst.LOPHOC_XEM);
         }
 
         private void btnMonHoc_Click(object sender, EventArgs e)
         {
-            GiaoDien.DanhDauMuc(btnMonHoc);
-            OpenChildForm(new frmMonHoc());
+            OpenChildForm(() => new frmMonHoc(), btnMonHoc, ChucNangConst.MONHOC_XEM);
         }
 
         private void btnDangKyLop_Click(object sender, EventArgs e)
@@ -285,18 +311,23 @@ namespace BTL_LTTQ
 
         private void btnTimLop_Click(object sender, EventArgs e)
         {
-            GiaoDien.DanhDauMuc(btnTimLop);
-            OpenChildForm(new frmTimKiemLopHoc());
+            OpenChildForm(() => new frmTimKiemLopHoc(), btnTimLop, ChucNangConst.TIM_LOP);
         }
 
         private void btnTimGiaoVien_Click(object sender, EventArgs e)
         {
-            GiaoDien.DanhDauMuc(btnTimGiaoVien);
-            OpenChildForm(new frmTimKiemGiaoVien());
+            OpenChildForm(() => new frmTimKiemGiaoVien(), btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN);
         }
 
         private void btnXuatExcel_Click(object sender, EventArgs e)
         {
+            DataGridView? luoi = activeForm == null || activeForm.Parent != panelContent
+                ? null
+                : ExcelHelper.TimLuoi(activeForm);
+            if (!PermissionService.Can(ChucNangConst.XUAT_EXCEL) || luoi == null ||
+                !luoi.Rows.Cast<DataGridViewRow>().Any(row => !row.IsNewRow))
+                return;
+
             ExcelHelper.XuatTrangHienTai(activeForm);
         }
     }

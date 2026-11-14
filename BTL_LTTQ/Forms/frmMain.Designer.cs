@@ -50,14 +50,12 @@
             btnDoanhThu = new Button();
             btnBaoCaoDiem = new Button();
             btnBaoCaoMenu = new Button();
-<<<<<<< Updated upstream
-=======
             panelHeThong = new Panel();
             btnPhanQuyen = new Button();
             btnTuDongHoa = new Button();
             btnHeThong = new Button();
->>>>>>> Stashed changes
             panelContent = new Panel();
+            lblChao = new Label();
             panelThoat = new Panel();
             btnXuatExcel = new Button();
             btnThoat = new Button();
@@ -66,6 +64,7 @@
             panelCRUD.SuspendLayout();
             panelTraCuu.SuspendLayout();
             panelBaoCao.SuspendLayout();
+            panelContent.SuspendLayout();
             panelThoat.SuspendLayout();
             panelSidebar.SuspendLayout();
             SuspendLayout();
@@ -77,6 +76,7 @@
             flowLayoutPanel1.Controls.Add(panelCRUD);
             flowLayoutPanel1.Controls.Add(panelTraCuu);
             flowLayoutPanel1.Controls.Add(panelBaoCao);
+            flowLayoutPanel1.Controls.Add(panelHeThong);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(0, 0);
@@ -109,11 +109,7 @@
             panelCRUD.Controls.Add(btnQuanLyMenu);
             panelCRUD.Location = new Point(3, 47);
             panelCRUD.Name = "panelCRUD";
-<<<<<<< Updated upstream
-            panelCRUD.Size = new Size(271, 39);
-=======
             panelCRUD.Size = new Size(271, 280);
->>>>>>> Stashed changes
             panelCRUD.TabIndex = 1;
             panelCRUD.Paint += panelCRUD_Paint;
             // 
@@ -208,9 +204,9 @@
             panelTraCuu.Controls.Add(btnTimLop);
             panelTraCuu.Controls.Add(btnThoiKhoaBieu);
             panelTraCuu.Controls.Add(btnTraCuuMenu);
-            panelTraCuu.Location = new Point(3, 92);
+            panelTraCuu.Location = new Point(3, 267);
             panelTraCuu.Name = "panelTraCuu";
-            panelTraCuu.Size = new Size(271, 37);
+            panelTraCuu.Size = new Size(271, 110);
             panelTraCuu.TabIndex = 2;
             // 
             // btnTimGiaoVien
@@ -264,9 +260,9 @@
             panelBaoCao.Controls.Add(btnDoanhThu);
             panelBaoCao.Controls.Add(btnBaoCaoDiem);
             panelBaoCao.Controls.Add(btnBaoCaoMenu);
-            panelBaoCao.Location = new Point(3, 135);
+            panelBaoCao.Location = new Point(3, 383);
             panelBaoCao.Name = "panelBaoCao";
-            panelBaoCao.Size = new Size(271, 37);
+            panelBaoCao.Size = new Size(271, 201);
             panelBaoCao.TabIndex = 3;
             // 
             // btnLopTheoPhong
@@ -320,8 +316,6 @@
             btnBaoCaoMenu.UseVisualStyleBackColor = true;
             btnBaoCaoMenu.Click += btnBaoCaoMenu_Click;
             // 
-<<<<<<< Updated upstream
-=======
             // panelHeThong
             // 
             panelHeThong.Controls.Add(btnPhanQuyen);
@@ -369,14 +363,26 @@
             btnHeThong.Visible = false;
             btnHeThong.Click += btnHeThong_Click;
             // 
->>>>>>> Stashed changes
             // panelContent
             // 
+            panelContent.Controls.Add(lblChao);
             panelContent.Dock = DockStyle.Fill;
             panelContent.Location = new Point(284, 0);
             panelContent.Name = "panelContent";
             panelContent.Size = new Size(722, 553);
             panelContent.TabIndex = 2;
+            // 
+            // lblChao
+            // 
+            lblChao.AutoSize = true;
+            lblChao.Font = new Font("Segoe UI", 14F);
+            lblChao.ForeColor = Color.FromArgb(64, 64, 64);
+            lblChao.Location = new Point(42, 23);
+            lblChao.Name = "lblChao";
+            lblChao.Size = new Size(69, 32);
+            lblChao.TabIndex = 0;
+            lblChao.Text = "Chào";
+            lblChao.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelThoat
             // 
@@ -433,6 +439,9 @@
             panelCRUD.ResumeLayout(false);
             panelTraCuu.ResumeLayout(false);
             panelBaoCao.ResumeLayout(false);
+            panelHeThong.ResumeLayout(false);
+            panelContent.ResumeLayout(false);
+            panelContent.PerformLayout();
             panelThoat.ResumeLayout(false);
             panelSidebar.ResumeLayout(false);
             ResumeLayout(false);
@@ -443,15 +452,13 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panelTraCuu;
         private Panel panelBaoCao;
+        private Panel panelHeThong;
         private Button btnTrangChu;
         private Button btnTraCuuMenu;
         private Button btnBaoCaoMenu;
-<<<<<<< Updated upstream
-=======
         private Button btnHeThong;
         private Button btnPhanQuyen;
         private Button btnTuDongHoa;
->>>>>>> Stashed changes
         private Button btnTimGiaoVien;
         private Button btnTimLop;
         private Button btnThoiKhoaBieu;
@@ -472,5 +479,6 @@
         private Button btnNhapDuLieu;
         private Button btnQuanLyMenu;
         private Button btnXuatExcel;
+        private Label lblChao;
     }
 }
