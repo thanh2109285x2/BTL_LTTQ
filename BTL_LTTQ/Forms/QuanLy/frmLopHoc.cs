@@ -1,10 +1,6 @@
-﻿using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
+﻿using BTL_LTTQ.BUS;
+using BTL_LTTQ.Common;
 using BTL_LTTQ.Models;
-using BTL_LTTQ.Repositories;
-using BTL_LTTQ.Services;
-using Microsoft.Data.SqlClient;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +14,7 @@ namespace BTL_LTTQ.Forms.QuanLy
     public partial class frmLopHoc : Form
     {
         private readonly LopHocService _lopHocService = new LopHocService();
-        private readonly LookupRepository _lookupRepo = new LookupRepository();
+        private readonly LookupService _lookupService = new LookupService();
 
         private string maLopDangChon = "";
         private bool _chiXem;
@@ -40,11 +36,11 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void NaptatcaComboBox()
         {
-            NapComboBox(cboMonHoc, _lookupRepo.LayMonHoc(), "MaMon", "TenMon");
-            NapComboBox(cboGiaoVien, _lookupRepo.LayGiaoVien(), "MaGV", "TenGV");
-            NapComboBox(cboCaHoc, _lookupRepo.LayCaHoc(), "MaCa", "TenCa");
-            NapComboBox(cboThoiGian, _lookupRepo.LayThoiGian(), "MaThoiGian", "TenThoiGian");
-            NapComboBox(cboPhongHoc, _lookupRepo.LayPhongHoc(), "MaPhong", "TenPhong");
+            NapComboBox(cboMonHoc, _lookupService.LayMonHoc(), "MaMon", "TenMon");
+            NapComboBox(cboGiaoVien, _lookupService.LayGiaoVien(), "MaGV", "TenGV");
+            NapComboBox(cboCaHoc, _lookupService.LayCaHoc(), "MaCa", "TenCa");
+            NapComboBox(cboThoiGian, _lookupService.LayThoiGian(), "MaThoiGian", "TenThoiGian");
+            NapComboBox(cboPhongHoc, _lookupService.LayPhongHoc(), "MaPhong", "TenPhong");
         }
 
         private void NapDanhSachLop(string tuKhoa = "")

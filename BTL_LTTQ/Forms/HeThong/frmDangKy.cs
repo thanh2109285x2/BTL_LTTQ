@@ -1,13 +1,15 @@
+using BTL_LTTQ.BUS;
 using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
+using System;
 using System.Data;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace BTL_LTTQ.Forms.HeThong
 {
     public partial class frmDangKy : Form
     {
-        private readonly TaiKhoanDAL _taiKhoanDAL = new TaiKhoanDAL();
+        private readonly TaiKhoanService _taiKhoanService = new TaiKhoanService();
 
         public string TenDangNhapMoi { get; private set; } = "";
 
@@ -17,7 +19,7 @@ namespace BTL_LTTQ.Forms.HeThong
             Load += frmDangKy_Load;
             GiaoDien.ApDung(this);
             btnDangKy.BackColor = GiaoDien.MauChinh;
-            btnDangKy.ForeColor = Color.White;
+            btnDangKy.ForeColor = System.Drawing.Color.White;
             btnDangKy.FlatStyle = FlatStyle.Flat;
             btnDangKy.FlatAppearance.BorderColor = GiaoDien.MauChinh;
         }
@@ -29,7 +31,7 @@ namespace BTL_LTTQ.Forms.HeThong
             vaiTro.Columns.Add("TenVaiTro", typeof(string));
             vaiTro.Rows.Add(VaiTroConst.GiaoVien, "Giáo viên");
             vaiTro.Rows.Add(VaiTroConst.HocVien, "Học viên");
-            if (!_taiKhoanDAL.CoAdmin())
+            if (!_taiKhoanService.CoAdmin())
                 vaiTro.Rows.Add(VaiTroConst.Admin, "Admin");
 
             cboVaiTro.DisplayMember = "TenVaiTro";
@@ -54,8 +56,8 @@ namespace BTL_LTTQ.Forms.HeThong
             if (!canChonHoSo) return;
 
             DataTable hoSo = vaiTro == VaiTroConst.GiaoVien
-                ? _taiKhoanDAL.LayGiaoVienChuaCoTaiKhoan()
-                : _taiKhoanDAL.LayHocVienChuaCoTaiKhoan();
+                ? _taiKhoanService.LayGiaoVienChuaCoTaiKhoan()
+                : _taiKhoanService.LayHocVienChuaCoTaiKhoan();
             string cotMa = vaiTro == VaiTroConst.GiaoVien ? "MaGV" : "MaHocVien";
             string cotTen = vaiTro == VaiTroConst.GiaoVien ? "TenGV" : "TenHocVien";
             hoSo.Columns.Add("HoSoHienThi", typeof(string));
@@ -72,73 +74,21 @@ namespace BTL_LTTQ.Forms.HeThong
         private void btnDangKy_Click(object sender, EventArgs e)
         {
             string tenDangNhap = txtTenDangNhap.Text;
-            if (tenDangNhap.Length < 4 || tenDangNhap.Length > 50 || tenDangNhap.Any(char.IsWhiteSpace))
-            {
-                BaoLoi("Tên đăng nhập phải từ 4 đến 50 ký tự và không chứa khoảng trắng.");
-                txtTenDangNhap.Focus();
-                return;
-            }
-
-            if (_taiKhoanDAL.TenDangNhapDaTonTai(tenDangNhap))
-            {
-                BaoLoi("Tên đăng nhập đã tồn tại.");
-                txtTenDangNhap.Focus();
-                return;
-            }
-
-            if (txtMatKhau.Text.Length < 6)
-            {
-                BaoLoi("Mật khẩu phải có ít nhất 6 ký tự.");
-                txtMatKhau.Focus();
-                return;
-            }
-
-            if (txtMatKhau.Text != txtNhapLaiMatKhau.Text)
-            {
-                BaoLoi("Mật khẩu nhập lại không khớp.");
-                txtNhapLaiMatKhau.Focus();
-                return;
-            }
-
             string vaiTro = cboVaiTro.SelectedValue?.ToString() ?? "";
-            string? maGV = null;
-            string? maHocVien = null;
-            if (vaiTro == VaiTroConst.GiaoVien || vaiTro == VaiTroConst.HocVien)
-            {
-                string? maHoSo = cboHoSo.SelectedValue?.ToString();
-                if (string.IsNullOrEmpty(maHoSo))
-                {
-                    BaoLoi("Vui lòng chọn hồ sơ đăng ký.");
-                    cboHoSo.Focus();
-                    return;
-                }
+            string? maHoSo = cboHoSo.SelectedValue?.ToString();
 
-                string? dienThoai = _taiKhoanDAL.LayDienThoai(vaiTro, maHoSo);
-                if (BoKhoangTrang(txtSoDienThoai.Text) != BoKhoangTrang(dienThoai ?? ""))
-                {
-                    BaoLoi("Số điện thoại không khớp với hồ sơ");
-                    txtSoDienThoai.Focus();
-                    return;
-                }
+            string loi = _taiKhoanService.DangKy(
+                tenDangNhap,
+                txtMatKhau.Text,
+                txtNhapLaiMatKhau.Text,
+                vaiTro,
+                maHoSo,
+                txtSoDienThoai.Text);
 
-                if (vaiTro == VaiTroConst.GiaoVien)
-                    maGV = maHoSo;
-                else
-                    maHocVien = maHoSo;
-            }
-            else if (vaiTro != VaiTroConst.Admin)
-            {
-                BaoLoi("Vui lòng chọn vai trò hợp lệ.");
-                cboVaiTro.Focus();
-                return;
-            }
-
-            string salt = MatKhauHelper.TaoSalt();
-            string hash = MatKhauHelper.BamMatKhau(txtMatKhau.Text, salt);
-            string loi = _taiKhoanDAL.ThemTaiKhoan(tenDangNhap, hash, salt, vaiTro, maGV, maHocVien);
             if (loi != "")
             {
                 BaoLoi(loi);
+                // giữ focus đơn giản
                 return;
             }
 
@@ -146,11 +96,6 @@ namespace BTL_LTTQ.Forms.HeThong
             MessageBox.Show("Đăng ký tài khoản thành công.", "Thông báo",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             DialogResult = DialogResult.OK;
-        }
-
-        private static string BoKhoangTrang(string giaTri)
-        {
-            return new string(giaTri.Where(c => !char.IsWhiteSpace(c)).ToArray());
         }
 
         private void BaoLoi(string noiDung)

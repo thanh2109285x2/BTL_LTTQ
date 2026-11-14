@@ -1,0 +1,126 @@
+﻿using BTL_LTTQ.Common;
+using BTL_LTTQ.DAL;
+using BTL_LTTQ.Models;
+using Microsoft.Data.SqlClient;
+using System;
+using System.Collections.Generic;
+using System.Data;
+
+namespace BTL_LTTQ.BUS
+{
+    public class LopHocService
+    {
+        private readonly LopHocRepository _repo = new LopHocRepository();
+
+        public DataTable LayDanhSach(string tuKhoa = "")
+        {
+            var phamVi = PhamViDuLieu.ChoLopHoc(ChucNangConst.LOPHOC_XEM);
+            return _repo.LayDanhSach((tuKhoa ?? "").Trim(), phamVi);
+        }
+
+        public string Them(LopHoc l)
+        {
+            ChuanHoa(l);
+
+            string loi = KiemTra(l);
+            if (loi != "") return loi;
+
+            try
+            {
+                if (!PermissionService.Can(ChucNangConst.LOPHOC_THEM))
+                    return "Bạn không có quyền thêm lớp học.";
+                if (CurrentUser.IsHocVien)
+                    return "Học viên không được thêm lớp học.";
+
+                if (_repo.TonTai(l.MaLop)) return "Mã lớp này đã tồn tại";
+
+                _repo.Them(l);
+                return "";
+            }
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException)
+            {
+                return ex is SqlException ? "Không thêm được: " + ex.Message : ex.Message;
+            }
+        }
+
+        public string Sua(LopHoc l)
+        {
+            ChuanHoa(l);
+
+            string loi = KiemTra(l);
+            if (loi != "") return loi;
+
+            try
+            {
+                if (!PermissionService.Can(ChucNangConst.LOPHOC_SUA))
+                    return "Bạn không có quyền sửa lớp học.";
+                if (CurrentUser.IsHocVien)
+                    return "Học viên không được sửa lớp học.";
+
+                bool chiCuaMinh = PermissionService.ChiCuaMinh(ChucNangConst.LOPHOC_SUA);
+                var phamVi = PhamViDuLieu.ChoLopHoc(ChucNangConst.LOPHOC_SUA);
+                int soDong = _repo.Sua(l, phamVi, !chiCuaMinh);
+                if (soDong != 1)
+                    return "Không thể cập nhật: lớp không tồn tại hoặc không thuộc quyền của bạn";
+                return "";
+            }
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException || ex is InvalidOperationException)
+            {
+                return ex is SqlException ? "Không sửa được: " + ex.Message : ex.Message;
+            }
+        }
+
+        public string Xoa(string maLop)
+        {
+            if (string.IsNullOrWhiteSpace(maLop)) return "Vui lòng chọn một lớp để xóa.";
+
+            try
+            {
+                if (!PermissionService.Can(ChucNangConst.LOPHOC_XOA))
+                    return "Bạn không có quyền xóa lớp học.";
+                if (CurrentUser.IsHocVien)
+                    return "Học viên không được xóa lớp học.";
+
+                _repo.Xoa(maLop);
+                return "";
+            }
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException)
+            {
+                if (ex is UnauthorizedAccessException) return ex.Message;
+                var sqlEx = (SqlException)ex;
+                if (sqlEx.Number == 547)
+                    return "Lớp này đang có học viên (hoặc dữ liệu liên quan), không thể xóa";
+                return "Không xóa được: " + sqlEx.Message;
+            }
+        }
+
+        private static void ChuanHoa(LopHoc l)
+        {
+            l.MaLop = (l.MaLop ?? "").Trim();
+            l.TenLop = (l.TenLop ?? "").Trim();
+        }
+
+        private static string KiemTra(LopHoc l)
+        {
+            var loi = new List<string>();
+
+            if (l.MaLop == "") loi.Add("Vui lòng nhập mã lớp");
+            if (l.TenLop == "") loi.Add("Vui lòng nhập tên lớp");
+
+            if (l.MaMon == null || l.MaGV == null || l.MaCa == null ||
+                l.MaThoiGian == null || l.MaPhong == null)
+                loi.Add("Vui lòng chọn đầy đủ môn học, giáo viên, ca học, thời gian và phòng học");
+
+            if (l.NgayKT.Date < l.NgayBD.Date)
+                loi.Add("Ngày kết thúc không được trước ngày bắt đầu");
+
+            if (l.SiSoToiDa < 1)
+                loi.Add("Sĩ số tối đa phải lớn hơn 0");
+
+            if (l.SoBuoiTuan < 1 || l.SoBuoiTuan > 7)
+                loi.Add("Số buổi mỗi tuần phải từ 1 đến 7");
+
+            return string.Join("\n", loi);
+        }
+    }
+}

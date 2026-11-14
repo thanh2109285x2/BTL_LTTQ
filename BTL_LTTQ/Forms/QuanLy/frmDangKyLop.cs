@@ -1,5 +1,5 @@
+using BTL_LTTQ.BUS;
 using BTL_LTTQ.Common;
-using BTL_LTTQ.Repositories;
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -9,7 +9,7 @@ namespace BTL_LTTQ.Forms.QuanLy
     //Học viên tự đăng ký / hủy đăng ký nhiều lớp, có giới hạn sĩ số
     public partial class frmDangKyLop : Form
     {
-        private readonly DangKyRepository _repo = new DangKyRepository();
+        private readonly DangKyLopService _service = new DangKyLopService();
 
         private string maLopDangChon = "";
         private bool _choPhepDangKy;
@@ -38,7 +38,7 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void NapDanhSachLop(string tuKhoa = "")
         {
-            DataTable dt = _repo.LayLopChoHocVien(CurrentUser.MaHocVien!, tuKhoa);
+            DataTable dt = _service.LayLopChoHocVien(CurrentUser.MaHocVien!, tuKhoa);
 
             if (!dt.Columns.Contains("SiSoText"))
                 dt.Columns.Add("SiSoText", typeof(string));
@@ -109,7 +109,7 @@ namespace BTL_LTTQ.Forms.QuanLy
                 return;
             }
 
-            string loi = _repo.Them(CurrentUser.MaHocVien!, maLopDangChon);
+            string loi = _service.DangKy(CurrentUser.MaHocVien!, maLopDangChon);
             if (loi != "")
             {
                 MessageBox.Show(loi, "Không đăng ký được", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -143,7 +143,7 @@ namespace BTL_LTTQ.Forms.QuanLy
                 "Xác nhận hủy", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (hoi != DialogResult.Yes) return;
 
-            string loi = _repo.Huy(CurrentUser.MaHocVien!, maLopDangChon);
+            string loi = _service.HuyDangKy(CurrentUser.MaHocVien!, maLopDangChon);
             if (loi != "")
             {
                 MessageBox.Show(loi, "Không hủy được", MessageBoxButtons.OK, MessageBoxIcon.Warning);

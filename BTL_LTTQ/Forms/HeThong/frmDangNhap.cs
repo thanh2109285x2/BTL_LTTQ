@@ -1,19 +1,19 @@
+using BTL_LTTQ.BUS;
 using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
-using System.Data;
+using System.Windows.Forms;
 
 namespace BTL_LTTQ.Forms.HeThong
 {
     public partial class frmDangNhap : Form
     {
-        private readonly TaiKhoanDAL _taiKhoanDAL = new TaiKhoanDAL();
+        private readonly TaiKhoanService _taiKhoanService = new TaiKhoanService();
 
         public frmDangNhap()
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
             btnDangNhap.BackColor = GiaoDien.MauChinh;
-            btnDangNhap.ForeColor = Color.White;
+            btnDangNhap.ForeColor = System.Drawing.Color.White;
             btnDangNhap.FlatStyle = FlatStyle.Flat;
             btnDangNhap.FlatAppearance.BorderColor = GiaoDien.MauChinh;
         }
@@ -32,57 +32,16 @@ namespace BTL_LTTQ.Forms.HeThong
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
-            string tenDangNhap = txtTenDangNhap.Text.Trim();
-            DataTable taiKhoan = _taiKhoanDAL.LayTheoTenDangNhap(tenDangNhap);
-
-            if (taiKhoan.Rows.Count == 0)
+            string loi = _taiKhoanService.DangNhap(txtTenDangNhap.Text.Trim(), txtMatKhau.Text);
+            if (loi != "")
             {
-                BaoLoiDangNhap();
-                return;
-            }
-
-            DataRow dong = taiKhoan.Rows[0];
-            string hash = dong["MatKhauHash"].ToString() ?? "";
-            string salt = dong["Salt"].ToString() ?? "";
-            if (!MatKhauHelper.KiemTra(txtMatKhau.Text, salt, hash))
-            {
-                BaoLoiDangNhap();
-                return;
-            }
-
-            if (!Convert.ToBoolean(dong["TrangThai"]))
-            {
-                MessageBox.Show("Tài khoản đã bị khóa", "Đăng nhập thất bại",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            CurrentUser.Dat(
-                tenDangNhap,
-                dong["VaiTro"].ToString() ?? "",
-                dong["MaGV"] == DBNull.Value ? null : dong["MaGV"].ToString(),
-                dong["MaHocVien"] == DBNull.Value ? null : dong["MaHocVien"].ToString());
-
-            try
-            {
-                PermissionService.Load();
-            }
-            catch (Exception ex)
-            {
-                PermissionService.Clear();
-                CurrentUser.Xoa();
-                MessageBox.Show("Không thể tải quyền truy cập, đăng nhập bị từ chối.\n" + ex.Message,
-                    "Lỗi phân quyền", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(loi, loi == "Tài khoản đã bị khóa" ? "Đăng nhập thất bại" : "Đăng nhập thất bại",
+                    MessageBoxButtons.OK,
+                    loi == "Tài khoản đã bị khóa" ? MessageBoxIcon.Warning : MessageBoxIcon.Warning);
                 return;
             }
 
             DialogResult = DialogResult.OK;
-        }
-
-        private void BaoLoiDangNhap()
-        {
-            MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu", "Đăng nhập thất bại",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void btnThoat_Click(object sender, EventArgs e)

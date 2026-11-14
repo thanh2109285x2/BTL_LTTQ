@@ -1,14 +1,15 @@
 using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
 using BTL_LTTQ.Models;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BTL_LTTQ.Forms.HeThong
 {
     public partial class frmPhanQuyen : Form
     {
-        private readonly PhanQuyenDAL _phanQuyenDAL = new PhanQuyenDAL();
         private List<PhanQuyenChucNang> _duLieuGoc = new List<PhanQuyenChucNang>();
         private bool _dangCapNhat;
         private bool _dangNap;
@@ -40,7 +41,7 @@ namespace BTL_LTTQ.Forms.HeThong
             _dangNap = true;
             try
             {
-                List<PhanQuyenChucNang> danhSach = _phanQuyenDAL.LayDanhSachChucNang();
+                List<PhanQuyenChucNang> danhSach = PermissionService.LayDanhSachChucNang();
                 dgvPhanQuyen.Rows.Clear();
                 foreach (string nhom in new[] { "Quản lý", "Tra cứu", "Báo cáo", "Khác" })
                     ThemNhom(nhom, danhSach.Where(x => string.Equals(x.Nhom, nhom, StringComparison.OrdinalIgnoreCase)));
@@ -157,7 +158,7 @@ namespace BTL_LTTQ.Forms.HeThong
             List<PhanQuyenChucNang> danhSach = LayDuLieuTrenLuoi();
             try
             {
-                _phanQuyenDAL.Luu(danhSach);
+                PermissionService.LuuPhanQuyen(danhSach);
                 _duLieuGoc = Clone(danhSach);
                 CapNhatTrangThaiNut();
                 MessageBox.Show("Đã lưu. Quyền mới có hiệu lực khi người dùng đăng nhập lại.", "Thông báo",

@@ -1,12 +1,12 @@
+using BTL_LTTQ.BUS;
 using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
 using System.Windows.Forms;
 
 namespace BTL_LTTQ.Forms.HeThong
 {
     public partial class frmDoiMatKhau : Form
     {
-        private readonly TaiKhoanDAL _taiKhoanDAL = new TaiKhoanDAL();
+        private readonly TaiKhoanService _taiKhoanService = new TaiKhoanService();
 
         public frmDoiMatKhau()
         {
@@ -35,39 +35,31 @@ namespace BTL_LTTQ.Forms.HeThong
                 return;
             }
 
-            if (string.Equals(matKhauCu, matKhauMoi, StringComparison.Ordinal))
+            if (string.Equals(matKhauCu, matKhauMoi, System.StringComparison.Ordinal))
             {
                 MessageBox.Show("Mật khẩu mới phải khác mật khẩu hiện tại.", "Mật khẩu không hợp lệ",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!string.Equals(matKhauMoi, nhapLai, StringComparison.Ordinal))
+            if (!string.Equals(matKhauMoi, nhapLai, System.StringComparison.Ordinal))
             {
                 MessageBox.Show("Mật khẩu mới và ô nhập lại không khớp.", "Mật khẩu không hợp lệ",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            try
+            string loi = _taiKhoanService.DoiMatKhau(CurrentUser.TenDangNhap, matKhauCu, matKhauMoi);
+            if (loi != "")
             {
-                string loi = _taiKhoanDAL.DoiMatKhau(CurrentUser.TenDangNhap, matKhauCu, matKhauMoi);
-                if (loi != "")
-                {
-                    MessageBox.Show(loi, "Không đổi được mật khẩu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                MessageBox.Show(loi, "Không đổi được mật khẩu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                MessageBox.Show("Đổi mật khẩu thành công", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            catch
-            {
-                MessageBox.Show("Không thể đổi mật khẩu do lỗi hệ thống.", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            MessageBox.Show("Đổi mật khẩu thành công", "Thông báo",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void btnHuy_Click(object? sender, EventArgs e)

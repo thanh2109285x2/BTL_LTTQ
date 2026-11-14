@@ -28,6 +28,8 @@ namespace BTL_LTTQ.Forms.TraCuu
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panelTieuDe = new Panel();
             lblMoTa = new Label();
             label1 = new Label();
@@ -37,8 +39,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             panelDieuHuong = new Panel();
             panelChonTuan = new Panel();
             lblKhoang = new Label();
-            numSoTuan = new NumericUpDown();
-            labelSoTuan = new Label();
             btnTuanSau = new Button();
             btnTuanNay = new Button();
             btnTuanTruoc = new Button();
@@ -51,7 +51,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             ((System.ComponentModel.ISupportInitialize)dgvTuan).BeginInit();
             panelDieuHuong.SuspendLayout();
             panelChonTuan.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numSoTuan).BeginInit();
             tabPageChiTiet.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvChiTiet).BeginInit();
             SuspendLayout();
@@ -65,8 +64,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             panelTieuDe.Name = "panelTieuDe";
             panelTieuDe.Size = new Size(1200, 84);
             panelTieuDe.TabIndex = 0;
-            // 
-            // 
             // 
             // lblMoTa
             // 
@@ -106,16 +103,35 @@ namespace BTL_LTTQ.Forms.TraCuu
             tabPageTuan.Padding = new Padding(10);
             tabPageTuan.Size = new Size(1192, 503);
             tabPageTuan.TabIndex = 0;
-            tabPageTuan.Text = "Lịch nhiều tuần";
+            tabPageTuan.Text = "Lịch tuần";
             tabPageTuan.UseVisualStyleBackColor = true;
             // 
             // dgvTuan
             // 
-            dgvTuan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvTuan.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvTuan.ColumnHeadersHeight = 55;
+            dgvTuan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvTuan.DefaultCellStyle = dataGridViewCellStyle2;
             dgvTuan.Dock = DockStyle.Fill;
             dgvTuan.Location = new Point(10, 230);
             dgvTuan.Name = "dgvTuan";
             dgvTuan.RowHeadersWidth = 51;
+            dgvTuan.RowTemplate.Height = 55;
+            dgvTuan.RowTemplate.ReadOnly = true;
             dgvTuan.Size = new Size(1172, 263);
             dgvTuan.TabIndex = 1;
             // 
@@ -133,8 +149,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             // panelChonTuan
             // 
             panelChonTuan.Controls.Add(lblKhoang);
-            panelChonTuan.Controls.Add(numSoTuan);
-            panelChonTuan.Controls.Add(labelSoTuan);
             panelChonTuan.Controls.Add(btnTuanSau);
             panelChonTuan.Controls.Add(btnTuanNay);
             panelChonTuan.Controls.Add(btnTuanTruoc);
@@ -145,33 +159,13 @@ namespace BTL_LTTQ.Forms.TraCuu
             // 
             // lblKhoang
             // 
-            lblKhoang.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblKhoang.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             lblKhoang.ForeColor = Color.FromArgb(41, 98, 168);
             lblKhoang.Location = new Point(4, 72);
             lblKhoang.Name = "lblKhoang";
             lblKhoang.Size = new Size(620, 133);
             lblKhoang.TabIndex = 5;
-            lblKhoang.Text = "Đang xem: --";
-            // 
-            // numSoTuan
-            // 
-            numSoTuan.Location = new Point(544, 20);
-            numSoTuan.Maximum = new decimal(new int[] { 12, 0, 0, 0 });
-            numSoTuan.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numSoTuan.Name = "numSoTuan";
-            numSoTuan.Size = new Size(70, 27);
-            numSoTuan.TabIndex = 4;
-            numSoTuan.Value = new decimal(new int[] { 4, 0, 0, 0 });
-            numSoTuan.ValueChanged += numSoTuan_ValueChanged;
-            // 
-            // labelSoTuan
-            // 
-            labelSoTuan.AutoSize = true;
-            labelSoTuan.Location = new Point(414, 24);
-            labelSoTuan.Name = "labelSoTuan";
-            labelSoTuan.Size = new Size(115, 20);
-            labelSoTuan.TabIndex = 3;
-            labelSoTuan.Text = "Số tuần hiển thị:";
+            lblKhoang.Text = "Tuần: --";
             // 
             // btnTuanSau
             // 
@@ -249,8 +243,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             ((System.ComponentModel.ISupportInitialize)dgvTuan).EndInit();
             panelDieuHuong.ResumeLayout(false);
             panelChonTuan.ResumeLayout(false);
-            panelChonTuan.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numSoTuan).EndInit();
             tabPageChiTiet.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvChiTiet).EndInit();
             ResumeLayout(false);
@@ -270,8 +262,6 @@ namespace BTL_LTTQ.Forms.TraCuu
         private Button btnTuanTruoc;
         private Button btnTuanNay;
         private Button btnTuanSau;
-        private Label labelSoTuan;
-        private NumericUpDown numSoTuan;
         private Label lblKhoang;
         private TabPage tabPageChiTiet;
         private DataGridView dgvChiTiet;
