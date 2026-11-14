@@ -24,4 +24,19 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Forms\QuanLy\frmHocVien.Designer.cs">
+      <DependentUpon>frmHocVien.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Forms\TraCuu\frmTimKiemHocVien.Designer.cs">
+      <DependentUpon>frmTimKiemHocVien.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Forms\BaoCao\frmBaoCaoDiem.Designer.cs">
+      <DependentUpon>frmBaoCaoDiem.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Forms\BaoCao\frmBaoCaoDoanhThu.Designer.cs">
+      <DependentUpon>frmBaoCaoDoanhThu.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

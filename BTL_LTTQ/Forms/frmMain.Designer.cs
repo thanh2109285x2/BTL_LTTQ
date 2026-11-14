@@ -38,9 +38,10 @@
             btnLopHoc = new AppButton();
             btnQuanLyMenu = new AppButton();
             panelTraCuu = new Panel();
-            btnTimGiaoVien = new AppButton();
-            btnTimLop = new AppButton();
-            btnTraCuuMenu = new AppButton();
+btnTimGiaoVien = new AppButton();
+btnTimLop = new AppButton();
+btnTraCuuMenu = new AppButton();
+btnTimHocVien = new Button();
             panelBaoCao = new Panel();
             btnLopTheoPhong = new AppButton();
             btnTop3 = new AppButton();
@@ -200,7 +201,11 @@
             btnHocVien.TabIndex = 2;
             btnHocVien.Text = "Học viên";
             btnHocVien.TextAlign = ContentAlignment.MiddleLeft;
+
+            btnHocVien.Click += btnHocVien_Click;
+
             btnHocVien.UseVisualStyleBackColor = false;
+
             // 
             // btnLopHoc
             // 
@@ -249,6 +254,7 @@
             // panelTraCuu
             // 
             panelTraCuu.Controls.Add(btnTimGiaoVien);
+            panelTraCuu.Controls.Add(btnTimHocVien);
             panelTraCuu.Controls.Add(btnTimLop);
             panelTraCuu.Controls.Add(btnTraCuuMenu);
             panelTraCuu.Location = new Point(3, 90);
@@ -276,6 +282,15 @@
             btnTimGiaoVien.TextAlign = ContentAlignment.MiddleLeft;
             btnTimGiaoVien.UseVisualStyleBackColor = false;
             btnTimGiaoVien.Click += btnTimGiaoVien_Click;
+            // btnTimHocVien
+            btnTimHocVien.Location = new Point(52, 108);
+            btnTimHocVien.Name = "btnTimHocVien";
+            btnTimHocVien.Size = new Size(120, 29);
+            btnTimHocVien.TabIndex = 4;
+            btnTimHocVien.Text = "Tìm học viên";
+            btnTimHocVien.TextAlign = ContentAlignment.MiddleLeft;
+            btnTimHocVien.UseVisualStyleBackColor = true;
+            btnTimHocVien.Click += btnTimHocVien_Click;
             // 
             // btnTimLop
             // 
@@ -391,7 +406,11 @@
             btnDoanhThu.TabIndex = 3;
             btnDoanhThu.Text = "Doanh thu";
             btnDoanhThu.TextAlign = ContentAlignment.MiddleLeft;
+
+            btnDoanhThu.Click += btnDoanhThu_Click;
+
             btnDoanhThu.UseVisualStyleBackColor = false;
+
             // 
             // btnBaoCaoDiem
             // 
@@ -411,7 +430,11 @@
             btnBaoCaoDiem.TabIndex = 2;
             btnBaoCaoDiem.Text = "Báo cáo điểm";
             btnBaoCaoDiem.TextAlign = ContentAlignment.MiddleLeft;
+
+            btnBaoCaoDiem.Click += btnBaoCaoDiem_Click;
+
             btnBaoCaoDiem.UseVisualStyleBackColor = false;
+
             // 
             // btnBaoCaoMenu
             // 
@@ -639,18 +662,19 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panelTraCuu;
         private Panel panelBaoCao;
-        private Panel panelHeThong;
-        private AppButton btnTrangChu;
-        private AppButton btnTraCuuMenu;
-        private AppButton btnBaoCaoMenu;
-        private AppButton btnHeThong;
-        private AppButton btnPhanQuyen;
-        private AppButton btnTimGiaoVien;
-        private AppButton btnTimLop;
-        private AppButton btnTop3;
-        private AppButton btnDoanhThu;
-        private AppButton btnBaoCaoDiem;
-        private AppButton btnLopTheoPhong;
+private Panel panelHeThong;
+private AppButton btnTrangChu;
+private AppButton btnTraCuuMenu;
+private AppButton btnBaoCaoMenu;
+private AppButton btnHeThong;
+private AppButton btnPhanQuyen;
+private AppButton btnTimGiaoVien;
+private Button btnTimHocVien;
+private AppButton btnTimLop;
+private AppButton btnTop3;
+private AppButton btnDoanhThu;
+private AppButton btnBaoCaoDiem;
+private AppButton btnLopTheoPhong;
         private Panel panelThoat;
         private AppButton btnThoat;
         private Panel panelSidebar;
