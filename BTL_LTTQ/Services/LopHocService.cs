@@ -47,9 +47,9 @@ namespace BTL_LTTQ.Services
                 _repo.Sua(l);
                 return "";
             }
-            catch (SqlException ex)
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException || ex is InvalidOperationException)
             {
-                return "Không sửa được: " + ex.Message;
+                return ex is SqlException ? "Không sửa được: " + ex.Message : ex.Message;
             }
         }
 

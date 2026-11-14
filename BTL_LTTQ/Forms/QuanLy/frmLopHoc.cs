@@ -21,6 +21,8 @@ namespace BTL_LTTQ.Forms.QuanLy
         private readonly LookupRepository _lookupRepo = new LookupRepository();
 
         private string maLopDangChon = "";
+        private bool _chiXem;
+        private bool _chiSuaLopCuaMinh;
 
         public frmLopHoc()
         {
@@ -106,14 +108,37 @@ namespace BTL_LTTQ.Forms.QuanLy
             dgvLopHoc.ClearSelection();
 
             maLopDangChon = "";
-            txtMaLop.ReadOnly = false;
+            txtMaLop.ReadOnly = _chiXem;
+            ApDungCheDoChiXem();
         }
 
         private void frmLopHoc_Load(object sender, EventArgs e)
         {
+            bool coQuyenThem = PermissionService.Can(ChucNangConst.LOPHOC_THEM);
+            bool coQuyenSua = PermissionService.Can(ChucNangConst.LOPHOC_SUA);
+            _chiSuaLopCuaMinh = coQuyenSua && PermissionService.ChiCuaMinh(ChucNangConst.LOPHOC_SUA);
+            _chiXem = !coQuyenThem && !coQuyenSua;
+            PhanQuyenUi.AnNutThemSuaXoa(
+                btnThem, btnSua, btnXoa,
+                ChucNangConst.LOPHOC_THEM, ChucNangConst.LOPHOC_SUA, ChucNangConst.LOPHOC_XOA);
+
             NaptatcaComboBox();
             NapDanhSachLop();
             LamMoi();
+            ApDungCheDoChiXem();
+        }
+
+        private void ApDungCheDoChiXem()
+        {
+            txtMaLop.ReadOnly = _chiXem || maLopDangChon != "";
+            txtTenLop.ReadOnly = _chiXem;
+            cboMonHoc.Enabled = !_chiXem;
+            cboGiaoVien.Enabled = !_chiXem && !_chiSuaLopCuaMinh;
+            cboCaHoc.Enabled = !_chiXem;
+            cboThoiGian.Enabled = !_chiXem;
+            cboPhongHoc.Enabled = !_chiXem;
+            dtpNgayBD.Enabled = !_chiXem;
+            dtpNgayKT.Enabled = !_chiXem;
         }
 
         private void btnLamMoi_Click(object sender, EventArgs e)
@@ -123,6 +148,13 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void btnThem_Click(object sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.LOPHOC_THEM))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             string loi = _lopHocService.Them(LayDuLieuTuForm());
             if (loi != "")
             {
@@ -137,6 +169,13 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void btnSua_Click(object sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.LOPHOC_SUA))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (maLopDangChon == "")
             {
                 MessageBox.Show("Vui lòng chọn một lớp trong danh sách để sửa.", "Chưa chọn lớp",
@@ -161,6 +200,13 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.LOPHOC_XOA))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (maLopDangChon == "")
             {
                 MessageBox.Show("Vui lòng chọn một lớp trong danh sách để xóa.", "Chưa chọn lớp",
@@ -205,6 +251,7 @@ namespace BTL_LTTQ.Forms.QuanLy
 
             dtpNgayBD.Value = Convert.ToDateTime(row.Cells["NgayBD"].Value);
             dtpNgayKT.Value = Convert.ToDateTime(row.Cells["NgayKT"].Value);
+            ApDungCheDoChiXem();
         }
 
         private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
@@ -252,6 +299,16 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         }
         private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelDanhSach_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dgvLopHoc_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
