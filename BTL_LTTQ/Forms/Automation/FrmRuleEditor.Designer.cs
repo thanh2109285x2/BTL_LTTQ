@@ -42,6 +42,8 @@ namespace BTL_LTTQ.Forms.Automation
             this.BtnXoaDieuKien = new System.Windows.Forms.Button();
             this.BtnSuaDieuKien = new System.Windows.Forms.Button();
             this.BtnThemDieuKien = new System.Windows.Forms.Button();
+            this.lblChonTruong = new System.Windows.Forms.Label();
+            this.CboField = new System.Windows.Forms.ComboBox();
             this.panelTop.SuspendLayout();
             this.panelBottom.SuspendLayout();
             this.panelBody.SuspendLayout();
