@@ -125,7 +125,7 @@ namespace BTL_LTTQ.Forms.HeThong
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnThoat;
-            ClientSize = new Size(440, 290);
+            ClientSize = new Size(440, 330);
             Controls.Add(btnThoat);
             Controls.Add(btnDangKy);
             Controls.Add(btnDangNhap);

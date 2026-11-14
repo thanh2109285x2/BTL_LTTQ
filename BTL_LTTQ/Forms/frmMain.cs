@@ -1,5 +1,6 @@
 using BTL_LTTQ.Common;
 using BTL_LTTQ.Forms.HeThong;
+using BTL_LTTQ.Forms;
 using BTL_LTTQ.Forms.QuanLy;
 using BTL_LTTQ.Forms.TraCuu;
 
@@ -253,6 +254,11 @@ namespace BTL_LTTQ
             OpenChildForm(() => new frmMonHoc(), btnMonHoc, ChucNangConst.MONHOC_XEM);
         }
 
+        private void btnGiaoVien_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmGiaoVien(), btnGiaoVien, ChucNangConst.GIAOVIEN_XEM);
+        }
+
         private void btnTimLop_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmTimKiemLopHoc(), btnTimLop, ChucNangConst.TIM_LOP);
@@ -261,6 +267,55 @@ namespace BTL_LTTQ
         private void btnTimGiaoVien_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmTimKiemGiaoVien(), btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN);
+        }
+
+        private void btnTop3_Click(object sender, EventArgs e)
+        {
+            MoBaoCao("BC_XEPHANG", "BÁO CÁO 3 HỌC VIÊN ĐẠT ĐIỂM CAO NHẤT THEO LỚP",
+                "SELECT MaLop AS [Mã lớp], TenLop AS [Tên lớp], MaHocVien AS [Mã học viên], " +
+                "TenHocVien AS [Tên học viên], Diem AS [Điểm], Hang AS [Xếp hạng] FROM (" +
+                "SELECT l.MaLop, l.TenLop, hv.MaHocVien, hv.TenHocVien, hv.Diem, " +
+                "ROW_NUMBER() OVER (PARTITION BY l.MaLop ORDER BY hv.Diem DESC, hv.MaHocVien) AS Hang " +
+                "FROM dbo.LopHoc l JOIN dbo.HocVien hv ON hv.MaLop = l.MaLop WHERE hv.Diem IS NOT NULL" +
+                ") x WHERE Hang <= 3 ORDER BY [Tên lớp], [Xếp hạng]");
+        }
+
+        private void btnLopTheoPhong_Click(object sender, EventArgs e)
+        {
+            MoBaoCao("BC_LOP_PHONG", "BÁO CÁO DANH SÁCH LỚP HỌC THEO PHÒNG",
+                "SELECT p.MaPhong AS [Mã phòng], p.TenPhong AS [Phòng học], p.DiaChi AS [Địa chỉ phòng], l.MaLop AS [Mã lớp], " +
+                "l.TenLop AS [Tên lớp], m.TenMon AS [Môn học], gv.TenGV AS [Giáo viên], " +
+                "c.TenCa AS [Ca học], tg.TenThoiGian AS [Ngày học], " +
+                "l.NgayBD AS [Ngày bắt đầu], l.NgayKT AS [Ngày kết thúc], l.SiSo AS [Sĩ số], " +
+                "(SELECT COUNT(*) FROM dbo.HocVien hv WHERE hv.MaLop = l.MaLop) AS [Số học viên đã ghi danh] " +
+                "FROM dbo.PhongHoc p LEFT JOIN dbo.LopHoc l ON l.MaPhong = p.MaPhong " +
+                "LEFT JOIN dbo.MonHoc m ON m.MaMon = l.MaMon " +
+                "LEFT JOIN dbo.GiaoVien gv ON gv.MaGV = l.MaGV " +
+                "LEFT JOIN dbo.CaHoc c ON c.MaCa = l.MaCa " +
+                "LEFT JOIN dbo.ThoiGian tg ON tg.MaThoiGian = l.MaThoiGian " +
+                "ORDER BY p.TenPhong, l.TenLop");
+        }
+
+        private void MoBaoCao(string maQuyen, string tieuDe, string sql)
+        {
+            if (!PhanQuyenUi.CoQuyenMo(maQuyen))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                var data = BTL_LTTQ.DataAccessLayer.DbHelper.ExecuteQuery(sql);
+                using var form = new frmXemBaoCao(tieuDe, data);
+                form.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không tải được báo cáo: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnXuatExcel_Click(object sender, EventArgs e)

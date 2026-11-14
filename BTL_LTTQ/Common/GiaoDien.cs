@@ -71,12 +71,20 @@ namespace BTL_LTTQ
             switch (b.Name)
             {
                 case "btnThem":
+                case "_btnThem":
                 case "btnSua":
+                case "_btnSua":
                 case "btnTimKiem":
+                case "_btnTim":
                     nen = MauChinh; chu = Color.White; vien = MauChinh; hover = MauChinhDam;
                     break;
                 case "btnXoa":
+                case "_btnXoa":
                     nen = MauNguyHiem; chu = Color.White; vien = MauNguyHiem; hover = MauNguyHiemDam;
+                    break;
+                case "_btnTatCa":
+                case "_btnMoi":
+                    nen = Color.White; chu = MauChinh; vien = MauChinh; hover = MauHangLe;
                     break;
                 default:
                     nen = Color.White; chu = MauChu; vien = MauVien; hover = MauHangLe;
