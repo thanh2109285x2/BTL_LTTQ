@@ -20,10 +20,6 @@ namespace BTL_LTTQ.Forms.HeThong
             dgvPhanQuyen.ReadOnly = false;
             dgvPhanQuyen.SelectionMode = DataGridViewSelectionMode.CellSelect;
             colChucNang.ReadOnly = true;
-            btnLuu.BackColor = GiaoDien.MauChinh;
-            btnLuu.ForeColor = Color.White;
-            btnLuu.FlatStyle = FlatStyle.Flat;
-            btnLuu.UseVisualStyleBackColor = false;
         }
 
         private void frmPhanQuyen_Load(object? sender, EventArgs e)

@@ -99,6 +99,35 @@ namespace BTL_LTTQ.DataAccessLayer
                 new SqlParameter("@TenDangNhap", SqlDbType.VarChar, 50) { Value = tenDangNhap });
         }
 
+        public string DoiMatKhau(string tenDangNhap, string matKhauCu, string matKhauMoi)
+        {
+            const string sqlDoc = @"SELECT MatKhauHash, Salt
+                                    FROM TaiKhoan
+                                    WHERE TenDangNhap = @TenDangNhap";
+            DataTable taiKhoan = DbHelper.ExecuteQuery(sqlDoc,
+                new SqlParameter("@TenDangNhap", SqlDbType.VarChar, 50) { Value = tenDangNhap });
+            if (taiKhoan.Rows.Count != 1)
+                return "Không thể đổi mật khẩu cho tài khoản hiện tại.";
+
+            DataRow dong = taiKhoan.Rows[0];
+            string hashCu = dong["MatKhauHash"].ToString() ?? "";
+            string saltCu = dong["Salt"].ToString() ?? "";
+            if (!MatKhauHelper.KiemTra(matKhauCu, saltCu, hashCu))
+                return "Mật khẩu hiện tại không đúng";
+
+            string saltMoi = MatKhauHelper.TaoSalt();
+            string hashMoi = MatKhauHelper.BamMatKhau(matKhauMoi, saltMoi);
+            const string sqlCapNhat = @"UPDATE TaiKhoan
+                                        SET MatKhauHash = @MatKhauHash, Salt = @Salt
+                                        WHERE TenDangNhap = @TenDangNhap";
+            int soDong = DbHelper.ExecuteNonQuery(sqlCapNhat,
+                new SqlParameter("@MatKhauHash", SqlDbType.VarChar, 256) { Value = hashMoi },
+                new SqlParameter("@Salt", SqlDbType.VarChar, 64) { Value = saltMoi },
+                new SqlParameter("@TenDangNhap", SqlDbType.VarChar, 50) { Value = tenDangNhap });
+
+            return soDong == 1 ? "" : "Không thể cập nhật mật khẩu tài khoản.";
+        }
+
         private static SqlParameter[] ThamSoTaiKhoan(string tenDangNhap, string hash, string salt, string vaiTro, string? maGV, string? maHocVien)
         {
             return new[]

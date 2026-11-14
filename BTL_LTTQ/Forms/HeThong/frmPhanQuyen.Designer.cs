@@ -1,3 +1,5 @@
+using BTL_LTTQ;
+
 namespace BTL_LTTQ.Forms.HeThong
 {
     partial class frmPhanQuyen
@@ -22,9 +24,9 @@ namespace BTL_LTTQ.Forms.HeThong
             colGiaoVienChiCuaMinh = new DataGridViewCheckBoxColumn();
             colHocVien = new DataGridViewCheckBoxColumn();
             colHocVienChiCuaMinh = new DataGridViewCheckBoxColumn();
-            btnLuu = new Button();
-            btnHoanTac = new Button();
-            btnDong = new Button();
+            btnLuu = new AppButton { Kieu = KieuNut.Chinh };
+            btnHoanTac = new AppButton { Kieu = KieuNut.Phu };
+            btnDong = new AppButton { Kieu = KieuNut.Phu };
             ((System.ComponentModel.ISupportInitialize)dgvPhanQuyen).BeginInit();
             layoutRoot.SuspendLayout();
             panelButtons.SuspendLayout();
@@ -199,8 +201,8 @@ namespace BTL_LTTQ.Forms.HeThong
         private DataGridViewCheckBoxColumn colGiaoVienChiCuaMinh;
         private DataGridViewCheckBoxColumn colHocVien;
         private DataGridViewCheckBoxColumn colHocVienChiCuaMinh;
-        private Button btnLuu;
-        private Button btnHoanTac;
-        private Button btnDong;
+        private AppButton btnLuu;
+        private AppButton btnHoanTac;
+        private AppButton btnDong;
     }
 }

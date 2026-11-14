@@ -1,3 +1,5 @@
+using BTL_LTTQ;
+
 namespace BTL_LTTQ.Forms.HeThong
 {
     partial class frmDangKy
@@ -16,8 +18,8 @@ namespace BTL_LTTQ.Forms.HeThong
         private TextBox txtNhapLaiMatKhau;
         private ComboBox cboHoSo;
         private TextBox txtSoDienThoai;
-        private Button btnDangKy;
-        private Button btnHuy;
+        private AppButton btnDangKy;
+        private AppButton btnHuy;
 
         protected override void Dispose(bool disposing)
         {
@@ -41,8 +43,8 @@ namespace BTL_LTTQ.Forms.HeThong
             txtNhapLaiMatKhau = new TextBox();
             cboHoSo = new ComboBox();
             txtSoDienThoai = new TextBox();
-            btnDangKy = new Button();
-            btnHuy = new Button();
+            btnDangKy = new AppButton { Kieu = KieuNut.Chinh };
+            btnHuy = new AppButton { Kieu = KieuNut.Phu };
             SuspendLayout();
             // 
             // lblTieuDe

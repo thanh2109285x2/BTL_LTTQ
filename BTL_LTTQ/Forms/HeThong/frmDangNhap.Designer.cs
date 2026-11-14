@@ -1,3 +1,5 @@
+using BTL_LTTQ;
+
 namespace BTL_LTTQ.Forms.HeThong
 {
     partial class frmDangNhap
@@ -9,9 +11,9 @@ namespace BTL_LTTQ.Forms.HeThong
         private TextBox txtTenDangNhap;
         private TextBox txtMatKhau;
         private CheckBox chkHienMatKhau;
-        private Button btnDangNhap;
-        private Button btnDangKy;
-        private Button btnThoat;
+        private AppButton btnDangNhap;
+        private AppButton btnDangKy;
+        private AppButton btnThoat;
 
         protected override void Dispose(bool disposing)
         {
@@ -28,9 +30,9 @@ namespace BTL_LTTQ.Forms.HeThong
             txtTenDangNhap = new TextBox();
             txtMatKhau = new TextBox();
             chkHienMatKhau = new CheckBox();
-            btnDangNhap = new Button();
-            btnDangKy = new Button();
-            btnThoat = new Button();
+            btnDangNhap = new AppButton { Kieu = KieuNut.Chinh };
+            btnDangKy = new AppButton { Kieu = KieuNut.Chinh };
+            btnThoat = new AppButton { Kieu = KieuNut.Phu };
             SuspendLayout();
             // 
             // lblTieuDe
