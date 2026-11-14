@@ -19,6 +19,7 @@
 | 7 | [`07-CAU-HOI-PHAN-BIEN.md`](07-CAU-HOI-PHAN-BIEN.md) | 38 câu hỏi nhóm A–G, mỗi câu có **3 mức trả lời** (15–30s / 45–90s / đào sâu) | Ôn sâu trước buổi thi |
 | 8 | [`08-KICH-BAN-DEMO.md`](08-KICH-BAN-DEMO.md) | Kịch bản demo 15 phút, tài khoản demo, dữ liệu chuẩn bị, thao tác cần tránh, phương án dự phòng | Chuẩn bị ngay trước buổi bảo vệ |
 | 9 | [`09-MOCK-DEFENSE.md`](09-MOCK-DEFENSE.md) | Quy trình luyện 8 vòng, rubric chấm điểm, ngân hàng câu hỏi dự phòng | Khi luyện với tôi |
+| 10 | [`10-HUONG-DAN-TEST-AUTOMATION.md`](10-HUONG-DAN-TEST-AUTOMATION.md) | Hướng dẫn test module Automation từng bước (test điều kiện, test end-to-end có action thật, SQL kiểm chứng, lỗi thường gặp, dọn dẹp) | Trước khi demo hoặc khi giảng viên hỏi "chứng minh nó chạy" |
 
 ## 5 điều phải nói trước khi giảng viên nói (tự nhận thẳng)
 
