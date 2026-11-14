@@ -32,6 +32,7 @@ namespace BTL_LTTQ.Forms.Automation
             this.lblThongBaoMoiCaption = new System.Windows.Forms.Label();
             this.lblThongBaoMoi = new System.Windows.Forms.Label();
             this.btnQuanLyRule = new System.Windows.Forms.Button();
+            this.btnPhatSuKien = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabLanChay = new System.Windows.Forms.TabPage();
             this.dgvLanChay = new System.Windows.Forms.DataGridView();
@@ -68,6 +69,7 @@ namespace BTL_LTTQ.Forms.Automation
             this.panelThongKe.Controls.Add(this.lblThongBaoMoiCaption);
             this.panelThongKe.Controls.Add(this.lblThongBaoMoi);
             this.panelThongKe.Controls.Add(this.btnQuanLyRule);
+            this.panelThongKe.Controls.Add(this.btnPhatSuKien);
             this.panelThongKe.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelThongKe.Location = new System.Drawing.Point(0, 0);
             this.panelThongKe.Name = "panelThongKe";
@@ -234,6 +236,16 @@ namespace BTL_LTTQ.Forms.Automation
             this.btnQuanLyRule.UseVisualStyleBackColor = true;
             this.btnQuanLyRule.Click += new System.EventHandler(this.btnQuanLyRule_Click);
             // 
+            // btnPhatSuKien
+            // 
+            this.btnPhatSuKien.Location = new System.Drawing.Point(645, 9);
+            this.btnPhatSuKien.Name = "btnPhatSuKien";
+            this.btnPhatSuKien.Size = new System.Drawing.Size(165, 30);
+            this.btnPhatSuKien.TabIndex = 16;
+            this.btnPhatSuKien.Text = "Phát sự kiện thử";
+            this.btnPhatSuKien.UseVisualStyleBackColor = true;
+            this.btnPhatSuKien.Click += new System.EventHandler(this.btnPhatSuKien_Click);
+            // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabLanChay);
@@ -373,6 +385,7 @@ namespace BTL_LTTQ.Forms.Automation
         private System.Windows.Forms.Label lblThongBaoMoiCaption;
         private System.Windows.Forms.Label lblThongBaoMoi;
         private System.Windows.Forms.Button btnQuanLyRule;
+        private System.Windows.Forms.Button btnPhatSuKien;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabLanChay;
         private System.Windows.Forms.DataGridView dgvLanChay;

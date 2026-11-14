@@ -243,8 +243,16 @@ frmMain → nhóm "Hệ thống" → nút "Tự động hóa"  (hiện nếu có
         ├─ Tab "Lần chạy gần đây"  → double click → FrmAutomationExecutionDetail
         ├─ Tab "Nhiệm vụ đang chờ"  → double click → FrmAutomationTaskDetail
         ├─ Tab "Thông báo mới"      → double click → đánh dấu đã đọc
-        └─ Nút "Quản lý quy tắc"   (chỉ hiện nếu có quyền AUTOMATION_QUANLY)
-             └─ FrmRuleManagement (kiểm tra AUTOMATION_QUANLY khi mở)
-                  └─ FrmRuleEditor (kiểm tra AUTOMATION_QUANLY khi mở) → thêm/sửa điều kiện, hành động, Test Rule
+        ├─ Nút "Quản lý quy tắc"   (chỉ hiện nếu có quyền AUTOMATION_QUANLY)
+        │    └─ FrmRuleManagement (kiểm tra AUTOMATION_QUANLY khi mở)
+        │         └─ FrmRuleEditor (kiểm tra AUTOMATION_QUANLY khi mở) → thêm/sửa điều kiện, hành động, Test Rule
+        └─ Nút "Phát sự kiện thử"   (chỉ hiện nếu có quyền AUTOMATION_QUANLY)
+             └─ FrmPhatSuKienThu: chọn lớp + loại sự kiện → phát sự kiện thật
+                (dùng đúng AutomationEventPublisher.PhatSuKienAsync như nghiệp vụ,
+                 token duy nhất mỗi lần ⇒ không bị dedup chặn)
 ```
 Quyền trong DB: `AUTOMATION_XEM` (GiaoVien có, HocVien không), `AUTOMATION_TASK` (GiaoVien có), `AUTOMATION_QUANLY` (`ChiAdmin = 1` ⇒ chỉ Admin).
+
+> **Nút "Phát sự kiện thử"** là công cụ kiểm thử từ phía người dùng: cho phép kiểm tra Rule **ngay trên giao diện**
+> mà không cần import dữ liệu — rất hữu ích khi demo, và giúp phát hiện Rule không chạy do cấu hình sai
+> (nhớ bật rule, đúng trigger, điều kiện khớp).

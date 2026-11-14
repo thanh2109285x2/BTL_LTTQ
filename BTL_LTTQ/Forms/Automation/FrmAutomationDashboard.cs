@@ -35,6 +35,28 @@ namespace BTL_LTTQ.Forms.Automation
             // Quản lý quy tắc là quyền riêng (chỉ Admin theo cấu hình mặc định).
             btnQuanLyRule.Visible = PermissionService.Can(ChucNangConst.AUTOMATION_QUANLY);
 
+            // Phát sự kiện thử: cũng chỉ dành cho người quản lý quy tắc.
+            btnPhatSuKien.Visible = PermissionService.Can(ChucNangConst.AUTOMATION_QUANLY);
+
+            LoadThongKe();
+            LoadLanChayGanDay();
+            LoadTaskDangCho();
+            LoadThongBaoMoi();
+        }
+
+        private void btnPhatSuKien_Click(object sender, EventArgs e)
+        {
+            if (!PermissionService.Can(ChucNangConst.AUTOMATION_QUANLY))
+            {
+                MessageBox.Show("Bạn không có quyền phát sự kiện thử.",
+                    "Không có quyền", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var frmPhat = new FrmPhatSuKienThu();
+            frmPhat.ShowDialog(this);
+
+            // Làm mới để thấy ngay lần chạy vừa phát.
             LoadThongKe();
             LoadLanChayGanDay();
             LoadTaskDangCho();

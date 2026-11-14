@@ -18,10 +18,19 @@
 
 ## 1. TEST NHANH TRÊN UI (2 phút) — chỉ kiểm tra điều kiện
 
+> **Cách nhanh nhất để test hoàn toàn từ giao diện** (không cần import gì):
+> **Hệ thống → Tự động hóa → nút "Phát sự kiện thử"** → chọn lớp + loại sự kiện → **Phát sự kiện**.
+> Sự kiện được phát qua đúng `AutomationEventPublisher.PhatSuKienAsync` như khi chạy thật,
+> nên Rule được đánh giá và **hành động chạy thật**; xong quay lại tab *"Lần chạy gần đây"* để xem kết quả.
+> (Nút này chỉ hiện với Admin — quyền `AUTOMATION_QUANLY`.)
+
 Bấm **Hệ thống → Tự động hóa → Quản lý quy tắc → Thêm**.
 
 1. **Tên rule**: `TEST_DEMO`.
 2. **Trigger**: chọn `Thay đổi số học viên đăng ký` (`CLASS_ENROLLMENT_CHANGED`).
+   > ⚠️ **Đừng chọn "Tạo lớp học" (`CLASS_CREATED`)** nếu bạn chỉ muốn rule chạy tự động:
+   > hiện chỉ Bulk Import mới phát sự kiện thật, nên rule `CLASS_CREATED` sẽ không bao giờ chạy.
+   > (Muốn test rule `CLASS_CREATED` ngay trên UI thì dùng nút **"Phát sự kiện thử"** ở Dashboard.)
 3. **Thêm điều kiện** → chọn trường **"Số học viên hiện tại"**, toán tử **"Lớn hơn"**, giá trị `0` → OK.
 4. **Thêm hành động** → `Ghi nhật ký` (`WRITE_AUDIT_LOG`), nội dung `demo audit` → OK.
 5. Bấm **Kiểm tra** ⇒ thông báo *"Cấu hình Rule hợp lệ."*
