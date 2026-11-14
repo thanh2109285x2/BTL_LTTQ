@@ -1,6 +1,7 @@
 using BTL_LTTQ.Common;
 using BTL_LTTQ.Forms.HeThong;
 using BTL_LTTQ.Forms.QuanLy;
+using BTL_LTTQ.Forms.BaoCao;
 using BTL_LTTQ.Forms.TraCuu;
 
 namespace BTL_LTTQ
@@ -8,9 +9,12 @@ namespace BTL_LTTQ
     public partial class frmMain : Form
     {
         private const int PANEL_COLLAPSED_HEIGHT = 35;
-        public bool DangXuat { get; private set; }
-        private Form? activeForm;
+private const int PANEL_CRUD_EXPANDED = PANEL_COLLAPSED_HEIGHT + (5 * 35);
+private const int PANEL_TRACUU_EXPANDED = PANEL_COLLAPSED_HEIGHT + (3 * 35);
+private const int PANEL_BAOCAO_EXPANDED = PANEL_COLLAPSED_HEIGHT + (4 * 35);
 
+public bool DangXuat { get; private set; }
+private Form? activeForm;
         public frmMain()
         {
             InitializeComponent();
@@ -278,6 +282,12 @@ namespace BTL_LTTQ
             OpenChildForm(() => new frmMonHoc(), btnMonHoc, ChucNangConst.MONHOC_XEM);
         }
 
+        private void btnHocVien_Click(object sender, EventArgs e)
+        {
+            GiaoDien.DanhDauMuc(btnHocVien);
+            OpenChildForm(new frmHocVien());
+        }
+
         private void btnTimLop_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmTimKiemLopHoc(), btnTimLop, ChucNangConst.TIM_LOP);
@@ -286,6 +296,24 @@ namespace BTL_LTTQ
         private void btnTimGiaoVien_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmTimKiemGiaoVien(), btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN);
+        }
+
+        private void btnTimHocVien_Click(object sender, EventArgs e)
+        {
+            GiaoDien.DanhDauMuc(btnTimHocVien);
+            OpenChildForm(new frmTimKiemHocVien());
+        }
+
+        private void btnBaoCaoDiem_Click(object sender, EventArgs e)
+        {
+            GiaoDien.DanhDauMuc(btnBaoCaoDiem);
+            OpenChildForm(new frmBaoCaoDiem());
+        }
+
+        private void btnDoanhThu_Click(object sender, EventArgs e)
+        {
+            GiaoDien.DanhDauMuc(btnDoanhThu);
+            OpenChildForm(new frmBaoCaoDoanhThu());
         }
 
         private void btnXuatExcel_Click(object sender, EventArgs e)
