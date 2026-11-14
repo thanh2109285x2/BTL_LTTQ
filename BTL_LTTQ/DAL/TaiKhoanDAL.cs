@@ -2,7 +2,7 @@ using BTL_LTTQ.Common;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace BTL_LTTQ.DataAccessLayer
+namespace BTL_LTTQ.DAL
 {
     public class TaiKhoanDAL
     {

@@ -21,6 +21,7 @@ namespace BTL_LTTQ.Common
         public const string DANHMUC_KHAC = "DANHMUC_KHAC";
         public const string TIM_LOP = "TIM_LOP";
         public const string TIM_GIAOVIEN = "TIM_GIAOVIEN";
+        public const string TIM_HOCVIEN = "TIM_HOCVIEN";
         public const string BC_DIEM = "BC_DIEM";
         public const string BC_DOANHTHU = "BC_DOANHTHU";
         public const string BC_XEPHANG = "BC_XEPHANG";

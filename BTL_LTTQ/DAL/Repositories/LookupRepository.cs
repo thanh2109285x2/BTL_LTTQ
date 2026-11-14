@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.DAL;
 using System.Data;
 
-namespace BTL_LTTQ.Repositories
+namespace BTL_LTTQ.DAL
 {
     public class LookupRepository
     {

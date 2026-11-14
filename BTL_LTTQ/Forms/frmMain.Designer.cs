@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             flowLayoutPanel1 = new FlowLayoutPanel();
+            panel1 = new Panel();
             btnTrangChu = new AppButton();
             panelCRUD = new Panel();
             btnDanhMucKhac = new AppButton();
@@ -38,10 +39,10 @@
             btnLopHoc = new AppButton();
             btnQuanLyMenu = new AppButton();
             panelTraCuu = new Panel();
-btnTimGiaoVien = new AppButton();
-btnTimLop = new AppButton();
-btnTraCuuMenu = new AppButton();
-btnTimHocVien = new Button();
+            btnTimGiaoVien = new AppButton();
+            btnTimHocVien = new AppButton();
+            btnTimLop = new AppButton();
+            btnTraCuuMenu = new AppButton();
             panelBaoCao = new Panel();
             btnLopTheoPhong = new AppButton();
             btnTop3 = new AppButton();
@@ -60,6 +61,7 @@ btnTimHocVien = new Button();
             btnThoat = new AppButton();
             panelSidebar = new Panel();
             flowLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
             panelCRUD.SuspendLayout();
             panelTraCuu.SuspendLayout();
             panelBaoCao.SuspendLayout();
@@ -72,7 +74,7 @@ btnTimHocVien = new Button();
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.AutoScroll = true;
-            flowLayoutPanel1.Controls.Add(btnTrangChu);
+            flowLayoutPanel1.Controls.Add(panel1);
             flowLayoutPanel1.Controls.Add(panelCRUD);
             flowLayoutPanel1.Controls.Add(panelTraCuu);
             flowLayoutPanel1.Controls.Add(panelBaoCao);
@@ -81,9 +83,17 @@ btnTimHocVien = new Button();
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(284, 354);
+            flowLayoutPanel1.Size = new Size(320, 383);
             flowLayoutPanel1.TabIndex = 0;
             flowLayoutPanel1.WrapContents = false;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(btnTrangChu);
+            panel1.Location = new Point(3, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(271, 52);
+            panel1.TabIndex = 5;
             // 
             // btnTrangChu
             // 
@@ -100,13 +110,13 @@ btnTimHocVien = new Button();
             btnTrangChu.Location = new Point(3, 3);
             btnTrangChu.Name = "btnTrangChu";
             btnTrangChu.Padding = new Padding(8, 0, 0, 0);
-            btnTrangChu.Size = new Size(152, 38);
+            btnTrangChu.Size = new Size(169, 49);
             btnTrangChu.TabIndex = 4;
-            btnTrangChu.Text = "🏠Trang chủ";
+            btnTrangChu.Text = "☰        Menu";
             btnTrangChu.TextAlign = ContentAlignment.MiddleLeft;
             btnTrangChu.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnTrangChu.UseVisualStyleBackColor = false;
-            btnTrangChu.Click += frmMain_Load;
+            btnTrangChu.Click += btnTrangChu_Click;
             // 
             // panelCRUD
             // 
@@ -116,7 +126,7 @@ btnTimHocVien = new Button();
             panelCRUD.Controls.Add(btnHocVien);
             panelCRUD.Controls.Add(btnLopHoc);
             panelCRUD.Controls.Add(btnQuanLyMenu);
-            panelCRUD.Location = new Point(3, 47);
+            panelCRUD.Location = new Point(3, 61);
             panelCRUD.Name = "panelCRUD";
             panelCRUD.Size = new Size(271, 37);
             panelCRUD.TabIndex = 1;
@@ -202,11 +212,8 @@ btnTimHocVien = new Button();
             btnHocVien.TabIndex = 2;
             btnHocVien.Text = "Học viên";
             btnHocVien.TextAlign = ContentAlignment.MiddleLeft;
-
-            btnHocVien.Click += btnHocVien_Click;
-
             btnHocVien.UseVisualStyleBackColor = false;
-
+            btnHocVien.Click += btnHocVien_Click;
             // 
             // btnLopHoc
             // 
@@ -241,12 +248,12 @@ btnTimHocVien = new Button();
             btnQuanLyMenu.ForeColor = Color.FromArgb(30, 74, 130);
             btnQuanLyMenu.ImageAlign = ContentAlignment.MiddleLeft;
             btnQuanLyMenu.Kieu = KieuNut.MenuCha;
-            btnQuanLyMenu.Location = new Point(9, 3);
+            btnQuanLyMenu.Location = new Point(3, 3);
             btnQuanLyMenu.Name = "btnQuanLyMenu";
             btnQuanLyMenu.Padding = new Padding(8, 0, 0, 0);
-            btnQuanLyMenu.Size = new Size(107, 29);
+            btnQuanLyMenu.Size = new Size(169, 29);
             btnQuanLyMenu.TabIndex = 0;
-            btnQuanLyMenu.Text = "📁Quản lý";
+            btnQuanLyMenu.Text = "📁      Quản lý";
             btnQuanLyMenu.TextAlign = ContentAlignment.MiddleLeft;
             btnQuanLyMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnQuanLyMenu.UseVisualStyleBackColor = false;
@@ -258,7 +265,7 @@ btnTimHocVien = new Button();
             panelTraCuu.Controls.Add(btnTimHocVien);
             panelTraCuu.Controls.Add(btnTimLop);
             panelTraCuu.Controls.Add(btnTraCuuMenu);
-            panelTraCuu.Location = new Point(3, 90);
+            panelTraCuu.Location = new Point(3, 104);
             panelTraCuu.Name = "panelTraCuu";
             panelTraCuu.Size = new Size(271, 40);
             panelTraCuu.TabIndex = 2;
@@ -283,14 +290,26 @@ btnTimHocVien = new Button();
             btnTimGiaoVien.TextAlign = ContentAlignment.MiddleLeft;
             btnTimGiaoVien.UseVisualStyleBackColor = false;
             btnTimGiaoVien.Click += btnTimGiaoVien_Click;
+            // 
             // btnTimHocVien
+            // 
+            btnTimHocVien.BackColor = Color.FromArgb(232, 240, 251);
+            btnTimHocVien.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnTimHocVien.FlatAppearance.BorderSize = 0;
+            btnTimHocVien.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnTimHocVien.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnTimHocVien.FlatStyle = FlatStyle.Flat;
+            btnTimHocVien.Font = new Font("Segoe UI", 9F);
+            btnTimHocVien.ForeColor = Color.FromArgb(33, 37, 41);
+            btnTimHocVien.Kieu = KieuNut.MenuCon;
             btnTimHocVien.Location = new Point(52, 108);
             btnTimHocVien.Name = "btnTimHocVien";
+            btnTimHocVien.Padding = new Padding(48, 0, 0, 0);
             btnTimHocVien.Size = new Size(120, 29);
             btnTimHocVien.TabIndex = 4;
             btnTimHocVien.Text = "Tìm học viên";
             btnTimHocVien.TextAlign = ContentAlignment.MiddleLeft;
-            btnTimHocVien.UseVisualStyleBackColor = true;
+            btnTimHocVien.UseVisualStyleBackColor = false;
             btnTimHocVien.Click += btnTimHocVien_Click;
             // 
             // btnTimLop
@@ -326,12 +345,12 @@ btnTimHocVien = new Button();
             btnTraCuuMenu.ForeColor = Color.FromArgb(30, 74, 130);
             btnTraCuuMenu.ImageAlign = ContentAlignment.MiddleLeft;
             btnTraCuuMenu.Kieu = KieuNut.MenuCha;
-            btnTraCuuMenu.Location = new Point(9, 3);
+            btnTraCuuMenu.Location = new Point(3, 3);
             btnTraCuuMenu.Name = "btnTraCuuMenu";
             btnTraCuuMenu.Padding = new Padding(8, 0, 0, 0);
-            btnTraCuuMenu.Size = new Size(107, 29);
+            btnTraCuuMenu.Size = new Size(169, 29);
             btnTraCuuMenu.TabIndex = 1;
-            btnTraCuuMenu.Text = "🔍Tra cứu";
+            btnTraCuuMenu.Text = "🔍      Tra cứu";
             btnTraCuuMenu.TextAlign = ContentAlignment.MiddleLeft;
             btnTraCuuMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnTraCuuMenu.UseVisualStyleBackColor = false;
@@ -344,9 +363,9 @@ btnTimHocVien = new Button();
             panelBaoCao.Controls.Add(btnDoanhThu);
             panelBaoCao.Controls.Add(btnBaoCaoDiem);
             panelBaoCao.Controls.Add(btnBaoCaoMenu);
-            panelBaoCao.Location = new Point(3, 136);
+            panelBaoCao.Location = new Point(3, 150);
             panelBaoCao.Name = "panelBaoCao";
-            panelBaoCao.Size = new Size(271, 34);
+            panelBaoCao.Size = new Size(271, 37);
             panelBaoCao.TabIndex = 3;
             // 
             // btnLopTheoPhong
@@ -409,11 +428,8 @@ btnTimHocVien = new Button();
             btnDoanhThu.TabIndex = 3;
             btnDoanhThu.Text = "Doanh thu";
             btnDoanhThu.TextAlign = ContentAlignment.MiddleLeft;
-
-            btnDoanhThu.Click += btnDoanhThu_Click;
-
             btnDoanhThu.UseVisualStyleBackColor = false;
-
+            btnDoanhThu.Click += btnDoanhThu_Click;
             // 
             // btnBaoCaoDiem
             // 
@@ -433,11 +449,8 @@ btnTimHocVien = new Button();
             btnBaoCaoDiem.TabIndex = 2;
             btnBaoCaoDiem.Text = "Báo cáo điểm";
             btnBaoCaoDiem.TextAlign = ContentAlignment.MiddleLeft;
-
-            btnBaoCaoDiem.Click += btnBaoCaoDiem_Click;
-
             btnBaoCaoDiem.UseVisualStyleBackColor = false;
-
+            btnBaoCaoDiem.Click += btnBaoCaoDiem_Click;
             // 
             // btnBaoCaoMenu
             // 
@@ -451,12 +464,12 @@ btnTimHocVien = new Button();
             btnBaoCaoMenu.ForeColor = Color.FromArgb(30, 74, 130);
             btnBaoCaoMenu.ImageAlign = ContentAlignment.MiddleLeft;
             btnBaoCaoMenu.Kieu = KieuNut.MenuCha;
-            btnBaoCaoMenu.Location = new Point(9, 3);
+            btnBaoCaoMenu.Location = new Point(3, 5);
             btnBaoCaoMenu.Name = "btnBaoCaoMenu";
             btnBaoCaoMenu.Padding = new Padding(8, 0, 0, 0);
-            btnBaoCaoMenu.Size = new Size(107, 29);
+            btnBaoCaoMenu.Size = new Size(169, 29);
             btnBaoCaoMenu.TabIndex = 1;
-            btnBaoCaoMenu.Text = "📊Báo cáo";
+            btnBaoCaoMenu.Text = "📊      Báo cáo";
             btnBaoCaoMenu.TextAlign = ContentAlignment.MiddleLeft;
             btnBaoCaoMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnBaoCaoMenu.UseVisualStyleBackColor = false;
@@ -466,7 +479,7 @@ btnTimHocVien = new Button();
             // 
             panelHeThong.Controls.Add(btnPhanQuyen);
             panelHeThong.Controls.Add(btnHeThong);
-            panelHeThong.Location = new Point(3, 176);
+            panelHeThong.Location = new Point(3, 193);
             panelHeThong.Name = "panelHeThong";
             panelHeThong.Size = new Size(271, 71);
             panelHeThong.TabIndex = 4;
@@ -486,7 +499,7 @@ btnTimHocVien = new Button();
             btnPhanQuyen.Location = new Point(52, 38);
             btnPhanQuyen.Name = "btnPhanQuyen";
             btnPhanQuyen.Padding = new Padding(48, 0, 0, 0);
-            btnPhanQuyen.Size = new Size(120, 29);
+            btnPhanQuyen.Size = new Size(156, 29);
             btnPhanQuyen.TabIndex = 2;
             btnPhanQuyen.Text = "Phân quyền";
             btnPhanQuyen.TextAlign = ContentAlignment.MiddleLeft;
@@ -506,12 +519,12 @@ btnTimHocVien = new Button();
             btnHeThong.ForeColor = Color.FromArgb(30, 74, 130);
             btnHeThong.ImageAlign = ContentAlignment.MiddleLeft;
             btnHeThong.Kieu = KieuNut.MenuCha;
-            btnHeThong.Location = new Point(9, 3);
+            btnHeThong.Location = new Point(3, 3);
             btnHeThong.Name = "btnHeThong";
             btnHeThong.Padding = new Padding(8, 0, 0, 0);
-            btnHeThong.Size = new Size(94, 29);
+            btnHeThong.Size = new Size(169, 29);
             btnHeThong.TabIndex = 1;
-            btnHeThong.Text = "Hệ thống";
+            btnHeThong.Text = "👮‍♂️      Hệ thống";
             btnHeThong.TextAlign = ContentAlignment.MiddleLeft;
             btnHeThong.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnHeThong.UseVisualStyleBackColor = false;
@@ -522,9 +535,9 @@ btnTimHocVien = new Button();
             // 
             panelContent.Controls.Add(lblChao);
             panelContent.Dock = DockStyle.Fill;
-            panelContent.Location = new Point(284, 0);
+            panelContent.Location = new Point(320, 0);
             panelContent.Name = "panelContent";
-            panelContent.Size = new Size(722, 553);
+            panelContent.Size = new Size(686, 553);
             panelContent.TabIndex = 2;
             // 
             // lblChao
@@ -546,9 +559,9 @@ btnTimHocVien = new Button();
             panelThoat.Controls.Add(btnDoiMatKhau);
             panelThoat.Controls.Add(btnThoat);
             panelThoat.Dock = DockStyle.Bottom;
-            panelThoat.Location = new Point(0, 354);
+            panelThoat.Location = new Point(0, 383);
             panelThoat.Name = "panelThoat";
-            panelThoat.Size = new Size(284, 199);
+            panelThoat.Size = new Size(320, 170);
             panelThoat.TabIndex = 5;
             // 
             // btnXuatExcel
@@ -562,7 +575,7 @@ btnTimHocVien = new Button();
             btnXuatExcel.Font = new Font("Segoe UI", 9F);
             btnXuatExcel.ForeColor = Color.FromArgb(41, 98, 168);
             btnXuatExcel.Kieu = KieuNut.MenuTienIch;
-            btnXuatExcel.Location = new Point(32, 3);
+            btnXuatExcel.Location = new Point(55, 3);
             btnXuatExcel.Name = "btnXuatExcel";
             btnXuatExcel.Size = new Size(219, 38);
             btnXuatExcel.TabIndex = 1;
@@ -581,7 +594,7 @@ btnTimHocVien = new Button();
             btnDangXuat.Font = new Font("Segoe UI", 9F);
             btnDangXuat.ForeColor = Color.FromArgb(41, 98, 168);
             btnDangXuat.Kieu = KieuNut.MenuTienIch;
-            btnDangXuat.Location = new Point(32, 91);
+            btnDangXuat.Location = new Point(55, 91);
             btnDangXuat.Name = "btnDangXuat";
             btnDangXuat.Size = new Size(219, 38);
             btnDangXuat.TabIndex = 3;
@@ -600,7 +613,7 @@ btnTimHocVien = new Button();
             btnDoiMatKhau.Font = new Font("Segoe UI", 9F);
             btnDoiMatKhau.ForeColor = Color.FromArgb(41, 98, 168);
             btnDoiMatKhau.Kieu = KieuNut.MenuTienIch;
-            btnDoiMatKhau.Location = new Point(32, 47);
+            btnDoiMatKhau.Location = new Point(55, 47);
             btnDoiMatKhau.Name = "btnDoiMatKhau";
             btnDoiMatKhau.Size = new Size(219, 38);
             btnDoiMatKhau.TabIndex = 2;
@@ -619,7 +632,7 @@ btnTimHocVien = new Button();
             btnThoat.Font = new Font("Segoe UI", 9F);
             btnThoat.ForeColor = Color.FromArgb(192, 57, 43);
             btnThoat.Kieu = KieuNut.MenuThoat;
-            btnThoat.Location = new Point(32, 136);
+            btnThoat.Location = new Point(55, 136);
             btnThoat.Name = "btnThoat";
             btnThoat.Size = new Size(219, 32);
             btnThoat.TabIndex = 0;
@@ -634,7 +647,7 @@ btnTimHocVien = new Button();
             panelSidebar.Dock = DockStyle.Left;
             panelSidebar.Location = new Point(0, 0);
             panelSidebar.Name = "panelSidebar";
-            panelSidebar.Size = new Size(284, 553);
+            panelSidebar.Size = new Size(320, 553);
             panelSidebar.TabIndex = 0;
             // 
             // frmMain
@@ -649,6 +662,7 @@ btnTimHocVien = new Button();
             Text = " Quản lý học viên lớp Tin Học và ngoại ngữ ngắn hạn";
             Load += frmMain_Load;
             flowLayoutPanel1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             panelCRUD.ResumeLayout(false);
             panelTraCuu.ResumeLayout(false);
             panelBaoCao.ResumeLayout(false);
@@ -672,7 +686,7 @@ private AppButton btnBaoCaoMenu;
 private AppButton btnHeThong;
 private AppButton btnPhanQuyen;
 private AppButton btnTimGiaoVien;
-private Button btnTimHocVien;
+private AppButton btnTimHocVien;
 private AppButton btnTimLop;
 private AppButton btnTop3;
 private AppButton btnDoanhThu;
@@ -692,5 +706,6 @@ private AppButton btnLopTheoPhong;
         private AppButton btnDoiMatKhau;
         private AppButton btnDangXuat;
         private Label lblChao;
+        private Panel panel1;
     }
 }

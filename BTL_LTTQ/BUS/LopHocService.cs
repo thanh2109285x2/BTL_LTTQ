@@ -1,10 +1,11 @@
-﻿using BTL_LTTQ.Models;
-using BTL_LTTQ.Repositories;
+﻿using BTL_LTTQ.Common;
+using BTL_LTTQ.Models;
+using BTL_LTTQ.DAL;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Data;
 
-namespace BTL_LTTQ.Services
+namespace BTL_LTTQ.BUS
 {
     public class LopHocService
     {
@@ -12,7 +13,8 @@ namespace BTL_LTTQ.Services
 
         public DataTable LayDanhSach(string tuKhoa = "")
         {
-            return _repo.LayDanhSach((tuKhoa ?? "").Trim());
+            PhamViInfo phamVi = PhamViDuLieu.ChoLopHoc(ChucNangConst.LOPHOC_XEM);
+            return _repo.LayDanhSach((tuKhoa ?? "").Trim(), phamVi);
         }
 
         public string Them(LopHoc l)
@@ -44,7 +46,8 @@ namespace BTL_LTTQ.Services
 
             try
             {
-                _repo.Sua(l);
+                PhamViInfo phamVi = PhamViDuLieu.ChoLopHoc(ChucNangConst.LOPHOC_SUA);
+                _repo.Sua(l, phamVi);
                 return "";
             }
             catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException || ex is InvalidOperationException)

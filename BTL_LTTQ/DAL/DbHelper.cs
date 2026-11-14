@@ -5,19 +5,16 @@ using System.Configuration;
 using System.Data;
 using System.Text;
 
-namespace BTL_LTTQ.DataAccessLayer
+namespace BTL_LTTQ.DAL
 {
     public static class DbHelper
     {
-        private static string ConnectDBStr => ConfigurationManager.ConnectionStrings["DB"]?.ConnectionString
-            ?? throw new InvalidOperationException("Chưa cấu hình connection string 'DB' trong App.config.");
-
-        public static string DataSource => new SqlConnectionStringBuilder(ConnectDBStr).DataSource;
+        private static readonly string _connectDBStr = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
         //dugn cho select
         public static DataTable ExecuteQuery(string sql, params SqlParameter[] parameters)
         {
-            using (var conn = new SqlConnection(ConnectDBStr))
+            using (var conn = new SqlConnection(_connectDBStr))
             using (var cmd = new SqlCommand(sql, conn))
             {
                 if (parameters != null) cmd.Parameters.AddRange(parameters);
@@ -41,7 +38,7 @@ namespace BTL_LTTQ.DataAccessLayer
         //dung cho cac lenh khac
         public static int ExecuteNonQuery(string sql, params SqlParameter[] parameters)
         {
-            using (var conn = new SqlConnection(ConnectDBStr))
+            using (var conn = new SqlConnection(_connectDBStr))
             using (var cmd = new SqlCommand(sql, conn))
             {
                 if (parameters != null) cmd.Parameters.AddRange(parameters);
@@ -84,7 +81,7 @@ namespace BTL_LTTQ.DataAccessLayer
         {
             try
             {
-                using (var conn = new SqlConnection(ConnectDBStr))
+                using (var conn = new SqlConnection(_connectDBStr))
                 {
                     conn.Open();
                     message = "ket noi thanh cong";

@@ -1,4 +1,5 @@
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.DAL;
+using BTL_LTTQ.Models;
 using System.Data;
 
 namespace BTL_LTTQ.Common
@@ -8,6 +9,10 @@ namespace BTL_LTTQ.Common
         private static readonly PhanQuyenDAL _phanQuyenDAL = new PhanQuyenDAL();
         private static readonly Dictionary<string, (bool CoQuyen, bool ChiCuaMinh)> _quyen =
             new Dictionary<string, (bool CoQuyen, bool ChiCuaMinh)>(StringComparer.OrdinalIgnoreCase);
+
+        public static List<PhanQuyenChucNang> LayDanhSachChucNang() => _phanQuyenDAL.LayDanhSachChucNang();
+
+        public static void Luu(IEnumerable<PhanQuyenChucNang> danhSach) => _phanQuyenDAL.Luu(danhSach);
 
         //Nạp lại quyền theo vai trò hiện tại; không có dòng = không có quyền.
         public static void Load()

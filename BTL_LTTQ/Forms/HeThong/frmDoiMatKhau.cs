@@ -1,12 +1,12 @@
 using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.BUS;
 using System.Windows.Forms;
 
 namespace BTL_LTTQ.Forms.HeThong
 {
     public partial class frmDoiMatKhau : Form
     {
-        private readonly TaiKhoanDAL _taiKhoanDAL = new TaiKhoanDAL();
+        private readonly TaiKhoanService _taiKhoanService = new();
 
         public frmDoiMatKhau()
         {
@@ -51,7 +51,7 @@ namespace BTL_LTTQ.Forms.HeThong
 
             try
             {
-                string loi = _taiKhoanDAL.DoiMatKhau(CurrentUser.TenDangNhap, matKhauCu, matKhauMoi);
+                string loi = _taiKhoanService.DoiMatKhau(CurrentUser.TenDangNhap, matKhauCu, matKhauMoi);
                 if (loi != "")
                 {
                     MessageBox.Show(loi, "Không đổi được mật khẩu", MessageBoxButtons.OK, MessageBoxIcon.Warning);

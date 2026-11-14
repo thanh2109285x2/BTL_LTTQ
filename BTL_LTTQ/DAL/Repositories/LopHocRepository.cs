@@ -1,19 +1,19 @@
 ﻿using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.DAL;
 using BTL_LTTQ.Models;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Data;
 using System;
 
-namespace BTL_LTTQ.Repositories
+namespace BTL_LTTQ.DAL
 {
     public class LopHocRepository
     {
-        public DataTable LayDanhSach(string tuKhoa = "")
+        public DataTable LayDanhSach(string tuKhoa, PhamViInfo phamVi)
         {
-            var phamVi = PhamViDuLieu.ChoLopHoc(ChucNangConst.LOPHOC_XEM, "l");
-            string dieuKienPhamVi = phamVi.DieuKienSql == "" ? "" : " AND " + phamVi.DieuKienSql;
+            var dieuKien = PhamViSqlBuilder.TaoDieuKienLopHoc(phamVi, "l");
+            string dieuKienPhamVi = dieuKien.DieuKienSql == "" ? "" : " AND " + dieuKien.DieuKienSql;
             string sql = $@"SELECT l.MaLop, l.TenLop,
                                   l.MaMon, m.TenMon,
                                   l.MaGV, g.TenGV,
@@ -34,7 +34,7 @@ namespace BTL_LTTQ.Repositories
             {
                 new SqlParameter("@TuKhoa", tuKhoa)
             };
-            thamSo.AddRange(phamVi.ThamSo);
+            thamSo.AddRange(dieuKien.ThamSo);
 
             return DbHelper.ExecuteQuery(sql, thamSo.ToArray());
         }
@@ -54,7 +54,7 @@ namespace BTL_LTTQ.Repositories
             DbHelper.ExecuteNonQuery(sql, ThamSo(l));
         }
 
-        public void Sua(LopHoc l)
+        public void Sua(LopHoc l, PhamViInfo phamVi)
         {
             if (!PermissionService.Can(ChucNangConst.LOPHOC_SUA))
                 throw new UnauthorizedAccessException("Bạn không có quyền sửa lớp học.");
@@ -63,8 +63,8 @@ namespace BTL_LTTQ.Repositories
                 throw new UnauthorizedAccessException("Học viên không được sửa lớp học.");
 
             bool chiCuaMinh = PermissionService.ChiCuaMinh(ChucNangConst.LOPHOC_SUA);
-            var phamVi = PhamViDuLieu.ChoLopHoc(ChucNangConst.LOPHOC_SUA, "l");
-            string dieuKienPhamVi = phamVi.DieuKienSql == "" ? "" : " AND " + phamVi.DieuKienSql;
+            var dieuKien = PhamViSqlBuilder.TaoDieuKienLopHoc(phamVi, "l");
+            string dieuKienPhamVi = dieuKien.DieuKienSql == "" ? "" : " AND " + dieuKien.DieuKienSql;
             string cotGiaoVien = chiCuaMinh ? "" : "MaGV = @MaGV, ";
             string sql = $@"UPDATE l
                             SET TenLop = @TenLop, MaMon = @MaMon, {cotGiaoVien}
@@ -74,7 +74,7 @@ namespace BTL_LTTQ.Repositories
                             WHERE l.MaLop = @MaLop{dieuKienPhamVi}";
 
             var thamSo = new List<SqlParameter>(ThamSo(l));
-            thamSo.AddRange(phamVi.ThamSo);
+            thamSo.AddRange(dieuKien.ThamSo);
 
             if (DbHelper.ExecuteNonQuery(sql, thamSo.ToArray()) != 1)
                 throw new InvalidOperationException("Không thể cập nhật: lớp không tồn tại hoặc không thuộc quyền của bạn");

@@ -1,5 +1,5 @@
 using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.BUS;
 using System.Data;
 using System.Linq;
 
@@ -7,7 +7,7 @@ namespace BTL_LTTQ.Forms.HeThong
 {
     public partial class frmDangKy : Form
     {
-        private readonly TaiKhoanDAL _taiKhoanDAL = new TaiKhoanDAL();
+        private readonly TaiKhoanService _taiKhoanService = new();
 
         public string TenDangNhapMoi { get; private set; } = "";
 
@@ -29,7 +29,7 @@ namespace BTL_LTTQ.Forms.HeThong
             vaiTro.Columns.Add("TenVaiTro", typeof(string));
             vaiTro.Rows.Add(VaiTroConst.GiaoVien, "Giáo viên");
             vaiTro.Rows.Add(VaiTroConst.HocVien, "Học viên");
-            if (!_taiKhoanDAL.CoAdmin())
+            if (!_taiKhoanService.CoAdmin())
                 vaiTro.Rows.Add(VaiTroConst.Admin, "Admin");
 
             cboVaiTro.DisplayMember = "TenVaiTro";
@@ -54,8 +54,8 @@ namespace BTL_LTTQ.Forms.HeThong
             if (!canChonHoSo) return;
 
             DataTable hoSo = vaiTro == VaiTroConst.GiaoVien
-                ? _taiKhoanDAL.LayGiaoVienChuaCoTaiKhoan()
-                : _taiKhoanDAL.LayHocVienChuaCoTaiKhoan();
+                ? _taiKhoanService.LayGiaoVienChuaCoTaiKhoan()
+                : _taiKhoanService.LayHocVienChuaCoTaiKhoan();
             string cotMa = vaiTro == VaiTroConst.GiaoVien ? "MaGV" : "MaHocVien";
             string cotTen = vaiTro == VaiTroConst.GiaoVien ? "TenGV" : "TenHocVien";
             hoSo.Columns.Add("HoSoHienThi", typeof(string));
@@ -79,7 +79,7 @@ namespace BTL_LTTQ.Forms.HeThong
                 return;
             }
 
-            if (_taiKhoanDAL.TenDangNhapDaTonTai(tenDangNhap))
+            if (_taiKhoanService.TenDangNhapDaTonTai(tenDangNhap))
             {
                 BaoLoi("Tên đăng nhập đã tồn tại.");
                 txtTenDangNhap.Focus();
@@ -113,7 +113,7 @@ namespace BTL_LTTQ.Forms.HeThong
                     return;
                 }
 
-                string? dienThoai = _taiKhoanDAL.LayDienThoai(vaiTro, maHoSo);
+                string? dienThoai = _taiKhoanService.LayDienThoai(vaiTro, maHoSo);
                 if (BoKhoangTrang(txtSoDienThoai.Text) != BoKhoangTrang(dienThoai ?? ""))
                 {
                     BaoLoi("Số điện thoại không khớp với hồ sơ");
@@ -133,9 +133,7 @@ namespace BTL_LTTQ.Forms.HeThong
                 return;
             }
 
-            string salt = MatKhauHelper.TaoSalt();
-            string hash = MatKhauHelper.BamMatKhau(txtMatKhau.Text, salt);
-            string loi = _taiKhoanDAL.ThemTaiKhoan(tenDangNhap, hash, salt, vaiTro, maGV, maHocVien);
+            string loi = _taiKhoanService.DangKy(tenDangNhap, txtMatKhau.Text, vaiTro, maGV, maHocVien);
             if (loi != "")
             {
                 BaoLoi(loi);

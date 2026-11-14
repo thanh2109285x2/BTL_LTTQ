@@ -186,6 +186,7 @@ FROM (VALUES
  ('DANHMUC_KHAC', N'Quản lý danh mục khác', N'Quản lý', 0, 17, 0),
  ('TIM_LOP', N'Tìm lớp học', N'Tra cứu', 1, 18, 0),
  ('TIM_GIAOVIEN', N'Tìm giáo viên', N'Tra cứu', 0, 19, 0),
+ ('TIM_HOCVIEN', N'Tìm học viên', N'Tra cứu', 0, 27, 0),
  ('BC_DIEM', N'Báo cáo điểm', N'Báo cáo', 1, 20, 0),
  ('BC_DOANHTHU', N'Báo cáo doanh thu', N'Báo cáo', 0, 21, 0),
  ('BC_XEPHANG', N'Báo cáo xếp hạng', N'Báo cáo', 0, 22, 0),

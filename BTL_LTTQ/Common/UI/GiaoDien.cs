@@ -190,7 +190,8 @@ namespace BTL_LTTQ
             if (b is AppButton)
             {
                 if (b is AppButton appButton &&
-                    appButton.Kieu is KieuNut.MenuCha or KieuNut.MenuCon)
+                    appButton.Kieu is KieuNut.MenuCha or KieuNut.MenuCon or
+                        KieuNut.MenuTienIch or KieuNut.MenuThoat)
                     ApDungBoCucNutMenu(b);
                 return;
             }

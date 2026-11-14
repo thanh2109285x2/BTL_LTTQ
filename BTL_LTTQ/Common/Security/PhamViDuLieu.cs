@@ -1,4 +1,5 @@
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.DAL;
+using BTL_LTTQ.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -6,41 +7,33 @@ namespace BTL_LTTQ.Common
 {
     public static class PhamViDuLieu
     {
-        public static (string DieuKienSql, SqlParameter[] ThamSo) ChoLopHoc(string maChucNang, string aliasBang)
+        public static PhamViInfo ChoLopHoc(string maChucNang)
         {
-            KiemTraAlias(aliasBang);
-
             if (!PermissionService.ChiCuaMinh(maChucNang))
-                return DieuKienRong();
+                return new PhamViInfo(LoaiPhamVi.TatCa);
 
             if (!string.Equals(maChucNang, ChucNangConst.LOPHOC_XEM, StringComparison.OrdinalIgnoreCase) &&
                 !string.Equals(maChucNang, ChucNangConst.TIM_LOP, StringComparison.OrdinalIgnoreCase) &&
                 !string.Equals(maChucNang, ChucNangConst.LOPHOC_SUA, StringComparison.OrdinalIgnoreCase))
-                return TuChoiTatCa();
+                return new PhamViInfo(LoaiPhamVi.TuChoi);
 
             if (CurrentUser.IsGiaoVien)
             {
                 if (string.IsNullOrWhiteSpace(CurrentUser.MaGV))
-                    return TuChoiTatCa();
+                    return new PhamViInfo(LoaiPhamVi.TuChoi);
 
-                return ($"{aliasBang}.MaGV = @PV_MaGV", new[]
-                {
-                    new SqlParameter("@PV_MaGV", SqlDbType.VarChar, 20) { Value = CurrentUser.MaGV }
-                });
+                return new PhamViInfo(LoaiPhamVi.GiaoVien, MaGiaoVien: CurrentUser.MaGV);
             }
 
             if (CurrentUser.IsHocVien)
             {
                 if (string.IsNullOrWhiteSpace(CurrentUser.MaHocVien))
-                    return TuChoiTatCa();
+                    return new PhamViInfo(LoaiPhamVi.TuChoi);
 
-                return ($"EXISTS (SELECT 1 FROM HocVien pv_h WHERE pv_h.MaHocVien = @PV_MaHocVien AND pv_h.MaLop = {aliasBang}.MaLop)", new[]
-                {
-                    new SqlParameter("@PV_MaHocVien", SqlDbType.VarChar, 20) { Value = CurrentUser.MaHocVien }
-                });
+                return new PhamViInfo(LoaiPhamVi.HocVien, MaHocVien: CurrentUser.MaHocVien);
             }
 
-            return TuChoiTatCa();
+            return new PhamViInfo(LoaiPhamVi.TuChoi);
         }
 
         public static (string DieuKienSql, SqlParameter[] ThamSo) ChoHocVien(string maChucNang, string aliasBang)

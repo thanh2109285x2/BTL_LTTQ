@@ -97,6 +97,7 @@ INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu],
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'PHANQUYEN', N'Phân quyền', N'Hệ thống', 0, 1, 90);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'TAIKHOAN', N'Quản lý tài khoản', N'Hệ thống', 0, 1, 91);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'TIM_GIAOVIEN', N'Tìm giáo viên', N'Tra cứu', 0, 0, 61);
+INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'TIM_HOCVIEN', N'Tìm học viên', N'Tra cứu', 0, 0, 62);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'TIM_LOP', N'Tìm lớp', N'Tra cứu', 1, 0, 60);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'XUAT_EXCEL', N'Xuất file Excel', N'Khác', 0, 0, 80);
 INSERT [dbo].[ChuyenMon] ([MaChuyenMon], [TenChuyenMon]) VALUES (N'CM01', N'Công nghệ thông tin');
@@ -188,6 +189,10 @@ INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUE
 INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'MONHOC_XOA', N'HocVien', 0, 0);
 INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'TIM_GIAOVIEN', N'GiaoVien', 1, 0);
 INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'TIM_GIAOVIEN', N'HocVien', 0, 0);
+INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'TIM_HOCVIEN', N'GiaoVien', 0, 0);
+INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'TIM_HOCVIEN', N'HocVien', 0, 0);
+INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'TIM_HOCVIEN', N'GiaoVien', 1, 0);
+INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'TIM_HOCVIEN', N'HocVien', 0, 0);
 INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'TIM_LOP', N'GiaoVien', 1, 0);
 INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'TIM_LOP', N'HocVien', 0, 0);
 INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'XUAT_EXCEL', N'GiaoVien', 1, 0);

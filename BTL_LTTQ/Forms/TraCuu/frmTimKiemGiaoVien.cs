@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using BTL_LTTQ.Models;
-using BTL_LTTQ.Services;
+using BTL_LTTQ.BUS;
 
 namespace BTL_LTTQ.Forms.TraCuu
 {

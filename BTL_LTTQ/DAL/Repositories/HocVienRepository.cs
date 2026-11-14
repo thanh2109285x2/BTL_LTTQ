@@ -1,8 +1,8 @@
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.DAL;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace BTL_LTTQ.Repositories
+namespace BTL_LTTQ.DAL
 {
     public class HocVienRepository
     {

@@ -1,8 +1,9 @@
+using BTL_LTTQ.Common;
 using BTL_LTTQ.Models;
-using BTL_LTTQ.Repositories;
+using BTL_LTTQ.DAL;
 using System.Data;
 
-namespace BTL_LTTQ.Services
+namespace BTL_LTTQ.BUS
 {
     public class LopHocTraCuuService
     {
@@ -15,7 +16,8 @@ namespace BTL_LTTQ.Services
             if (tieuChi.SiSoTu > tieuChi.SiSoDen)
                 return "Sĩ số 'từ' không được lớn hơn sĩ số 'đến'.";
 
-            ketQua = _repo.TimKiem(tieuChi);
+            PhamViInfo phamVi = PhamViDuLieu.ChoLopHoc(ChucNangConst.TIM_LOP);
+            ketQua = _repo.TimKiem(tieuChi, phamVi);
             return "";
         }
     }

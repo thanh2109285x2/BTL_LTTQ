@@ -1,8 +1,8 @@
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.DAL;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace BTL_LTTQ.Forms.BaoCao
+namespace BTL_LTTQ.DAL
 {
     internal sealed class BaoCaoRepository
     {

@@ -1,18 +1,18 @@
 using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.DAL;
 using BTL_LTTQ.Models;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Data;
 
-namespace BTL_LTTQ.Repositories
+namespace BTL_LTTQ.DAL
 {
     public class LopHocTraCuuRepository
     {
-        public DataTable TimKiem(TimKiemLopHoc tieuChi)
+        public DataTable TimKiem(TimKiemLopHoc tieuChi, PhamViInfo phamVi)
         {
-            var phamVi = PhamViDuLieu.ChoLopHoc(ChucNangConst.TIM_LOP, "l");
-            string dieuKienPhamVi = phamVi.DieuKienSql == "" ? "" : " AND " + phamVi.DieuKienSql;
+            var dieuKien = PhamViSqlBuilder.TaoDieuKienLopHoc(phamVi, "l");
+            string dieuKienPhamVi = dieuKien.DieuKienSql == "" ? "" : " AND " + dieuKien.DieuKienSql;
             string sql = $@"SELECT * FROM(
                             SELECT l.MaLop, l.TenLop, m.TenMon, g.TenGV, l.NgayBD, l.NgayKT,
                                    (SELECT COUNT(*) FROM HocVien d WHERE d.MaLop = l.MaLop) AS SiSo
@@ -30,7 +30,7 @@ namespace BTL_LTTQ.Repositories
                 new SqlParameter("@SiSoTu", tieuChi.SiSoTu),
                 new SqlParameter("@SiSoDen", tieuChi.SiSoDen)
             };
-            thamSo.AddRange(phamVi.ThamSo);
+            thamSo.AddRange(dieuKien.ThamSo);
 
             return DbHelper.ExecuteQuery(sql, thamSo.ToArray());
         }

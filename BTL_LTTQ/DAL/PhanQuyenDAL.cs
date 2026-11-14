@@ -4,7 +4,7 @@ using System.Linq;
 using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace BTL_LTTQ.DataAccessLayer
+namespace BTL_LTTQ.DAL
 {
     public class PhanQuyenDAL
     {

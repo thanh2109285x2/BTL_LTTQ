@@ -1,10 +1,10 @@
 using BTL_LTTQ.Models;
-using BTL_LTTQ.Repositories;
+using BTL_LTTQ.DAL;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Data;
 
-namespace BTL_LTTQ.Services
+namespace BTL_LTTQ.BUS
 {
     public class MonHocService
     {
