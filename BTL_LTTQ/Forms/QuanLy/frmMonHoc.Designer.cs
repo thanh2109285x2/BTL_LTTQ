@@ -1,4 +1,6 @@
-﻿namespace BTL_LTTQ.Forms.QuanLy
+﻿using BTL_LTTQ;
+
+namespace BTL_LTTQ.Forms.QuanLy
 {
     partial class frmMonHoc
     {
@@ -36,11 +38,11 @@
             label11 = new Label();
             label1 = new Label();
             panelNut = new Panel();
-            btnLamMoi = new Button();
-            btnXoa = new Button();
-            btnSua = new Button();
-            btnThem = new Button();
-            btnThu = new Button();
+            btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
+            btnXoa = new AppButton { Kieu = KieuNut.NguyHiem };
+            btnSua = new AppButton { Kieu = KieuNut.Chinh };
+            btnThem = new AppButton { Kieu = KieuNut.Chinh };
+            btnThu = new AppButton { Kieu = KieuNut.Phu };
             panelTieuDe = new Panel();
             label3 = new Label();
             label2 = new Label();
@@ -318,11 +320,11 @@
         private Label label11;
         private Label label1;
         private Panel panelNut;
-        private Button btnLamMoi;
-        private Button btnXoa;
-        private Button btnSua;
-        private Button btnThem;
-        private Button btnThu;
+        private AppButton btnLamMoi;
+        private AppButton btnXoa;
+        private AppButton btnSua;
+        private AppButton btnThem;
+        private AppButton btnThu;
         private Panel panelTieuDe;
         private Label label3;
         private Label label2;

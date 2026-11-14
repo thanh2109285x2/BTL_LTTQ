@@ -27,6 +27,17 @@ namespace BTL_LTTQ.DataAccessLayer
             }
         }
 
+        public static object? ExecuteScalar(string sql, params SqlParameter[] parameters)
+        {
+            using (var conn = new SqlConnection(_connectDBStr))
+            using (var cmd = new SqlCommand(sql, conn))
+            {
+                if (parameters != null) cmd.Parameters.AddRange(parameters);
+                conn.Open();
+                return cmd.ExecuteScalar();
+            }
+        }
+
         //dung cho cac lenh khac
         public static int ExecuteNonQuery(string sql, params SqlParameter[] parameters)
         {
@@ -36,6 +47,36 @@ namespace BTL_LTTQ.DataAccessLayer
                 if (parameters != null) cmd.Parameters.AddRange(parameters);
                 conn.Open();
                 return cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static void ExecuteTransaction(Action<SqlConnection, SqlTransaction> action)
+        {
+            ArgumentNullException.ThrowIfNull(action);
+
+            using (var conn = new SqlConnection(_connectDBStr))
+            {
+                conn.Open();
+                using (SqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        action(conn, transaction);
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            transaction.Rollback();
+                        }
+                        catch
+                        {
+                        }
+
+                        throw;
+                    }
+                }
             }
         }
 

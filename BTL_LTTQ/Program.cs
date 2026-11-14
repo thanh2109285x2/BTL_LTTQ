@@ -17,9 +17,17 @@ namespace BTL_LTTQ
             // Đăng ký handler Automation một lần cho toàn ứng dụng.
             Services.Automation.ActionHandlerRegistry.EnsureInitialized();
 
-            using var formDangNhap = new frmDangNhap();
-            if (formDangNhap.ShowDialog() == DialogResult.OK)
-                Application.Run(new frmMain());
+            while (true)
+            {
+                using var formDangNhap = new frmDangNhap();
+                if (formDangNhap.ShowDialog() != DialogResult.OK)
+                    return;
+
+                using var formMain = new frmMain();
+                Application.Run(formMain);
+                if (!formMain.DangXuat)
+                    return;
+            }
         }
     }
 }

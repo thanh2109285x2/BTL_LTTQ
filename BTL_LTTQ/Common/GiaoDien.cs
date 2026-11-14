@@ -5,6 +5,7 @@ namespace BTL_LTTQ
 {
     public static class GiaoDien
     {
+        public static readonly Color MauTrang = Color.White;
         public static readonly Color MauChinh = Color.FromArgb(41, 98, 168);
         public static readonly Color MauChinhDam = Color.FromArgb(30, 74, 130);
         public static readonly Color MauNguyHiem = Color.FromArgb(192, 57, 43);
@@ -20,6 +21,18 @@ namespace BTL_LTTQ
         public static readonly Color MauSidebarCha = Color.FromArgb(210, 225, 246);
         public static readonly Color MauSidebarHover = Color.FromArgb(193, 214, 242);
         public static readonly Color MauSidebarChu = Color.FromArgb(33, 37, 41);
+        public static readonly Color MauThoatHover = Color.FromArgb(250, 225, 222);
+        public const int VienNutThuong = 1;
+        public const int VienNutMenu = 0;
+        public static readonly Padding LeMenuCha = new Padding(8, 0, 0, 0);
+        public static readonly Padding LeMenuCon = new Padding(48, 0, 0, 0);
+        public static readonly Padding LeMenuTienIch = new Padding(0);
+        public static readonly ContentAlignment CanGiua = ContentAlignment.MiddleCenter;
+        public static readonly ContentAlignment CanTrai = ContentAlignment.MiddleLeft;
+        public static readonly ContentAlignment CanAnhMenuCha = ContentAlignment.MiddleLeft;
+        public static readonly TextImageRelation AnhTruocChu = TextImageRelation.ImageBeforeText;
+        public const FontStyle ChuThuong = FontStyle.Regular;
+        public const FontStyle ChuDam = FontStyle.Bold;
 
         public static void ApDung(Form f)
         {
@@ -62,6 +75,9 @@ namespace BTL_LTTQ
 
         private static void DinhDangNut(Button b)
         {
+            if (b is AppButton)
+                return;
+
             b.FlatStyle = FlatStyle.Flat;
             b.UseVisualStyleBackColor = false;
             b.Cursor = Cursors.Hand;
@@ -73,20 +89,20 @@ namespace BTL_LTTQ
                 case "btnThem":
                 case "btnSua":
                 case "btnTimKiem":
-                    nen = MauChinh; chu = Color.White; vien = MauChinh; hover = MauChinhDam;
+                    nen = MauChinh; chu = MauTrang; vien = MauChinh; hover = MauChinhDam;
                     break;
                 case "btnXoa":
-                    nen = MauNguyHiem; chu = Color.White; vien = MauNguyHiem; hover = MauNguyHiemDam;
+                    nen = MauNguyHiem; chu = MauTrang; vien = MauNguyHiem; hover = MauNguyHiemDam;
                     break;
                 default:
-                    nen = Color.White; chu = MauChu; vien = MauVien; hover = MauHangLe;
+                    nen = MauTrang; chu = MauChu; vien = MauVien; hover = MauHangLe;
                     break;
             }
 
             b.BackColor = nen;
             b.ForeColor = chu;
             b.FlatAppearance.BorderColor = vien;
-            b.FlatAppearance.BorderSize = 1;
+            b.FlatAppearance.BorderSize = VienNutThuong;
             b.FlatAppearance.MouseOverBackColor = hover;
             b.FlatAppearance.MouseDownBackColor = hover;
         }
@@ -103,9 +119,9 @@ namespace BTL_LTTQ
             g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             g.ColumnHeadersHeight = 34;
             g.ColumnHeadersDefaultCellStyle.BackColor = MauChinh;
-            g.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            g.ColumnHeadersDefaultCellStyle.ForeColor = MauTrang;
             g.ColumnHeadersDefaultCellStyle.SelectionBackColor = MauChinh;
-            g.ColumnHeadersDefaultCellStyle.SelectionForeColor = Color.White;
+            g.ColumnHeadersDefaultCellStyle.SelectionForeColor = MauTrang;
             g.ColumnHeadersDefaultCellStyle.Font = new Font(g.Font, FontStyle.Bold);
 
             g.DefaultCellStyle.ForeColor = MauChu;
@@ -136,7 +152,7 @@ namespace BTL_LTTQ
             }
             _mucDangChon = b;
             b.BackColor = MauChinh;
-            b.ForeColor = Color.White;
+            b.ForeColor = MauTrang;
         }
 
         private static void DuyetMain(Control cha)
@@ -161,6 +177,14 @@ namespace BTL_LTTQ
 
         private static void DinhDangNutMenu(Button b)
         {
+            if (b is AppButton)
+            {
+                if (b is AppButton appButton &&
+                    appButton.Kieu is KieuNut.MenuCha or KieuNut.MenuCon)
+                    ApDungBoCucNutMenu(b);
+                return;
+            }
+
             bool laMucCha = LaMucCha(b);
             bool laThoat = b.Text.Trim() == "Thoát";
 
@@ -173,16 +197,16 @@ namespace BTL_LTTQ
             {
                 b.BackColor = MauSidebar;
                 b.ForeColor = MauNguyHiem;
-                b.TextAlign = ContentAlignment.MiddleCenter;
-                b.FlatAppearance.MouseOverBackColor = Color.FromArgb(250, 225, 222);
-                b.FlatAppearance.MouseDownBackColor = Color.FromArgb(250, 225, 222);
+                b.TextAlign = CanGiua;
+                b.FlatAppearance.MouseOverBackColor = MauThoatHover;
+                b.FlatAppearance.MouseDownBackColor = MauThoatHover;
             }
             else if (b.Name == "btnXuatExcel")
             {
                 b.BackColor = MauSidebar;
                 b.ForeColor = MauChinh;
-                b.TextAlign = ContentAlignment.MiddleCenter;
-                b.Padding = new Padding(0);
+                b.TextAlign = CanGiua;
+                b.Padding = LeMenuTienIch;
                 b.FlatAppearance.MouseOverBackColor = MauSidebarHover;
                 b.FlatAppearance.MouseDownBackColor = MauSidebarHover;
             }
@@ -190,11 +214,11 @@ namespace BTL_LTTQ
             {
                 b.BackColor = MauSidebarCha;
                 b.ForeColor = MauChinhDam;
-                b.Font = new Font(b.Font, FontStyle.Bold);
-                b.TextAlign = ContentAlignment.MiddleLeft;
-                b.ImageAlign = ContentAlignment.MiddleLeft;
-                b.TextImageRelation = TextImageRelation.ImageBeforeText;
-                b.Padding = new Padding(8, 0, 0, 0);
+                b.Font = new Font(b.Font, ChuDam);
+                b.TextAlign = CanTrai;
+                b.ImageAlign = CanAnhMenuCha;
+                b.TextImageRelation = AnhTruocChu;
+                b.Padding = LeMenuCha;
                 b.FlatAppearance.MouseOverBackColor = MauSidebarHover;
                 b.FlatAppearance.MouseDownBackColor = MauSidebarHover;
             }
@@ -202,12 +226,17 @@ namespace BTL_LTTQ
             {
                 b.BackColor = MauSidebar;
                 b.ForeColor = MauSidebarChu;
-                b.TextAlign = ContentAlignment.MiddleLeft;
-                b.Padding = new Padding(48, 0, 0, 0);
+                b.TextAlign = CanTrai;
+                b.Padding = LeMenuCon;
                 b.FlatAppearance.MouseOverBackColor = MauSidebarHover;
                 b.FlatAppearance.MouseDownBackColor = MauSidebarHover;
             }
 
+            ApDungBoCucNutMenu(b);
+        }
+
+        private static void ApDungBoCucNutMenu(Button b)
+        {
             if (b.Parent != null)
             {
                 b.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;

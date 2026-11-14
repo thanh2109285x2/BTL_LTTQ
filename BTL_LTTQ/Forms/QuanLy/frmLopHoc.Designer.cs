@@ -1,4 +1,6 @@
-﻿namespace BTL_LTTQ.Forms.QuanLy
+﻿using BTL_LTTQ;
+
+namespace BTL_LTTQ.Forms.QuanLy
 {
     partial class frmLopHoc
     {
@@ -32,10 +34,10 @@
             panelNoiDung = new Panel();
             groupBox1 = new GroupBox();
             panelNut = new Panel();
-            btnLamMoi = new Button();
-            btnXoa = new Button();
-            btnSua = new Button();
-            btnThem = new Button();
+            btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
+            btnXoa = new AppButton { Kieu = KieuNut.NguyHiem };
+            btnSua = new AppButton { Kieu = KieuNut.Chinh };
+            btnThem = new AppButton { Kieu = KieuNut.Chinh };
             cboThoiGian = new ComboBox();
             cboCaHoc = new ComboBox();
             numSoBuoiTuan = new NumericUpDown();
@@ -59,7 +61,7 @@
             txtTenLop = new TextBox();
             txtMaLop = new TextBox();
             panelTieuDe = new Panel();
-            btnThu = new Button();
+            btnThu = new AppButton { Kieu = KieuNut.Phu };
             label1 = new Label();
             panelDanhSach = new Panel();
             txtTimKiem = new TextBox();
@@ -479,7 +481,7 @@
 
         private Panel panelNhapLieu;
         private Panel panelTieuDe;
-        private Button btnThu;
+        private AppButton btnThu;
         private Label label1;
         private Panel panelNoiDung;
         private GroupBox groupBox1;
@@ -500,12 +502,12 @@
         private Label label8;
         private Label label7;
         private Panel panelNut;
-        private Button btnThem;
+        private AppButton btnThem;
         private ComboBox cboThoiGian;
         private ComboBox cboCaHoc;
-        private Button btnLamMoi;
-        private Button btnXoa;
-        private Button btnSua;
+        private AppButton btnLamMoi;
+        private AppButton btnXoa;
+        private AppButton btnSua;
         private GroupBox groupBox2;
         private DataGridView dgvLopHoc;
         private Panel panelDanhSach;

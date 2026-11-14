@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using BTL_LTTQ.Common;
 using BTL_LTTQ.Models;
 using BTL_LTTQ.Services;
 
@@ -39,6 +40,14 @@ namespace BTL_LTTQ.Forms.TraCuu
         {
             NapComboBox(cboMonHoc, _lookupService.LayMonHoc(), "MaMon", "TenMon");
             NapComboBox(cboGiaoVien, _lookupService.LayGiaoVien(), "MaGV", "TenGV");
+
+            if (PermissionService.ChiCuaMinh(ChucNangConst.TIM_LOP) && CurrentUser.IsGiaoVien)
+            {
+                if (!string.IsNullOrWhiteSpace(CurrentUser.MaGV))
+                    cboGiaoVien.SelectedValue = CurrentUser.MaGV;
+                cboGiaoVien.Enabled = false;
+            }
+
             TimKiem();
         }
 
