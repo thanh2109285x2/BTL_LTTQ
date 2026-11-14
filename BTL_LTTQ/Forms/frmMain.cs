@@ -1,5 +1,4 @@
 using BTL_LTTQ.Common;
-using BTL_LTTQ.Forms.Automation;
 using BTL_LTTQ.Forms.HeThong;
 using BTL_LTTQ.Forms.Import;
 using BTL_LTTQ.Forms.QuanLy;
@@ -51,6 +50,7 @@ namespace BTL_LTTQ
             PhanQuyenUi.AnNeuKhongCoQuyen(btnGiaoVien, ChucNangConst.GIAOVIEN_XEM);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnMonHoc, ChucNangConst.MONHOC_XEM);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDanhMucKhac, ChucNangConst.DANHMUC_KHAC);
+            PhanQuyenUi.AnNeuKhongCoQuyen(btnPhongHoc, ChucNangConst.DANHMUC_KHAC);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDangKyLop, ChucNangConst.DANGKYLOP);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTimLop, ChucNangConst.TIM_LOP);
@@ -72,13 +72,14 @@ namespace BTL_LTTQ
             btnNhapDuLieu.Visible = coQuyenNhapHangLoat;
 
             btnQuanLyMenu.Visible = SapXepMenu(panelCRUD,
-                (btnLopHoc, ChucNangConst.LOPHOC_XEM),
-                (btnHocVien, ChucNangConst.HOCVIEN_XEM),
-                (btnGiaoVien, ChucNangConst.GIAOVIEN_XEM),
-                (btnMonHoc, ChucNangConst.MONHOC_XEM),
-                (btnDanhMucKhac, ChucNangConst.DANHMUC_KHAC),
-                (btnDangKyLop, null),
-                (btnNhapDuLieu, null));
+                (Nut: btnLopHoc, MaChucNang: ChucNangConst.LOPHOC_XEM),
+                (Nut: btnHocVien, MaChucNang: ChucNangConst.HOCVIEN_XEM),
+                (Nut: btnGiaoVien, MaChucNang: ChucNangConst.GIAOVIEN_XEM),
+                (Nut: btnMonHoc, MaChucNang: ChucNangConst.MONHOC_XEM),
+                (Nut: btnDanhMucKhac, MaChucNang: ChucNangConst.DANHMUC_KHAC),
+                (Nut: btnPhongHoc, MaChucNang: ChucNangConst.DANHMUC_KHAC),
+                (Nut: btnDangKyLop, MaChucNang: null),
+                (Nut: btnNhapDuLieu, MaChucNang: null));
             btnTraCuuMenu.Visible = SapXepMenu(panelTraCuu,
                 (btnTimLop, ChucNangConst.TIM_LOP),
                 (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
@@ -89,18 +90,20 @@ namespace BTL_LTTQ
                 (btnTop3, ChucNangConst.BC_XEPHANG),
                 (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG));
 
-            bool coQuyenPhanQuyen = PermissionService.Can(ChucNangConst.PHANQUYEN);
-            bool coQuyenTuDongHoa = PermissionService.Can(ChucNangConst.AUTOMATION_XEM);
+            bool coQuyenHeThong = PermissionService.Can(ChucNangConst.PHANQUYEN);
 
-            btnPhanQuyen.Visible = coQuyenPhanQuyen;
-            btnTuDongHoa.Visible = coQuyenTuDongHoa;
+            btnPhanQuyen.Visible = coQuyenHeThong;
+            btnBackup.Visible = coQuyenHeThong;
+            btnRestore.Visible = coQuyenHeThong;
 
             btnPhanQuyen.Location = new Point(btnPhanQuyen.Left, 38);
-            btnTuDongHoa.Location = new Point(btnTuDongHoa.Left, 73);
+            btnBackup.Location = new Point(btnBackup.Left, 73);
+            btnRestore.Location = new Point(btnRestore.Left, 108);
 
             // Đếm theo biến quyền, không đọc Visible của control:
-            // thuộc tính Visible trả về false khi panel cha đang ẩn.
-            _soMucHeThong = (coQuyenPhanQuyen ? 1 : 0) + (coQuyenTuDongHoa ? 1 : 0);
+            // thuộc tính Visible trả về false khi control cha đang ẩn.
+            // (Nhóm Hệ thống gồm: Phân quyền, Sao lưu database, Khôi phục database.)
+            _soMucHeThong = coQuyenHeThong ? 3 : 0;
 
             btnHeThong.Visible = _soMucHeThong > 0;
             panelHeThong.Visible = _soMucHeThong > 0;
@@ -124,6 +127,32 @@ namespace BTL_LTTQ
             }
 
             using var form = new frmPhanQuyen();
+            form.ShowDialog(this);
+        }
+
+        private void btnBackup_Click(object? sender, EventArgs e)
+        {
+            if (!PhanQuyenUi.CoQuyenMo(ChucNangConst.PHANQUYEN))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var form = new frmBackup();
+            form.ShowDialog(this);
+        }
+
+        private void btnRestore_Click(object? sender, EventArgs e)
+        {
+            if (!PhanQuyenUi.CoQuyenMo(ChucNangConst.PHANQUYEN))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var form = new frmRestore();
             form.ShowDialog(this);
         }
 
@@ -192,30 +221,31 @@ namespace BTL_LTTQ
         private void btnQuanLyMenu_Click(object sender, EventArgs e)
         {
             TogglePanel(panelCRUD,
-                (btnLopHoc, ChucNangConst.LOPHOC_XEM),
-                (btnHocVien, ChucNangConst.HOCVIEN_XEM),
-                (btnGiaoVien, ChucNangConst.GIAOVIEN_XEM),
-                (btnMonHoc, ChucNangConst.MONHOC_XEM),
-                (btnDanhMucKhac, ChucNangConst.DANHMUC_KHAC),
-                (btnDangKyLop, null),
-                (btnNhapDuLieu, null));
+                (Nut: btnLopHoc, MaChucNang: ChucNangConst.LOPHOC_XEM),
+                (Nut: btnHocVien, MaChucNang: ChucNangConst.HOCVIEN_XEM),
+                (Nut: btnGiaoVien, MaChucNang: ChucNangConst.GIAOVIEN_XEM),
+                (Nut: btnMonHoc, MaChucNang: ChucNangConst.MONHOC_XEM),
+                (Nut: btnDanhMucKhac, MaChucNang: ChucNangConst.DANHMUC_KHAC),
+                (Nut: btnPhongHoc, MaChucNang: ChucNangConst.DANHMUC_KHAC),
+                (Nut: btnDangKyLop, MaChucNang: null),
+                (Nut: btnNhapDuLieu, MaChucNang: null));
         }
 
         private void btnTraCuuMenu_Click(object sender, EventArgs e)
         {
             TogglePanel(panelTraCuu,
-                (btnTimLop, ChucNangConst.TIM_LOP),
-                (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
-                (btnThoiKhoaBieu, null));
+                (Nut: btnTimLop, MaChucNang: ChucNangConst.TIM_LOP),
+                (Nut: btnTimGiaoVien, MaChucNang: ChucNangConst.TIM_GIAOVIEN),
+                (Nut: btnThoiKhoaBieu, MaChucNang: null));
         }
 
         private void btnBaoCaoMenu_Click(object sender, EventArgs e)
         {
             TogglePanel(panelBaoCao,
-                (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
-                (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
-                (btnTop3, ChucNangConst.BC_XEPHANG),
-                (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG));
+                (Nut: btnBaoCaoDiem, MaChucNang: ChucNangConst.BC_DIEM),
+                (Nut: btnDoanhThu, MaChucNang: ChucNangConst.BC_DOANHTHU),
+                (Nut: btnTop3, MaChucNang: ChucNangConst.BC_XEPHANG),
+                (Nut: btnLopTheoPhong, MaChucNang: ChucNangConst.BC_LOP_PHONG));
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -340,10 +370,11 @@ namespace BTL_LTTQ
             OpenChildForm(() => new FrmBulkImport(), btnNhapDuLieu, null);
         }
 
-        private void btnTuDongHoa_Click(object sender, EventArgs e)
+        private void btnPhongHoc_Click(object sender, EventArgs e)
         {
-            OpenChildForm(() => new FrmAutomationDashboard(), btnTuDongHoa, ChucNangConst.AUTOMATION_XEM);
+            OpenChildForm(() => new frmPhongHoc(), btnPhongHoc, ChucNangConst.DANHMUC_KHAC);
         }
+
 
         private void btnXuatExcel_Click(object sender, EventArgs e)
         {

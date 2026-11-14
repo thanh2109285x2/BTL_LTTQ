@@ -96,6 +96,14 @@ namespace BTL_LTTQ.Services.Import
                         _ => 0
                     };
 
+                    // Đăng ký hàng loạt cũng sinh lịch học cho các lớp bị ảnh hưởng,
+                    // giống hệt khi học viên đăng ký bằng form.
+                    if (preview.Loai == ImportLoai.DangKy)
+                    {
+                        foreach (string maLop in lopThayDoi)
+                            LichHocService.TaoBuoiHocChoLop(conn, tran, maLop);
+                    }
+
                     ketQua.SoDongDaThem = soDong;
                     lopBiAnhHuong = lopThayDoi;
                 });

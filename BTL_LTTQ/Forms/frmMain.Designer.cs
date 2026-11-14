@@ -1,4 +1,4 @@
-﻿namespace BTL_LTTQ
+namespace BTL_LTTQ
 {
     partial class frmMain
     {
@@ -32,6 +32,7 @@
             btnTrangChu = new AppButton();
             panelCRUD = new Panel();
             btnDanhMucKhac = new AppButton();
+            btnPhongHoc = new AppButton();
             btnMonHoc = new AppButton();
             btnGiaoVien = new AppButton();
             btnHocVien = new AppButton();
@@ -52,7 +53,8 @@
             btnBaoCaoMenu = new AppButton();
             panelHeThong = new Panel();
             btnPhanQuyen = new AppButton();
-            btnTuDongHoa = new AppButton();
+            btnBackup = new AppButton();
+            btnRestore = new AppButton();
             btnHeThong = new AppButton();
             panelContent = new Panel();
             lblChao = new Label();
@@ -114,6 +116,7 @@
             // panelCRUD
             // 
             panelCRUD.Controls.Add(btnDanhMucKhac);
+            panelCRUD.Controls.Add(btnPhongHoc);
             panelCRUD.Controls.Add(btnMonHoc);
             panelCRUD.Controls.Add(btnGiaoVien);
             panelCRUD.Controls.Add(btnHocVien);
@@ -146,6 +149,28 @@
             btnDanhMucKhac.Text = "Danh mục khác";
             btnDanhMucKhac.TextAlign = ContentAlignment.MiddleLeft;
             btnDanhMucKhac.UseVisualStyleBackColor = false;
+            // 
+            // btnPhongHoc
+            // 
+            btnPhongHoc.BackColor = Color.FromArgb(232, 240, 251);
+            btnPhongHoc.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnPhongHoc.FlatAppearance.BorderSize = 0;
+            btnPhongHoc.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnPhongHoc.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnPhongHoc.FlatStyle = FlatStyle.Flat;
+            btnPhongHoc.Font = new Font("Segoe UI", 9F);
+            btnPhongHoc.ForeColor = Color.FromArgb(33, 37, 41);
+            btnPhongHoc.Kieu = KieuNut.MenuCon;
+            btnPhongHoc.Location = new Point(52, 283);
+            btnPhongHoc.Name = "btnPhongHoc";
+            btnPhongHoc.Padding = new Padding(48, 0, 0, 0);
+            btnPhongHoc.Size = new Size(120, 29);
+            btnPhongHoc.TabIndex = 8;
+            btnPhongHoc.Text = "Phòng học";
+            btnPhongHoc.TextAlign = ContentAlignment.MiddleLeft;
+            btnPhongHoc.UseVisualStyleBackColor = false;
+            btnPhongHoc.Visible = false;
+            btnPhongHoc.Click += btnPhongHoc_Click;
             // 
             // btnMonHoc
             // 
@@ -512,11 +537,12 @@
             // panelHeThong
             // 
             panelHeThong.Controls.Add(btnPhanQuyen);
-            panelHeThong.Controls.Add(btnTuDongHoa);
+            panelHeThong.Controls.Add(btnBackup);
+            panelHeThong.Controls.Add(btnRestore);
             panelHeThong.Controls.Add(btnHeThong);
             panelHeThong.Location = new Point(3, 176);
             panelHeThong.Name = "panelHeThong";
-            panelHeThong.Size = new Size(271, 71);
+            panelHeThong.Size = new Size(271, 140);
             panelHeThong.TabIndex = 4;
             panelHeThong.Visible = false;
             // 
@@ -542,27 +568,49 @@
             btnPhanQuyen.Visible = false;
             btnPhanQuyen.Click += btnPhanQuyen_Click;
             // 
-            // btnTuDongHoa
+            // btnBackup
             // 
-            btnTuDongHoa.BackColor = Color.FromArgb(232, 240, 251);
-            btnTuDongHoa.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
-            btnTuDongHoa.FlatAppearance.BorderSize = 0;
-            btnTuDongHoa.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
-            btnTuDongHoa.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
-            btnTuDongHoa.FlatStyle = FlatStyle.Flat;
-            btnTuDongHoa.Font = new Font("Segoe UI", 9F);
-            btnTuDongHoa.ForeColor = Color.FromArgb(33, 37, 41);
-            btnTuDongHoa.Kieu = KieuNut.MenuCon;
-            btnTuDongHoa.Location = new Point(52, 73);
-            btnTuDongHoa.Name = "btnTuDongHoa";
-            btnTuDongHoa.Padding = new Padding(48, 0, 0, 0);
-            btnTuDongHoa.Size = new Size(150, 29);
-            btnTuDongHoa.TabIndex = 3;
-            btnTuDongHoa.Text = "Tự động hóa";
-            btnTuDongHoa.TextAlign = ContentAlignment.MiddleLeft;
-            btnTuDongHoa.UseVisualStyleBackColor = false;
-            btnTuDongHoa.Visible = false;
-            btnTuDongHoa.Click += btnTuDongHoa_Click;
+            btnBackup.BackColor = Color.FromArgb(232, 240, 251);
+            btnBackup.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnBackup.FlatAppearance.BorderSize = 0;
+            btnBackup.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnBackup.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnBackup.FlatStyle = FlatStyle.Flat;
+            btnBackup.Font = new Font("Segoe UI", 9F);
+            btnBackup.ForeColor = Color.FromArgb(33, 37, 41);
+            btnBackup.Kieu = KieuNut.MenuCon;
+            btnBackup.Location = new Point(52, 73);
+            btnBackup.Name = "btnBackup";
+            btnBackup.Padding = new Padding(48, 0, 0, 0);
+            btnBackup.Size = new Size(120, 29);
+            btnBackup.TabIndex = 3;
+            btnBackup.Text = "Sao lưu Database";
+            btnBackup.TextAlign = ContentAlignment.MiddleLeft;
+            btnBackup.UseVisualStyleBackColor = false;
+            btnBackup.Visible = false;
+            btnBackup.Click += btnBackup_Click;
+            // 
+            // btnRestore
+            // 
+            btnRestore.BackColor = Color.FromArgb(232, 240, 251);
+            btnRestore.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnRestore.FlatAppearance.BorderSize = 0;
+            btnRestore.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnRestore.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnRestore.FlatStyle = FlatStyle.Flat;
+            btnRestore.Font = new Font("Segoe UI", 9F);
+            btnRestore.ForeColor = Color.FromArgb(33, 37, 41);
+            btnRestore.Kieu = KieuNut.MenuCon;
+            btnRestore.Location = new Point(52, 108);
+            btnRestore.Name = "btnRestore";
+            btnRestore.Padding = new Padding(48, 0, 0, 0);
+            btnRestore.Size = new Size(120, 29);
+            btnRestore.TabIndex = 4;
+            btnRestore.Text = "Khôi phục Database";
+            btnRestore.TextAlign = ContentAlignment.MiddleLeft;
+            btnRestore.UseVisualStyleBackColor = false;
+            btnRestore.Visible = false;
+            btnRestore.Click += btnRestore_Click;
             // 
             // btnHeThong
             // 
@@ -741,7 +789,8 @@
         private AppButton btnBaoCaoMenu;
         private AppButton btnHeThong;
         private AppButton btnPhanQuyen;
-        private AppButton btnTuDongHoa;
+        private AppButton btnBackup;
+        private AppButton btnRestore;
         private AppButton btnTimGiaoVien;
         private AppButton btnTimLop;
         private AppButton btnThoiKhoaBieu;
@@ -754,6 +803,7 @@
         private Panel panelSidebar;
         private Panel panelCRUD;
         private AppButton btnDanhMucKhac;
+        private AppButton btnPhongHoc;
         private AppButton btnMonHoc;
         private AppButton btnGiaoVien;
         private AppButton btnHocVien;

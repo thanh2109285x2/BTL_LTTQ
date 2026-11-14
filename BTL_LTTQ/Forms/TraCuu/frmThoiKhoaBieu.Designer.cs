@@ -29,7 +29,6 @@ namespace BTL_LTTQ.Forms.TraCuu
         private void InitializeComponent()
         {
             panelTieuDe = new Panel();
-            btnTao = new Button();
             lblMoTa = new Label();
             label1 = new Label();
             tabControl1 = new TabControl();
@@ -59,7 +58,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             // 
             // panelTieuDe
             // 
-            panelTieuDe.Controls.Add(btnTao);
             panelTieuDe.Controls.Add(lblMoTa);
             panelTieuDe.Controls.Add(label1);
             panelTieuDe.Dock = DockStyle.Top;
@@ -68,17 +66,7 @@ namespace BTL_LTTQ.Forms.TraCuu
             panelTieuDe.Size = new Size(1200, 84);
             panelTieuDe.TabIndex = 0;
             // 
-            // btnTao
             // 
-            btnTao.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnTao.Location = new Point(950, 20);
-            btnTao.Name = "btnTao";
-            btnTao.Size = new Size(210, 44);
-            btnTao.TabIndex = 2;
-            btnTao.Text = "Tạo thời khóa biểu";
-            btnTao.UseVisualStyleBackColor = true;
-            btnTao.Visible = false;
-            btnTao.Click += btnTao_Click;
             // 
             // lblMoTa
             // 
@@ -273,7 +261,6 @@ namespace BTL_LTTQ.Forms.TraCuu
         private Panel panelTieuDe;
         private Label label1;
         private Label lblMoTa;
-        private Button btnTao;
         private TabControl tabControl1;
         private TabPage tabPageTuan;
         private DataGridView dgvTuan;

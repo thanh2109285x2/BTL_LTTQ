@@ -1,6 +1,5 @@
 using BTL_LTTQ.Common;
 using BTL_LTTQ.Models.Import;
-using BTL_LTTQ.Services.Automation;
 using BTL_LTTQ.Services.Import;
 using System;
 using System.Collections.Generic;
@@ -253,8 +252,6 @@ namespace BTL_LTTQ.Forms.Import
                     $"Đã nhập thành công {ketQua.SoDongDaThem} dòng {ImportLoaiMoTa.TenHienThi(ketQua.Loai).ToLowerInvariant()}.",
                     "Nhập dữ liệu thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Sự kiện Automation chỉ phát sau khi transaction nghiệp vụ đã commit.
-                await PhatSuKienSauCommitAsync(ketQua);
 
                 _preview = null;
                 _ketQua = null;
@@ -300,47 +297,6 @@ namespace BTL_LTTQ.Forms.Import
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private async Task PhatSuKienSauCommitAsync(KetQuaImport ketQua)
-        {
-            try
-            {
-                var publisher = new AutomationEventPublisher();
-                string nguoiThucHien = CurrentUser.TenDangNhap;
-
-                if (ketQua.Loai == ImportLoai.DangKy)
-                {
-                    foreach (string maLop in ketQua.LopBiAnhHuong)
-                    {
-                        await publisher.PhatSuKienAsync(
-                            AutomationConst.Trigger.ClassEnrollmentChanged,
-                            AutomationConst.EntityType.Class,
-                            maLop,
-                            $"BULK_IMPORT:{ketQua.OperationId:N}:{maLop}",
-                            context: null,
-                            triggeredBy: nguoiThucHien);
-                    }
-                }
-
-                string entityId = "BI" + ketQua.OperationId.ToString("N").Substring(0, 18);
-                var context = new AutomationContext
-                {
-                    EntityType = AutomationConst.EntityType.Import,
-                    EntityID = entityId
-                };
-
-                await publisher.PhatSuKienAsync(
-                    AutomationConst.Trigger.BulkImportCompleted,
-                    AutomationConst.EntityType.Import,
-                    entityId,
-                    $"BULK_IMPORT_COMPLETED:{ketQua.OperationId:N}",
-                    context,
-                    nguoiThucHien);
-            }
-            catch
-            {
-                // Automation không được ảnh hưởng kết quả nhập dữ liệu đã commit.
-            }
-        }
 
         private void btnXuatBaoCao_Click(object sender, EventArgs e)
         {

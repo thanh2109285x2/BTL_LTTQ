@@ -31,8 +31,5 @@ namespace BTL_LTTQ.Common
         public const string THOIKHOA_XEP = "THOIKHOA_XEP";
         public const string PHANQUYEN = "PHANQUYEN";
         public const string TAIKHOAN = "TAIKHOAN";
-        public const string AUTOMATION_XEM = "AUTOMATION_XEM";
-        public const string AUTOMATION_QUANLY = "AUTOMATION_QUANLY";
-        public const string AUTOMATION_TASK = "AUTOMATION_TASK";
     }
 }

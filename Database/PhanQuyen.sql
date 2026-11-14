@@ -124,11 +124,7 @@ USING (VALUES
     ('DANHMUC_KHAC',    N'Danh mục khác',            N'Khác',    0, 0, 23),
     ('XUAT_EXCEL',      N'Xuất Excel',               N'Khác',    0, 0, 24),
     ('PHANQUYEN',       N'Phân quyền',               N'Hệ thống',1, 0, 25),
-    ('TAIKHOAN',        N'Quản lý tài khoản',        N'Hệ thống',1, 0, 26),
-    ('THOIKHOA_XEP',    N'Tạo thời khóa biểu',      N'Hệ thống',1, 0, 27),
-    ('AUTOMATION_XEM',  N'Xem tự động hóa',          N'Hệ thống',0, 0, 28),
-    ('AUTOMATION_QUANLY',N'Quản lý quy tắc tự động',N'Hệ thống',1, 0, 29),
-    ('AUTOMATION_TASK', N'Xử lý nhiệm vụ tự động',   N'Hệ thống',0, 0, 30)
+    ('TAIKHOAN',        N'Quản lý tài khoản',        N'Hệ thống',1, 0, 26)
 ) AS source (MaChucNang, TenChucNang, Nhom, ChiAdmin, HoTroLocTheoChu, ThuTu)
 ON target.MaChucNang = source.MaChucNang
 WHEN MATCHED THEN
@@ -174,9 +170,7 @@ FROM (VALUES
     ('DANHMUC_KHAC',  0, 0, 0, 0),
     ('XUAT_EXCEL',    1, 0, 1, 0),
     ('DANGKYLOP',     0, 0, 1, 1),
-    ('THOIKHOA_XEM',  1, 1, 1, 1),
-    ('AUTOMATION_XEM',1, 0, 0, 0),
-    ('AUTOMATION_TASK',1, 0, 0, 0)
+    ('THOIKHOA_XEM',  1, 1, 1, 1)
 ) AS m (MaChucNang, GV_CoQuyen, GV_ChiCuaMinh, HV_CoQuyen, HV_ChiCuaMinh)
 WHERE NOT EXISTS
 (
@@ -212,9 +206,7 @@ FROM (VALUES
     ('DANHMUC_KHAC',  0, 0, 0, 0),
     ('XUAT_EXCEL',    1, 0, 1, 0),
     ('DANGKYLOP',     0, 0, 1, 1),
-    ('THOIKHOA_XEM',  1, 1, 1, 1),
-    ('AUTOMATION_XEM',1, 0, 0, 0),
-    ('AUTOMATION_TASK',1, 0, 0, 0)
+    ('THOIKHOA_XEM',  1, 1, 1, 1)
 ) AS m (MaChucNang, GV_CoQuyen, GV_ChiCuaMinh, HV_CoQuyen, HV_ChiCuaMinh)
 WHERE NOT EXISTS
 (

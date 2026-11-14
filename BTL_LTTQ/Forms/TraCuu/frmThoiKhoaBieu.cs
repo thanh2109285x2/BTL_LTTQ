@@ -21,7 +21,6 @@ namespace BTL_LTTQ.Forms.TraCuu
         private const int SoTuanToiDa = 12;
 
         private readonly ThoiKhoaBieuRepository _repo = new ThoiKhoaBieuRepository();
-        private readonly XepLichService _xepLich = new XepLichService();
 
         private string? _maGV;
         private string? _maHocVien;
@@ -51,8 +50,6 @@ namespace BTL_LTTQ.Forms.TraCuu
 
         private void frmThoiKhoaBieu_Load(object sender, EventArgs e)
         {
-            btnTao.Visible = PermissionService.Can(ChucNangConst.THOIKHOA_XEP);
-
             if (!PermissionService.Can(ChucNangConst.THOIKHOA_XEM))
             {
                 MessageBox.Show("Bạn không có quyền xem thời khóa biểu.", "Không có quyền",
@@ -100,7 +97,7 @@ namespace BTL_LTTQ.Forms.TraCuu
             if (ds.Count == 0)
             {
                 return CurrentUser.IsAdmin
-                    ? phamVi + " • Chưa có lịch. Bấm \"Tạo thời khóa biểu\" để hệ thống xếp lịch."
+                    ? phamVi + "  Chưa có lịch. Lịch được tạo tự động khi học viên đăng ký lớp."
                     : phamVi + " • Bạn chưa có buổi học nào.";
             }
 
@@ -384,48 +381,5 @@ namespace BTL_LTTQ.Forms.TraCuu
             VeLichTuan();
         }
 
-        private void btnTao_Click(object sender, EventArgs e)
-        {
-            if (!PermissionService.Can(ChucNangConst.THOIKHOA_XEP))
-            {
-                MessageBox.Show("Bạn không có quyền tạo thời khóa biểu.", "Không có quyền",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (_repo.CoLich())
-            {
-                DialogResult hoi = MessageBox.Show(
-                    "Thời khóa biểu hiện tại sẽ được thay thế bằng lịch mới. Tiếp tục?",
-                    "Xác nhận xếp lịch", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (hoi != DialogResult.Yes) return;
-            }
-
-            Cursor = Cursors.WaitCursor;
-            KetQuaXepLich ketQua;
-            try
-            {
-                ketQua = _xepLich.XepVaLuu();
-            }
-            catch (Exception ex)
-            {
-                ketQua = KetQuaXepLich.Loi("Xếp lịch thất bại: " + ex.Message);
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
-            }
-
-            MessageBox.Show(ketQua.ThongBao,
-                ketQua.ThanhCong ? "Xếp lịch thành công" : "Không xếp được",
-                MessageBoxButtons.OK,
-                ketQua.ThanhCong ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
-
-            if (ketQua.ThanhCong)
-            {
-                NapLich();
-                NhayVeTuanDauTien();
-            }
-        }
     }
 }

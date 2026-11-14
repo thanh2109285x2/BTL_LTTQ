@@ -95,6 +95,9 @@ namespace BTL_LTTQ.Repositories
                         cmd.Parameters.Add(new SqlParameter("@MaLop", SqlDbType.VarChar, 20) { Value = maLop });
                         cmd.ExecuteNonQuery();
                     }
+
+                    // Lớp có học viên => sinh lịch học theo ca / mẫu thời gian / phòng đã gán.
+                    Services.LichHocService.TaoBuoiHocChoLop(conn, tran, maLop);
                 });
 
                 return "";
@@ -121,12 +124,29 @@ namespace BTL_LTTQ.Repositories
         {
             try
             {
-                int soDong = DbHelper.ExecuteNonQuery(
-                    "DELETE FROM DangKy WHERE MaHocVien = @MaHocVien AND MaLop = @MaLop",
-                    new SqlParameter("@MaHocVien", SqlDbType.VarChar, 20) { Value = maHocVien },
-                    new SqlParameter("@MaLop", SqlDbType.VarChar, 20) { Value = maLop });
+                // Hủy đăng ký và dọn lịch của lớp (nếu lớp không còn học viên) trong cùng transaction.
+                DbHelper.ExecuteTransaction((conn, tran) =>
+                {
+                    using (var cmd = new SqlCommand(
+                        "DELETE FROM DangKy WHERE MaHocVien = @MaHocVien AND MaLop = @MaLop", conn, tran))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("@MaHocVien", SqlDbType.VarChar, 20) { Value = maHocVien });
+                        cmd.Parameters.Add(new SqlParameter("@MaLop", SqlDbType.VarChar, 20) { Value = maLop });
+                        cmd.ExecuteNonQuery();
+                    }
 
-                return soDong == 0 ? "Bạn chưa đăng ký lớp này." : "";
+                    using (var cmd = new SqlCommand(
+                        "SELECT COUNT(*) FROM DangKy WHERE MaLop = @MaLop", conn, tran))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("@MaLop", SqlDbType.VarChar, 20) { Value = maLop });
+                        int conLai = Convert.ToInt32(cmd.ExecuteScalar());
+
+                        if (conLai == 0)
+                            Services.LichHocService.XoaBuoiHocCuaLop(conn, tran, maLop);
+                    }
+                });
+
+                return "";
             }
             catch (Exception ex)
             {

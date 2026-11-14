@@ -14,9 +14,6 @@ namespace BTL_LTTQ
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            // Đăng ký handler Automation một lần cho toàn ứng dụng.
-            Services.Automation.ActionHandlerRegistry.EnsureInitialized();
-
             while (true)
             {
                 using var formDangNhap = new frmDangNhap();

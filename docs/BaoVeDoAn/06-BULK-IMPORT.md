@@ -116,16 +116,10 @@ Cơ chế: **mọi dòng nằm trong cùng 1 transaction**; bất kỳ exception
 
 ---
 
-## 7. Quan hệ với Workflow Automation
+## 7. Module Workflow Automation đã gỡ
 
-| Câu hỏi | Trả lời đúng theo code |
-|---|---|
-| **Khi nào phát `BULK_IMPORT_COMPLETED`?** | Sau khi transaction **đã commit**: `FrmBulkImport.PhatSuKienSauCommitAsync(ketQua)` được gọi **sau** `MessageBox` thành công, trong nhánh `if (ketQua.ThanhCong)`. |
-| **Nếu rollback thì sao?** | Nhánh thất bại **không** gọi publisher ⇒ không có sự kiện nào được phát. Không có "sự kiện thất bại". |
-| **Vì sao không phát trigger cho từng dòng?** | (1) Sự kiện phải mô tả **sự kiện nghiệp vụ**, không phải từng thao tác kỹ thuật; phát 200 lần cho 200 dòng sẽ tạo 200 execution, 200 rule chạy ⇒ nghẽn và nhiễu. (2) Với đăng ký, 1 lớp có thể nhận nhiều dòng ⇒ phát theo **lớp** mới đúng nghĩa; em gom và phát **một lần cho mỗi lớp bị ảnh hưởng** với `CLASS_ENROLLMENT_CHANGED`. |
-| **Làm sao xác định lớp bị ảnh hưởng?** | Trong transaction, `ImportService.KiemTraLaiDangKy` thu thập `lopThayDoi` (tập mã lớp có dòng đăng ký) ⇒ `KetQuaImport.LopBiAnhHuong` trả về cho Form ⇒ Form phát `CLASS_ENROLLMENT_CHANGED` cho từng lớp, **mỗi lớp đúng 1 lần**. |
-| **Làm sao tránh Automation xử lý trùng?** | `EventToken` = `BULK_IMPORT:{OperationId}:{MaLop}` ⇒ cùng một lần import ⇒ cùng token ⇒ `DedupKey` (SHA-256) trùng ⇒ `AutomationExecutionRepository.DaTonTaiDedup` chặn lần thứ hai. Thêm lớp nữa: unique index `UX_AutomationExecution_Dedup (RuleID, DedupKey)` chặn ở DB khi 2 phiên chạy song song. |
-| **`BULK_IMPORT_COMPLETED` có chạy được không?** | **Hiện chưa**: `CK_AutomationRule_TriggerType` chỉ cho `CLASS_CREATED/CLASS_ENROLLMENT_CHANGED/CLASS_STATUS_CHANGED` ⇒ không tạo được rule ⇒ publisher phát xong rồi **no-op** (không có rule khớp). Sự kiện vẫn được phát đúng theo code, chỉ là chưa có rule nào dùng được. |
+- Module Workflow Automation (RulesEngine, bảng `Automation*`, `AutomationEventPublisher`, `BULK_IMPORT_COMPLETED`, `CLASS_ENROLLMENT_CHANGED`, …) đã **bị gỡ** khỏi ứng dụng: không còn code, không còn bảng, không còn nút phát sự kiện, không còn package `RulesEngine`/`Google.OrTools`.
+- Vì vậy luồng nhập hàng loạt **không còn có bước phát sự kiện sau commit** nữa; nghiệp vụ import (dữ liệu + transaction + kết quả) đã đủ và tự chứa audit/đối chiếu.
 
 ---
 
@@ -133,7 +127,7 @@ Cơ chế: **mọi dòng nằm trong cùng 1 transaction**; bất kỳ exception
 
 - **Không có** bảng `ImportBatch`/`ImportBatchDetail`, **không có** `FrmImportHistory`, **không** lưu lịch sử import vào DB.
 - Thay vào đó dùng `KetQuaPreview.OperationId` (Guid, **chỉ trong bộ nhớ**) để đối chiếu kết quả với lần xem trước trong cùng phiên làm việc.
-- **Lý do**: (1) đúng phạm vi đồ án đã thống nhất (không làm thừa); (2) lịch sử import đòi hỏi bảng + màn hình + chính sách giữ dữ liệu (bao lâu?), tăng diện tích bảo trì; (3) audit trail nghiệp vụ đã có ở module Automation (`AutomationExecution` + `AutomationExecutionLog`) cho phần tự động hóa.
+- **Lý do**: (1) đúng phạm vi đồ án đã thống nhất (không làm thừa); (2) lịch sử import đòi hỏi bảng + màn hình + chính sách giữ dữ liệu (bao lâu?), tăng diện tích bảo trì; (3) audit/đối chiếu nghiệp vụ nằm trong transaction import (`KetQuaImport` trả `LopBiAnhHuong` các lớp bị ảnh hưởng) cho phần kiểm soát lại.
 - **Nói thẳng khi bị hỏi**: "Phần lịch sử nhập hàng loạt em cố ý **không** làm trong phạm vi hiện tại; nếu cần, thiết kế tối thiểu là bảng `ImportBatch(OperationId UNIQUE, Loai, TenFile, SoDong, ThanhCong, NguoiThucHien, ThoiGian)` + `ImportBatchDetail(ImportID, SoDong, Cot, GiaTri, ThongDiep)`, ghi trong **cùng transaction** với dữ liệu để nó cũng all-or-nothing."
 
 ---
@@ -166,4 +160,4 @@ Cơ chế: **mọi dòng nằm trong cùng 1 transaction**; bất kỳ exception
 5. **Không có báo cáo kết quả từng dòng thành công** (chỉ có báo cáo lỗi).
 6. **Mã lớp/nhân sự giới hạn 20 ký tự, chỉ chữ/số/`_ . -`** — quy tắc riêng của module, không phải của DB.
 7. `DangKy.NgayDangKy` để trống ⇒ dùng `CONVERT([date], getdate())` (mặc định của DB).
-8. **Trigger `BULK_IMPORT_COMPLETED` chưa dùng được** (xem mục 7).
+8. **Module Workflow Automation đã gỡ** (xem mục 7) — không còn bước phát sự kiện sau commit.
