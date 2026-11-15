@@ -28,9 +28,9 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             try
             {
-                NapCombo(cboLop, _repo.LayDanhSachLop(), "MaLop", "TenLop");
-                NapCombo(cboNghe, _repo.LayDanhSachNghe(), "MaNghe", "TenNghe");
-                NapCombo(cboXepLoai, _repo.LayDanhSachXepLoai(), "MaXepLoai", "TenLoai");
+                NapCombo(cboLop, _hocVienService.LayDanhSachLop(), "MaLop", "TenLop");
+                NapCombo(cboNghe, _hocVienService.LayDanhSachNghe(), "MaNghe", "TenNghe");
+                NapCombo(cboXepLoai, _hocVienService.LayDanhSachXepLoai(), "MaXepLoai", "TenLoai");
                 NapDanhSachTinhThanh();
                 cboXepLoai.Enabled = false;
                 NapDanhSach();
@@ -158,8 +158,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             var d = DuLieu();
             try
             {
-                if (_repo.TonTai(d.ma)) { BaoLoiNhap("Mã học viên đã tồn tại.", txtMaHocVien); return; }
-                _repo.Them(d.ma, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai,
+                if (_hocVienService.TonTai(d.ma)) { BaoLoiNhap("Mã học viên đã tồn tại.", txtMaHocVien); return; }
+                _hocVienService.Them(d.ma, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai,
                     d.ngayNop, d.diem, nullIfEmpty(cboXepLoai), nullIfEmpty(cboLop));
                 Saved("Thêm học viên thành công.");
             }

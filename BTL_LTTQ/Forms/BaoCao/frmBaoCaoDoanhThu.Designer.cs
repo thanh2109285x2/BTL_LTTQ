@@ -142,11 +142,12 @@ namespace BTL_LTTQ.Forms.BaoCao
             //
             pnlDieuKien.Controls.Add(lblLop);
             pnlDieuKien.Controls.Add(_cboLop);
-            pnlDieuKien.Controls.Add(btnXemBaoCao);
             pnlDieuKien.Controls.Add(lblTimKiemBaoCao);
             pnlDieuKien.Controls.Add(txtTimKiemBaoCao);
             pnlDieuKien.Controls.Add(lblSapXepBaoCao);
             pnlDieuKien.Controls.Add(cboSapXepBaoCao);
+            pnlDieuKien.SetFlowBreak(cboSapXepBaoCao, true);
+            pnlDieuKien.Controls.Add(btnXemBaoCao);
             pnlDieuKien.Controls.Add(btnSapXepBaoCao);
             pnlDieuKien.Controls.Add(btnLamMoiBaoCao);
             pnlDieuKien.Controls.Add(btnXuatExcelBaoCao);

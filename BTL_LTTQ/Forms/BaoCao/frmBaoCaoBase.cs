@@ -1,4 +1,4 @@
-using BTL_LTTQ.DataAccessLayer;
+using BTL_LTTQ.DAL;
 using BTL_LTTQ.Common;
 using BTL_LTTQ.BUS;
 using Microsoft.Data.SqlClient;
@@ -65,7 +65,7 @@ namespace BTL_LTTQ.Forms.BaoCao
             {
                 string? maLop = cboLop.SelectedValue == null || cboLop.SelectedValue == DBNull.Value
                     ? null : cboLop.SelectedValue.ToString();
-                _duLieuGoc = _laBaoCaoDiem ? _repo.LayBangDiem(maLop) : _repo.LayDoanhThu(maLop);
+                _duLieuGoc = _laBaoCaoDiem ? _baoCaoService.LayBangDiem(maLop) : _baoCaoService.LayDoanhThu(maLop);
                 dgvBaoCao.DataSource = _duLieuGoc;
                 DinhDangCot(_duLieuGoc);
                 ApDungBoLocVaSapXep();
