@@ -83,8 +83,11 @@ CREATE TABLE dbo.HocVien (
     MaHocVien varchar(20) NOT NULL PRIMARY KEY,
     TenHocVien nvarchar(150) NOT NULL,
     DienThoai varchar(30) NULL,
-    MaLop varchar(20) NULL REFERENCES dbo.LopHoc(MaLop)
+    MaLop varchar(20) NULL REFERENCES dbo.LopHoc(MaLop),
+    Diem float NULL
 );
+IF COL_LENGTH(N'dbo.HocVien', N'Diem') IS NULL
+    ALTER TABLE dbo.HocVien ADD Diem float NULL;
 
 IF OBJECT_ID(N'dbo.TaiKhoan', N'U') IS NULL
 CREATE TABLE dbo.TaiKhoan (
@@ -147,7 +150,8 @@ IF NOT EXISTS (SELECT 1 FROM dbo.PhongHoc WHERE MaPhong='P001')
 IF NOT EXISTS (SELECT 1 FROM dbo.LopHoc WHERE MaLop='LH001')
     INSERT dbo.LopHoc VALUES ('LH001', N'Lớp mẫu', 'MH001', 'GV001', '2026-01-01', '2027-01-01', 'CA01', 'TG01', 'P001');
 IF NOT EXISTS (SELECT 1 FROM dbo.HocVien WHERE MaHocVien='HV001')
-    INSERT dbo.HocVien VALUES ('HV001', N'Học viên mẫu', '0000000001', 'LH001');
+    INSERT dbo.HocVien (MaHocVien, TenHocVien, DienThoai, MaLop, Diem)
+    VALUES ('HV001', N'Học viên mẫu', '0000000001', 'LH001', 9.0);
 
 /* Tài khoản mẫu dùng đúng PBKDF2-SHA256, 600.000 vòng như MatKhauHelper.cs. */
 IF NOT EXISTS (SELECT 1 FROM dbo.TaiKhoan WHERE TenDangNhap='admin')
@@ -196,6 +200,29 @@ FROM (VALUES
  ('TAIKHOAN', N'Quản lý tài khoản', N'Khác', 0, 26, 1)
 ) s (Ma, Ten, Nhom, Loc, ThuTu, AdminOnly)
 WHERE NOT EXISTS (SELECT 1 FROM dbo.ChucNang c WHERE c.MaChucNang=s.Ma);
+UPDATE dbo.ChucNang SET HoTroLocTheoChu = 1 WHERE MaChucNang IN ('BC_XEPHANG', 'BC_LOP_PHONG');
+
+/* Quyền tra cứu AI mặc định. Doanh thu mặc định chỉ Admin; không cấp cho giáo viên/học viên. */
+INSERT dbo.PhanQuyen (MaChucNang, VaiTro, CoQuyen, ChiCuaMinh)
+SELECT p.MaChucNang, p.VaiTro, p.CoQuyen, p.ChiCuaMinh
+FROM (VALUES
+    ('TIM_LOP', 'GiaoVien', 1, 0),
+    ('TIM_LOP', 'HocVien', 0, 0),
+    ('TIM_GIAOVIEN', 'GiaoVien', 1, 0),
+    ('TIM_GIAOVIEN', 'HocVien', 0, 0),
+    ('BC_DIEM', 'GiaoVien', 1, 1),
+    ('BC_DIEM', 'HocVien', 1, 1),
+    ('BC_DOANHTHU', 'GiaoVien', 0, 0),
+    ('BC_DOANHTHU', 'HocVien', 0, 0),
+    ('BC_XEPHANG', 'GiaoVien', 1, 0),
+    ('BC_XEPHANG', 'HocVien', 0, 0),
+    ('BC_LOP_PHONG', 'GiaoVien', 1, 0),
+    ('BC_LOP_PHONG', 'HocVien', 0, 0)
+) p (MaChucNang, VaiTro, CoQuyen, ChiCuaMinh)
+WHERE NOT EXISTS (
+    SELECT 1 FROM dbo.PhanQuyen q
+    WHERE q.MaChucNang = p.MaChucNang AND q.VaiTro = p.VaiTro
+);
 GO
 PRINT N'Database _Dev đã sẵn sàng. Mở ứng dụng và đăng ký tài khoản Admin đầu tiên.';
 GO

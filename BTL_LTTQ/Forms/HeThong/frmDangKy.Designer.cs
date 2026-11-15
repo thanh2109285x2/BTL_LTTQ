@@ -160,7 +160,9 @@ namespace BTL_LTTQ.Forms.HeThong
             // txtSoDienThoai
             // 
             txtSoDienThoai.Location = new Point(190, 300);
+            txtSoDienThoai.MaxLength = 30;
             txtSoDienThoai.Name = "txtSoDienThoai";
+            txtSoDienThoai.PlaceholderText = "Nhập số điện thoại đã khai báo trong hồ sơ";
             txtSoDienThoai.Size = new Size(310, 25);
             txtSoDienThoai.TabIndex = 5;
             txtSoDienThoai.Visible = false;

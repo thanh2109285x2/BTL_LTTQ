@@ -2,6 +2,7 @@ using System.Data;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using BTL_LTTQ.Common;
 using BTL_LTTQ.DAL;
 using Microsoft.Data.SqlClient;
@@ -86,6 +87,59 @@ namespace BTL_LTTQ.Services.Ai
           }
         ]
         """;
+
+        public static string LayDinhNghiaTheoQuyen()
+        {
+            JsonArray dinhNghia = JsonNode.Parse(DinhNghiaJson)!.AsArray();
+            var duocPhep = new JsonArray();
+            foreach (JsonNode? congCu in dinhNghia)
+            {
+                string ten = congCu?["function"]?["name"]?.ToString() ?? "";
+                if (CoQuyenCongCu(ten))
+                    duocPhep.Add(congCu!.DeepClone());
+            }
+            return duocPhep.ToJsonString();
+        }
+
+        public static List<string> LayMoTaCongCuDuocPhep()
+        {
+            JsonArray dinhNghia = JsonNode.Parse(DinhNghiaJson)!.AsArray();
+            var moTa = new List<string>();
+            foreach (JsonNode? congCu in dinhNghia)
+            {
+                string ten = congCu?["function"]?["name"]?.ToString() ?? "";
+                string? noiDung = MoTaCongCu(ten, congCu?["function"]?["description"]?.ToString());
+                if (CoQuyenCongCu(ten) && !string.IsNullOrWhiteSpace(noiDung))
+                    moTa.Add(noiDung);
+            }
+            return moTa;
+        }
+
+        private static string? MoTaCongCu(string tenHam, string? moTaMacDinh) => tenHam switch
+        {
+            "xep_hang_hoc_vien" when !PermissionService.Can(ChucNangConst.BC_XEPHANG)
+                && PermissionService.ChiCuaMinh(ChucNangConst.BC_DIEM) => "Xem điểm và thứ hạng của chính học viên đang đăng nhập.",
+            "xep_hang_hoc_vien" when PermissionService.ChiCuaMinh(ChucNangConst.BC_XEPHANG)
+                && CurrentUser.IsGiaoVien => "Xem xếp hạng trong các lớp do giáo viên đang đăng nhập phụ trách.",
+            "lop_theo_phong" when PermissionService.ChiCuaMinh(ChucNangConst.BC_LOP_PHONG)
+                && CurrentUser.IsGiaoVien => "Liệt kê các lớp do giáo viên đang đăng nhập phụ trách theo phòng.",
+            "lop_theo_phong" when PermissionService.ChiCuaMinh(ChucNangConst.BC_LOP_PHONG)
+                && CurrentUser.IsHocVien => "Xem phòng học của lớp mà học viên đang đăng nhập tham gia.",
+            "doanh_thu_mon" when PermissionService.ChiCuaMinh(ChucNangConst.BC_DOANHTHU)
+                && CurrentUser.IsGiaoVien => "Ước tính doanh thu theo môn trong các lớp do giáo viên đang đăng nhập phụ trách.",
+            _ => moTaMacDinh
+        };
+
+        private static bool CoQuyenCongCu(string tenHam) => tenHam switch
+        {
+            "tim_lop" => PermissionService.Can(ChucNangConst.TIM_LOP) || PermissionService.Can(ChucNangConst.LOPHOC_XEM),
+            "tim_giao_vien" => PermissionService.Can(ChucNangConst.TIM_GIAOVIEN) || PermissionService.Can(ChucNangConst.GIAOVIEN_XEM),
+            "xep_hang_hoc_vien" => PermissionService.Can(ChucNangConst.BC_XEPHANG) || PermissionService.Can(ChucNangConst.BC_DIEM),
+            "doanh_thu_mon" => !CurrentUser.IsHocVien && PermissionService.Can(ChucNangConst.BC_DOANHTHU),
+            "lop_theo_phong" => PermissionService.Can(ChucNangConst.BC_LOP_PHONG),
+            _ => false
+        };
+
         public static string ThucThi(string tenHam, string thamSoJson, out DataTable? bangKetQua)
         {
             bangKetQua = null;
@@ -253,7 +307,7 @@ namespace BTL_LTTQ.Services.Ai
             var phamVi = PhamViBaoCaoLop();
             string dieuKienPhamVi = phamVi.DieuKienSql == "" ? "" : " AND " + phamVi.DieuKienSql;
             string sql = $"""
-                SELECT p.TenPhong AS [Phòng], p.DiaChi AS [Địa chỉ phòng], l.TenLop AS [Tên lớp],
+                SELECT p.TenPhong AS [Phòng], l.TenLop AS [Tên lớp],
                        m.TenMon AS [Môn học], g.TenGV AS [Giáo viên], c.TenCa AS [Ca học]
                 FROM PhongHoc p
                 LEFT JOIN LopHoc l ON l.MaPhong = p.MaPhong

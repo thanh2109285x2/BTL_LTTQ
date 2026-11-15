@@ -14,6 +14,7 @@ namespace BTL_LTTQ.Forms.HeThong
         public frmDangKy()
         {
             InitializeComponent();
+            cboHoSo.SelectedIndexChanged += cboHoSo_SelectedIndexChanged;
             Load += frmDangKy_Load;
             GiaoDien.ApDung(this);
             btnDangKy.BackColor = GiaoDien.MauChinh;
@@ -60,13 +61,27 @@ namespace BTL_LTTQ.Forms.HeThong
             string cotTen = vaiTro == VaiTroConst.GiaoVien ? "TenGV" : "TenHocVien";
             hoSo.Columns.Add("HoSoHienThi", typeof(string));
             foreach (DataRow dong in hoSo.Rows)
-                dong["HoSoHienThi"] = $"{dong[cotMa]} - {dong[cotTen]}";
+            {
+                bool coDienThoai = !string.IsNullOrWhiteSpace(Convert.ToString(dong["DienThoai"]));
+                dong["HoSoHienThi"] = $"{dong[cotMa]} - {dong[cotTen]} {(coDienThoai ? "(đã có SĐT)" : "(chưa có SĐT)")}";
+            }
 
             cboHoSo.DisplayMember = "HoSoHienThi";
             cboHoSo.ValueMember = cotMa;
             cboHoSo.DataSource = hoSo;
             cboHoSo.SelectedIndex = hoSo.Rows.Count == 0 ? -1 : 0;
             lblHoSo.Text = vaiTro == VaiTroConst.GiaoVien ? "Hồ sơ giáo viên" : "Hồ sơ học viên";
+        }
+
+        private void cboHoSo_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (cboHoSo.SelectedItem is not DataRowView hoSo) return;
+            bool coDienThoai = !string.IsNullOrWhiteSpace(Convert.ToString(hoSo["DienThoai"]));
+            txtSoDienThoai.Enabled = coDienThoai;
+            lblSoDienThoai.Text = coDienThoai ? "Xác nhận SĐT hồ sơ" : "Cần bổ sung SĐT";
+            txtSoDienThoai.PlaceholderText = coDienThoai
+                ? "Nhập số điện thoại đã khai báo trong hồ sơ"
+                : "Cập nhật hồ sơ trước khi đăng ký";
         }
 
         private void btnDangKy_Click(object sender, EventArgs e)
@@ -113,10 +128,17 @@ namespace BTL_LTTQ.Forms.HeThong
                     return;
                 }
 
-                string? dienThoai = _taiKhoanService.LayDienThoai(vaiTro, maHoSo);
-                if (BoKhoangTrang(txtSoDienThoai.Text) != BoKhoangTrang(dienThoai ?? ""))
+                string? dienThoai = _taiKhoanService.LayDienThoai(vaiTro, maHoSo)?.Trim();
+                if (string.IsNullOrWhiteSpace(dienThoai))
                 {
-                    BaoLoi("Số điện thoại không khớp với hồ sơ");
+                    BaoLoi("Hồ sơ này chưa có số điện thoại. Hãy cập nhật số điện thoại trong Quản lý giáo viên/học viên rồi đăng ký lại.");
+                    cboHoSo.Focus();
+                    return;
+                }
+
+                if (ChuanHoaDienThoai(txtSoDienThoai.Text) != ChuanHoaDienThoai(dienThoai))
+                {
+                    BaoLoi("Số điện thoại không khớp với hồ sơ.");
                     txtSoDienThoai.Focus();
                     return;
                 }
@@ -146,9 +168,12 @@ namespace BTL_LTTQ.Forms.HeThong
             DialogResult = DialogResult.OK;
         }
 
-        private static string BoKhoangTrang(string giaTri)
+        private static string ChuanHoaDienThoai(string giaTri)
         {
-            return new string(giaTri.Where(c => !char.IsWhiteSpace(c)).ToArray());
+            string chuSo = new(giaTri.Where(char.IsDigit).ToArray());
+            return chuSo.StartsWith("84", StringComparison.Ordinal) && chuSo.Length == 11
+                ? "0" + chuSo[2..]
+                : chuSo;
         }
 
         private void BaoLoi(string noiDung)

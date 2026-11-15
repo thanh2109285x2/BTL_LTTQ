@@ -75,8 +75,8 @@ INSERT [dbo].[ChucDanh] ([MaChucDanh], [TenChucDanh]) VALUES (N'CD02', N'Trợ g
 INSERT [dbo].[ChucDanh] ([MaChucDanh], [TenChucDanh]) VALUES (N'CD03', N'Trưởng khoa');
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'BC_DIEM', N'Báo cáo điểm', N'Báo cáo', 1, 0, 70);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'BC_DOANHTHU', N'Doanh thu', N'Báo cáo', 0, 0, 71);
-INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'BC_LOP_PHONG', N'Lớp học theo phòng', N'Báo cáo', 0, 0, 73);
-INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'BC_XEPHANG', N'Bảng xếp hạng HV', N'Báo cáo', 0, 0, 72);
+INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'BC_LOP_PHONG', N'Lớp học theo phòng', N'Báo cáo', 1, 0, 73);
+INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'BC_XEPHANG', N'Bảng xếp hạng HV', N'Báo cáo', 1, 0, 72);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'DANHMUC_KHAC', N'Danh mục khác', N'Quản lý', 0, 0, 50);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'GIAOVIEN_SUA', N'Giáo viên - Sửa', N'Quản lý', 0, 0, 32);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'GIAOVIEN_THEM', N'Giáo viên - Thêm', N'Quản lý', 0, 0, 31);

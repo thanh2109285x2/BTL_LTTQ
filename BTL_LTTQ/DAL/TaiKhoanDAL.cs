@@ -17,7 +17,7 @@ namespace BTL_LTTQ.DAL
 
         public DataTable LayGiaoVienChuaCoTaiKhoan()
         {
-            const string sql = @"SELECT g.MaGV, g.TenGV
+            const string sql = @"SELECT g.MaGV, g.TenGV, g.DienThoai
                                  FROM GiaoVien g
                                  WHERE NOT EXISTS (SELECT 1 FROM TaiKhoan t WHERE t.MaGV = g.MaGV)
                                  ORDER BY g.TenGV";
@@ -26,7 +26,7 @@ namespace BTL_LTTQ.DAL
 
         public DataTable LayHocVienChuaCoTaiKhoan()
         {
-            const string sql = @"SELECT h.MaHocVien, h.TenHocVien
+            const string sql = @"SELECT h.MaHocVien, h.TenHocVien, h.DienThoai
                                  FROM HocVien h
                                  WHERE NOT EXISTS (SELECT 1 FROM TaiKhoan t WHERE t.MaHocVien = h.MaHocVien)
                                  ORDER BY h.TenHocVien";
