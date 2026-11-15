@@ -530,7 +530,7 @@
             btnTop3.Location = new Point(52, 107);
             btnTop3.Name = "btnTop3";
             btnTop3.Padding = new Padding(48, 0, 0, 0);
-            btnTop3.Size = new Size(138, 29);
+            btnTop3.Size = new Size(205, 29);
             btnTop3.TabIndex = 5;
             btnTop3.Text = "Bảng xếp hạng hv";
             btnTop3.TextAlign = ContentAlignment.MiddleLeft;

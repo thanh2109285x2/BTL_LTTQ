@@ -13,10 +13,12 @@ namespace BTL_LTTQ.Forms.QuanLy
         private string? _anhDaChon;
         private string _maDangChon = "";
         private bool _chiXem;
+        private bool _ngaySinhRong;
 
         public frmGiaoVien()
         {
             InitializeComponent();
+            _ngaySinh.ValueChanged += (_, _) => _ngaySinhRong = false;
             GiaoDien.ApDung(this);
             Load += Form_Load;
             _btnThem.Click += (_, _) => Them();
@@ -212,7 +214,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             MaGV = _txtMa.Text,
             TenGV = _txtTen.Text,
-            NgaySinh = _ngaySinh.Checked ? _ngaySinh.Value.Date : null,
+            NgaySinh = _ngaySinhRong ? null : _ngaySinh.Value.Date,
             GioiTinh = _nam.Checked ? "Nam" : _nu.Checked ? "Nữ" : null,
             DienThoai = _txtDienThoai.Text,
             DiaChi = _txtDiaChi.Text,
@@ -242,8 +244,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             _txtMa.ReadOnly = true;
             _txtTen.Text = Convert.ToString(row.Cells["TenGV"].Value) ?? "";
             object ngay = row.Cells["NgaySinh"].Value;
-            _ngaySinh.Checked = ngay != DBNull.Value && ngay != null;
-            if (_ngaySinh.Checked) _ngaySinh.Value = Convert.ToDateTime(ngay);
+            _ngaySinh.Value = ngay == DBNull.Value || ngay == null ? _ngaySinh.MaxDate : Convert.ToDateTime(ngay);
+            _ngaySinhRong = ngay == DBNull.Value || ngay == null;
             string gioiTinh = Convert.ToString(row.Cells["GioiTinh"].Value) ?? "";
             _nam.Checked = gioiTinh == "Nam";
             _nu.Checked = gioiTinh == "Nữ";
@@ -279,7 +281,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             _nam.Checked = false;
             _nu.Checked = false;
             _ngaySinh.Value = _ngaySinh.MaxDate;
-            _ngaySinh.Checked = false;
+            _ngaySinhRong = false;
             _chucDanh.SelectedIndex = 0;
             _chuyenMon.SelectedIndex = 0;
             _coQuan.SelectedIndex = 0;

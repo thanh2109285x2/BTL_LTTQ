@@ -28,6 +28,12 @@
     <Compile Update="Forms\BaoCao\frmBaoCaoDoanhThu.Designer.cs">
       <DependentUpon>frmBaoCaoDoanhThu.cs</DependentUpon>
     </Compile>
+    <Compile Update="Forms\BaoCao\frmBaoCaoTop3.Designer.cs">
+      <DependentUpon>frmBaoCaoTop3.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Forms\BaoCao\frmBaoCaoLopTheoPhong.Designer.cs">
+      <DependentUpon>frmBaoCaoLopTheoPhong.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

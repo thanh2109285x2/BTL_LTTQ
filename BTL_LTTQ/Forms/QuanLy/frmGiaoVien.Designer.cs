@@ -336,11 +336,10 @@ namespace BTL_LTTQ.Forms.QuanLy
             _ngaySinh.Checked = false;
             _ngaySinh.CustomFormat = "dd/MM/yyyy";
             _ngaySinh.Format = DateTimePickerFormat.Custom;
-            _ngaySinh.Location = new Point(112, 71);
+            _ngaySinh.Location = new Point(112, 87);
             _ngaySinh.Margin = new Padding(3, 4, 3, 4);
             _ngaySinh.Name = "_ngaySinh";
-            _ngaySinh.ShowCheckBox = true;
-            _ngaySinh.Size = new Size(190, 27);
+            _ngaySinh.Size = new Size(205, 27);
             _ngaySinh.TabIndex = 1;
             // 
             // _lblGioiTinh

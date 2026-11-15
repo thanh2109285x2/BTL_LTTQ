@@ -31,5 +31,41 @@ namespace BTL_LTTQ.DAL
             GROUP BY l.MaLop, l.TenLop, m.TenMon, m.HocPhi
             ORDER BY l.TenLop",
             new SqlParameter("@MaLop", (object?)maLop ?? DBNull.Value));
+
+        public DataTable LayTop3HocVienTheoLop(string? dieuKienPhamVi, SqlParameter[] thamSo)
+        {
+            string locPhamVi = string.IsNullOrWhiteSpace(dieuKienPhamVi) ? "" : " AND " + dieuKienPhamVi;
+            var thamSoTruyVan = thamSo.ToList();
+            thamSoTruyVan.Add(new SqlParameter("@Top", 3));
+            return DbHelper.ExecuteQuery($@"
+                SELECT MaLop, TenLop, MaHocVien, TenHocVien, Diem, Hang
+                FROM (
+                    SELECT l.MaLop, l.TenLop, hv.MaHocVien, hv.TenHocVien, hv.Diem,
+                           ROW_NUMBER() OVER (PARTITION BY l.MaLop ORDER BY hv.Diem DESC, hv.MaHocVien) AS Hang
+                    FROM LopHoc l
+                    JOIN HocVien hv ON hv.MaLop = l.MaLop
+                    WHERE hv.Diem IS NOT NULL {locPhamVi}
+                ) x
+                WHERE Hang <= @Top
+                ORDER BY TenLop, Hang", thamSoTruyVan.ToArray());
+        }
+
+        public DataTable LayLopTheoPhong(string? maPhong, string? dieuKienPhamVi, SqlParameter[] thamSo)
+        {
+            string locPhamVi = string.IsNullOrWhiteSpace(dieuKienPhamVi) ? "" : " AND " + dieuKienPhamVi;
+            var thamSoTruyVan = thamSo.ToList();
+            thamSoTruyVan.Add(new SqlParameter("@MaPhong", SqlDbType.VarChar, 20) { Value = (object?)maPhong ?? DBNull.Value });
+            return DbHelper.ExecuteQuery($@"
+                SELECT p.MaPhong, p.TenPhong, l.MaLop, l.TenLop,
+                       m.TenMon, g.TenGV, c.TenCa, tg.TenThoiGian
+                FROM PhongHoc p
+                LEFT JOIN LopHoc l ON l.MaPhong = p.MaPhong
+                LEFT JOIN MonHoc m ON m.MaMon = l.MaMon
+                LEFT JOIN GiaoVien g ON g.MaGV = l.MaGV
+                LEFT JOIN CaHoc c ON c.MaCa = l.MaCa
+                LEFT JOIN ThoiGian tg ON tg.MaThoiGian = l.MaThoiGian
+                WHERE (@MaPhong IS NULL OR p.MaPhong = @MaPhong) {locPhamVi}
+                ORDER BY p.TenPhong, l.TenLop", thamSoTruyVan.ToArray());
+        }
     }
 }

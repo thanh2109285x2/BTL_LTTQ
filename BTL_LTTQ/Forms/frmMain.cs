@@ -22,6 +22,9 @@ namespace BTL_LTTQ
 
         public bool DangXuat { get; private set; }
         private Form? activeForm;
+        private frmTroLyAi? formTroLyAi;
+        private Panel? panelTroLyAiMenu;
+        private AppButton? btnTroLy;
         public frmMain()
         {
             InitializeComponent();
@@ -119,6 +122,34 @@ namespace BTL_LTTQ
             ApDungQuyenMenu();
             CollapseAllPanels();
             HienThiTrangChu();
+
+            if (btnTroLy == null || btnTroLy.IsDisposed)
+            {
+                panelTroLyAiMenu = new Panel
+                {
+                    Name = "panelTroLyAiMenu",
+                    Size = new Size(271, 35),
+                    Margin = new Padding(3)
+                };
+                btnTroLy = new AppButton
+                {
+                    Name = "btnTroLy",
+                    Text = "🤖      Trợ lý AI",
+                    Kieu = KieuNut.MenuCha,
+                    Size = new Size(panelTroLyAiMenu.ClientSize.Width - 12, 29),
+                    Margin = new Padding(3),
+                    Location = new Point(6, 3),
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    TextImageRelation = TextImageRelation.ImageBeforeText,
+                    Padding = new Padding(8, 0, 0, 0)
+                };
+                btnTroLy.Click += btnTroLy_Click;
+                btnTroLy.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+                panelTroLyAiMenu.Controls.Add(btnTroLy);
+            }
+
+            if (panelTroLyAiMenu != null && !flowLayoutPanel1.Controls.Contains(panelTroLyAiMenu))
+                flowLayoutPanel1.Controls.Add(panelTroLyAiMenu);
         }
 
         private void ApDungQuyenMenu()
@@ -283,6 +314,11 @@ namespace BTL_LTTQ
                 activeForm.Dispose();
                 activeForm = null;
             }
+            if (formTroLyAi != null && !formTroLyAi.IsDisposed)
+            {
+                formTroLyAi.Dispose();
+                formTroLyAi = null;
+            }
             panelContent.Controls.Clear();
 
             PermissionService.Clear();
@@ -352,7 +388,10 @@ namespace BTL_LTTQ
             }
             if (activeForm != null)
             {
-                activeForm.Close();
+                if (activeForm == formTroLyAi)
+                    activeForm.Hide();
+                else
+                    activeForm.Close();
             }
 
             activeForm = childForm;
@@ -440,6 +479,37 @@ namespace BTL_LTTQ
             OpenChildForm(() => new frmTimKiemHocVien(), btnTimHocVien, ChucNangConst.TIM_HOCVIEN);
         }
 
+        private void btnTroLy_Click(object? sender, EventArgs e)
+        {
+            if (btnTroLy == null) return;
+            GiaoDien.DanhDauMuc(btnTroLy);
+            if (activeForm != null && activeForm != formTroLyAi)
+            {
+                activeForm.Close();
+                activeForm.Dispose();
+                activeForm = null;
+            }
+
+            if (formTroLyAi == null || formTroLyAi.IsDisposed)
+            {
+                formTroLyAi = new frmTroLyAi
+                {
+                    TopLevel = false,
+                    FormBorderStyle = FormBorderStyle.None,
+                    Dock = DockStyle.Fill
+                };
+            }
+            if (formTroLyAi.Parent != panelContent)
+            {
+                panelContent.Controls.Add(formTroLyAi);
+            }
+
+            activeForm = formTroLyAi;
+            formTroLyAi.Show();
+            formTroLyAi.BringToFront();
+            CapNhatNutXuatExcel();
+        }
+
         private void btnThoiKhoaBieu_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmThoiKhoaBieu(), btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM);
@@ -464,8 +534,7 @@ namespace BTL_LTTQ
                 return;
             }
 
-            MessageBox.Show("Báo cáo xếp hạng học viên chưa được triển khai.", "Chưa khả dụng",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            OpenChildForm(() => new frmBaoCaoTop3(), btnTop3, ChucNangConst.BC_XEPHANG);
         }
 
         private void btnLopTheoPhong_Click(object? sender, EventArgs e)
@@ -477,8 +546,7 @@ namespace BTL_LTTQ
                 return;
             }
 
-            MessageBox.Show("Báo cáo lớp học theo phòng chưa được triển khai.", "Chưa khả dụng",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            OpenChildForm(() => new frmBaoCaoLopTheoPhong(), btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG);
         }
 
         private void btnXuatExcel_Click(object sender, EventArgs e)
