@@ -79,7 +79,7 @@ namespace BTL_LTTQ.DAL
             var thamSo = new List<SqlParameter>(ThamSo(l));
             thamSo.AddRange(dieuKien.ThamSo);
 
-            return DbHelper.ExecuteNonQuery(sql, thamSo.ToArray());
+            DbHelper.ExecuteNonQuery(sql, thamSo.ToArray());
         }
 
         public void Xoa(string maLop)

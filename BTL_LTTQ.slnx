@@ -1,3 +1,10 @@
 <Solution>
+  <Folder Name="/Database/">
+    <File Path="Database/BoSung_Tu_Qlloptinhoc.sql" />
+    <File Path="Database/DevDatabase.sql" />
+    <File Path="Database/PhanQuyen.sql" />
+    <File Path="Database/ResetProjectData.sql" />
+    <File Path="Database/ThoiKhoaBieu.sql" />
+  </Folder>
   <Project Path="BTL_LTTQ/BTL_LTTQ.csproj" />
 </Solution>

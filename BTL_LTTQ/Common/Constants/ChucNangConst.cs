@@ -28,6 +28,9 @@ namespace BTL_LTTQ.Common
         public const string BC_LOP_PHONG = "BC_LOP_PHONG";
         public const string XUAT_EXCEL = "XUAT_EXCEL";
         public const string DANGKYLOP = "DANGKYLOP";
+        public const string DONGHOCPHI = "DONGHOCPHI";
+        public const string HOCPHI_XACNHAN = "HOCPHI_XACNHAN";
+        public const string HOCVIEN_NHAPDIEM = "HOCVIEN_NHAPDIEM";
         public const string THOIKHOA_XEM = "THOIKHOA_XEM";
         public const string THOIKHOA_XEP = "THOIKHOA_XEP";
         public const string PHANQUYEN = "PHANQUYEN";

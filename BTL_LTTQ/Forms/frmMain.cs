@@ -3,6 +3,7 @@ using BTL_LTTQ.Forms.HeThong;
 using BTL_LTTQ.Forms;
 using BTL_LTTQ.Forms.QuanLy;
 using BTL_LTTQ.Forms.BaoCao;
+using BTL_LTTQ.Forms.NghiepVu;
 using BTL_LTTQ.Forms.TraCuu;
 
 namespace BTL_LTTQ
@@ -99,6 +100,7 @@ namespace BTL_LTTQ
             menuTimer.Stop();
             panelMenuDangHoatDong = null;
             panelCRUD.Height = PANEL_COLLAPSED_HEIGHT;
+            panelNghiepVu.Height = PANEL_COLLAPSED_HEIGHT;
             panelTraCuu.Height = PANEL_COLLAPSED_HEIGHT;
             panelBaoCao.Height = PANEL_COLLAPSED_HEIGHT;
             panelHeThong.Height = PANEL_COLLAPSED_HEIGHT;
@@ -134,6 +136,9 @@ namespace BTL_LTTQ
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDoanhThu, ChucNangConst.BC_DOANHTHU);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTop3, ChucNangConst.BC_XEPHANG);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG);
+            PhanQuyenUi.AnNeuKhongCoQuyen(btnDangKyLop, ChucNangConst.DANGKYLOP);
+            PhanQuyenUi.AnNeuKhongCoQuyen(btnDongHocPhi, ChucNangConst.DONGHOCPHI);
+            PhanQuyenUi.AnNeuKhongCoQuyen(btnNhapDiem, ChucNangConst.HOCVIEN_NHAPDIEM);
 
             btnQuanLyMenu.Visible = SapXepMenu(panelCRUD,
                 (btnLopHoc, ChucNangConst.LOPHOC_XEM),
@@ -146,6 +151,10 @@ namespace BTL_LTTQ
                 (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
                 (btnTimHocVien, ChucNangConst.TIM_HOCVIEN),
                 (btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM));
+            btnNghiepVuMenu.Visible = SapXepMenu(panelNghiepVu,
+                (btnDangKyLop, ChucNangConst.DANGKYLOP),
+                (btnDongHocPhi, ChucNangConst.DONGHOCPHI),
+                (btnNhapDiem, ChucNangConst.HOCVIEN_NHAPDIEM));
             btnBaoCaoMenu.Visible = SapXepMenu(panelBaoCao,
                 (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
                 (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
@@ -225,11 +234,34 @@ namespace BTL_LTTQ
 
         private void CollapseOtherPanels(Panel panelToKeep)
         {
-            foreach (Panel panel in new[] { panelCRUD, panelTraCuu, panelBaoCao, panelHeThong })
+            foreach (Panel panel in new[] { panelCRUD, panelNghiepVu, panelTraCuu, panelBaoCao, panelHeThong })
             {
                 if (panel != panelToKeep)
                     panel.Height = PANEL_COLLAPSED_HEIGHT;
             }
+        }
+
+        private void btnNghiepVuMenu_Click(object sender, EventArgs e)
+        {
+            TogglePanel(panelNghiepVu,
+                (btnDangKyLop, ChucNangConst.DANGKYLOP),
+                (btnDongHocPhi, ChucNangConst.DONGHOCPHI),
+                (btnNhapDiem, ChucNangConst.HOCVIEN_NHAPDIEM));
+        }
+
+        private void btnDangKyLop_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmDangKyLop(), btnDangKyLop, ChucNangConst.DANGKYLOP);
+        }
+
+        private void btnDongHocPhi_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmDongHocPhi(), btnDongHocPhi, ChucNangConst.DONGHOCPHI);
+        }
+
+        private void btnNhapDiem_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmNhapDiem(), btnNhapDiem, ChucNangConst.HOCVIEN_NHAPDIEM);
         }
 
         private void btnDoiMatKhau_Click(object? sender, EventArgs e)

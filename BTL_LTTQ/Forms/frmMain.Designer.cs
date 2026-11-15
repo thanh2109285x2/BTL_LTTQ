@@ -38,6 +38,11 @@
             btnHocVien = new AppButton();
             btnLopHoc = new AppButton();
             btnQuanLyMenu = new AppButton();
+            panelNghiepVu = new Panel();
+            btnNhapDiem = new AppButton();
+            btnDongHocPhi = new AppButton();
+            btnDangKyLop = new AppButton();
+            btnNghiepVuMenu = new AppButton();
             panelTraCuu = new Panel();
             btnThoiKhoaBieu = new AppButton();
             btnTimGiaoVien = new AppButton();
@@ -64,6 +69,7 @@
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             panelCRUD.SuspendLayout();
+            panelNghiepVu.SuspendLayout();
             panelTraCuu.SuspendLayout();
             panelBaoCao.SuspendLayout();
             panelHeThong.SuspendLayout();
@@ -77,6 +83,7 @@
             flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.Controls.Add(panel1);
             flowLayoutPanel1.Controls.Add(panelCRUD);
+            flowLayoutPanel1.Controls.Add(panelNghiepVu);
             flowLayoutPanel1.Controls.Add(panelTraCuu);
             flowLayoutPanel1.Controls.Add(panelBaoCao);
             flowLayoutPanel1.Controls.Add(panelHeThong);
@@ -129,7 +136,7 @@
             panelCRUD.Controls.Add(btnQuanLyMenu);
             panelCRUD.Location = new Point(3, 61);
             panelCRUD.Name = "panelCRUD";
-            panelCRUD.Size = new Size(271, 37);
+            panelCRUD.Size = new Size(271, 222);
             panelCRUD.TabIndex = 1;
             panelCRUD.Paint += panelCRUD_Paint;
             // 
@@ -147,7 +154,7 @@
             btnDanhMucKhac.Location = new Point(52, 178);
             btnDanhMucKhac.Name = "btnDanhMucKhac";
             btnDanhMucKhac.Padding = new Padding(48, 0, 0, 0);
-            btnDanhMucKhac.Size = new Size(120, 29);
+            btnDanhMucKhac.Size = new Size(192, 29);
             btnDanhMucKhac.TabIndex = 5;
             btnDanhMucKhac.Text = "Danh mục khác";
             btnDanhMucKhac.TextAlign = ContentAlignment.MiddleLeft;
@@ -167,7 +174,7 @@
             btnMonHoc.Location = new Point(52, 143);
             btnMonHoc.Name = "btnMonHoc";
             btnMonHoc.Padding = new Padding(48, 0, 0, 0);
-            btnMonHoc.Size = new Size(86, 29);
+            btnMonHoc.Size = new Size(156, 29);
             btnMonHoc.TabIndex = 4;
             btnMonHoc.Text = "Môn học";
             btnMonHoc.TextAlign = ContentAlignment.MiddleLeft;
@@ -188,7 +195,7 @@
             btnGiaoVien.Location = new Point(52, 108);
             btnGiaoVien.Name = "btnGiaoVien";
             btnGiaoVien.Padding = new Padding(48, 0, 0, 0);
-            btnGiaoVien.Size = new Size(86, 29);
+            btnGiaoVien.Size = new Size(156, 29);
             btnGiaoVien.TabIndex = 3;
             btnGiaoVien.Text = "Giáo viên";
             btnGiaoVien.TextAlign = ContentAlignment.MiddleLeft;
@@ -209,7 +216,7 @@
             btnHocVien.Location = new Point(52, 73);
             btnHocVien.Name = "btnHocVien";
             btnHocVien.Padding = new Padding(48, 0, 0, 0);
-            btnHocVien.Size = new Size(86, 29);
+            btnHocVien.Size = new Size(156, 29);
             btnHocVien.TabIndex = 2;
             btnHocVien.Text = "Học viên";
             btnHocVien.TextAlign = ContentAlignment.MiddleLeft;
@@ -230,7 +237,7 @@
             btnLopHoc.Location = new Point(52, 38);
             btnLopHoc.Name = "btnLopHoc";
             btnLopHoc.Padding = new Padding(48, 0, 0, 0);
-            btnLopHoc.Size = new Size(86, 29);
+            btnLopHoc.Size = new Size(156, 29);
             btnLopHoc.TabIndex = 1;
             btnLopHoc.Text = "Lớp học";
             btnLopHoc.TextAlign = ContentAlignment.MiddleLeft;
@@ -260,6 +267,103 @@
             btnQuanLyMenu.UseVisualStyleBackColor = false;
             btnQuanLyMenu.Click += btnQuanLyMenu_Click;
             // 
+            // panelNghiepVu
+            // 
+            panelNghiepVu.Controls.Add(btnNhapDiem);
+            panelNghiepVu.Controls.Add(btnDongHocPhi);
+            panelNghiepVu.Controls.Add(btnDangKyLop);
+            panelNghiepVu.Controls.Add(btnNghiepVuMenu);
+            panelNghiepVu.Location = new Point(3, 289);
+            panelNghiepVu.Name = "panelNghiepVu";
+            panelNghiepVu.Size = new Size(271, 140);
+            panelNghiepVu.TabIndex = 2;
+            // 
+            // btnNhapDiem
+            // 
+            btnNhapDiem.BackColor = Color.FromArgb(232, 240, 251);
+            btnNhapDiem.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnNhapDiem.FlatAppearance.BorderSize = 0;
+            btnNhapDiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnNhapDiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnNhapDiem.FlatStyle = FlatStyle.Flat;
+            btnNhapDiem.Font = new Font("Segoe UI", 9F);
+            btnNhapDiem.ForeColor = Color.FromArgb(33, 37, 41);
+            btnNhapDiem.Kieu = KieuNut.MenuCon;
+            btnNhapDiem.Location = new Point(52, 108);
+            btnNhapDiem.Name = "btnNhapDiem";
+            btnNhapDiem.Padding = new Padding(48, 0, 0, 0);
+            btnNhapDiem.Size = new Size(192, 29);
+            btnNhapDiem.TabIndex = 4;
+            btnNhapDiem.Text = "Nhập điểm";
+            btnNhapDiem.TextAlign = ContentAlignment.MiddleLeft;
+            btnNhapDiem.UseVisualStyleBackColor = false;
+            btnNhapDiem.Click += btnNhapDiem_Click;
+            // 
+            // btnDongHocPhi
+            // 
+            btnDongHocPhi.BackColor = Color.FromArgb(232, 240, 251);
+            btnDongHocPhi.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnDongHocPhi.FlatAppearance.BorderSize = 0;
+            btnDongHocPhi.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnDongHocPhi.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnDongHocPhi.FlatStyle = FlatStyle.Flat;
+            btnDongHocPhi.Font = new Font("Segoe UI", 9F);
+            btnDongHocPhi.ForeColor = Color.FromArgb(33, 37, 41);
+            btnDongHocPhi.Kieu = KieuNut.MenuCon;
+            btnDongHocPhi.Location = new Point(52, 73);
+            btnDongHocPhi.Name = "btnDongHocPhi";
+            btnDongHocPhi.Padding = new Padding(48, 0, 0, 0);
+            btnDongHocPhi.Size = new Size(192, 29);
+            btnDongHocPhi.TabIndex = 3;
+            btnDongHocPhi.Text = "Đóng học phí";
+            btnDongHocPhi.TextAlign = ContentAlignment.MiddleLeft;
+            btnDongHocPhi.UseVisualStyleBackColor = false;
+            btnDongHocPhi.Click += btnDongHocPhi_Click;
+            // 
+            // btnDangKyLop
+            // 
+            btnDangKyLop.BackColor = Color.FromArgb(232, 240, 251);
+            btnDangKyLop.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnDangKyLop.FlatAppearance.BorderSize = 0;
+            btnDangKyLop.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnDangKyLop.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnDangKyLop.FlatStyle = FlatStyle.Flat;
+            btnDangKyLop.Font = new Font("Segoe UI", 9F);
+            btnDangKyLop.ForeColor = Color.FromArgb(33, 37, 41);
+            btnDangKyLop.Kieu = KieuNut.MenuCon;
+            btnDangKyLop.Location = new Point(52, 38);
+            btnDangKyLop.Name = "btnDangKyLop";
+            btnDangKyLop.Padding = new Padding(48, 0, 0, 0);
+            btnDangKyLop.Size = new Size(192, 29);
+            btnDangKyLop.TabIndex = 2;
+            btnDangKyLop.Text = "Đăng ký lớp";
+            btnDangKyLop.TextAlign = ContentAlignment.MiddleLeft;
+            btnDangKyLop.UseVisualStyleBackColor = false;
+            btnDangKyLop.Click += btnDangKyLop_Click;
+            // 
+            // btnNghiepVuMenu
+            // 
+            btnNghiepVuMenu.BackColor = Color.FromArgb(210, 225, 246);
+            btnNghiepVuMenu.FlatAppearance.BorderColor = Color.FromArgb(210, 225, 246);
+            btnNghiepVuMenu.FlatAppearance.BorderSize = 0;
+            btnNghiepVuMenu.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnNghiepVuMenu.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnNghiepVuMenu.FlatStyle = FlatStyle.Flat;
+            btnNghiepVuMenu.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnNghiepVuMenu.ForeColor = Color.FromArgb(30, 74, 130);
+            btnNghiepVuMenu.ImageAlign = ContentAlignment.MiddleLeft;
+            btnNghiepVuMenu.Kieu = KieuNut.MenuCha;
+            btnNghiepVuMenu.Location = new Point(3, 3);
+            btnNghiepVuMenu.Name = "btnNghiepVuMenu";
+            btnNghiepVuMenu.Padding = new Padding(8, 0, 0, 0);
+            btnNghiepVuMenu.Size = new Size(169, 29);
+            btnNghiepVuMenu.TabIndex = 1;
+            btnNghiepVuMenu.Text = "🛠️      Nghiệp vụ";
+            btnNghiepVuMenu.TextAlign = ContentAlignment.MiddleLeft;
+            btnNghiepVuMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnNghiepVuMenu.UseVisualStyleBackColor = false;
+            btnNghiepVuMenu.Click += btnNghiepVuMenu_Click;
+            // 
             // panelTraCuu
             // 
             panelTraCuu.Controls.Add(btnThoiKhoaBieu);
@@ -267,9 +371,9 @@
             panelTraCuu.Controls.Add(btnTimHocVien);
             panelTraCuu.Controls.Add(btnTimLop);
             panelTraCuu.Controls.Add(btnTraCuuMenu);
-            panelTraCuu.Location = new Point(3, 104);
+            panelTraCuu.Location = new Point(3, 435);
             panelTraCuu.Name = "panelTraCuu";
-            panelTraCuu.Size = new Size(271, 40);
+            panelTraCuu.Size = new Size(271, 38);
             panelTraCuu.TabIndex = 2;
             // 
             // btnThoiKhoaBieu
@@ -286,7 +390,7 @@
             btnThoiKhoaBieu.Location = new Point(52, 143);
             btnThoiKhoaBieu.Name = "btnThoiKhoaBieu";
             btnThoiKhoaBieu.Padding = new Padding(48, 0, 0, 0);
-            btnThoiKhoaBieu.Size = new Size(156, 29);
+            btnThoiKhoaBieu.Size = new Size(192, 29);
             btnThoiKhoaBieu.TabIndex = 5;
             btnThoiKhoaBieu.Text = "Thời khóa biểu";
             btnThoiKhoaBieu.TextAlign = ContentAlignment.MiddleLeft;
@@ -307,7 +411,7 @@
             btnTimGiaoVien.Location = new Point(52, 73);
             btnTimGiaoVien.Name = "btnTimGiaoVien";
             btnTimGiaoVien.Padding = new Padding(48, 0, 0, 0);
-            btnTimGiaoVien.Size = new Size(120, 29);
+            btnTimGiaoVien.Size = new Size(156, 29);
             btnTimGiaoVien.TabIndex = 3;
             btnTimGiaoVien.Text = "Tìm giáo viên";
             btnTimGiaoVien.TextAlign = ContentAlignment.MiddleLeft;
@@ -328,7 +432,7 @@
             btnTimHocVien.Location = new Point(52, 108);
             btnTimHocVien.Name = "btnTimHocVien";
             btnTimHocVien.Padding = new Padding(48, 0, 0, 0);
-            btnTimHocVien.Size = new Size(120, 29);
+            btnTimHocVien.Size = new Size(156, 29);
             btnTimHocVien.TabIndex = 4;
             btnTimHocVien.Text = "Tìm học viên";
             btnTimHocVien.TextAlign = ContentAlignment.MiddleLeft;
@@ -349,7 +453,7 @@
             btnTimLop.Location = new Point(52, 38);
             btnTimLop.Name = "btnTimLop";
             btnTimLop.Padding = new Padding(48, 0, 0, 0);
-            btnTimLop.Size = new Size(86, 29);
+            btnTimLop.Size = new Size(156, 29);
             btnTimLop.TabIndex = 2;
             btnTimLop.Text = "Tìm lớp";
             btnTimLop.TextAlign = ContentAlignment.MiddleLeft;
@@ -386,9 +490,9 @@
             panelBaoCao.Controls.Add(btnDoanhThu);
             panelBaoCao.Controls.Add(btnBaoCaoDiem);
             panelBaoCao.Controls.Add(btnBaoCaoMenu);
-            panelBaoCao.Location = new Point(3, 150);
+            panelBaoCao.Location = new Point(3, 479);
             panelBaoCao.Name = "panelBaoCao";
-            panelBaoCao.Size = new Size(271, 37);
+            panelBaoCao.Size = new Size(271, 38);
             panelBaoCao.TabIndex = 3;
             // 
             // btnLopTheoPhong
@@ -502,7 +606,7 @@
             // 
             panelHeThong.Controls.Add(btnPhanQuyen);
             panelHeThong.Controls.Add(btnHeThong);
-            panelHeThong.Location = new Point(3, 193);
+            panelHeThong.Location = new Point(3, 523);
             panelHeThong.Name = "panelHeThong";
             panelHeThong.Size = new Size(271, 71);
             panelHeThong.TabIndex = 4;
@@ -687,6 +791,7 @@
             flowLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panelCRUD.ResumeLayout(false);
+            panelNghiepVu.ResumeLayout(false);
             panelTraCuu.ResumeLayout(false);
             panelBaoCao.ResumeLayout(false);
             panelHeThong.ResumeLayout(false);
@@ -700,6 +805,7 @@
         #endregion
         private Panel panelContent;
         private FlowLayoutPanel flowLayoutPanel1;
+        private Panel panelNghiepVu;
         private Panel panelTraCuu;
         private Panel panelBaoCao;
 private Panel panelHeThong;
@@ -726,6 +832,10 @@ private AppButton btnLopTheoPhong;
         private AppButton btnHocVien;
         private AppButton btnLopHoc;
         private AppButton btnQuanLyMenu;
+        private AppButton btnNghiepVuMenu;
+        private AppButton btnDangKyLop;
+        private AppButton btnDongHocPhi;
+        private AppButton btnNhapDiem;
         private AppButton btnXuatExcel;
         private AppButton btnDoiMatKhau;
         private AppButton btnDangXuat;

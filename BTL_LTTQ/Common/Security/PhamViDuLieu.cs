@@ -13,7 +13,7 @@ namespace BTL_LTTQ.Common
         public static PhamViInfo ChoLopHoc(string maChucNang)
         {
             if (!PermissionService.Can(maChucNang))
-                return new PhamViInfo { Loai = LoaiPhamVi.TuChoi };
+                return new PhamViInfo(LoaiPhamVi.TuChoi);
 
             if (!PermissionService.ChiCuaMinh(maChucNang))
                 return new PhamViInfo(LoaiPhamVi.TatCa);

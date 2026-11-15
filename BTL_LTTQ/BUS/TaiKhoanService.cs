@@ -58,6 +58,8 @@ namespace BTL_LTTQ.BUS
         public bool TenDangNhapDaTonTai(string tenDangNhap) => _taiKhoanDAL.TenDangNhapDaTonTai(tenDangNhap);
 
         public string DangKy(string tenDangNhap, string matKhau, string vaiTro, string? maGV, string? maHocVien)
+        {
+            if (string.IsNullOrWhiteSpace(vaiTro) || (vaiTro != "Admin" && vaiTro != "GiangVien" && vaiTro != "HocVien"))
             {
                 return "Vui lòng chọn vai trò hợp lệ.";
             }
@@ -65,11 +67,7 @@ namespace BTL_LTTQ.BUS
             string salt = MatKhauHelper.TaoSalt();
             string hash = MatKhauHelper.BamMatKhau(matKhau, salt);
             return _taiKhoanDAL.ThemTaiKhoan(tenDangNhap, hash, salt, vaiTro, maGV, maHocVien);
-                }
-                else
-                {
-                    soDong = _dal.ThemTaiKhoan(tenDangNhap, hash, salt, vaiTro, maGV, maHocVien);
-                }
+        }
 
         public string DoiMatKhau(string tenDangNhap, string matKhauCu, string matKhauMoi) =>
             _taiKhoanDAL.DoiMatKhau(tenDangNhap, matKhauCu, matKhauMoi);
