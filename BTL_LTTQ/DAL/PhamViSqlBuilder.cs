@@ -28,7 +28,7 @@ namespace BTL_LTTQ.DAL
                         new SqlParameter("@PV_MaGV", SqlDbType.VarChar, 20) { Value = phamVi.MaGiaoVien }
                     }),
                 LoaiPhamVi.HocVien when !string.IsNullOrWhiteSpace(phamVi.MaHocVien) =>
-                    ($"EXISTS (SELECT 1 FROM HocVien pv_h WHERE pv_h.MaHocVien = @PV_MaHocVien AND pv_h.MaLop = {aliasBang}.MaLop)", new[]
+                    ($"EXISTS (SELECT 1 FROM DangKy pv_dk WHERE pv_dk.MaHocVien = @PV_MaHocVien AND pv_dk.MaLop = {aliasBang}.MaLop)", new[]
             {
                         new SqlParameter("@PV_MaHocVien", SqlDbType.VarChar, 20) { Value = phamVi.MaHocVien }
                     }),

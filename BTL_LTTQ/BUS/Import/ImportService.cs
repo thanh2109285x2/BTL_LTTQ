@@ -210,7 +210,6 @@ namespace BTL_LTTQ.BUS.Import
                     ThemLoi(loi, dong, "MaHocVien", ma, $"Mã học viên '{ma}' đã tồn tại trong hệ thống.");
 
                 KiemTraThamChieuTrongDb(conn, tran, dong, "MaNghe", "NgheNghiep", "MaNghe", loi);
-                KiemTraThamChieuTrongDb(conn, tran, dong, "MaXepLoai", "XepLoai", "MaXepLoai", loi);
                 KiemTraThamChieuTrongDb(conn, tran, dong, "MaLop", "LopHoc", "MaLop", loi);
             }
         }
@@ -316,29 +315,33 @@ namespace BTL_LTTQ.BUS.Import
         {
             const string sql = @"
                 INSERT INTO dbo.HocVien
-                    (MaHocVien, TenHocVien, MaLop, NgaySinh, GioiTinh, DiaChi,
-                     MaNghe, DienThoai, NgayNopHocPhi, Diem, MaXepLoai)
+                    (MaHocVien, TenHocVien, NgaySinh, GioiTinh, DiaChi, MaNghe, DienThoai)
                 VALUES
-                    (@MaHocVien, @TenHocVien, @MaLop, @NgaySinh, @GioiTinh, @DiaChi,
-                     @MaNghe, @DienThoai, @NgayNopHocPhi, @Diem, @MaXepLoai)";
+                    (@MaHocVien, @TenHocVien, @NgaySinh, @GioiTinh, @DiaChi, @MaNghe, @DienThoai)";
 
             foreach (ImportDong dong in dongList)
             {
-                using var cmd = new SqlCommand(sql, conn, tran);
+                using (var cmd = new SqlCommand(sql, conn, tran))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@MaHocVien", SqlDbType.VarChar, 20) { Value = dong.LayChuoi("MaHocVien") });
+                    cmd.Parameters.Add(new SqlParameter("@TenHocVien", SqlDbType.NVarChar, 100) { Value = dong.LayChuoi("TenHocVien") });
+                    cmd.Parameters.Add(new SqlParameter("@NgaySinh", SqlDbType.Date) { Value = (object?)dong.LayNgay("NgaySinh") ?? DBNull.Value });
+                    cmd.Parameters.Add(GiaTriHoacNull("@GioiTinh", SqlDbType.NVarChar, 10, dong.LayChuoi("GioiTinh")));
+                    cmd.Parameters.Add(GiaTriHoacNull("@DiaChi", SqlDbType.NVarChar, 200, dong.LayChuoi("DiaChi")));
+                    cmd.Parameters.Add(GiaTriHoacNull("@MaNghe", SqlDbType.VarChar, 20, dong.LayChuoi("MaNghe")));
+                    cmd.Parameters.Add(GiaTriHoacNull("@DienThoai", SqlDbType.VarChar, 20, dong.LayChuoi("DienThoai")));
+                    cmd.ExecuteNonQuery();
+                }
 
-                cmd.Parameters.Add(new SqlParameter("@MaHocVien", SqlDbType.VarChar, 20) { Value = dong.LayChuoi("MaHocVien") });
-                cmd.Parameters.Add(new SqlParameter("@TenHocVien", SqlDbType.NVarChar, 100) { Value = dong.LayChuoi("TenHocVien") });
-                cmd.Parameters.Add(GiaTriHoacNull("@MaLop", SqlDbType.VarChar, 20, dong.LayChuoi("MaLop")));
-                cmd.Parameters.Add(new SqlParameter("@NgaySinh", SqlDbType.Date) { Value = (object?)dong.LayNgay("NgaySinh") ?? DBNull.Value });
-                cmd.Parameters.Add(GiaTriHoacNull("@GioiTinh", SqlDbType.NVarChar, 10, dong.LayChuoi("GioiTinh")));
-                cmd.Parameters.Add(GiaTriHoacNull("@DiaChi", SqlDbType.NVarChar, 200, dong.LayChuoi("DiaChi")));
-                cmd.Parameters.Add(GiaTriHoacNull("@MaNghe", SqlDbType.VarChar, 20, dong.LayChuoi("MaNghe")));
-                cmd.Parameters.Add(GiaTriHoacNull("@DienThoai", SqlDbType.VarChar, 20, dong.LayChuoi("DienThoai")));
-                cmd.Parameters.Add(new SqlParameter("@NgayNopHocPhi", SqlDbType.Date) { Value = (object?)dong.LayNgay("NgayNopHocPhi") ?? DBNull.Value });
-                cmd.Parameters.Add(new SqlParameter("@Diem", SqlDbType.Float) { Value = (object?)dong.LaySo("Diem") is decimal diem ? (double)diem : DBNull.Value });
-                cmd.Parameters.Add(GiaTriHoacNull("@MaXepLoai", SqlDbType.VarChar, 20, dong.LayChuoi("MaXepLoai")));
+                string maLop = dong.LayChuoi("MaLop");
+                if (maLop.Length == 0)
+                    continue;
 
-                cmd.ExecuteNonQuery();
+                using var dk = new SqlCommand(
+                    "INSERT INTO dbo.DangKy (MaHocVien, MaLop) VALUES (@MaHocVien, @MaLop)", conn, tran);
+                dk.Parameters.Add(new SqlParameter("@MaHocVien", SqlDbType.VarChar, 20) { Value = dong.LayChuoi("MaHocVien") });
+                dk.Parameters.Add(new SqlParameter("@MaLop", SqlDbType.VarChar, 20) { Value = maLop });
+                dk.ExecuteNonQuery();
             }
 
             return dongList.Count;

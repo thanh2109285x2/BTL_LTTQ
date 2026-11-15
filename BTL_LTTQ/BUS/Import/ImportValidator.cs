@@ -57,9 +57,6 @@ namespace BTL_LTTQ.BUS.Import
                 KiemTraDoDai(dong, "DiaChi", "Địa chỉ", 200);
                 KiemTraMaThamChieu(dong, "MaNghe", "Mã nghề", _lookup.MaNghe, "Nghề nghiệp");
                 KiemTraDoDai(dong, "DienThoai", "Điện thoại", 20);
-                KiemTraNgay(dong, "NgayNopHocPhi", "Ngày nộp học phí");
-                KiemTraSo(dong, "Diem", "Điểm");
-                KiemTraMaThamChieu(dong, "MaXepLoai", "Mã xếp loại", _lookup.MaXepLoai, "Xếp loại");
                 KiemTraMaLopKhongBatBuoc(dong);
             }
         }

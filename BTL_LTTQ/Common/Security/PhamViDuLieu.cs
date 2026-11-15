@@ -42,6 +42,20 @@ namespace BTL_LTTQ.Common
             return new PhamViInfo(LoaiPhamVi.TuChoi);
         }
 
+        public static PhamViInfo ChoNhapDiem()
+        {
+            if (!PermissionService.Can(ChucNangConst.HOCVIEN_NHAPDIEM) || CurrentUser.IsHocVien)
+                return new PhamViInfo(LoaiPhamVi.TuChoi);
+
+            if (CurrentUser.IsAdmin)
+                return new PhamViInfo(LoaiPhamVi.TatCa);
+
+            if (CurrentUser.IsGiaoVien && !string.IsNullOrWhiteSpace(CurrentUser.MaGV))
+                return new PhamViInfo(LoaiPhamVi.GiaoVien, MaGiaoVien: CurrentUser.MaGV);
+
+            return new PhamViInfo(LoaiPhamVi.TuChoi);
+        }
+
         public static (string DieuKienSql, SqlParameter[] ThamSo) ChoHocVien(string maChucNang, string aliasBang)
         {
             KiemTraAlias(aliasBang);
@@ -50,6 +64,7 @@ namespace BTL_LTTQ.Common
                 return DieuKienRong();
 
             if (!string.Equals(maChucNang, ChucNangConst.HOCVIEN_XEM, StringComparison.OrdinalIgnoreCase) &&
+                !string.Equals(maChucNang, ChucNangConst.TIM_HOCVIEN, StringComparison.OrdinalIgnoreCase) &&
                 !string.Equals(maChucNang, ChucNangConst.BC_DIEM, StringComparison.OrdinalIgnoreCase))
                 return TuChoiTatCa();
 
@@ -58,7 +73,7 @@ namespace BTL_LTTQ.Common
                 if (string.IsNullOrWhiteSpace(CurrentUser.MaGV))
                     return TuChoiTatCa();
 
-                return ($"{aliasBang}.MaLop IN (SELECT pv_l.MaLop FROM LopHoc pv_l WHERE pv_l.MaGV = @PV_MaGV)", new[]
+                return ($"{aliasBang}.MaHocVien IN (SELECT pv_dk.MaHocVien FROM DangKy pv_dk INNER JOIN LopHoc pv_l ON pv_l.MaLop = pv_dk.MaLop WHERE pv_l.MaGV = @PV_MaGV)", new[]
                 {
                     new SqlParameter("@PV_MaGV", SqlDbType.VarChar, 20) { Value = CurrentUser.MaGV }
                 });

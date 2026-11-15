@@ -20,9 +20,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             try
             {
-                NapCombo(cboLop, _hocVienService.LayDanhSachLop(), "MaLop", "TenLop");
                 NapCombo(cboNghe, _hocVienService.LayDanhSachNghe(), "MaNghe", "TenNghe");
-                NapCombo(cboXepLoai, _hocVienService.LayDanhSachXepLoai(), "MaXepLoai", "TenLoai");
                 NapDanhSach();
             }
             catch (SqlException ex)
@@ -41,33 +39,27 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             dgvHocVien.DataSource = _hocVienService.LayDanhSach(keyword);
             if (dgvHocVien.Columns.Count == 0) return;
-            dgvHocVien.Columns["MaLop"].Visible = dgvHocVien.Columns["MaNghe"].Visible = dgvHocVien.Columns["MaXepLoai"].Visible = false;
+            dgvHocVien.Columns["MaNghe"].Visible = false;
             SetHeader("MaHocVien", "Mã học viên"); SetHeader("TenHocVien", "Tên học viên");
             SetHeader("NgaySinh", "Ngày sinh"); SetHeader("GioiTinh", "Giới tính"); SetHeader("DienThoai", "Điện thoại");
-            SetHeader("DiaChi", "Địa chỉ"); SetHeader("TenLop", "Lớp học"); SetHeader("TenNghe", "Nghề nghiệp");
-            SetHeader("NgayNopHocPhi", "Ngày nộp học phí"); SetHeader("Diem", "Điểm"); SetHeader("TenLoai", "Xếp loại");
+            SetHeader("DiaChi", "Địa chỉ"); SetHeader("TenNghe", "Nghề nghiệp");
             dgvHocVien.Columns["NgaySinh"].DefaultCellStyle.Format = "dd/MM/yyyy";
-            dgvHocVien.Columns["NgayNopHocPhi"].DefaultCellStyle.Format = "dd/MM/yyyy";
         }
 
         private void SetHeader(string column, string header) => dgvHocVien.Columns[column].HeaderText = header;
 
-        private (string ma, string ten, DateTime? ngaySinh, string? gioiTinh, string diaChi,
-            string? dienThoai, string? maLop, string? maNghe, DateTime? ngayNop, double? diem, string? xepLoai) DuLieu()
+        private (string ma, string ten, DateTime? ngaySinh, string? gioiTinh, string diaChi, string? dienThoai) DuLieu()
         {
             DateTime? ngaySinh = dtpNgaySinh.ShowCheckBox && !dtpNgaySinh.Checked ? null : dtpNgaySinh.Value.Date;
-            DateTime? ngayNop = dtpNgayNopHocPhi.ShowCheckBox && !dtpNgayNopHocPhi.Checked ? null : dtpNgayNopHocPhi.Value.Date;
             return (txtMaHocVien.Text.Trim(), txtTenHocVien.Text.Trim(), ngaySinh,
-                cboGioiTinh.SelectedItem?.ToString(), txtDiaChi.Text.Trim(), txtDienThoai.Text.Trim(),
-                cboLop.SelectedValue?.ToString(), cboNghe.SelectedValue?.ToString(), ngayNop,
-                (double)nudDiem.Value, cboXepLoai.SelectedValue?.ToString());
+                cboGioiTinh.SelectedItem?.ToString(), txtDiaChi.Text.Trim(), txtDienThoai.Text.Trim());
         }
 
         private string ValidateInput()
         {
             var d = DuLieu();
             if (d.ma.Length == 0 || d.ten.Length == 0) return "Vui lòng nhập mã và tên học viên.";
-            if (d.ngaySinh > DateTime.Today || d.ngayNop > DateTime.Today) return "Ngày không được ở tương lai.";
+            if (d.ngaySinh > DateTime.Today) return "Ngày không được ở tương lai.";
             return "";
         }
 
@@ -78,8 +70,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             try
             {
                 if (_hocVienService.TonTai(d.ma)) { ShowError("Mã học viên đã tồn tại."); return; }
-                _hocVienService.Them(d.ma, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai,
-                    d.ngayNop, d.diem, nullIfEmpty(cboXepLoai), nullIfEmpty(cboLop));
+                _hocVienService.Them(d.ma, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai);
                 Saved("Thêm học viên thành công.");
             }
             catch (SqlException ex) { ShowError("Không thêm được: " + ex.Message); }
@@ -92,8 +83,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             var d = DuLieu();
             try
             {
-                _hocVienService.Sua(maDangChon, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai,
-                    d.ngayNop, d.diem, nullIfEmpty(cboXepLoai), nullIfEmpty(cboLop));
+                _hocVienService.Sua(maDangChon, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai);
                 Saved("Cập nhật học viên thành công.");
             }
             catch (SqlException ex) { ShowError("Không sửa được: " + ex.Message); }
@@ -127,10 +117,9 @@ namespace BTL_LTTQ.Forms.QuanLy
             txtTenHocVien.Text = Convert.ToString(r.Cells["TenHocVien"].Value) ?? "";
             txtDiaChi.Text = Convert.ToString(r.Cells["DiaChi"].Value) ?? "";
             txtDienThoai.Text = Convert.ToString(r.Cells["DienThoai"].Value) ?? "";
-            SetDate(dtpNgaySinh, r.Cells["NgaySinh"].Value); SetDate(dtpNgayNopHocPhi, r.Cells["NgayNopHocPhi"].Value);
+            SetDate(dtpNgaySinh, r.Cells["NgaySinh"].Value);
             cboGioiTinh.SelectedItem = Convert.ToString(r.Cells["GioiTinh"].Value);
-            SetSelected(cboLop, r.Cells["MaLop"].Value); SetSelected(cboNghe, r.Cells["MaNghe"].Value); SetSelected(cboXepLoai, r.Cells["MaXepLoai"].Value);
-            if (r.Cells["Diem"].Value != DBNull.Value) nudDiem.Value = Math.Clamp(Convert.ToDecimal(r.Cells["Diem"].Value), nudDiem.Minimum, nudDiem.Maximum);
+            SetSelected(cboNghe, r.Cells["MaNghe"].Value);
         }
 
         private static void SetDate(DateTimePicker picker, object? value)
@@ -146,9 +135,9 @@ namespace BTL_LTTQ.Forms.QuanLy
         private void LamMoi(bool clearSearch = true)
         {
             txtMaHocVien.Clear(); txtMaHocVien.ReadOnly = false; txtTenHocVien.Clear(); txtDiaChi.Clear(); txtDienThoai.Clear();
-            dtpNgaySinh.Value = dtpNgayNopHocPhi.Value = DateTime.Today; dtpNgaySinh.Checked = dtpNgayNopHocPhi.Checked = false;
-            cboGioiTinh.SelectedIndex = cboLop.SelectedIndex = cboNghe.SelectedIndex = cboXepLoai.SelectedIndex = -1;
-            nudDiem.Value = 0; if (clearSearch) txtTimKiem.Clear(); dgvHocVien.ClearSelection(); maDangChon = "";
+            dtpNgaySinh.Value = DateTime.Today; dtpNgaySinh.Checked = false;
+            cboGioiTinh.SelectedIndex = cboNghe.SelectedIndex = -1;
+            if (clearSearch) txtTimKiem.Clear(); dgvHocVien.ClearSelection(); maDangChon = "";
         }
         private static void ShowError(string message) => MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }

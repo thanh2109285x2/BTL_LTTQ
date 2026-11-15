@@ -16,7 +16,7 @@ namespace BTL_LTTQ.DAL
             string dieuKienPhamVi = dieuKien.DieuKienSql == "" ? "" : " AND " + dieuKien.DieuKienSql;
             string sql = $@"SELECT * FROM(
                             SELECT l.MaLop, l.TenLop, m.TenMon, g.TenGV, l.NgayBD, l.NgayKT,
-                                   (SELECT COUNT(*) FROM HocVien d WHERE d.MaLop = l.MaLop) AS SiSo
+                                   (SELECT COUNT(*) FROM DangKy d WHERE d.MaLop = l.MaLop) AS SiSo
                             FROM LopHoc l
                             LEFT JOIN MonHoc m ON l.MaMon = m.MaMon
                             LEFT JOIN GiaoVien g ON l.MaGV = g.MaGV

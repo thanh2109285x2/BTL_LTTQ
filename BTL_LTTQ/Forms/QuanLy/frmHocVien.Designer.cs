@@ -10,12 +10,8 @@ namespace BTL_LTTQ.Forms.QuanLy
         private TextBox txtDienThoai = null!;
         private TextBox txtTimKiem = null!;
         private DateTimePicker dtpNgaySinh = null!;
-        private DateTimePicker dtpNgayNopHocPhi = null!;
         private ComboBox cboGioiTinh = null!;
-        private ComboBox cboLop = null!;
         private ComboBox cboNghe = null!;
-        private ComboBox cboXepLoai = null!;
-        private NumericUpDown nudDiem = null!;
         private DataGridView dgvHocVien = null!;
         private Button btnThem = null!;
         private Button btnSua = null!;
@@ -33,11 +29,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         private Label lblGioiTinh = null!;
         private Label lblDienThoai = null!;
         private Label lblDiaChi = null!;
-        private Label lblLop = null!;
         private Label lblNghe = null!;
-        private Label lblNgayNopHocPhi = null!;
-        private Label lblDiem = null!;
-        private Label lblXepLoai = null!;
         private Label lblTimKiem = null!;
 
         protected override void Dispose(bool disposing)
@@ -54,12 +46,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             txtDienThoai = new TextBox();
             txtTimKiem = new TextBox();
             dtpNgaySinh = new DateTimePicker();
-            dtpNgayNopHocPhi = new DateTimePicker();
             cboGioiTinh = new ComboBox();
-            cboLop = new ComboBox();
             cboNghe = new ComboBox();
-            cboXepLoai = new ComboBox();
-            nudDiem = new NumericUpDown();
             dgvHocVien = new DataGridView();
             btnThem = new Button();
             btnSua = new Button();
@@ -73,17 +61,12 @@ namespace BTL_LTTQ.Forms.QuanLy
             lblGioiTinh = new Label();
             lblDienThoai = new Label();
             lblDiaChi = new Label();
-            lblLop = new Label();
             lblNghe = new Label();
-            lblNgayNopHocPhi = new Label();
-            lblDiem = new Label();
-            lblXepLoai = new Label();
             pnlNut = new FlowLayoutPanel();
             grpDanhSach = new GroupBox();
             pnlNhap = new Panel();
             pnlTim = new Panel();
             lblTimKiem = new Label();
-            ((System.ComponentModel.ISupportInitialize)nudDiem).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvHocVien).BeginInit();
             grpThongTin.SuspendLayout();
             pnlNut.SuspendLayout();
@@ -138,15 +121,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             dtpNgaySinh.Size = new Size(220, 27);
             dtpNgaySinh.TabIndex = 5;
             // 
-            // dtpNgayNopHocPhi
-            // 
-            dtpNgayNopHocPhi.CustomFormat = "dd/MM/yyyy";
-            dtpNgayNopHocPhi.Format = DateTimePickerFormat.Custom;
-            dtpNgayNopHocPhi.Location = new Point(605, 104);
-            dtpNgayNopHocPhi.Name = "dtpNgayNopHocPhi";
-            dtpNgayNopHocPhi.Size = new Size(230, 27);
-            dtpNgayNopHocPhi.TabIndex = 17;
-            // 
             // cboGioiTinh
             // 
             cboGioiTinh.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -156,14 +130,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             cboGioiTinh.Size = new Size(220, 28);
             cboGioiTinh.TabIndex = 7;
             // 
-            // cboLop
-            // 
-            cboLop.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboLop.Location = new Point(605, 28);
-            cboLop.Name = "cboLop";
-            cboLop.Size = new Size(230, 28);
-            cboLop.TabIndex = 13;
-            // 
             // cboNghe
             // 
             cboNghe.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -171,23 +137,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             cboNghe.Name = "cboNghe";
             cboNghe.Size = new Size(230, 28);
             cboNghe.TabIndex = 15;
-            // 
-            // cboXepLoai
-            // 
-            cboXepLoai.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboXepLoai.Location = new Point(605, 180);
-            cboXepLoai.Name = "cboXepLoai";
-            cboXepLoai.Size = new Size(230, 28);
-            cboXepLoai.TabIndex = 21;
-            // 
-            // nudDiem
-            // 
-            nudDiem.DecimalPlaces = 2;
-            nudDiem.Location = new Point(605, 142);
-            nudDiem.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-            nudDiem.Name = "nudDiem";
-            nudDiem.Size = new Size(230, 27);
-            nudDiem.TabIndex = 19;
             // 
             // dgvHocVien
             // 
@@ -264,16 +213,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             grpThongTin.Controls.Add(txtDienThoai);
             grpThongTin.Controls.Add(lblDiaChi);
             grpThongTin.Controls.Add(txtDiaChi);
-            grpThongTin.Controls.Add(lblLop);
-            grpThongTin.Controls.Add(cboLop);
             grpThongTin.Controls.Add(lblNghe);
             grpThongTin.Controls.Add(cboNghe);
-            grpThongTin.Controls.Add(lblNgayNopHocPhi);
-            grpThongTin.Controls.Add(dtpNgayNopHocPhi);
-            grpThongTin.Controls.Add(lblDiem);
-            grpThongTin.Controls.Add(nudDiem);
-            grpThongTin.Controls.Add(lblXepLoai);
-            grpThongTin.Controls.Add(cboXepLoai);
             grpThongTin.Controls.Add(pnlNut);
             grpThongTin.Dock = DockStyle.Fill;
             grpThongTin.Location = new Point(10, 10);
@@ -331,14 +272,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             lblDiaChi.TabIndex = 10;
             lblDiaChi.Text = "Địa chỉ";
             // 
-            // lblLop
-            // 
-            lblLop.Location = new Point(455, 33);
-            lblLop.Name = "lblLop";
-            lblLop.Size = new Size(150, 22);
-            lblLop.TabIndex = 12;
-            lblLop.Text = "Lớp học";
-            // 
             // lblNghe
             // 
             lblNghe.Location = new Point(455, 71);
@@ -346,30 +279,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             lblNghe.Size = new Size(150, 22);
             lblNghe.TabIndex = 14;
             lblNghe.Text = "Nghề nghiệp";
-            // 
-            // lblNgayNopHocPhi
-            // 
-            lblNgayNopHocPhi.Location = new Point(455, 109);
-            lblNgayNopHocPhi.Name = "lblNgayNopHocPhi";
-            lblNgayNopHocPhi.Size = new Size(150, 22);
-            lblNgayNopHocPhi.TabIndex = 16;
-            lblNgayNopHocPhi.Text = "Ngày nộp học phí";
-            // 
-            // lblDiem
-            // 
-            lblDiem.Location = new Point(455, 147);
-            lblDiem.Name = "lblDiem";
-            lblDiem.Size = new Size(150, 22);
-            lblDiem.TabIndex = 18;
-            lblDiem.Text = "Điểm";
-            // 
-            // lblXepLoai
-            // 
-            lblXepLoai.Location = new Point(455, 185);
-            lblXepLoai.Name = "lblXepLoai";
-            lblXepLoai.Size = new Size(150, 22);
-            lblXepLoai.TabIndex = 20;
-            lblXepLoai.Text = "Xếp loại";
             // 
             // pnlNut
             // 
@@ -440,7 +349,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             Name = "frmHocVien";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Quản lý học viên";
-            ((System.ComponentModel.ISupportInitialize)nudDiem).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvHocVien).EndInit();
             grpThongTin.ResumeLayout(false);
             grpThongTin.PerformLayout();

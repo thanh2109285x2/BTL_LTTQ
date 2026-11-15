@@ -27,12 +27,12 @@ namespace BTL_LTTQ.BUS
         public bool TonTai(string maHocVien) => _repo.TonTai(maHocVien);
 
         public void Them(string ma, string ten, DateTime? ngaySinh, string? gioiTinh, string diaChi,
-            string? maNghe, string? dienThoai, DateTime? ngayNopHocPhi, double? diem, string? maXepLoai, string? maLop) =>
-            _repo.Them(ma, ten, ngaySinh, gioiTinh, diaChi, maNghe, dienThoai, ngayNopHocPhi, diem, maXepLoai, maLop);
+            string? maNghe, string? dienThoai) =>
+            _repo.Them(ma, ten, ngaySinh, gioiTinh, diaChi, maNghe, dienThoai);
 
         public void Sua(string ma, string ten, DateTime? ngaySinh, string? gioiTinh, string diaChi,
-            string? maNghe, string? dienThoai, DateTime? ngayNopHocPhi, double? diem, string? maXepLoai, string? maLop) =>
-            _repo.Sua(ma, ten, ngaySinh, gioiTinh, diaChi, maNghe, dienThoai, ngayNopHocPhi, diem, maXepLoai, maLop);
+            string? maNghe, string? dienThoai) =>
+            _repo.Sua(ma, ten, ngaySinh, gioiTinh, diaChi, maNghe, dienThoai);
 
         public void Xoa(string ma) => _repo.Xoa(ma);
     }

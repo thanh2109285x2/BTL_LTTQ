@@ -9,15 +9,26 @@ namespace BTL_LTTQ.Forms.NghiepVu
         private Label lblMoTa;
         private Label lblTieuDe;
         private Panel panelNoiDung;
-        private Label lblNoiDung;
-        private Panel panelThaoTac;
+        private ComboBox cboLop;
+        private GroupBox grpThongTinDiem;
+        private Label lblMaHocVien;
+        private Label lblTenHocVien;
+        private Label lblDiem;
+        private Label lblXepLoai;
+        private TextBox txtMaHocVien;
+        private TextBox txtTenHocVien;
+        private TextBox txtDiem;
+        private TextBox txtXepLoai;
+        private AppButton btnSuaDiem;
         private AppButton btnLamMoi;
-        private AppButton btnLuuDiem;
+        private TextBox txtTimMaHocVien;
+        private TextBox txtTimTenHocVien;
+        private AppButton btnTimKiem;
+        private DataGridView dgvHocVien;
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-                components.Dispose();
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
 
@@ -27,13 +38,26 @@ namespace BTL_LTTQ.Forms.NghiepVu
             lblMoTa = new Label();
             lblTieuDe = new Label();
             panelNoiDung = new Panel();
-            lblNoiDung = new Label();
-            panelThaoTac = new Panel();
-            btnLamMoi = new AppButton { Kieu = KieuNut.Phu, Enabled = false };
-            btnLuuDiem = new AppButton { Kieu = KieuNut.Chinh, Enabled = false };
+            dgvHocVien = new DataGridView();
+            btnTimKiem = new AppButton();
+            txtTimTenHocVien = new TextBox();
+            txtTimMaHocVien = new TextBox();
+            btnLamMoi = new AppButton();
+            btnSuaDiem = new AppButton();
+            grpThongTinDiem = new GroupBox();
+            lblMaHocVien = new Label();
+            lblTenHocVien = new Label();
+            lblDiem = new Label();
+            lblXepLoai = new Label();
+            txtMaHocVien = new TextBox();
+            txtTenHocVien = new TextBox();
+            txtDiem = new TextBox();
+            txtXepLoai = new TextBox();
+            cboLop = new ComboBox();
             panelTieuDe.SuspendLayout();
             panelNoiDung.SuspendLayout();
-            panelThaoTac.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvHocVien).BeginInit();
+            grpThongTinDiem.SuspendLayout();
             SuspendLayout();
             // 
             // panelTieuDe
@@ -53,7 +77,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             lblMoTa.AutoSize = true;
             lblMoTa.Location = new Point(35, 54);
             lblMoTa.Name = "lblMoTa";
-            lblMoTa.Size = new Size(254, 20);
+            lblMoTa.Size = new Size(247, 20);
             lblMoTa.TabIndex = 1;
             lblMoTa.Text = "Quản lý điểm học viên theo lớp học.";
             // 
@@ -61,79 +85,219 @@ namespace BTL_LTTQ.Forms.NghiepVu
             // 
             lblTieuDe.AutoSize = true;
             lblTieuDe.Font = new Font("Segoe UI", 17F, FontStyle.Bold);
-            lblTieuDe.ForeColor = GiaoDien.MauChinhDam;
+            lblTieuDe.ForeColor = Color.FromArgb(30, 74, 130);
             lblTieuDe.Location = new Point(32, 12);
             lblTieuDe.Name = "lblTieuDe";
-            lblTieuDe.Size = new Size(181, 31);
+            lblTieuDe.Size = new Size(168, 40);
             lblTieuDe.TabIndex = 0;
             lblTieuDe.Text = "Nhập điểm";
             // 
             // panelNoiDung
             // 
-            panelNoiDung.Controls.Add(lblNoiDung);
+            panelNoiDung.Controls.Add(dgvHocVien);
+            panelNoiDung.Controls.Add(btnTimKiem);
+            panelNoiDung.Controls.Add(txtTimTenHocVien);
+            panelNoiDung.Controls.Add(txtTimMaHocVien);
+            panelNoiDung.Controls.Add(btnLamMoi);
+            panelNoiDung.Controls.Add(btnSuaDiem);
+            panelNoiDung.Controls.Add(grpThongTinDiem);
+            panelNoiDung.Controls.Add(cboLop);
             panelNoiDung.Dock = DockStyle.Fill;
             panelNoiDung.Location = new Point(0, 88);
             panelNoiDung.Name = "panelNoiDung";
-            panelNoiDung.Padding = new Padding(32);
-            panelNoiDung.Size = new Size(1200, 404);
+            panelNoiDung.Padding = new Padding(32, 16, 32, 16);
+            panelNoiDung.Size = new Size(1200, 472);
             panelNoiDung.TabIndex = 1;
             // 
-            // lblNoiDung
+            // dgvHocVien
             // 
-            lblNoiDung.Dock = DockStyle.Fill;
-            lblNoiDung.Font = new Font("Segoe UI", 11F);
-            lblNoiDung.ForeColor = Color.FromArgb(110, 120, 132);
-            lblNoiDung.Location = new Point(32, 32);
-            lblNoiDung.Name = "lblNoiDung";
-            lblNoiDung.Size = new Size(1136, 340);
-            lblNoiDung.TabIndex = 0;
-            lblNoiDung.Text = "Giao diện nhập điểm sẽ được bổ sung sau.";
-            lblNoiDung.TextAlign = ContentAlignment.MiddleCenter;
+            dgvHocVien.AllowUserToAddRows = false;
+            dgvHocVien.AllowUserToDeleteRows = false;
+            dgvHocVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvHocVien.BackgroundColor = Color.White;
+            dgvHocVien.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvHocVien.Location = new Point(32, 284);
+            dgvHocVien.MultiSelect = false;
+            dgvHocVien.Name = "dgvHocVien";
+            dgvHocVien.ReadOnly = true;
+            dgvHocVien.RowHeadersVisible = false;
+            dgvHocVien.RowHeadersWidth = 51;
+            dgvHocVien.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvHocVien.Size = new Size(1136, 170);
+            dgvHocVien.TabIndex = 6;
             // 
-            // panelThaoTac
+            // btnTimKiem
             // 
-            panelThaoTac.Controls.Add(btnLamMoi);
-            panelThaoTac.Controls.Add(btnLuuDiem);
-            panelThaoTac.Dock = DockStyle.Bottom;
-            panelThaoTac.Location = new Point(0, 492);
-            panelThaoTac.Name = "panelThaoTac";
-            panelThaoTac.Padding = new Padding(32, 12, 32, 12);
-            panelThaoTac.Size = new Size(1200, 68);
-            panelThaoTac.TabIndex = 2;
+            btnTimKiem.BackColor = Color.White;
+            btnTimKiem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnTimKiem.FlatStyle = FlatStyle.Flat;
+            btnTimKiem.ForeColor = Color.FromArgb(33, 37, 41);
+            btnTimKiem.Location = new Point(462, 238);
+            btnTimKiem.Name = "btnTimKiem";
+            btnTimKiem.Size = new Size(100, 36);
+            btnTimKiem.TabIndex = 5;
+            btnTimKiem.Text = "Tìm kiếm";
+            btnTimKiem.UseVisualStyleBackColor = false;
+            // 
+            // txtTimTenHocVien
+            // 
+            txtTimTenHocVien.Location = new Point(242, 242);
+            txtTimTenHocVien.Name = "txtTimTenHocVien";
+            txtTimTenHocVien.PlaceholderText = "Tìm theo tên học viên";
+            txtTimTenHocVien.Size = new Size(210, 27);
+            txtTimTenHocVien.TabIndex = 7;
+            // 
+            // txtTimMaHocVien
+            // 
+            txtTimMaHocVien.Location = new Point(32, 242);
+            txtTimMaHocVien.Name = "txtTimMaHocVien";
+            txtTimMaHocVien.PlaceholderText = "Tìm theo mã học viên";
+            txtTimMaHocVien.Size = new Size(200, 27);
+            txtTimMaHocVien.TabIndex = 8;
             // 
             // btnLamMoi
             // 
-            btnLamMoi.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnLamMoi.Location = new Point(936, 12);
+            btnLamMoi.BackColor = Color.White;
+            btnLamMoi.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnLamMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnLamMoi.FlatStyle = FlatStyle.Flat;
+            btnLamMoi.ForeColor = Color.FromArgb(33, 37, 41);
+            btnLamMoi.Location = new Point(172, 157);
             btnLamMoi.Name = "btnLamMoi";
-            btnLamMoi.Size = new Size(100, 40);
-            btnLamMoi.TabIndex = 1;
+            btnLamMoi.Size = new Size(110, 38);
+            btnLamMoi.TabIndex = 3;
             btnLamMoi.Text = "Làm mới";
+            btnLamMoi.UseVisualStyleBackColor = false;
             // 
-            // btnLuuDiem
+            // btnSuaDiem
             // 
-            btnLuuDiem.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnLuuDiem.Location = new Point(1048, 12);
-            btnLuuDiem.Name = "btnLuuDiem";
-            btnLuuDiem.Size = new Size(120, 40);
-            btnLuuDiem.TabIndex = 0;
-            btnLuuDiem.Text = "Lưu điểm";
+            btnSuaDiem.BackColor = Color.White;
+            btnSuaDiem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnSuaDiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnSuaDiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnSuaDiem.FlatStyle = FlatStyle.Flat;
+            btnSuaDiem.ForeColor = Color.FromArgb(33, 37, 41);
+            btnSuaDiem.Location = new Point(32, 157);
+            btnSuaDiem.Name = "btnSuaDiem";
+            btnSuaDiem.Size = new Size(130, 38);
+            btnSuaDiem.TabIndex = 2;
+            btnSuaDiem.Text = "Sửa điểm";
+            btnSuaDiem.UseVisualStyleBackColor = false;
+            // 
+            // grpThongTinDiem
+            // 
+            grpThongTinDiem.Controls.Add(lblMaHocVien);
+            grpThongTinDiem.Controls.Add(lblTenHocVien);
+            grpThongTinDiem.Controls.Add(lblDiem);
+            grpThongTinDiem.Controls.Add(lblXepLoai);
+            grpThongTinDiem.Controls.Add(txtMaHocVien);
+            grpThongTinDiem.Controls.Add(txtTenHocVien);
+            grpThongTinDiem.Controls.Add(txtDiem);
+            grpThongTinDiem.Controls.Add(txtXepLoai);
+            grpThongTinDiem.Location = new Point(35, 19);
+            grpThongTinDiem.Name = "grpThongTinDiem";
+            grpThongTinDiem.Size = new Size(1136, 132);
+            grpThongTinDiem.TabIndex = 1;
+            grpThongTinDiem.TabStop = false;
+            grpThongTinDiem.Text = "Thông tin điểm";
+            // 
+            // lblMaHocVien
+            // 
+            lblMaHocVien.AutoSize = true;
+            lblMaHocVien.Location = new Point(16, 30);
+            lblMaHocVien.Name = "lblMaHocVien";
+            lblMaHocVien.Size = new Size(89, 20);
+            lblMaHocVien.TabIndex = 0;
+            lblMaHocVien.Text = "Mã học viên";
+            // 
+            // lblTenHocVien
+            // 
+            lblTenHocVien.AutoSize = true;
+            lblTenHocVien.Location = new Point(430, 30);
+            lblTenHocVien.Name = "lblTenHocVien";
+            lblTenHocVien.Size = new Size(73, 20);
+            lblTenHocVien.TabIndex = 1;
+            lblTenHocVien.Text = "Họ và tên";
+            // 
+            // lblDiem
+            // 
+            lblDiem.AutoSize = true;
+            lblDiem.Location = new Point(16, 78);
+            lblDiem.Name = "lblDiem";
+            lblDiem.Size = new Size(45, 20);
+            lblDiem.TabIndex = 2;
+            lblDiem.Text = "Điểm";
+            // 
+            // lblXepLoai
+            // 
+            lblXepLoai.AutoSize = true;
+            lblXepLoai.Location = new Point(430, 78);
+            lblXepLoai.Name = "lblXepLoai";
+            lblXepLoai.Size = new Size(64, 20);
+            lblXepLoai.TabIndex = 3;
+            lblXepLoai.Text = "Xếp loại";
+            // 
+            // txtMaHocVien
+            // 
+            txtMaHocVien.Location = new Point(128, 27);
+            txtMaHocVien.Name = "txtMaHocVien";
+            txtMaHocVien.ReadOnly = true;
+            txtMaHocVien.Size = new Size(260, 27);
+            txtMaHocVien.TabIndex = 4;
+            // 
+            // txtTenHocVien
+            // 
+            txtTenHocVien.Location = new Point(530, 27);
+            txtTenHocVien.Name = "txtTenHocVien";
+            txtTenHocVien.ReadOnly = true;
+            txtTenHocVien.Size = new Size(570, 27);
+            txtTenHocVien.TabIndex = 5;
+            // 
+            // txtDiem
+            // 
+            txtDiem.Location = new Point(128, 74);
+            txtDiem.Name = "txtDiem";
+            txtDiem.ReadOnly = true;
+            txtDiem.Size = new Size(260, 27);
+            txtDiem.TabIndex = 6;
+            // 
+            // txtXepLoai
+            // 
+            txtXepLoai.Location = new Point(530, 74);
+            txtXepLoai.Name = "txtXepLoai";
+            txtXepLoai.ReadOnly = true;
+            txtXepLoai.Size = new Size(570, 27);
+            txtXepLoai.TabIndex = 7;
+            // 
+            // cboLop
+            // 
+            cboLop.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboLop.FormattingEnabled = true;
+            cboLop.Location = new Point(32, 204);
+            cboLop.Name = "cboLop";
+            cboLop.Size = new Size(480, 28);
+            cboLop.TabIndex = 0;
             // 
             // frmNhapDiem
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = GiaoDien.MauNen;
+            BackColor = Color.FromArgb(244, 247, 251);
             ClientSize = new Size(1200, 560);
             Controls.Add(panelNoiDung);
-            Controls.Add(panelThaoTac);
             Controls.Add(panelTieuDe);
             Name = "frmNhapDiem";
             Text = "Nhập điểm";
             panelTieuDe.ResumeLayout(false);
             panelTieuDe.PerformLayout();
             panelNoiDung.ResumeLayout(false);
-            panelThaoTac.ResumeLayout(false);
+            panelNoiDung.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvHocVien).EndInit();
+            grpThongTinDiem.ResumeLayout(false);
+            grpThongTinDiem.PerformLayout();
             ResumeLayout(false);
         }
     }

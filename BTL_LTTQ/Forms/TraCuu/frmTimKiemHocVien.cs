@@ -29,7 +29,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             {
                 NapCombo(cboLop, _hocVienService.LayDanhSachLop(), "MaLop", "TenLop");
                 NapCombo(cboNghe, _hocVienService.LayDanhSachNghe(), "MaNghe", "TenNghe");
-                NapCombo(cboXepLoai, _hocVienService.LayDanhSachXepLoai(), "MaXepLoai", "TenLoai");
                 TimKiem();
             }
             catch (SqlException ex) { ShowError("Không tra cứu được học viên: " + ex.Message); }
@@ -46,7 +45,7 @@ namespace BTL_LTTQ.Forms.TraCuu
 
         private void TimKiem()
         {
-            dgvKetQua.DataSource = _hocVienService.TimKiem(txtTuKhoa.Text, GiaTri(cboLop), GiaTri(cboNghe), GiaTri(cboXepLoai));
+            dgvKetQua.DataSource = _hocVienService.TimKiem(txtTuKhoa.Text, GiaTri(cboLop), GiaTri(cboNghe), null);
             DinhDangBang();
         }
 
@@ -59,13 +58,8 @@ namespace BTL_LTTQ.Forms.TraCuu
             dgvKetQua.Columns["GioiTinh"].HeaderText = "Giới tính";
             dgvKetQua.Columns["DienThoai"].HeaderText = "Điện thoại";
             dgvKetQua.Columns["DiaChi"].HeaderText = "Địa chỉ";
-            dgvKetQua.Columns["TenLop"].HeaderText = "Lớp học";
             dgvKetQua.Columns["TenNghe"].HeaderText = "Nghề nghiệp";
-            dgvKetQua.Columns["NgayNopHocPhi"].HeaderText = "Ngày nộp học phí";
-            dgvKetQua.Columns["Diem"].HeaderText = "Điểm";
-            dgvKetQua.Columns["TenLoai"].HeaderText = "Xếp loại";
             dgvKetQua.Columns["NgaySinh"].DefaultCellStyle.Format = "dd/MM/yyyy";
-            dgvKetQua.Columns["NgayNopHocPhi"].DefaultCellStyle.Format = "dd/MM/yyyy";
         }
 
         private void btnTimKiem_Click(object? sender, EventArgs e)
@@ -80,7 +74,7 @@ namespace BTL_LTTQ.Forms.TraCuu
 
         private void btnLamMoi_Click(object? sender, EventArgs e)
         {
-            txtTuKhoa.Clear(); cboLop.SelectedIndex = cboNghe.SelectedIndex = cboXepLoai.SelectedIndex = 0;
+            txtTuKhoa.Clear(); cboLop.SelectedIndex = cboNghe.SelectedIndex = 0;
             btnTimKiem_Click(sender, e);
         }
 

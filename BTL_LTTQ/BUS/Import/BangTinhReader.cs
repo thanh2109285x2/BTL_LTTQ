@@ -54,9 +54,6 @@ namespace BTL_LTTQ.BUS.Import
             Truong("DiaChi", "Địa chỉ", false),
             Truong("MaNghe", "Mã nghề", false, "manguyenghe", "nghe"),
             Truong("DienThoai", "Điện thoại", false, "sdt", "dienthoai"),
-            Truong("NgayNopHocPhi", "Ngày nộp học phí", false, "ngaynophp"),
-            Truong("Diem", "Điểm", false, "diemtb", "diemtrungbinh"),
-            Truong("MaXepLoai", "Mã xếp loại", false, "xeploai"),
             Truong("MaLop", "Mã lớp", false, "lop", "malophoc")
         }.AsReadOnly();
 

@@ -9,7 +9,6 @@ namespace BTL_LTTQ.Forms.TraCuu
         private TextBox txtTuKhoa = null!;
         private ComboBox cboLop = null!;
         private ComboBox cboNghe = null!;
-        private ComboBox cboXepLoai = null!;
         private DataGridView dgvKetQua = null!;
         private AppButton btnTimKiem = null!;
         private AppButton btnLamMoi = null!;
@@ -19,16 +18,15 @@ namespace BTL_LTTQ.Forms.TraCuu
         private Label lblTuKhoa = null!;
         private Label lblLop = null!;
         private Label lblNghe = null!;
-        private Label lblXepLoai = null!;
 
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            txtTuKhoa = new TextBox(); cboLop = new ComboBox(); cboNghe = new ComboBox(); cboXepLoai = new ComboBox(); dgvKetQua = new DataGridView(); btnTimKiem = new AppButton { Kieu = KieuNut.Chinh }; btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
+            txtTuKhoa = new TextBox(); cboLop = new ComboBox(); cboNghe = new ComboBox(); dgvKetQua = new DataGridView(); btnTimKiem = new AppButton { Kieu = KieuNut.Chinh }; btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
             grpDieuKien = new GroupBox(); grpKetQua = new GroupBox(); pnlNut = new Panel();
-            lblTuKhoa = new Label(); lblLop = new Label(); lblNghe = new Label(); lblXepLoai = new Label();
+            lblTuKhoa = new Label(); lblLop = new Label(); lblNghe = new Label();
             grpDieuKien.Name = "grpDieuKien"; grpKetQua.Name = "grpKetQua"; pnlNut.Name = "pnlNut";
-            lblTuKhoa.Name = "lblTuKhoa"; lblLop.Name = "lblLop"; lblNghe.Name = "lblNghe"; lblXepLoai.Name = "lblXepLoai";
+            lblTuKhoa.Name = "lblTuKhoa"; lblLop.Name = "lblLop"; lblNghe.Name = "lblNghe";
             ((System.ComponentModel.ISupportInitialize)dgvKetQua).BeginInit(); SuspendLayout();
             grpDieuKien.Dock = DockStyle.Top; grpDieuKien.Height = 150; grpDieuKien.Text = "Điều kiện tra cứu"; grpDieuKien.Padding = new Padding(10);
             lblTuKhoa.Text = "Mã, tên hoặc điện thoại"; lblTuKhoa.AutoSize = true; lblTuKhoa.Location = new Point(18, 34);
@@ -37,9 +35,7 @@ namespace BTL_LTTQ.Forms.TraCuu
             cboLop.Name = "cboLop"; cboLop.DropDownStyle = ComboBoxStyle.DropDownList; cboLop.SetBounds(545, 29, 250, 28); cboLop.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblNghe.Text = "Nghề nghiệp"; lblNghe.AutoSize = true; lblNghe.Location = new Point(18, 88);
             cboNghe.Name = "cboNghe"; cboNghe.DropDownStyle = ComboBoxStyle.DropDownList; cboNghe.SetBounds(190, 83, 240, 28);
-            lblXepLoai.Text = "Xếp loại"; lblXepLoai.AutoSize = true; lblXepLoai.Location = new Point(465, 88);
-            cboXepLoai.Name = "cboXepLoai"; cboXepLoai.DropDownStyle = ComboBoxStyle.DropDownList; cboXepLoai.SetBounds(545, 83, 250, 28); cboXepLoai.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            grpDieuKien.Controls.AddRange(new Control[] { lblTuKhoa, txtTuKhoa, lblLop, cboLop, lblNghe, cboNghe, lblXepLoai, cboXepLoai });
+            grpDieuKien.Controls.AddRange(new Control[] { lblTuKhoa, txtTuKhoa, lblLop, cboLop, lblNghe, cboNghe });
             pnlNut.Dock = DockStyle.Top; pnlNut.Height = 52; pnlNut.Padding = new Padding(12, 6, 0, 0);
             btnTimKiem.Name = "btnTimKiem"; btnTimKiem.Text = "Tìm kiếm"; btnTimKiem.Size = new Size(120, 36); btnTimKiem.Click += btnTimKiem_Click;
             btnLamMoi.Name = "btnLamMoi"; btnLamMoi.Text = "Làm mới"; btnLamMoi.Size = new Size(120, 36); btnLamMoi.Location = new Point(145, 6); btnLamMoi.Click += btnLamMoi_Click;
