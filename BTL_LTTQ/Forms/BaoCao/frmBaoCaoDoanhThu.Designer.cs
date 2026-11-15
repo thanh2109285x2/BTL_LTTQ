@@ -20,6 +20,9 @@ namespace BTL_LTTQ.Forms.BaoCao
         private Button btnXemInPdfBaoCao = null!;
         private Label lblTimKiemBaoCao = null!;
         private Label lblSapXepBaoCao = null!;
+        private Panel pnlBanner = null!;
+        private Label lblBannerTieuDe = null!;
+        private Label lblBannerMoTa = null!;
         private void InitializeComponent()
         {
             _cboLop = new ComboBox();
@@ -38,23 +41,60 @@ namespace BTL_LTTQ.Forms.BaoCao
             btnXuatExcelBaoCao = new Button();
             btnXemInPdfBaoCao = new Button();
             grpKetQua = new GroupBox();
+            pnlBanner = new Panel();
+            lblBannerTieuDe = new Label();
+            lblBannerMoTa = new Label();
             ((System.ComponentModel.ISupportInitialize)_dgvBaoCao).BeginInit();
             grpDieuKien.SuspendLayout();
             pnlDieuKien.SuspendLayout();
             grpKetQua.SuspendLayout();
+            pnlBanner.SuspendLayout();
             SuspendLayout();
-            // 
-            // _cboLop
-            // 
+            //
+            //pnlBanner
+            //
+            pnlBanner.BackColor = Color.FromArgb(43, 98, 164);
+            pnlBanner.Controls.Add(lblBannerMoTa);
+            pnlBanner.Controls.Add(lblBannerTieuDe);
+            pnlBanner.Dock = DockStyle.Top;
+            pnlBanner.Location = new Point(0, 0);
+            pnlBanner.Name = "pnlBanner";
+            pnlBanner.Size = new Size(900, 78);
+            pnlBanner.TabIndex = 3;
+            //
+            //lblBannerTieuDe
+            //
+            lblBannerTieuDe.AutoSize = true;
+            lblBannerTieuDe.Font = new Font("Segoe UI", 17F, FontStyle.Bold);
+            lblBannerTieuDe.ForeColor = Color.White;
+            lblBannerTieuDe.Location = new Point(20, 8);
+            lblBannerTieuDe.Name = "lblBannerTieuDe";
+            lblBannerTieuDe.Size = new Size(290, 31);
+            lblBannerTieuDe.TabIndex = 0;
+            lblBannerTieuDe.Text = "BÁO CÁO DOANH THU";
+            //
+            //lblBannerMoTa
+            //
+            lblBannerMoTa.AutoSize = true;
+            lblBannerMoTa.Font = new Font("Segoe UI", 9F);
+            lblBannerMoTa.ForeColor = Color.FromArgb(225, 235, 248);
+            lblBannerMoTa.Location = new Point(22, 43);
+            lblBannerMoTa.Name = "lblBannerMoTa";
+            lblBannerMoTa.Size = new Size(253, 15);
+            lblBannerMoTa.TabIndex = 1;
+            lblBannerMoTa.Text = "Tổng hợp doanh thu của trung tâm theo lớp";
+            //
+            //_cboLop
+            //
             _cboLop.DropDownStyle = ComboBoxStyle.DropDownList;
             _cboLop.Location = new Point(90, 20);
             _cboLop.Name = "_cboLop";
             _cboLop.Size = new Size(240, 28);
             _cboLop.Margin = new Padding(4, 7, 8, 4);
             _cboLop.TabIndex = 1;
-            // 
-            // btnXemBaoCao
-            // 
+            //
+            //btnXemBaoCao
+            //
             btnXemBaoCao.Location = new Point(465, 18);
             btnXemBaoCao.Name = "btnXemBaoCao";
             btnXemBaoCao.Size = new Size(118, 34);
@@ -62,9 +102,9 @@ namespace BTL_LTTQ.Forms.BaoCao
             btnXemBaoCao.TabIndex = 2;
             btnXemBaoCao.Text = "Xem báo cáo";
             btnXemBaoCao.Click += btnXemBaoCao_Click;
-            // 
-            // _dgvBaoCao
-            // 
+            //
+            //_dgvBaoCao
+            //
             _dgvBaoCao.AllowUserToAddRows = false;
             _dgvBaoCao.AllowUserToDeleteRows = false;
             _dgvBaoCao.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -76,18 +116,18 @@ namespace BTL_LTTQ.Forms.BaoCao
             _dgvBaoCao.RowHeadersWidth = 51;
             _dgvBaoCao.Size = new Size(884, 376);
             _dgvBaoCao.TabIndex = 0;
-            // 
-            // _lblTong
-            // 
+            //
+            //_lblTong
+            //
             _lblTong.Dock = DockStyle.Bottom;
             _lblTong.Location = new Point(0, 562);
             _lblTong.Name = "_lblTong";
             _lblTong.Size = new Size(900, 38);
             _lblTong.TabIndex = 1;
             _lblTong.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // grpDieuKien
-            // 
+            //
+            //grpDieuKien
+            //
             grpDieuKien.Controls.Add(pnlDieuKien);
             grpDieuKien.Dock = DockStyle.Top;
             grpDieuKien.Location = new Point(0, 0);
@@ -97,9 +137,9 @@ namespace BTL_LTTQ.Forms.BaoCao
             grpDieuKien.TabIndex = 2;
             grpDieuKien.TabStop = false;
             grpDieuKien.Text = "Điều kiện báo cáo";
-            // 
-            // pnlDieuKien
-            // 
+            //
+            //pnlDieuKien
+            //
             pnlDieuKien.Controls.Add(lblLop);
             pnlDieuKien.Controls.Add(_cboLop);
             pnlDieuKien.Controls.Add(btnXemBaoCao);
@@ -120,9 +160,9 @@ namespace BTL_LTTQ.Forms.BaoCao
             pnlDieuKien.Name = "pnlDieuKien";
             pnlDieuKien.Size = new Size(880, 110);
             pnlDieuKien.TabIndex = 0;
-            // 
-            // lblLop
-            // 
+            //
+            //lblLop
+            //
             lblLop.AutoSize = true;
             lblLop.Location = new Point(12, 25);
             lblLop.Name = "lblLop";
@@ -130,9 +170,9 @@ namespace BTL_LTTQ.Forms.BaoCao
             lblLop.TabIndex = 0;
             lblLop.Text = "Lớp học";
             lblLop.Margin = new Padding(4, 12, 3, 0);
-            // 
-            // lblTimKiemBaoCao
-            // 
+            //
+            //lblTimKiemBaoCao
+            //
             lblTimKiemBaoCao.AutoSize = true;
             lblTimKiemBaoCao.Location = new Point(12, 78);
             lblTimKiemBaoCao.Name = "lblTimKiemBaoCao";
@@ -140,17 +180,17 @@ namespace BTL_LTTQ.Forms.BaoCao
             lblTimKiemBaoCao.TabIndex = 3;
             lblTimKiemBaoCao.Text = "Tìm lớp / môn";
             lblTimKiemBaoCao.Margin = new Padding(4, 12, 3, 0);
-            // 
-            // txtTimKiemBaoCao
-            // 
+            //
+            //txtTimKiemBaoCao
+            //
             txtTimKiemBaoCao.Location = new Point(105, 72);
             txtTimKiemBaoCao.Name = "txtTimKiemBaoCao";
             txtTimKiemBaoCao.Size = new Size(185, 27);
             txtTimKiemBaoCao.Margin = new Padding(2, 7, 8, 4);
             txtTimKiemBaoCao.TabIndex = 4;
-            // 
-            // lblSapXepBaoCao
-            // 
+            //
+            //lblSapXepBaoCao
+            //
             lblSapXepBaoCao.AutoSize = true;
             lblSapXepBaoCao.Location = new Point(305, 78);
             lblSapXepBaoCao.Name = "lblSapXepBaoCao";
@@ -158,54 +198,54 @@ namespace BTL_LTTQ.Forms.BaoCao
             lblSapXepBaoCao.TabIndex = 5;
             lblSapXepBaoCao.Text = "Sắp xếp";
             lblSapXepBaoCao.Margin = new Padding(2, 12, 3, 0);
-            // 
-            // cboSapXepBaoCao
-            // 
+            //
+            //cboSapXepBaoCao
+            //
             cboSapXepBaoCao.DropDownStyle = ComboBoxStyle.DropDownList;
             cboSapXepBaoCao.Location = new Point(365, 72);
             cboSapXepBaoCao.Name = "cboSapXepBaoCao";
             cboSapXepBaoCao.Size = new Size(145, 28);
             cboSapXepBaoCao.Margin = new Padding(2, 7, 6, 4);
             cboSapXepBaoCao.TabIndex = 6;
-            // 
-            // btnSapXepBaoCao
-            // 
+            //
+            //btnSapXepBaoCao
+            //
             btnSapXepBaoCao.Location = new Point(520, 70);
             btnSapXepBaoCao.Name = "btnSapXepBaoCao";
             btnSapXepBaoCao.Size = new Size(82, 32);
             btnSapXepBaoCao.Margin = new Padding(2, 4, 4, 4);
             btnSapXepBaoCao.TabIndex = 7;
             btnSapXepBaoCao.Text = "Sắp xếp";
-            // 
-            // btnLamMoiBaoCao
-            // 
+            //
+            //btnLamMoiBaoCao
+            //
             btnLamMoiBaoCao.Location = new Point(604, 70);
             btnLamMoiBaoCao.Name = "btnLamMoiBaoCao";
             btnLamMoiBaoCao.Size = new Size(82, 32);
             btnLamMoiBaoCao.Margin = new Padding(2, 4, 4, 4);
             btnLamMoiBaoCao.TabIndex = 8;
             btnLamMoiBaoCao.Text = "Làm mới";
-            // 
-            // btnXuatExcelBaoCao
-            // 
+            //
+            //btnXuatExcelBaoCao
+            //
             btnXuatExcelBaoCao.Location = new Point(682, 70);
             btnXuatExcelBaoCao.Name = "btnXuatExcelBaoCao";
             btnXuatExcelBaoCao.Size = new Size(90, 32);
             btnXuatExcelBaoCao.Margin = new Padding(2, 4, 4, 4);
             btnXuatExcelBaoCao.TabIndex = 9;
             btnXuatExcelBaoCao.Text = "Xuất Excel";
-            // 
-            // btnXemInPdfBaoCao
-            // 
+            //
+            //btnXemInPdfBaoCao
+            //
             btnXemInPdfBaoCao.Location = new Point(768, 70);
             btnXemInPdfBaoCao.Name = "btnXemInPdfBaoCao";
             btnXemInPdfBaoCao.Size = new Size(122, 32);
             btnXemInPdfBaoCao.Margin = new Padding(2, 4, 4, 4);
             btnXemInPdfBaoCao.TabIndex = 10;
             btnXemInPdfBaoCao.Text = "Xem / In / PDF";
-            // 
-            // grpKetQua
-            // 
+            //
+            //grpKetQua
+            //
             grpKetQua.Controls.Add(_dgvBaoCao);
             grpKetQua.Dock = DockStyle.Fill;
             grpKetQua.Location = new Point(0, 150);
@@ -215,15 +255,16 @@ namespace BTL_LTTQ.Forms.BaoCao
             grpKetQua.TabIndex = 0;
             grpKetQua.TabStop = false;
             grpKetQua.Text = "Báo cáo doanh thu trung tâm theo lớp";
-            // 
-            // frmBaoCaoDoanhThu
-            // 
+            //
+            //frmBaoCaoDoanhThu
+            //
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(900, 600);
             Controls.Add(grpKetQua);
             Controls.Add(_lblTong);
             Controls.Add(grpDieuKien);
+            Controls.Add(pnlBanner);
             MinimumSize = new Size(700, 500);
             Name = "frmBaoCaoDoanhThu";
             Text = "Báo cáo doanh thu trung tâm theo lớp";
@@ -232,6 +273,8 @@ namespace BTL_LTTQ.Forms.BaoCao
             pnlDieuKien.ResumeLayout(false);
             pnlDieuKien.PerformLayout();
             grpKetQua.ResumeLayout(false);
+            pnlBanner.ResumeLayout(false);
+            pnlBanner.PerformLayout();
             ResumeLayout(false);
         }
         protected override void Dispose(bool disposing) { if (disposing && components != null) components.Dispose(); base.Dispose(disposing); }
