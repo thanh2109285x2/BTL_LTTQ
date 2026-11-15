@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Database/">
+    <File Path="bo_sung_thu_hoc_phi.sql" />
     <File Path="Database/BoSung_Tu_Qlloptinhoc.sql" />
     <File Path="Database/DevDatabase.sql" />
     <File Path="Database/PhanQuyen.sql" />
