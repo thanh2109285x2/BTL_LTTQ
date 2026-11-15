@@ -21,7 +21,6 @@ namespace BTL_LTTQ
 
         public bool DangXuat { get; private set; }
         private Form? activeForm;
-        private AppButton? btnTroLy;
         public frmMain()
         {
             InitializeComponent();
@@ -118,22 +117,6 @@ namespace BTL_LTTQ
             ApDungQuyenMenu();
             CollapseAllPanels();
             HienThiTrangChu();
-
-            if (btnTroLy == null || btnTroLy.IsDisposed)
-            {
-                btnTroLy = new AppButton
-                {
-                    Name = "btnTroLy",
-                    Text = "🤖  Trợ lý AI",
-                    Kieu = KieuNut.MenuCha,
-                    Size = new Size(260, 38),
-                    Margin = new Padding(3)
-                };
-                btnTroLy.Click += btnTroLy_Click;
-            }
-
-            if (btnTroLy != null && !flowLayoutPanel1.Controls.Contains(btnTroLy))
-                flowLayoutPanel1.Controls.Add(btnTroLy);
         }
 
         private void ApDungQuyenMenu()
@@ -420,30 +403,6 @@ namespace BTL_LTTQ
         private void btnTimHocVien_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmTimKiemHocVien(), btnTimHocVien, ChucNangConst.TIM_HOCVIEN);
-        }
-
-        private void btnTroLy_Click(object? sender, EventArgs e)
-        {
-            if (btnTroLy == null) return;
-            GiaoDien.DanhDauMuc(btnTroLy);
-            if (activeForm != null)
-            {
-                activeForm.Close();
-                activeForm.Dispose();
-                activeForm = null;
-            }
-
-            var form = new frmTroLyAi
-            {
-                TopLevel = false,
-                FormBorderStyle = FormBorderStyle.None,
-                Dock = DockStyle.Fill
-            };
-            activeForm = form;
-            panelContent.Controls.Add(form);
-            form.BringToFront();
-            form.Show();
-            CapNhatNutXuatExcel();
         }
 
         private void btnBaoCaoDiem_Click(object sender, EventArgs e)
