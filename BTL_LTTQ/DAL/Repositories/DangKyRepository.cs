@@ -128,11 +128,12 @@ namespace BTL_LTTQ.DAL
                 DbHelper.ExecuteTransaction((conn, tran) =>
                 {
                     using (var cmd = new SqlCommand(
-                        "DELETE FROM DangKy WHERE MaHocVien = @MaHocVien AND MaLop = @MaLop", conn, tran))
+                        "DELETE FROM DangKy WHERE MaHocVien = @MaHocVien AND MaLop = @MaLop AND MaPhieu IS NULL AND Diem IS NULL", conn, tran))
                     {
                         cmd.Parameters.Add(new SqlParameter("@MaHocVien", SqlDbType.VarChar, 20) { Value = maHocVien });
                         cmd.Parameters.Add(new SqlParameter("@MaLop", SqlDbType.VarChar, 20) { Value = maLop });
-                        cmd.ExecuteNonQuery();
+                        if (cmd.ExecuteNonQuery() != 1)
+                            throw new InvalidOperationException("Không thể hủy đăng ký: lớp đã có phiếu học phí hoặc điểm đã được nhập.");
                     }
 
                     using (var cmd = new SqlCommand(
