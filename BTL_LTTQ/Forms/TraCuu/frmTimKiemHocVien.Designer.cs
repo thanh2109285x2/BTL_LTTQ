@@ -1,4 +1,6 @@
 #nullable enable
+using BTL_LTTQ;
+
 namespace BTL_LTTQ.Forms.TraCuu
 {
     partial class frmTimKiemHocVien
@@ -9,8 +11,8 @@ namespace BTL_LTTQ.Forms.TraCuu
         private ComboBox cboNghe = null!;
         private ComboBox cboXepLoai = null!;
         private DataGridView dgvKetQua = null!;
-        private Button btnTimKiem = null!;
-        private Button btnLamMoi = null!;
+        private AppButton btnTimKiem = null!;
+        private AppButton btnLamMoi = null!;
         private GroupBox grpDieuKien = null!;
         private GroupBox grpKetQua = null!;
         private Panel pnlNut = null!;
@@ -22,7 +24,7 @@ namespace BTL_LTTQ.Forms.TraCuu
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            txtTuKhoa = new TextBox(); cboLop = new ComboBox(); cboNghe = new ComboBox(); cboXepLoai = new ComboBox(); dgvKetQua = new DataGridView(); btnTimKiem = new Button(); btnLamMoi = new Button();
+            txtTuKhoa = new TextBox(); cboLop = new ComboBox(); cboNghe = new ComboBox(); cboXepLoai = new ComboBox(); dgvKetQua = new DataGridView(); btnTimKiem = new AppButton { Kieu = KieuNut.Chinh }; btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
             grpDieuKien = new GroupBox(); grpKetQua = new GroupBox(); pnlNut = new Panel();
             lblTuKhoa = new Label(); lblLop = new Label(); lblNghe = new Label(); lblXepLoai = new Label();
             grpDieuKien.Name = "grpDieuKien"; grpKetQua.Name = "grpKetQua"; pnlNut.Name = "pnlNut";

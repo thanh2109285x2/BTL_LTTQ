@@ -1,0 +1,38 @@
+using BTL_LTTQ.Common;
+using BTL_LTTQ.DAL;
+using BTL_LTTQ.Models;
+using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
+using System.Data;
+
+namespace BTL_LTTQ.DAL
+{
+    public class LopHocTraCuuRepository
+    {
+        public DataTable TimKiem(TimKiemLopHoc tieuChi, PhamViInfo phamVi)
+        {
+            var dieuKien = PhamViSqlBuilder.TaoDieuKienLopHoc(phamVi, "l");
+            string dieuKienPhamVi = dieuKien.DieuKienSql == "" ? "" : " AND " + dieuKien.DieuKienSql;
+            string sql = $@"SELECT * FROM(
+                            SELECT l.MaLop, l.TenLop, m.TenMon, g.TenGV, l.NgayBD, l.NgayKT,
+                                   (SELECT COUNT(*) FROM HocVien d WHERE d.MaLop = l.MaLop) AS SiSo
+                            FROM LopHoc l
+                            LEFT JOIN MonHoc m ON l.MaMon = m.MaMon
+                            LEFT JOIN GiaoVien g ON l.MaGV = g.MaGV
+                            WHERE (@MaMon IS NULL OR l.MaMon = @MaMon) AND (@MaGV IS NULL OR l.MaGV = @MaGV){dieuKienPhamVi}) x
+                            WHERE x.SiSo BETWEEN @SiSoTu AND @SiSoDen
+                            ORDER BY x.NgayBD DESC";
+
+            var thamSo = new List<SqlParameter>
+            {
+                new SqlParameter("@MaMon", (object?)tieuChi.MaMon ?? DBNull.Value),
+                new SqlParameter("@MaGV", (object?)tieuChi.MaGV ?? DBNull.Value),
+                new SqlParameter("@SiSoTu", tieuChi.SiSoTu),
+                new SqlParameter("@SiSoDen", tieuChi.SiSoDen)
+            };
+            thamSo.AddRange(dieuKien.ThamSo);
+
+            return DbHelper.ExecuteQuery(sql, thamSo.ToArray());
+        }
+    }
+}

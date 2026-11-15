@@ -1,4 +1,5 @@
-using BTL_LTTQ.Repositories;
+﻿using BTL_LTTQ.Common;
+using BTL_LTTQ.BUS;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -6,7 +7,7 @@ namespace BTL_LTTQ.Forms.TraCuu
 {
     public partial class frmTimKiemHocVien : Form
     {
-        private readonly HocVienRepository _repo = new();
+        private readonly HocVienService _hocVienService = new();
 
         public frmTimKiemHocVien()
         {
@@ -17,11 +18,18 @@ namespace BTL_LTTQ.Forms.TraCuu
 
         private void frmTimKiemHocVien_Load(object? sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.TIM_HOCVIEN))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Close();
+                return;
+            }
+
             try
             {
-                NapCombo(cboLop, _repo.LayDanhSachLop(), "MaLop", "TenLop");
-                NapCombo(cboNghe, _repo.LayDanhSachNghe(), "MaNghe", "TenNghe");
-                NapCombo(cboXepLoai, _repo.LayDanhSachXepLoai(), "MaXepLoai", "TenLoai");
+                NapCombo(cboLop, _hocVienService.LayDanhSachLop(), "MaLop", "TenLop");
+                NapCombo(cboNghe, _hocVienService.LayDanhSachNghe(), "MaNghe", "TenNghe");
+                NapCombo(cboXepLoai, _hocVienService.LayDanhSachXepLoai(), "MaXepLoai", "TenLoai");
                 TimKiem();
             }
             catch (SqlException ex) { ShowError("Không tra cứu được học viên: " + ex.Message); }
@@ -38,7 +46,7 @@ namespace BTL_LTTQ.Forms.TraCuu
 
         private void TimKiem()
         {
-            dgvKetQua.DataSource = _repo.TimKiem(txtTuKhoa.Text, GiaTri(cboLop), GiaTri(cboNghe), GiaTri(cboXepLoai));
+            dgvKetQua.DataSource = _hocVienService.TimKiem(txtTuKhoa.Text, GiaTri(cboLop), GiaTri(cboNghe), GiaTri(cboXepLoai));
             DinhDangBang();
         }
 

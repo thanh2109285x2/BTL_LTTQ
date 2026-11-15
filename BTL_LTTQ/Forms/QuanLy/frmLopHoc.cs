@@ -1,8 +1,6 @@
 ﻿using BTL_LTTQ.Common;
-using BTL_LTTQ.DataAccessLayer;
 using BTL_LTTQ.Models;
-using BTL_LTTQ.Repositories;
-using BTL_LTTQ.Services;
+using BTL_LTTQ.BUS;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -18,16 +16,18 @@ namespace BTL_LTTQ.Forms.QuanLy
     public partial class frmLopHoc : Form
     {
         private readonly LopHocService _lopHocService = new LopHocService();
-        private readonly LookupRepository _lookupRepo = new LookupRepository();
+        private readonly LookupService _lookupService = new LookupService();
 
         private string maLopDangChon = "";
         private bool _chiXem;
         private bool _chiSuaLopCuaMinh;
+        private bool _napComboBox;
 
         public frmLopHoc()
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
+            cboMonHoc.SelectedValueChanged += cboMonHoc_SelectedValueChanged;
         }
 
         private void NapComboBox(ComboBox cbo, DataTable dt, string tenCotMa, string tenCotHienThi)
@@ -40,11 +40,24 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void NaptatcaComboBox()
         {
-            NapComboBox(cboMonHoc, _lookupRepo.LayMonHoc(), "MaMon", "TenMon");
-            NapComboBox(cboGiaoVien, _lookupRepo.LayGiaoVien(), "MaGV", "TenGV");
-            NapComboBox(cboCaHoc, _lookupRepo.LayCaHoc(), "MaCa", "TenCa");
-            NapComboBox(cboThoiGian, _lookupRepo.LayThoiGian(), "MaThoiGian", "TenThoiGian");
-            NapComboBox(cboPhongHoc, _lookupRepo.LayPhongHoc(), "MaPhong", "TenPhong");
+            _napComboBox = true;
+            NapComboBox(cboMonHoc, _lookupService.LayMonHoc(), "MaMon", "TenMon");
+            NapComboBox(cboCaHoc, _lookupService.LayCaHoc(), "MaCa", "TenCa");
+            NapComboBox(cboThoiGian, _lookupService.LayThoiGian(), "MaThoiGian", "TenThoiGian");
+            NapComboBox(cboPhongHoc, _lookupService.LayPhongHoc(), "MaPhong", "TenPhong");
+            _napComboBox = false;
+            NapGiaoVienTheoMon();
+        }
+
+        private void cboMonHoc_SelectedValueChanged(object? sender, EventArgs e)
+        {
+            if (!_napComboBox) NapGiaoVienTheoMon();
+        }
+
+        private void NapGiaoVienTheoMon()
+        {
+            string? maMon = cboMonHoc.SelectedValue?.ToString();
+            NapComboBox(cboGiaoVien, _lookupService.LayGiaoVienTheoMon(string.IsNullOrWhiteSpace(maMon) ? null : maMon), "MaGV", "TenGV");
         }
 
         private void NapDanhSachLop(string tuKhoa = "")

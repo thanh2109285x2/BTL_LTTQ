@@ -1,5 +1,6 @@
 using BTL_LTTQ.Common;
 using BTL_LTTQ.Forms.HeThong;
+using BTL_LTTQ.Forms;
 using BTL_LTTQ.Forms.QuanLy;
 using BTL_LTTQ.Forms.BaoCao;
 using BTL_LTTQ.Forms.TraCuu;
@@ -9,19 +10,94 @@ namespace BTL_LTTQ
     public partial class frmMain : Form
     {
         private const int PANEL_COLLAPSED_HEIGHT = 35;
-private const int PANEL_CRUD_EXPANDED = PANEL_COLLAPSED_HEIGHT + (5 * 35);
-private const int PANEL_TRACUU_EXPANDED = PANEL_COLLAPSED_HEIGHT + (3 * 35);
-private const int PANEL_BAOCAO_EXPANDED = PANEL_COLLAPSED_HEIGHT + (4 * 35);
+        private const int SIDEBAR_COLLAPSED_WIDTH = 55;
+        private const int SIDEBAR_EXPANDED_WIDTH = 284;
+        private readonly System.Windows.Forms.Timer sidebarTimer;
+        private readonly System.Windows.Forms.Timer menuTimer;
+        private bool sidebarExpand = true;
+        private bool menuExpand;
+        private Panel? panelMenuDangHoatDong;
+        private int menuMaxHeight;
 
-public bool DangXuat { get; private set; }
-private Form? activeForm;
+        public bool DangXuat { get; private set; }
+        private Form? activeForm;
         public frmMain()
         {
             InitializeComponent();
+            components ??= new System.ComponentModel.Container();
+            panelSidebar.MinimumSize = new Size(SIDEBAR_COLLAPSED_WIDTH, 0);
+            panelSidebar.MaximumSize = new Size(SIDEBAR_EXPANDED_WIDTH, 0);
+
+            sidebarTimer = new System.Windows.Forms.Timer(components) { Interval = 10 };
+            sidebarTimer.Tick += sidebarTimer_Tick;
+            menuTimer = new System.Windows.Forms.Timer(components) { Interval = 10 };
+            menuTimer.Tick += menuTimer_Tick;
+
             GiaoDien.ApDungMain(this);
+        }
+
+        private void btnTrangChu_Click(object? sender, EventArgs e)
+        {
+            sidebarTimer.Start();
+        }
+
+        private void sidebarTimer_Tick(object? sender, EventArgs e)
+        {
+            if (sidebarExpand)
+            {
+                panelSidebar.Width -= 10;
+                panelThoat.Visible = false;
+                if (panelSidebar.Width <= SIDEBAR_COLLAPSED_WIDTH)
+                {
+                    panelSidebar.Width = SIDEBAR_COLLAPSED_WIDTH;
+                    sidebarExpand = false;
+                    sidebarTimer.Stop();
+                }
+            }
+            else
+            {
+                panelSidebar.Width += 10;
+                if (panelSidebar.Width >= SIDEBAR_EXPANDED_WIDTH)
+                {
+                    panelSidebar.Width = SIDEBAR_EXPANDED_WIDTH;
+                    panelThoat.Visible = true;
+                    sidebarExpand = true;
+                    sidebarTimer.Stop();
+                }
+            }
+        }
+
+        private void menuTimer_Tick(object? sender, EventArgs e)
+        {
+            if (panelMenuDangHoatDong == null)
+            {
+                menuTimer.Stop();
+                return;
+            }
+
+            if (menuExpand)
+            {
+                panelMenuDangHoatDong.Height += 10;
+                if (panelMenuDangHoatDong.Height >= menuMaxHeight)
+                {
+                    panelMenuDangHoatDong.Height = menuMaxHeight;
+                    menuTimer.Stop();
+                }
+            }
+            else
+            {
+                panelMenuDangHoatDong.Height -= 10;
+                if (panelMenuDangHoatDong.Height <= PANEL_COLLAPSED_HEIGHT)
+                {
+                    panelMenuDangHoatDong.Height = PANEL_COLLAPSED_HEIGHT;
+                    menuTimer.Stop();
+                }
+            }
         }
         private void CollapseAllPanels()
         {
+            menuTimer.Stop();
+            panelMenuDangHoatDong = null;
             panelCRUD.Height = PANEL_COLLAPSED_HEIGHT;
             panelTraCuu.Height = PANEL_COLLAPSED_HEIGHT;
             panelBaoCao.Height = PANEL_COLLAPSED_HEIGHT;
@@ -52,6 +128,7 @@ private Form? activeForm;
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDanhMucKhac, ChucNangConst.DANHMUC_KHAC);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTimLop, ChucNangConst.TIM_LOP);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN);
+            PhanQuyenUi.AnNeuKhongCoQuyen(btnTimHocVien, ChucNangConst.TIM_HOCVIEN);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnBaoCaoDiem, ChucNangConst.BC_DIEM);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDoanhThu, ChucNangConst.BC_DOANHTHU);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTop3, ChucNangConst.BC_XEPHANG);
@@ -82,9 +159,7 @@ private Form? activeForm;
 
         private void btnHeThong_Click(object? sender, EventArgs e)
         {
-            panelHeThong.Height = panelHeThong.Height == PANEL_COLLAPSED_HEIGHT
-                ? PANEL_COLLAPSED_HEIGHT + 35
-                : PANEL_COLLAPSED_HEIGHT;
+            TogglePanel(panelHeThong, (btnPhanQuyen, ChucNangConst.PHANQUYEN));
         }
 
         private void btnPhanQuyen_Click(object? sender, EventArgs e)
@@ -123,14 +198,35 @@ private Form? activeForm;
 
         private void TogglePanel(Panel panelToToggle, params (Button Nut, string MaChucNang)[] muc)
         {
-            if (panelToToggle.Height == PANEL_COLLAPSED_HEIGHT)
+            int maxHeight = Math.Max(PANEL_COLLAPSED_HEIGHT,
+                muc.Where(m => m.Nut.Visible)
+                    .Select(m => m.Nut.Bottom + 3)
+                    .DefaultIfEmpty(PANEL_COLLAPSED_HEIGHT)
+                    .Max());
+            panelToToggle.MinimumSize = new Size(0, PANEL_COLLAPSED_HEIGHT);
+
+            if (menuTimer.Enabled && panelMenuDangHoatDong == panelToToggle)
             {
-                panelToToggle.Height = PANEL_COLLAPSED_HEIGHT +
-                    (muc.Count(m => PermissionService.Can(m.MaChucNang)) * 35);
+                menuExpand = !menuExpand;
             }
             else
             {
-                panelToToggle.Height = PANEL_COLLAPSED_HEIGHT;
+                menuTimer.Stop();
+                CollapseOtherPanels(panelToToggle);
+                menuExpand = panelToToggle.Height <= PANEL_COLLAPSED_HEIGHT;
+            }
+
+            panelMenuDangHoatDong = panelToToggle;
+            menuMaxHeight = maxHeight;
+            menuTimer.Start();
+        }
+
+        private void CollapseOtherPanels(Panel panelToKeep)
+        {
+            foreach (Panel panel in new[] { panelCRUD, panelTraCuu, panelBaoCao, panelHeThong })
+            {
+                if (panel != panelToKeep)
+                    panel.Height = PANEL_COLLAPSED_HEIGHT;
             }
         }
 
@@ -269,7 +365,7 @@ private Form? activeForm;
 
         private void CapNhatNutXuatExcel()
         {
-            DataGridView? luoi = activeForm == null || activeForm.Parent != panelContent? null: ExcelHelper.TimLuoi(activeForm);
+            DataGridView? luoi = activeForm == null || activeForm.Parent != panelContent ? null : ExcelHelper.TimLuoi(activeForm);
             bool coDuLieu = luoi != null && luoi.Rows.Cast<DataGridViewRow>().Any(row => !row.IsNewRow);
             btnXuatExcel.Enabled = PermissionService.Can(ChucNangConst.XUAT_EXCEL) && coDuLieu;
         }
@@ -289,6 +385,11 @@ private Form? activeForm;
             OpenChildForm(() => new frmHocVien(), btnHocVien, ChucNangConst.HOCVIEN_XEM);
         }
 
+        private void btnGiaoVien_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmGiaoVien(), btnGiaoVien, ChucNangConst.GIAOVIEN_XEM);
+        }
+
         private void btnTimLop_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmTimKiemLopHoc(), btnTimLop, ChucNangConst.TIM_LOP);
@@ -301,7 +402,7 @@ private Form? activeForm;
 
         private void btnTimHocVien_Click(object sender, EventArgs e)
         {
-            OpenChildForm(() => new frmTimKiemHocVien(), btnTimHocVien, ChucNangConst.HOCVIEN_XEM);
+            OpenChildForm(() => new frmTimKiemHocVien(), btnTimHocVien, ChucNangConst.TIM_HOCVIEN);
         }
 
         private void btnBaoCaoDiem_Click(object sender, EventArgs e)
@@ -312,6 +413,32 @@ private Form? activeForm;
         private void btnDoanhThu_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmBaoCaoDoanhThu(), btnDoanhThu, ChucNangConst.BC_DOANHTHU);
+        }
+
+        private void btnTop3_Click(object? sender, EventArgs e)
+        {
+            if (!PhanQuyenUi.CoQuyenMo(ChucNangConst.BC_XEPHANG))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            MessageBox.Show("Báo cáo xếp hạng học viên chưa được triển khai.", "Chưa khả dụng",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnLopTheoPhong_Click(object? sender, EventArgs e)
+        {
+            if (!PhanQuyenUi.CoQuyenMo(ChucNangConst.BC_LOP_PHONG))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            MessageBox.Show("Báo cáo lớp học theo phòng chưa được triển khai.", "Chưa khả dụng",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnXuatExcel_Click(object sender, EventArgs e)

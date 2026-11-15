@@ -1,0 +1,259 @@
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace BTL_LTTQ
+{
+    public static class GiaoDien
+    {
+        public static readonly Color MauTrang = Color.White;
+        public static readonly Color MauChinh = Color.FromArgb(41, 98, 168);
+        public static readonly Color MauChinhDam = Color.FromArgb(30, 74, 130);
+        public static readonly Color MauNguyHiem = Color.FromArgb(192, 57, 43);
+        public static readonly Color MauNguyHiemDam = Color.FromArgb(150, 40, 30);
+        public static readonly Color MauNen = Color.FromArgb(244, 247, 251);
+        public static readonly Color MauHangLe = Color.FromArgb(234, 241, 250);
+        public static readonly Color MauChon = Color.FromArgb(200, 220, 245);
+        public static readonly Color MauVien = Color.FromArgb(200, 208, 220);
+        public static readonly Color MauChu = Color.FromArgb(33, 37, 41);
+        public static readonly Color MauMucCha = Color.FromArgb(221, 227, 236);
+        public static readonly Color MauMucChaHover = Color.FromArgb(205, 214, 228);
+        public static readonly Color MauSidebar = Color.FromArgb(232, 240, 251);
+        public static readonly Color MauSidebarCha = Color.FromArgb(210, 225, 246);
+        public static readonly Color MauSidebarHover = Color.FromArgb(193, 214, 242);
+        public static readonly Color MauSidebarChu = Color.FromArgb(33, 37, 41);
+        public static readonly Color MauThoatHover = Color.FromArgb(250, 225, 222);
+        public const int VienNutThuong = 1;
+        public const int VienNutMenu = 0;
+        public static readonly Padding LeMenuCha = new Padding(8, 0, 0, 0);
+        public static readonly Padding LeMenuCon = new Padding(48, 0, 0, 0);
+        public static readonly Padding LeMenuTienIch = new Padding(0);
+        public static readonly ContentAlignment CanGiua = ContentAlignment.MiddleCenter;
+        public static readonly ContentAlignment CanTrai = ContentAlignment.MiddleLeft;
+        public static readonly ContentAlignment CanAnhMenuCha = ContentAlignment.MiddleLeft;
+        public static readonly TextImageRelation AnhTruocChu = TextImageRelation.ImageBeforeText;
+        public const FontStyle ChuThuong = FontStyle.Regular;
+        public const FontStyle ChuDam = FontStyle.Bold;
+
+        public static void ApDung(Form f)
+        {
+            f.BackColor = MauNen;
+            Duyet(f);
+        }
+
+        public static void ApDungMain(Form f)
+        {
+            f.BackColor = MauNen;
+            DuyetMain(f);
+        }
+
+        private static void Duyet(Control cha)
+        {
+            foreach (Control c in cha.Controls)
+            {
+                if (c is Button b)
+                {
+                    DinhDangNut(b);
+                }
+                else if (c is DataGridView g)
+                {
+                    DinhDangBang(g);
+                    continue;
+                }
+                else if (c is GroupBox gb)
+                {
+                    gb.ForeColor = MauChinh;
+                }
+                else if (c is Label || c is TextBoxBase || c is ComboBox ||
+                         c is NumericUpDown || c is DateTimePicker)
+                {
+                    c.ForeColor = MauChu;
+                }
+
+                if (c.HasChildren) Duyet(c);
+            }
+        }
+
+        private static void DinhDangNut(Button b)
+        {
+            if (b is AppButton)
+                return;
+
+            b.FlatStyle = FlatStyle.Flat;
+            b.UseVisualStyleBackColor = false;
+            b.Cursor = Cursors.Hand;
+
+            Color nen, chu, vien, hover;
+
+            switch (b.Name)
+            {
+                case "btnThem":
+                case "_btnThem":
+                case "btnSua":
+                case "_btnSua":
+                case "btnTimKiem":
+                case "_btnTim":
+                    nen = MauChinh; chu = MauTrang; vien = MauChinh; hover = MauChinhDam;
+                    break;
+                case "btnXoa":
+                    nen = MauNguyHiem; chu = MauTrang; vien = MauNguyHiem; hover = MauNguyHiemDam;
+                    break;
+                case "_btnXoa":
+                    nen = MauNguyHiem; chu = MauTrang; vien = MauNguyHiem; hover = MauNguyHiemDam;
+                    break;
+                case "_btnTatCa":
+                case "_btnMoi":
+                    nen = Color.White; chu = MauChinh; vien = MauChinh; hover = MauHangLe;
+                    break;
+                default:
+                    nen = MauTrang; chu = MauChu; vien = MauVien; hover = MauHangLe;
+                    break;
+            }
+
+            b.BackColor = nen;
+            b.ForeColor = chu;
+            b.FlatAppearance.BorderColor = vien;
+            b.FlatAppearance.BorderSize = VienNutThuong;
+            b.FlatAppearance.MouseOverBackColor = hover;
+            b.FlatAppearance.MouseDownBackColor = hover;
+        }
+
+        private static void DinhDangBang(DataGridView g)
+        {
+            g.BackgroundColor = Color.White;
+            g.BorderStyle = BorderStyle.None;
+            g.GridColor = MauVien;
+            g.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            g.EnableHeadersVisualStyles = false;
+            g.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            g.ColumnHeadersHeight = 34;
+            g.ColumnHeadersDefaultCellStyle.BackColor = MauChinh;
+            g.ColumnHeadersDefaultCellStyle.ForeColor = MauTrang;
+            g.ColumnHeadersDefaultCellStyle.SelectionBackColor = MauChinh;
+            g.ColumnHeadersDefaultCellStyle.SelectionForeColor = MauTrang;
+            g.ColumnHeadersDefaultCellStyle.Font = new Font(g.Font, FontStyle.Bold);
+
+            g.DefaultCellStyle.ForeColor = MauChu;
+            g.DefaultCellStyle.SelectionBackColor = MauChon;
+            g.DefaultCellStyle.SelectionForeColor = MauChu;
+            g.AlternatingRowsDefaultCellStyle.BackColor = MauHangLe;
+            g.AlternatingRowsDefaultCellStyle.SelectionBackColor = MauChon;
+            g.AlternatingRowsDefaultCellStyle.SelectionForeColor = MauChu;
+            g.RowTemplate.Height = 28;
+
+            g.RowHeadersVisible = false;
+            g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            g.MultiSelect = false;
+            g.AllowUserToAddRows = false;
+            g.AllowUserToDeleteRows = false;
+            g.ReadOnly = true;
+            g.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private static Button _mucDangChon;
+
+        public static void DanhDauMuc(Button b)
+        {
+            if (_mucDangChon != null && !_mucDangChon.IsDisposed)
+            {
+                _mucDangChon.BackColor = MauSidebar;
+                _mucDangChon.ForeColor = MauSidebarChu;
+            }
+            _mucDangChon = b;
+            b.BackColor = MauChinh;
+            b.ForeColor = MauTrang;
+        }
+
+        private static void DuyetMain(Control cha)
+        {
+            foreach (Control c in cha.Controls)
+            {
+                if (c is Button b)
+                {
+                    DinhDangNutMenu(b);
+                }
+
+                if (c.HasChildren) DuyetMain(c);
+            }
+        }
+
+        private static bool LaMucCha(Button b)
+        {
+            if (b.Image != null || b.ImageList != null) return true;
+            string t = b.Text.TrimStart();
+            return t.Length > 0 && !char.IsLetterOrDigit(t[0]);
+        }
+
+        private static void DinhDangNutMenu(Button b)
+        {
+            if (b is AppButton)
+            {
+                if (b is AppButton appButton &&
+                    appButton.Kieu is KieuNut.MenuCha or KieuNut.MenuCon or
+                        KieuNut.MenuTienIch or KieuNut.MenuThoat)
+                    ApDungBoCucNutMenu(b);
+                return;
+            }
+
+            bool laMucCha = LaMucCha(b);
+            bool laThoat = b.Text.Trim() == "Thoát";
+
+            b.FlatStyle = FlatStyle.Flat;
+            b.UseVisualStyleBackColor = false;
+            b.Cursor = Cursors.Hand;
+            b.FlatAppearance.BorderSize = 0;
+
+            if (laThoat)
+            {
+                b.BackColor = MauSidebar;
+                b.ForeColor = MauNguyHiem;
+                b.TextAlign = CanGiua;
+                b.FlatAppearance.MouseOverBackColor = MauThoatHover;
+                b.FlatAppearance.MouseDownBackColor = MauThoatHover;
+            }
+            else if (b.Name == "btnXuatExcel")
+            {
+                b.BackColor = MauSidebar;
+                b.ForeColor = MauChinh;
+                b.TextAlign = CanGiua;
+                b.Padding = LeMenuTienIch;
+                b.FlatAppearance.MouseOverBackColor = MauSidebarHover;
+                b.FlatAppearance.MouseDownBackColor = MauSidebarHover;
+            }
+            else if (laMucCha)
+            {
+                b.BackColor = MauSidebarCha;
+                b.ForeColor = MauChinhDam;
+                b.Font = new Font(b.Font, ChuDam);
+                b.TextAlign = CanTrai;
+                b.ImageAlign = CanAnhMenuCha;
+                b.TextImageRelation = AnhTruocChu;
+                b.Padding = LeMenuCha;
+                b.FlatAppearance.MouseOverBackColor = MauSidebarHover;
+                b.FlatAppearance.MouseDownBackColor = MauSidebarHover;
+            }
+            else
+            {
+                b.BackColor = MauSidebar;
+                b.ForeColor = MauSidebarChu;
+                b.TextAlign = CanTrai;
+                b.Padding = LeMenuCon;
+                b.FlatAppearance.MouseOverBackColor = MauSidebarHover;
+                b.FlatAppearance.MouseDownBackColor = MauSidebarHover;
+            }
+
+            ApDungBoCucNutMenu(b);
+        }
+
+        private static void ApDungBoCucNutMenu(Button b)
+        {
+            if (b.Parent != null)
+            {
+                b.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                b.Left = 6;
+                b.Width = b.Parent.ClientSize.Width - 12;
+            }
+        }
+    }
+}

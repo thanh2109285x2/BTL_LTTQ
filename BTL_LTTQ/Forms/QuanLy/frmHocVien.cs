@@ -1,5 +1,4 @@
-using BTL_LTTQ.Repositories;
-using BTL_LTTQ.DataAccessLayer;
+﻿using BTL_LTTQ.BUS;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Text.RegularExpressions;
@@ -8,7 +7,7 @@ namespace BTL_LTTQ.Forms.QuanLy
 {
     public partial class frmHocVien : Form
     {
-        private readonly HocVienRepository _repo = new();
+        private readonly HocVienService _hocVienService = new();
         private string maDangChon = "";
 
         public frmHocVien()
@@ -38,7 +37,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             }
             catch (SqlException ex)
             {
-                ShowError($"Không kết nối được SQL Server '{DbHelper.DataSource}'. Kiểm tra SQL Server service/instance đang chạy, sửa Data Source trong App.config cho đúng instance, và xác nhận database QuanLyLopTinHocVaNgoaiNguNganHan đã được tạo.\n\nChi tiết: {ex.Message}");
+                ShowError($"Không kết nối được SQL Server. Kiểm tra SQL Server service/instance đang chạy, sửa Data Source trong App.config cho đúng instance, và xác nhận database QuanLyLopTinHocVaNgoaiNguNganHan đã được tạo.\n\nChi tiết: {ex.Message}");
             }
             catch (Exception ex) { ShowError("Không tải được dữ liệu: " + ex.Message); }
         }
@@ -78,7 +77,7 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void NapDanhSach(string keyword = "")
         {
-            dgvHocVien.DataSource = _repo.LayDanhSach(keyword);
+            dgvHocVien.DataSource = _hocVienService.LayDanhSach(keyword);
             if (dgvHocVien.Columns.Count == 0) return;
             dgvHocVien.Columns["MaLop"].Visible = dgvHocVien.Columns["MaNghe"].Visible = dgvHocVien.Columns["MaXepLoai"].Visible = false;
             SetHeader("MaHocVien", "Mã học viên"); SetHeader("TenHocVien", "Tên học viên");
@@ -174,7 +173,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             var d = DuLieu();
             try
             {
-                _repo.Sua(maDangChon, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai,
+                _hocVienService.Sua(maDangChon, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai,
                     d.ngayNop, d.diem, nullIfEmpty(cboXepLoai), nullIfEmpty(cboLop));
                 Saved("Cập nhật học viên thành công.");
             }
@@ -185,7 +184,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             if (maDangChon == "") { ShowError("Hãy chọn học viên trong danh sách để xóa."); return; }
             if (MessageBox.Show($"Xóa học viên {maDangChon}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            try { _repo.Xoa(maDangChon); Saved("Đã xóa học viên."); }
+            try { _hocVienService.Xoa(maDangChon); Saved("Đã xóa học viên."); }
             catch (SqlException ex) { ShowError("Không xóa được: " + ex.Message); }
         }
 

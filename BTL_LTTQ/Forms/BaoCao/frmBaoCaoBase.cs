@@ -1,5 +1,6 @@
 using BTL_LTTQ.DataAccessLayer;
 using BTL_LTTQ.Common;
+using BTL_LTTQ.BUS;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BTL_LTTQ.Forms.BaoCao
 {
     public class frmBaoCaoBase : Form
     {
-        private readonly BaoCaoRepository _repo = new();
+        private readonly BaoCaoService _baoCaoService = new();
         private readonly bool _laBaoCaoDiem;
         private DataTable? _duLieuGoc;
         private readonly PrintDocument _printDocument = new();
@@ -33,9 +34,18 @@ namespace BTL_LTTQ.Forms.BaoCao
 
         private void FrmBaoCao_Load(object? sender, EventArgs e)
         {
+            string maChucNang = _laBaoCaoDiem ? ChucNangConst.BC_DIEM : ChucNangConst.BC_DOANHTHU;
+            if (!PermissionService.Can(maChucNang))
+            {
+                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Close();
+                return;
+            }
+
             try
             {
-                var lop = _repo.LayDanhSachLop();
+                var lop = _baoCaoService.LayDanhSachLop();
                 var tatCa = lop.NewRow();
                 tatCa["MaLop"] = DBNull.Value;
                 tatCa["TenLop"] = "-- Tất cả lớp --";
