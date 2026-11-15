@@ -1,4 +1,4 @@
-﻿using BTL_LTTQ.Common;
+using BTL_LTTQ.Common;
 using BTL_LTTQ.Forms.HeThong;
 using BTL_LTTQ.Forms;
 using BTL_LTTQ.Forms.QuanLy;
@@ -143,7 +143,7 @@ namespace BTL_LTTQ
             btnTraCuuMenu.Visible = SapXepMenu(panelTraCuu,
                 (btnTimLop, ChucNangConst.TIM_LOP),
                 (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
-                (btnTimHocVien, ChucNangConst.TIM_HOCVIEN));
+                (btnTimHocVien, ChucNangConst.HOCVIEN_XEM));
             btnBaoCaoMenu.Visible = SapXepMenu(panelBaoCao,
                 (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
                 (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
@@ -272,7 +272,7 @@ namespace BTL_LTTQ
             TogglePanel(panelTraCuu,
                 (btnTimLop, ChucNangConst.TIM_LOP),
                 (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
-                (btnTimHocVien, ChucNangConst.TIM_HOCVIEN));
+                (btnTimHocVien, ChucNangConst.HOCVIEN_XEM));
         }
 
         private void btnBaoCaoMenu_Click(object sender, EventArgs e)
