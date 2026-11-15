@@ -1,26 +1,35 @@
 using BTL_LTTQ.Models;
 using Microsoft.Data.SqlClient;
+using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace BTL_LTTQ.DAL
 {
+    /// <summary>
+    /// Biến PhamViInfo (BUS quyết định) thành điều kiện SQL và tham số cho DAL.
+    /// </summary>
     public static class PhamViSqlBuilder
     {
         public static (string DieuKienSql, SqlParameter[] ThamSo) TaoDieuKienLopHoc(PhamViInfo phamVi, string aliasBang)
         {
             KiemTraAlias(aliasBang);
+            if (phamVi == null || phamVi.Loai == LoaiPhamVi.TatCa)
+                return ("", Array.Empty<SqlParameter>());
+            if (phamVi.Loai == LoaiPhamVi.TuChoi)
+                return ("1 = 0", Array.Empty<SqlParameter>());
 
             return phamVi.Loai switch
             {
                 LoaiPhamVi.TatCa => ("", Array.Empty<SqlParameter>()),
                 LoaiPhamVi.GiaoVien when !string.IsNullOrWhiteSpace(phamVi.MaGiaoVien) =>
                     ($"{aliasBang}.MaGV = @PV_MaGV", new[]
-                    {
+                {
                         new SqlParameter("@PV_MaGV", SqlDbType.VarChar, 20) { Value = phamVi.MaGiaoVien }
                     }),
                 LoaiPhamVi.HocVien when !string.IsNullOrWhiteSpace(phamVi.MaHocVien) =>
                     ($"EXISTS (SELECT 1 FROM HocVien pv_h WHERE pv_h.MaHocVien = @PV_MaHocVien AND pv_h.MaLop = {aliasBang}.MaLop)", new[]
-                    {
+            {
                         new SqlParameter("@PV_MaHocVien", SqlDbType.VarChar, 20) { Value = phamVi.MaHocVien }
                     }),
                 _ => ("1 = 0", Array.Empty<SqlParameter>())

@@ -1,6 +1,9 @@
+using BTL_LTTQ.Common;
+using BTL_LTTQ.DAL;
 using BTL_LTTQ.Models;
 using BTL_LTTQ.DAL;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -12,6 +15,8 @@ namespace BTL_LTTQ.BUS
 
         public DataTable LayDanhSach(string tuKhoa = "")
         {
+            if (!PermissionService.Can(ChucNangConst.MONHOC_XEM))
+                return new DataTable();
             return _repo.LayDanhSach((tuKhoa ?? "").Trim());
         }
 
@@ -22,16 +27,18 @@ namespace BTL_LTTQ.BUS
             string loi = KiemTra(m);
             if (loi != "") return loi;
 
-            if (_repo.TonTai(m.MaMon)) return "Mã môn này đã tồn tại";
-
             try
             {
+                if (!PermissionService.Can(ChucNangConst.MONHOC_THEM))
+                    return "Bạn không có quyền thêm môn học.";
+                if (_repo.TonTai(m.MaMon)) return "Mã môn này đã tồn tại";
+
                 _repo.Them(m);
                 return "";
             }
-            catch (SqlException ex)
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException)
             {
-                return "Không thêm được: " + ex.Message;
+                return ex is SqlException ? "Không thêm được: " + ex.Message : ex.Message;
             }
         }
 
@@ -44,12 +51,14 @@ namespace BTL_LTTQ.BUS
 
             try
             {
+                if (!PermissionService.Can(ChucNangConst.MONHOC_SUA))
+                    return "Bạn không có quyền sửa môn học.";
                 _repo.Sua(m);
                 return "";
             }
-            catch (SqlException ex)
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException)
             {
-                return "Không sửa được: " + ex.Message;
+                return ex is SqlException ? "Không sửa được: " + ex.Message : ex.Message;
             }
         }
 
@@ -59,8 +68,14 @@ namespace BTL_LTTQ.BUS
 
             try
             {
+                if (!PermissionService.Can(ChucNangConst.MONHOC_XOA))
+                    return "Bạn không có quyền xóa môn học.";
                 _repo.Xoa(maMon);
                 return "";
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return ex.Message;
             }
             catch (SqlException ex)
             {

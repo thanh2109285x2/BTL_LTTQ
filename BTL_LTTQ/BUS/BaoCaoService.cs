@@ -3,6 +3,9 @@ using System.Data;
 
 namespace BTL_LTTQ.BUS
 {
+    /// <summary>
+    /// BUS cho báo cáo (mở rộng theo yêu cầu 3 tầng).
+    /// </summary>
     public class BaoCaoService
     {
         private readonly BaoCaoRepository _repo = new();

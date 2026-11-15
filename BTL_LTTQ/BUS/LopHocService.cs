@@ -2,6 +2,7 @@
 using BTL_LTTQ.Models;
 using BTL_LTTQ.DAL;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -24,16 +25,21 @@ namespace BTL_LTTQ.BUS
             string loi = KiemTra(l);
             if (loi != "") return loi;
 
-            if (_repo.TonTai(l.MaLop)) return "Mã lớp này đã tồn tại";
-
             try
             {
+                if (!PermissionService.Can(ChucNangConst.LOPHOC_THEM))
+                    return "Bạn không có quyền thêm lớp học.";
+                if (CurrentUser.IsHocVien)
+                    return "Học viên không được thêm lớp học.";
+
+                if (_repo.TonTai(l.MaLop)) return "Mã lớp này đã tồn tại";
+
                 _repo.Them(l);
                 return "";
             }
-            catch (SqlException ex)
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException)
             {
-                return "Không thêm được: " + ex.Message;
+                return ex is SqlException ? "Không thêm được: " + ex.Message : ex.Message;
             }
         }
 
@@ -62,14 +68,21 @@ namespace BTL_LTTQ.BUS
 
             try
             {
+                if (!PermissionService.Can(ChucNangConst.LOPHOC_XOA))
+                    return "Bạn không có quyền xóa lớp học.";
+                if (CurrentUser.IsHocVien)
+                    return "Học viên không được xóa lớp học.";
+
                 _repo.Xoa(maLop);
                 return "";
             }
-            catch (SqlException ex)
+            catch (Exception ex) when (ex is SqlException || ex is UnauthorizedAccessException)
             {
-                if (ex.Number == 547)
+                if (ex is UnauthorizedAccessException) return ex.Message;
+                var sqlEx = (SqlException)ex;
+                if (sqlEx.Number == 547)
                     return "Lớp này đang có học viên (hoặc dữ liệu liên quan), không thể xóa";
-                return "Không xóa được: " + ex.Message;
+                return "Không xóa được: " + sqlEx.Message;
             }
         }
 
@@ -92,6 +105,12 @@ namespace BTL_LTTQ.BUS
 
             if (l.NgayKT.Date < l.NgayBD.Date)
                 loi.Add("Ngày kết thúc không được trước ngày bắt đầu");
+
+            if (l.SiSoToiDa < 1)
+                loi.Add("Sĩ số tối đa phải lớn hơn 0");
+
+            if (l.SoBuoiTuan < 1 || l.SoBuoiTuan > 7)
+                loi.Add("Số buổi mỗi tuần phải từ 1 đến 7");
 
             return string.Join("\n", loi);
         }

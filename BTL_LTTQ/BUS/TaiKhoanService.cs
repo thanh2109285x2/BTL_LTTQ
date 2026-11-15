@@ -2,6 +2,7 @@ using BTL_LTTQ.Common;
 using BTL_LTTQ.DAL;
 using BTL_LTTQ.Models;
 using System.Data;
+using System.Linq;
 
 namespace BTL_LTTQ.BUS
 {
@@ -13,35 +14,35 @@ namespace BTL_LTTQ.BUS
         {
             loi = null;
             DataTable taiKhoan = _taiKhoanDAL.LayTheoTenDangNhap(tenDangNhap);
-            if (taiKhoan.Rows.Count == 0)
+                if (taiKhoan.Rows.Count == 0)
                 return KetQuaDangNhap.SaiThongTin;
 
-            DataRow dong = taiKhoan.Rows[0];
-            string hash = dong["MatKhauHash"].ToString() ?? "";
-            string salt = dong["Salt"].ToString() ?? "";
-            if (!MatKhauHelper.KiemTra(matKhau, salt, hash))
+                DataRow dong = taiKhoan.Rows[0];
+                string hash = dong["MatKhauHash"].ToString() ?? "";
+                string salt = dong["Salt"].ToString() ?? "";
+                if (!MatKhauHelper.KiemTra(matKhau, salt, hash))
                 return KetQuaDangNhap.SaiThongTin;
 
-            if (!Convert.ToBoolean(dong["TrangThai"]))
+                if (!Convert.ToBoolean(dong["TrangThai"]))
                 return KetQuaDangNhap.TaiKhoanBiKhoa;
 
-            CurrentUser.Dat(
-                tenDangNhap,
-                dong["VaiTro"].ToString() ?? "",
-                dong["MaGV"] == DBNull.Value ? null : dong["MaGV"].ToString(),
-                dong["MaHocVien"] == DBNull.Value ? null : dong["MaHocVien"].ToString());
+                CurrentUser.Dat(
+                    tenDangNhap,
+                    dong["VaiTro"].ToString() ?? "",
+                    dong["MaGV"] == DBNull.Value ? null : dong["MaGV"].ToString(),
+                    dong["MaHocVien"] == DBNull.Value ? null : dong["MaHocVien"].ToString());
 
-            try
-            {
-                PermissionService.Load();
-            }
-            catch (Exception ex)
-            {
-                PermissionService.Clear();
-                CurrentUser.Xoa();
+                try
+                {
+                    PermissionService.Load();
+                }
+                catch (Exception ex)
+                {
+                    PermissionService.Clear();
+                    CurrentUser.Xoa();
                 loi = ex.Message;
                 return KetQuaDangNhap.LoiTaiQuyen;
-            }
+                }
 
             return KetQuaDangNhap.ThanhCong;
         }
@@ -57,11 +58,18 @@ namespace BTL_LTTQ.BUS
         public bool TenDangNhapDaTonTai(string tenDangNhap) => _taiKhoanDAL.TenDangNhapDaTonTai(tenDangNhap);
 
         public string DangKy(string tenDangNhap, string matKhau, string vaiTro, string? maGV, string? maHocVien)
-        {
+            {
+                return "Vui lòng chọn vai trò hợp lệ.";
+            }
+
             string salt = MatKhauHelper.TaoSalt();
             string hash = MatKhauHelper.BamMatKhau(matKhau, salt);
             return _taiKhoanDAL.ThemTaiKhoan(tenDangNhap, hash, salt, vaiTro, maGV, maHocVien);
-        }
+                }
+                else
+                {
+                    soDong = _dal.ThemTaiKhoan(tenDangNhap, hash, salt, vaiTro, maGV, maHocVien);
+                }
 
         public string DoiMatKhau(string tenDangNhap, string matKhauCu, string matKhauMoi) =>
             _taiKhoanDAL.DoiMatKhau(tenDangNhap, matKhauCu, matKhauMoi);

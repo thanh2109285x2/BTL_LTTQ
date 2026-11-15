@@ -5,10 +5,16 @@ using System.Data;
 
 namespace BTL_LTTQ.Common
 {
+    /// <summary>
+    /// BUS quyết định phạm vi dữ liệu được xem; DAL nhận PhamViInfo và tạo SQL.
+    /// </summary>
     public static class PhamViDuLieu
     {
         public static PhamViInfo ChoLopHoc(string maChucNang)
         {
+            if (!PermissionService.Can(maChucNang))
+                return new PhamViInfo { Loai = LoaiPhamVi.TuChoi };
+
             if (!PermissionService.ChiCuaMinh(maChucNang))
                 return new PhamViInfo(LoaiPhamVi.TatCa);
 
@@ -93,7 +99,7 @@ namespace BTL_LTTQ.Common
                 if (!LaChuCaiHoacGachDuoi(kyTu) && (kyTu < '0' || kyTu > '9'))
                     throw new ArgumentException("Alias bảng không hợp lệ.", nameof(aliasBang));
             }
-        }
+            }
 
         private static bool LaChuCaiHoacGachDuoi(char kyTu)
         {

@@ -39,6 +39,7 @@
             btnLopHoc = new AppButton();
             btnQuanLyMenu = new AppButton();
             panelTraCuu = new Panel();
+            btnThoiKhoaBieu = new AppButton();
             btnTimGiaoVien = new AppButton();
             btnTimHocVien = new AppButton();
             btnTimLop = new AppButton();
@@ -261,6 +262,7 @@
             // 
             // panelTraCuu
             // 
+            panelTraCuu.Controls.Add(btnThoiKhoaBieu);
             panelTraCuu.Controls.Add(btnTimGiaoVien);
             panelTraCuu.Controls.Add(btnTimHocVien);
             panelTraCuu.Controls.Add(btnTimLop);
@@ -269,6 +271,27 @@
             panelTraCuu.Name = "panelTraCuu";
             panelTraCuu.Size = new Size(271, 40);
             panelTraCuu.TabIndex = 2;
+            // 
+            // btnThoiKhoaBieu
+            // 
+            btnThoiKhoaBieu.BackColor = Color.FromArgb(232, 240, 251);
+            btnThoiKhoaBieu.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnThoiKhoaBieu.FlatAppearance.BorderSize = 0;
+            btnThoiKhoaBieu.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnThoiKhoaBieu.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnThoiKhoaBieu.FlatStyle = FlatStyle.Flat;
+            btnThoiKhoaBieu.Font = new Font("Segoe UI", 9F);
+            btnThoiKhoaBieu.ForeColor = Color.FromArgb(33, 37, 41);
+            btnThoiKhoaBieu.Kieu = KieuNut.MenuCon;
+            btnThoiKhoaBieu.Location = new Point(52, 143);
+            btnThoiKhoaBieu.Name = "btnThoiKhoaBieu";
+            btnThoiKhoaBieu.Padding = new Padding(48, 0, 0, 0);
+            btnThoiKhoaBieu.Size = new Size(156, 29);
+            btnThoiKhoaBieu.TabIndex = 5;
+            btnThoiKhoaBieu.Text = "Thời khóa biểu";
+            btnThoiKhoaBieu.TextAlign = ContentAlignment.MiddleLeft;
+            btnThoiKhoaBieu.UseVisualStyleBackColor = false;
+            btnThoiKhoaBieu.Click += btnThoiKhoaBieu_Click;
             // 
             // btnTimGiaoVien
             // 
@@ -688,6 +711,7 @@ private AppButton btnPhanQuyen;
 private AppButton btnTimGiaoVien;
 private AppButton btnTimHocVien;
 private AppButton btnTimLop;
+private AppButton btnThoiKhoaBieu;
 private AppButton btnTop3;
 private AppButton btnDoanhThu;
 private AppButton btnBaoCaoDiem;

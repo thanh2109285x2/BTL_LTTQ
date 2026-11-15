@@ -1,8 +1,13 @@
+using BTL_LTTQ.Common;
 using BTL_LTTQ.DAL;
+using BTL_LTTQ.Models;
 using System.Data;
 
 namespace BTL_LTTQ.BUS
 {
+    /// <summary>
+    /// BUS cho nghiệp vụ học viên (mở rộng theo yêu cầu 3 tầng).
+    /// </summary>
     public class HocVienService
     {
         private readonly HocVienRepository _repo = new();

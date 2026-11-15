@@ -15,5 +15,9 @@ namespace BTL_LTTQ.Models
         public string MaCa { get; set; }
         public string MaThoiGian { get; set; }
         public string MaPhong { get; set; }
+
+        //Giới hạn đăng ký và số buổi mỗi tuần khi xếp thời khóa biểu
+        public int SiSoToiDa { get; set; } = 30;
+        public int SoBuoiTuan { get; set; } = 3;
     }
 }

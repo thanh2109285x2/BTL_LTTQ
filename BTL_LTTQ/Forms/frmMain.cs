@@ -129,6 +129,7 @@ namespace BTL_LTTQ
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTimLop, ChucNangConst.TIM_LOP);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTimHocVien, ChucNangConst.TIM_HOCVIEN);
+            PhanQuyenUi.AnNeuKhongCoQuyen(btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnBaoCaoDiem, ChucNangConst.BC_DIEM);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDoanhThu, ChucNangConst.BC_DOANHTHU);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTop3, ChucNangConst.BC_XEPHANG);
@@ -143,7 +144,8 @@ namespace BTL_LTTQ
             btnTraCuuMenu.Visible = SapXepMenu(panelTraCuu,
                 (btnTimLop, ChucNangConst.TIM_LOP),
                 (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
-                (btnTimHocVien, ChucNangConst.TIM_HOCVIEN));
+                (btnTimHocVien, ChucNangConst.TIM_HOCVIEN),
+                (btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM));
             btnBaoCaoMenu.Visible = SapXepMenu(panelBaoCao,
                 (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
                 (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
@@ -272,7 +274,8 @@ namespace BTL_LTTQ
             TogglePanel(panelTraCuu,
                 (btnTimLop, ChucNangConst.TIM_LOP),
                 (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
-                (btnTimHocVien, ChucNangConst.TIM_HOCVIEN));
+                (btnTimHocVien, ChucNangConst.TIM_HOCVIEN),
+                (btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM));
         }
 
         private void btnBaoCaoMenu_Click(object sender, EventArgs e)
@@ -403,6 +406,11 @@ namespace BTL_LTTQ
         private void btnTimHocVien_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmTimKiemHocVien(), btnTimHocVien, ChucNangConst.TIM_HOCVIEN);
+        }
+
+        private void btnThoiKhoaBieu_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmThoiKhoaBieu(), btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM);
         }
 
         private void btnBaoCaoDiem_Click(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 using BTL_LTTQ.Common;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Data;
 
 namespace BTL_LTTQ.DAL
@@ -36,7 +37,7 @@ namespace BTL_LTTQ.DAL
         public string? LayDienThoai(string vaiTro, string ma)
         {
             string? sql = vaiTro switch
-            {
+        {
                 VaiTroConst.GiaoVien => "SELECT DienThoai FROM GiaoVien WHERE MaGV = @Ma",
                 VaiTroConst.HocVien => "SELECT DienThoai FROM HocVien WHERE MaHocVien = @Ma",
                 _ => null
@@ -64,17 +65,17 @@ namespace BTL_LTTQ.DAL
                 int soDong;
                 if (vaiTro == VaiTroConst.Admin)
                 {
-                    const string sqlAdmin = @"INSERT INTO TaiKhoan (TenDangNhap, MatKhauHash, Salt, VaiTro, MaGV, MaHocVien)
-                                              SELECT @TenDangNhap, @MatKhauHash, @Salt, @VaiTro, @MaGV, @MaHocVien
-                                              WHERE NOT EXISTS (
-                                                  SELECT 1 FROM TaiKhoan WITH (UPDLOCK, HOLDLOCK) WHERE VaiTro = @VaiTro)";
+            const string sqlAdmin = @"INSERT INTO TaiKhoan (TenDangNhap, MatKhauHash, Salt, VaiTro, MaGV, MaHocVien)
+                                      SELECT @TenDangNhap, @MatKhauHash, @Salt, @VaiTro, @MaGV, @MaHocVien
+                                      WHERE NOT EXISTS (
+                                          SELECT 1 FROM TaiKhoan WITH (UPDLOCK, HOLDLOCK) WHERE VaiTro = @VaiTro)";
                     soDong = DbHelper.ExecuteNonQuery(sqlAdmin, ThamSoTaiKhoan(tenDangNhap, hash, salt, vaiTro, maGV, maHocVien));
                     if (soDong == 0) return "Tài khoản Admin đã tồn tại.";
-                }
+        }
                 else
-                {
-                    const string sql = @"INSERT INTO TaiKhoan (TenDangNhap, MatKhauHash, Salt, VaiTro, MaGV, MaHocVien)
-                                         VALUES (@TenDangNhap, @MatKhauHash, @Salt, @VaiTro, @MaGV, @MaHocVien)";
+        {
+            const string sql = @"INSERT INTO TaiKhoan (TenDangNhap, MatKhauHash, Salt, VaiTro, MaGV, MaHocVien)
+                                 VALUES (@TenDangNhap, @MatKhauHash, @Salt, @VaiTro, @MaGV, @MaHocVien)";
                     soDong = DbHelper.ExecuteNonQuery(sql, ThamSoTaiKhoan(tenDangNhap, hash, salt, vaiTro, maGV, maHocVien));
                 }
 
@@ -102,8 +103,8 @@ namespace BTL_LTTQ.DAL
         public string DoiMatKhau(string tenDangNhap, string matKhauCu, string matKhauMoi)
         {
             const string sqlDoc = @"SELECT MatKhauHash, Salt
-                                    FROM TaiKhoan
-                                    WHERE TenDangNhap = @TenDangNhap";
+                                 FROM TaiKhoan
+                                 WHERE TenDangNhap = @TenDangNhap";
             DataTable taiKhoan = DbHelper.ExecuteQuery(sqlDoc,
                 new SqlParameter("@TenDangNhap", SqlDbType.VarChar, 50) { Value = tenDangNhap });
             if (taiKhoan.Rows.Count != 1)
@@ -118,8 +119,8 @@ namespace BTL_LTTQ.DAL
             string saltMoi = MatKhauHelper.TaoSalt();
             string hashMoi = MatKhauHelper.BamMatKhau(matKhauMoi, saltMoi);
             const string sqlCapNhat = @"UPDATE TaiKhoan
-                                        SET MatKhauHash = @MatKhauHash, Salt = @Salt
-                                        WHERE TenDangNhap = @TenDangNhap";
+                                 SET MatKhauHash = @MatKhauHash, Salt = @Salt
+                                 WHERE TenDangNhap = @TenDangNhap";
             int soDong = DbHelper.ExecuteNonQuery(sqlCapNhat,
                 new SqlParameter("@MatKhauHash", SqlDbType.VarChar, 256) { Value = hashMoi },
                 new SqlParameter("@Salt", SqlDbType.VarChar, 64) { Value = saltMoi },

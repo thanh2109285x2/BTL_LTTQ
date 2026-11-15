@@ -2,9 +2,9 @@
 using BTL_LTTQ.DAL;
 using BTL_LTTQ.Models;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System;
 
 namespace BTL_LTTQ.DAL
 {
@@ -20,7 +20,9 @@ namespace BTL_LTTQ.DAL
                                   l.NgayBD, l.NgayKT,
                                   l.MaCa, c.TenCa,
                                   l.MaThoiGian, t.TenThoiGian,
-                                  l.MaPhong, p.TenPhong
+                                  l.MaPhong, p.TenPhong,
+                                  l.SiSoToiDa, l.SoBuoiTuan,
+                                  (SELECT COUNT(*) FROM DangKy d WHERE d.MaLop = l.MaLop) AS SiSo
                            FROM LopHoc l
                            LEFT JOIN MonHoc m   ON l.MaMon = m.MaMon
                            LEFT JOIN GiaoVien g ON l.MaGV = g.MaGV
@@ -49,8 +51,8 @@ namespace BTL_LTTQ.DAL
 
         public void Them(LopHoc l)
         {
-            string sql = @"INSERT INTO LopHoc (MaLop, TenLop, MaMon, MaGV, NgayBD, NgayKT, MaCa, MaThoiGian, MaPhong)
-                           VALUES (@MaLop, @TenLop, @MaMon, @MaGV, @NgayBD, @NgayKT, @MaCa, @MaThoiGian, @MaPhong)";
+            string sql = @"INSERT INTO LopHoc (MaLop, TenLop, MaMon, MaGV, NgayBD, NgayKT, MaCa, MaThoiGian, MaPhong, SiSoToiDa, SoBuoiTuan)
+                           VALUES (@MaLop, @TenLop, @MaMon, @MaGV, @NgayBD, @NgayKT, @MaCa, @MaThoiGian, @MaPhong, @SiSoToiDa, @SoBuoiTuan)";
             DbHelper.ExecuteNonQuery(sql, ThamSo(l));
         }
 
@@ -69,15 +71,15 @@ namespace BTL_LTTQ.DAL
             string sql = $@"UPDATE l
                             SET TenLop = @TenLop, MaMon = @MaMon, {cotGiaoVien}
                                 NgayBD = @NgayBD, NgayKT = @NgayKT,
-                                MaCa = @MaCa, MaThoiGian = @MaThoiGian, MaPhong = @MaPhong
+                                MaCa = @MaCa, MaThoiGian = @MaThoiGian, MaPhong = @MaPhong,
+                                SiSoToiDa = @SiSoToiDa, SoBuoiTuan = @SoBuoiTuan
                             FROM LopHoc l
                             WHERE l.MaLop = @MaLop{dieuKienPhamVi}";
 
             var thamSo = new List<SqlParameter>(ThamSo(l));
             thamSo.AddRange(dieuKien.ThamSo);
 
-            if (DbHelper.ExecuteNonQuery(sql, thamSo.ToArray()) != 1)
-                throw new InvalidOperationException("Không thể cập nhật: lớp không tồn tại hoặc không thuộc quyền của bạn");
+            return DbHelper.ExecuteNonQuery(sql, thamSo.ToArray());
         }
 
         public void Xoa(string maLop)
@@ -85,6 +87,7 @@ namespace BTL_LTTQ.DAL
             DbHelper.ExecuteNonQuery("DELETE FROM LopHoc WHERE MaLop = @MaLop",
                                      new SqlParameter("@MaLop", maLop));
         }
+
         private static SqlParameter[] ThamSo(LopHoc l)
         {
             return new[]
@@ -97,7 +100,9 @@ namespace BTL_LTTQ.DAL
                 new SqlParameter("@NgayKT", l.NgayKT),
                 new SqlParameter("@MaCa", l.MaCa),
                 new SqlParameter("@MaThoiGian", l.MaThoiGian),
-                new SqlParameter("@MaPhong", l.MaPhong)
+                new SqlParameter("@MaPhong", l.MaPhong),
+                new SqlParameter("@SiSoToiDa", SqlDbType.SmallInt) { Value = l.SiSoToiDa },
+                new SqlParameter("@SoBuoiTuan", SqlDbType.TinyInt) { Value = l.SoBuoiTuan }
             };
         }
     }
