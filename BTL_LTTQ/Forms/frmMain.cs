@@ -65,7 +65,8 @@ private Form? activeForm;
                 (btnDanhMucKhac, ChucNangConst.DANHMUC_KHAC));
             btnTraCuuMenu.Visible = SapXepMenu(panelTraCuu,
                 (btnTimLop, ChucNangConst.TIM_LOP),
-                (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN));
+                (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
+                (btnTimHocVien, ChucNangConst.HOCVIEN_XEM));
             btnBaoCaoMenu.Visible = SapXepMenu(panelBaoCao,
                 (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
                 (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
@@ -174,7 +175,8 @@ private Form? activeForm;
         {
             TogglePanel(panelTraCuu,
                 (btnTimLop, ChucNangConst.TIM_LOP),
-                (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN));
+                (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
+                (btnTimHocVien, ChucNangConst.HOCVIEN_XEM));
         }
 
         private void btnBaoCaoMenu_Click(object sender, EventArgs e)
@@ -284,8 +286,7 @@ private Form? activeForm;
 
         private void btnHocVien_Click(object sender, EventArgs e)
         {
-            GiaoDien.DanhDauMuc(btnHocVien);
-            OpenChildForm(new frmHocVien());
+            OpenChildForm(() => new frmHocVien(), btnHocVien, ChucNangConst.HOCVIEN_XEM);
         }
 
         private void btnTimLop_Click(object sender, EventArgs e)
@@ -300,20 +301,17 @@ private Form? activeForm;
 
         private void btnTimHocVien_Click(object sender, EventArgs e)
         {
-            GiaoDien.DanhDauMuc(btnTimHocVien);
-            OpenChildForm(new frmTimKiemHocVien());
+            OpenChildForm(() => new frmTimKiemHocVien(), btnTimHocVien, ChucNangConst.HOCVIEN_XEM);
         }
 
         private void btnBaoCaoDiem_Click(object sender, EventArgs e)
         {
-            GiaoDien.DanhDauMuc(btnBaoCaoDiem);
-            OpenChildForm(new frmBaoCaoDiem());
+            OpenChildForm(() => new frmBaoCaoDiem(), btnBaoCaoDiem, ChucNangConst.BC_DIEM);
         }
 
         private void btnDoanhThu_Click(object sender, EventArgs e)
         {
-            GiaoDien.DanhDauMuc(btnDoanhThu);
-            OpenChildForm(new frmBaoCaoDoanhThu());
+            OpenChildForm(() => new frmBaoCaoDoanhThu(), btnDoanhThu, ChucNangConst.BC_DOANHTHU);
         }
 
         private void btnXuatExcel_Click(object sender, EventArgs e)
