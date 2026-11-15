@@ -23,8 +23,8 @@ namespace BTL_LTTQ.Forms.BaoCao
             grpDieuKien.Dock = DockStyle.Top; grpDieuKien.Height = 96; grpDieuKien.Text = "Điều kiện báo cáo"; grpDieuKien.Padding = new Padding(10);
             pnlDieuKien.Dock = DockStyle.Fill;
             lblLop.Text = "Lớp học"; lblLop.AutoSize = true; lblLop.Location = new Point(12, 25);
-            _cboLop.Name = "cboLop"; _cboLop.DropDownStyle = ComboBoxStyle.DropDownList; _cboLop.SetBounds(90, 20, 360, 30); _cboLop.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnXemBaoCao.Name = "btnXemBaoCao"; btnXemBaoCao.Text = "Xem báo cáo"; btnXemBaoCao.SetBounds(465, 18, 130, 34); btnXemBaoCao.Anchor = AnchorStyles.Top | AnchorStyles.Right; btnXemBaoCao.Click += btnXemBaoCao_Click;
+            _cboLop.Name = "_cboLop"; _cboLop.DropDownStyle = ComboBoxStyle.DropDownList; _cboLop.Location = new Point(90, 20); _cboLop.Size = new Size(360, 30); _cboLop.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            btnXemBaoCao.Name = "btnXemBaoCao"; btnXemBaoCao.Text = "Xem báo cáo"; btnXemBaoCao.Location = new Point(465, 18); btnXemBaoCao.Size = new Size(130, 34); btnXemBaoCao.Anchor = AnchorStyles.Top | AnchorStyles.Left; btnXemBaoCao.Click += btnXemBaoCao_Click;
             pnlDieuKien.Controls.AddRange(new Control[] { lblLop, _cboLop, btnXemBaoCao }); grpDieuKien.Controls.Add(pnlDieuKien);
             grpKetQua.Dock = DockStyle.Fill; grpKetQua.Text = "Báo cáo doanh thu trung tâm theo lớp"; grpKetQua.Padding = new Padding(8);
             _dgvBaoCao.Name = "dgvBaoCao"; _dgvBaoCao.Dock = DockStyle.Fill; _dgvBaoCao.ReadOnly = true; _dgvBaoCao.AllowUserToAddRows = false; _dgvBaoCao.AllowUserToDeleteRows = false; _dgvBaoCao.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; grpKetQua.Controls.Add(_dgvBaoCao);
