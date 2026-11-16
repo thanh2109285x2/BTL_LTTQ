@@ -55,6 +55,13 @@ namespace BTL_LTTQ.Common
                 string.Equals(maChucNang, ChucNangConst.TAIKHOAN, StringComparison.OrdinalIgnoreCase))
                 return false;
 
+            if (string.Equals(maChucNang, ChucNangConst.BAOCAO_TAO, StringComparison.OrdinalIgnoreCase))
+            {
+                if (_quyen.TryGetValue(maChucNang, out var quyenBc))
+                    return quyenBc.CoQuyen;
+                return true;
+            }
+
             if (string.IsNullOrEmpty(maChucNang) || !_quyen.TryGetValue(maChucNang, out var quyen))
                 return false;
 

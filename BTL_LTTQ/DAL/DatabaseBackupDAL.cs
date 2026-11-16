@@ -15,11 +15,12 @@ namespace BTL_LTTQ.DAL
         {
             using var conn = new SqlConnection(DbHelper.ConnectionString);
             using var cmd = new SqlCommand(@"
-                BACKUP DATABASE QuanLyLopTinHocVaNgoaiNguNganHan
-                TO DATABASE = @DuongDanBackup
-                WITH INIT, COMPRESSION;", conn);
+                BACKUP DATABASE [QuanLyLopTinHocVaNgoaiNguNganHan]
+                TO DISK = @DuongDanBackup
+                WITH INIT;", conn);
 
             cmd.Parameters.Add(new SqlParameter("@DuongDanBackup", SqlDbType.NVarChar, 260) { Value = duongDanBackup });
+            cmd.CommandTimeout = 0;
             conn.Open();
             cmd.ExecuteNonQuery();
             loi = "";
@@ -27,13 +28,27 @@ namespace BTL_LTTQ.DAL
 
         public void ThucRestore(string duongDanBackup, out string loi)
         {
-            using var conn = new SqlConnection(DbHelper.ConnectionString);
+            var csb = new SqlConnectionStringBuilder(DbHelper.ConnectionString)
+            {
+                InitialCatalog = "master"
+            };
+            using var conn = new SqlConnection(csb.ConnectionString);
             using var cmd = new SqlCommand(@"
-                RESTORE DATABASE QuanLyLopTinHocVaNgoaiNguNganHan
-                FROM DATABASE = @DuongDanBackup
-                WITH REPLACE;", conn);
+                BEGIN TRY
+                    ALTER DATABASE [QuanLyLopTinHocVaNgoaiNguNganHan]
+                        SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+                    RESTORE DATABASE [QuanLyLopTinHocVaNgoaiNguNganHan]
+                        FROM DISK = @DuongDanBackup WITH REPLACE;
+                    ALTER DATABASE [QuanLyLopTinHocVaNgoaiNguNganHan] SET MULTI_USER;
+                END TRY
+                BEGIN CATCH
+                    IF DB_ID(N'QuanLyLopTinHocVaNgoaiNguNganHan') IS NOT NULL
+                        ALTER DATABASE [QuanLyLopTinHocVaNgoaiNguNganHan] SET MULTI_USER;
+                    THROW;
+                END CATCH;", conn);
 
             cmd.Parameters.Add(new SqlParameter("@DuongDanBackup", SqlDbType.NVarChar, 260) { Value = duongDanBackup });
+            cmd.CommandTimeout = 0;
             conn.Open();
             cmd.ExecuteNonQuery();
             loi = "";

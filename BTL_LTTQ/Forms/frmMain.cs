@@ -5,6 +5,7 @@ using BTL_LTTQ.Forms.QuanLy;
 using BTL_LTTQ.Forms.Import;
 using BTL_LTTQ.Forms.BaoCao;
 using BTL_LTTQ.Forms.NghiepVu;
+using BTL_LTTQ.Forms.Reports;
 using BTL_LTTQ.Forms.TraCuu;
 
 namespace BTL_LTTQ
@@ -161,6 +162,18 @@ namespace BTL_LTTQ
             PhanQuyenUi.AnNeuKhongCoQuyen(btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDongHocPhi, ChucNangConst.DONGHOCPHI);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnNhapDiem, ChucNangConst.HOCVIEN_NHAPDIEM);
+            PhanQuyenUi.AnNeuKhongCoQuyen(btnReportBuilder, ChucNangConst.BAOCAO_TAO);
+
+            // Chức năng đăng ký lớp chỉ dành cho học viên.
+            btnDangKyLop.Visible = CurrentUser.IsHocVien && PermissionService.Can(ChucNangConst.DANGKYLOP);
+
+            // Nhập hàng loạt là chức năng quản trị dữ liệu: học viên không được dùng
+            // (học viên tự đăng ký lớp bằng chức năng Đăng ký lớp, không nhập hàng loạt).
+            bool coQuyenNhapHangLoat = !CurrentUser.IsHocVien &&
+                                       (PermissionService.Can(ChucNangConst.HOCVIEN_THEM) ||
+                                        PermissionService.Can(ChucNangConst.GIAOVIEN_THEM) ||
+                                        PermissionService.Can(ChucNangConst.DANGKYLOP));
+            btnNhapDuLieu.Visible = coQuyenNhapHangLoat;
 
             btnQuanLyMenu.Visible = SapXepMenu(panelCRUD,
                 (btnLopHoc, ChucNangConst.LOPHOC_XEM),
@@ -181,7 +194,8 @@ namespace BTL_LTTQ
                 (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
                 (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
                 (btnTop3, ChucNangConst.BC_XEPHANG),
-                (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG));
+                (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG),
+                (btnReportBuilder, ChucNangConst.BAOCAO_TAO));
 
             bool coQuyenPhanQuyen = PermissionService.Can(ChucNangConst.PHANQUYEN);
             bool coQuyenNhap = CoQuyenNhapHangLoat();
@@ -363,6 +377,12 @@ namespace BTL_LTTQ
         private void btnBaoCaoMenu_Click(object sender, EventArgs e)
         {
             TogglePanel(panelBaoCao, btnBaoCaoDiem, btnDoanhThu, btnTop3, btnLopTheoPhong);
+            TogglePanel(panelBaoCao,
+                (Nut: btnBaoCaoDiem, MaChucNang: ChucNangConst.BC_DIEM),
+                (Nut: btnDoanhThu, MaChucNang: ChucNangConst.BC_DOANHTHU),
+                (Nut: btnTop3, MaChucNang: ChucNangConst.BC_XEPHANG),
+                (Nut: btnLopTheoPhong, MaChucNang: ChucNangConst.BC_LOP_PHONG),
+                (Nut: btnReportBuilder, MaChucNang: ChucNangConst.BAOCAO_TAO));
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -563,6 +583,11 @@ namespace BTL_LTTQ
 
             OpenChildForm(() => new frmBaoCaoLopTheoPhong(), btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG);
         }
+        private void btnReportBuilder_Click(object? sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmReportBuilder(), btnReportBuilder, ChucNangConst.BAOCAO_TAO);
+        }
+
 
         private void btnXuatExcel_Click(object sender, EventArgs e)
         {

@@ -34,6 +34,10 @@
     <Compile Update="Forms\BaoCao\frmBaoCaoLopTheoPhong.Designer.cs">
       <DependentUpon>frmBaoCaoLopTheoPhong.cs</DependentUpon>
     </Compile>
+    <PackageReference Include="ClosedXML" Version="0.105.1" />
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
+    <PackageReference Include="ReportViewerCore.WinForms" Version="15.1.33" />
   </ItemGroup>
 
 </Project>

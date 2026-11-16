@@ -54,6 +54,7 @@
             btnTop3 = new AppButton();
             btnDoanhThu = new AppButton();
             btnBaoCaoDiem = new AppButton();
+            btnReportBuilder = new AppButton();
             btnBaoCaoMenu = new AppButton();
             panelKhac = new Panel();
             btnXuatExcel = new AppButton();
@@ -495,6 +496,7 @@
             panelBaoCao.Controls.Add(btnTop3);
             panelBaoCao.Controls.Add(btnDoanhThu);
             panelBaoCao.Controls.Add(btnBaoCaoDiem);
+            panelBaoCao.Controls.Add(btnReportBuilder);
             panelBaoCao.Controls.Add(btnBaoCaoMenu);
             panelBaoCao.Location = new Point(3, 368);
             panelBaoCao.Name = "panelBaoCao";
@@ -584,6 +586,27 @@
             btnBaoCaoDiem.TextAlign = ContentAlignment.MiddleLeft;
             btnBaoCaoDiem.UseVisualStyleBackColor = false;
             btnBaoCaoDiem.Click += btnBaoCaoDiem_Click;
+            // 
+            // btnReportBuilder
+            // 
+            btnReportBuilder.BackColor = Color.FromArgb(232, 240, 251);
+            btnReportBuilder.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnReportBuilder.FlatAppearance.BorderSize = 0;
+            btnReportBuilder.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnReportBuilder.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnReportBuilder.FlatStyle = FlatStyle.Flat;
+            btnReportBuilder.Font = new Font("Segoe UI", 9F);
+            btnReportBuilder.ForeColor = Color.FromArgb(33, 37, 41);
+            btnReportBuilder.Kieu = KieuNut.MenuCon;
+            btnReportBuilder.Location = new Point(52, 176);
+            btnReportBuilder.Name = "btnReportBuilder";
+            btnReportBuilder.Padding = new Padding(48, 0, 0, 0);
+            btnReportBuilder.Size = new Size(156, 29);
+            btnReportBuilder.TabIndex = 7;
+            btnReportBuilder.Text = "Trình tạo báo cáo";
+            btnReportBuilder.TextAlign = ContentAlignment.MiddleLeft;
+            btnReportBuilder.UseVisualStyleBackColor = false;
+            btnReportBuilder.Click += btnReportBuilder_Click;
             // 
             // btnBaoCaoMenu
             // 
@@ -890,6 +913,22 @@ private AppButton btnTop3;
 private AppButton btnDoanhThu;
 private AppButton btnBaoCaoDiem;
 private AppButton btnLopTheoPhong;
+        private Panel panelHeThong;
+        private AppButton btnTrangChu;
+        private AppButton btnTraCuuMenu;
+        private AppButton btnBaoCaoMenu;
+        private AppButton btnHeThong;
+        private AppButton btnPhanQuyen;
+        private AppButton btnBackup;
+        private AppButton btnRestore;
+        private AppButton btnTimGiaoVien;
+        private AppButton btnTimLop;
+        private AppButton btnThoiKhoaBieu;
+        private AppButton btnTop3;
+        private AppButton btnDoanhThu;
+        private AppButton btnBaoCaoDiem;
+        private AppButton btnReportBuilder;
+        private AppButton btnLopTheoPhong;
         private Panel panelThoat;
         private AppButton btnThoat;
         private Panel panelSidebar;

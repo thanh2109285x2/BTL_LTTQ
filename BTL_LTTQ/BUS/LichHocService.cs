@@ -121,12 +121,14 @@ namespace BTL_LTTQ.BUS
                 if (!thuDuocChon)
                     continue;
 
-                // Không sinh quá số buổi mỗi tuần đã khai.
-                soBuoiTheoThu.TryGetValue(thu, out int daTaoTrongTuan);
-                if (daTaoTrongTuan >= soBuoiTuanThucTe)
-                    continue;
-
                 if (ngayDaCo.Contains(ngay))
+                {
+                    soBuoiTrongTuan++;
+                    continue;
+                }
+
+                // Giới hạn được tính lại theo từng tuần (không phải tích lũy qua cả khóa).
+                if (soBuoiTrongTuan >= soBuoiTuanThucTe)
                     continue;
 
                 // Bỏ qua nếu giáo viên hoặc phòng đã bị lớp khác chiếm trong khung giờ này.
@@ -146,7 +148,7 @@ namespace BTL_LTTQ.BUS
                 }
 
                 ngayDaCo.Add(ngay);
-                soBuoiTheoThu[thu] = daTaoTrongTuan + 1;
+                soBuoiTrongTuan++;
                 soBuoiDaTao++;
             }
 

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -91,22 +90,22 @@ namespace BTL_LTTQ.Common
 
         private static object O(dynamic ws, int dong, int cot) => ws.Cells[dong, cot];
 
-        private static void GhiFile(DataGridView dgv, string tieuDe, string duongDan)
-        {
-            var cols = dgv.Columns.Cast<DataGridViewColumn>().Where(c => c.Visible).OrderBy(c => c.DisplayIndex).ToList();
-            var rows = dgv.Rows.Cast<DataGridViewRow>().Where(r => !r.IsNewRow).ToList();
-            int soCot = cols.Count;
-            if (soCot == 0) throw new InvalidOperationException("Bảng không có cột nào đang hiển thị.");
-            int soDong = rows.Count;
-            const int dongTieuDe = 1, dongNgay = 2, dongHeader = 4;
-            int dongDau = dongHeader + 1;
-            int dongCuoi = dongHeader + soDong;
+            return (Excel.Range)ws.Cells[dong, cot];
+        }
+
+            return (Excel.Range)ws.Cells[dong, cot];
+        }
+
+            return (Excel.Range)ws.Cells[dong, cot];
+
+            return (Excel.Range)ws.Cells[dong, cot];
+
 
             // Late binding qua ProgID tránh cast ApplicationClass sang _Application khi nạp Type Library lỗi.
             object appObject = null, booksObject = null, bookObject = null, sheetsObject = null, sheetObject = null;
             object wbObject = null, wsObject = null;
             try
-            {
+            Excel.Workbook wb = null;
                 Type excelType = Type.GetTypeFromProgID("Excel.Application", throwOnError: true);
                 appObject = Activator.CreateInstance(excelType);
                 dynamic app = appObject;
@@ -122,16 +121,16 @@ namespace BTL_LTTQ.Common
                 wsObject = sheetObject;
                 dynamic ws = wsObject;
                 ws.Name = "Dữ liệu";
-
+                app = new Excel.Application { Visible = false, DisplayAlerts = false };
                 dynamic rTitle = ws.Range[O(ws, dongTieuDe, 1), O(ws, dongTieuDe, soCot)];
-                rTitle.Merge();
+                ws.Name = "Dữ liệu";
                 ((dynamic)O(ws, dongTieuDe, 1)).Value2 = tieuDe;
                 rTitle.Font.Bold = true;
                 rTitle.Font.Size = 16;
                 rTitle.HorizontalAlignment = -4108;
-
+                O(ws, dongTieuDe, 1).Value2 = tieuDe;
                 dynamic rNgay = ws.Range[O(ws, dongNgay, 1), O(ws, dongNgay, soCot)];
-                rNgay.Merge();
+                rTitle.Font.Size = 16;
                 ((dynamic)O(ws, dongNgay, 1)).Value2 = "Ngày xuất: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm");
                 rNgay.Font.Italic = true;
                 rNgay.HorizontalAlignment = -4108;
@@ -142,52 +141,51 @@ namespace BTL_LTTQ.Common
                 rHeader.Font.Color = ColorTranslator.ToOle(Color.White);
                 rHeader.Font.Bold = true;
                 rHeader.HorizontalAlignment = -4108; // xlHAlignCenter
-
-                var kieu = new Kieu[soCot];
-                for (int i = 0; i < soCot; i++)
-                {
-                    kieu[i] = Kieu.Chu;
-                    foreach (var r in rows)
-                    {
-                        object v = r.Cells[cols[i].Index].Value;
-                        if (v == null || v is DBNull) continue;
-                        if (v is DateTime) kieu[i] = Kieu.Ngay;
-                        else if (LaSo(v)) kieu[i] = Kieu.So;
-                        break;
-                    }
-
+                rHeader.Interior.Color = ColorTranslator.ToOle(GiaoDien.MauChinh);
+                rHeader.Font.Color = ColorTranslator.ToOle(Color.White);
+                rHeader.Font.Bold = true;
+                rHeader.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                rHeader.Style.Font.FontColor = XLColor.White;
+                rHeader.Style.Font.Bold = true;
+                rHeader.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                rHeader.Style.Font.FontColor = XLColor.White;
+                rHeader.Style.Font.Bold = true;
+                rHeader.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                rHeader.Style.Font.FontColor = XLColor.White;
+                rHeader.Style.Font.Bold = true;
+                rHeader.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                rHeader.Style.Font.FontColor = XLColor.White;
                     if (soDong == 0) continue;
                     dynamic cotDuLieu = ws.Range[O(ws, dongDau, i + 1), O(ws, dongCuoi, i + 1)];
-                    switch (kieu[i])
-                    {
-                        case Kieu.Ngay:
+                rHeader.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+                var kieu = new Kieu[soCot];
                             cotDuLieu.NumberFormat = "dd/mm/yyyy";
                             cotDuLieu.HorizontalAlignment = -4108; // xlHAlignCenter
+                            cotDuLieu.NumberFormat = DinhDangSo(cols[i].DefaultCellStyle.Format);
                             break;
-                        case Kieu.So: cotDuLieu.NumberFormat = DinhDangSo(cols[i].DefaultCellStyle.Format); break;
-                        default: cotDuLieu.NumberFormat = "@"; break;
-                    }
-                    Marshal.ReleaseComObject(cotDuLieu);
-                }
-
+                        default:
+                            cotDuLieu.NumberFormat = "@";
+                            break;
+                        default:
                 if (soDong > 0)
                 {
                     object[,] data = new object[soDong, soCot];
                     for (int r = 0; r < soDong; r++)
-                    for (int c = 0; c < soCot; c++)
-                    {
-                        var cell = rows[r].Cells[cols[c].Index];
-                        object v = cell.Value;
+                            cotDuLieu.Style.NumberFormat.Format = "@";
+                object[,] data = new object[soDong, soCot];
+                for (int r = 0; r < soDong; r++)
+                {
                         if (v == null || v is DBNull) data[r, c] = null;
                         else if (v is DateTime d) data[r, c] = d.ToOADate();
                         else if (kieu[c] == Kieu.So && LaSo(v)) data[r, c] = Convert.ToDouble(v);
                         else data[r, c] = cell.FormattedValue?.ToString() ?? "";
-                    }
+                        else if (v is DateTime d) data[r, c] = d.ToOADate();
                     dynamic vung = ws.Range[O(ws, dongDau, 1), O(ws, dongCuoi, soCot)];
                     vung.Value2 = data;
                     Marshal.ReleaseComObject(vung);
                 }
-
+                        else if (kieu[c] == Kieu.So && (v is byte || v is short || v is int || v is long ||
                 dynamic bang = ws.Range[O(ws, dongHeader, 1), O(ws, Math.Max(dongHeader, dongCuoi), soCot)];
                 bang.Borders.LineStyle = 1; // xlContinuous
                 bang.Columns.AutoFit();
@@ -212,21 +210,36 @@ namespace BTL_LTTQ.Common
                 }
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-            }
+                if (ws != null) Marshal.ReleaseComObject(ws);
+                if (app != null) { app.Quit(); Marshal.ReleaseComObject(app); }
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                bang.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws.Columns(1, soCot).AdjustToContents();
+                wb.SaveAs(duongDan);
+                bang.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws.Columns(1, soCot).AdjustToContents();
+                wb.SaveAs(duongDan);
+                bang.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws.Columns(1, soCot).AdjustToContents();
+                wb.SaveAs(duongDan);
+                bang.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws.Columns(1, soCot).AdjustToContents();
+                wb.SaveAs(duongDan);
+}
+
         }
 
         private static bool LaSo(object v) => v is byte || v is short || v is int || v is long || v is float || v is double || v is decimal;
-
-        private static string DinhDangSo(string fmt)
+}        private static string DinhDangSo(string fmt)
         {
-            if (string.IsNullOrEmpty(fmt)) return "General";
+}
             if (fmt.StartsWith("N", StringComparison.OrdinalIgnoreCase))
             {
-                int.TryParse(fmt.Substring(1), out int soLe);
+}
                 return soLe > 0 ? "#,##0." + new string('0', soLe) : "#,##0";
             }
-            return "General";
+}
         }
     }
 }
-
