@@ -105,10 +105,10 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // txtTimKiem
             // 
-            txtTimKiem.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtTimKiem.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             txtTimKiem.Location = new Point(210, 7);
             txtTimKiem.Name = "txtTimKiem";
-            txtTimKiem.Size = new Size(1040, 27);
+            txtTimKiem.Size = new Size(300, 27);
             txtTimKiem.TabIndex = 1;
             txtTimKiem.KeyDown += txtTimKiem_KeyDown;
             // 
@@ -191,8 +191,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // btnTimKiem
             // 
-            btnTimKiem.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnTimKiem.Location = new Point(1260, 4);
+            btnTimKiem.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            btnTimKiem.Location = new Point(520, 4);
             btnTimKiem.Name = "btnTimKiem";
             btnTimKiem.Size = new Size(110, 34);
             btnTimKiem.TabIndex = 2;
@@ -268,9 +268,9 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             lblDiaChi.Location = new Point(18, 223);
             lblDiaChi.Name = "lblDiaChi";
-            lblDiaChi.Size = new Size(145, 22);
+            lblDiaChi.Size = new Size(170, 22);
             lblDiaChi.TabIndex = 10;
-            lblDiaChi.Text = "Địa chỉ";
+            lblDiaChi.Text = "Địa chỉ (Tỉnh/Thành phố)";
             // 
             // lblNghe
             // 

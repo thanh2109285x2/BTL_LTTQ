@@ -1,4 +1,4 @@
-﻿using BTL_LTTQ.Common;
+using BTL_LTTQ.Common;
 using BTL_LTTQ.Forms.HeThong;
 using BTL_LTTQ.Forms;
 using BTL_LTTQ.Forms.QuanLy;

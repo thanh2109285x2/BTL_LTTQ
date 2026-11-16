@@ -1,6 +1,7 @@
 ﻿using BTL_LTTQ.BUS;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace BTL_LTTQ.Forms.QuanLy
 {
@@ -14,6 +15,13 @@ namespace BTL_LTTQ.Forms.QuanLy
             InitializeComponent();
             GiaoDien.ApDung(this);
             Load += frmHocVien_Load;
+            nudDiem.ValueChanged += (_, _) => CapNhatXepLoaiTheoDiem();
+            txtTenHocVien.KeyPress += ChiChoNhapChuVaKhoangTrang;
+            txtDienThoai.KeyPress += ChiChoNhapSo;
+            txtDienThoai.MaxLength = 10;
+            txtMaHocVien.KeyPress += ChiChoNhapMa;
+            txtMaHocVien.MaxLength = 20;
+            txtTenHocVien.MaxLength = 100;
         }
 
         private void frmHocVien_Load(object? sender, EventArgs e)
@@ -21,6 +29,11 @@ namespace BTL_LTTQ.Forms.QuanLy
             try
             {
                 NapCombo(cboNghe, _hocVienService.LayDanhSachNghe(), "MaNghe", "TenNghe");
+                NapCombo(cboLop, _repo.LayDanhSachLop(), "MaLop", "TenLop");
+                NapCombo(cboNghe, _repo.LayDanhSachNghe(), "MaNghe", "TenNghe");
+                NapCombo(cboXepLoai, _repo.LayDanhSachXepLoai(), "MaXepLoai", "TenLoai");
+                NapDanhSachTinhThanh();
+                cboXepLoai.Enabled = false;
                 NapDanhSach();
             }
             catch (SqlException ex)
@@ -33,6 +46,34 @@ namespace BTL_LTTQ.Forms.QuanLy
         private static void NapCombo(ComboBox combo, DataTable data, string value, string display)
         {
             combo.DataSource = data; combo.ValueMember = value; combo.DisplayMember = display; combo.SelectedIndex = -1;
+        }
+
+        private void NapDanhSachTinhThanh()
+        {
+            cboTinhThanh.Items.AddRange(new object[]
+            {
+                "An Giang", "Bắc Ninh", "Cà Mau", "Cao Bằng", "Cần Thơ", "Đà Nẵng",
+                "Đắk Lắk", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Nội",
+                "Hà Tĩnh", "Hải Phòng", "Huế", "Hưng Yên", "Khánh Hòa",
+                "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Nghệ An", "Ninh Bình",
+                "Phú Thọ", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sơn La", "Tây Ninh",
+                "Thái Nguyên", "Thành phố Hồ Chí Minh", "Thanh Hóa", "Tuyên Quang", "Vĩnh Long"
+            });
+            cboTinhThanh.SelectedIndex = -1;
+        }
+
+        private void CapNhatXepLoaiTheoDiem()
+        {
+            if (cboXepLoai.DataSource is not DataTable danhSach) return;
+            double diem = (double)nudDiem.Value;
+            string tenLoai = diem >= 9 ? "Xuất sắc"
+                : diem >= 8 ? "Giỏi"
+                : diem >= 6.5 ? "Khá"
+                : "Trung bình";
+            var dong = danhSach.AsEnumerable()
+                .FirstOrDefault(r => string.Equals(Convert.ToString(r["TenLoai"]), tenLoai, StringComparison.OrdinalIgnoreCase));
+            if (dong == null) cboXepLoai.SelectedIndex = -1;
+            else cboXepLoai.SelectedValue = dong["MaXepLoai"];
         }
 
         private void NapDanhSach(string keyword = "")
@@ -53,24 +94,76 @@ namespace BTL_LTTQ.Forms.QuanLy
             DateTime? ngaySinh = dtpNgaySinh.ShowCheckBox && !dtpNgaySinh.Checked ? null : dtpNgaySinh.Value.Date;
             return (txtMaHocVien.Text.Trim(), txtTenHocVien.Text.Trim(), ngaySinh,
                 cboGioiTinh.SelectedItem?.ToString(), txtDiaChi.Text.Trim(), txtDienThoai.Text.Trim());
+                cboGioiTinh.SelectedItem?.ToString(), cboTinhThanh.SelectedItem?.ToString() ?? "", txtDienThoai.Text.Trim(),
+                cboLop.SelectedValue?.ToString(), cboNghe.SelectedValue?.ToString(), ngayNop,
+                (double)nudDiem.Value, cboXepLoai.SelectedValue?.ToString());
         }
 
-        private string ValidateInput()
+        private bool ValidateInput(out string error, out Control control)
         {
             var d = DuLieu();
             if (d.ma.Length == 0 || d.ten.Length == 0) return "Vui lòng nhập mã và tên học viên.";
             if (d.ngaySinh > DateTime.Today) return "Ngày không được ở tương lai.";
             return "";
+            if (d.ma.Length == 0) return LoiNhap("Vui lòng nhập mã học viên.", txtMaHocVien, out error, out control);
+            if (d.ten.Length == 0) return LoiNhap("Vui lòng nhập tên học viên.", txtTenHocVien, out error, out control);
+            if (!Regex.IsMatch(d.ma, @"^[A-Za-z0-9_-]+$")) return LoiNhap("Mã học viên chỉ được gồm chữ không dấu, chữ số, dấu gạch dưới hoặc gạch ngang.", txtMaHocVien, out error, out control);
+            if (!Regex.IsMatch(d.ten, @"^\p{L}+(?:[ '\-]\p{L}+)*$")) return LoiNhap("Tên học viên chỉ được chứa chữ cái và khoảng trắng, dấu gạch ngang hoặc dấu nháy.", txtTenHocVien, out error, out control);
+            if (d.dienThoai is { Length: > 0 } && !Regex.IsMatch(d.dienThoai, @"^[0-9]{10}$")) return LoiNhap("Số điện thoại phải gồm đúng 10 chữ số.", txtDienThoai, out error, out control);
+            if (d.diaChi.Length == 0) return LoiNhap("Vui lòng chọn tỉnh/thành phố.", cboTinhThanh, out error, out control);
+            if (!d.ngaySinh.HasValue) return LoiNhap("Vui lòng chọn ngày sinh học viên.", dtpNgaySinh, out error, out control);
+            if (d.ngaySinh.Value.Date > DateTime.Today) return LoiNhap("Ngày sinh không được ở tương lai.", dtpNgaySinh, out error, out control);
+            if (d.ngaySinh.Value.Date > DateTime.Today.AddYears(-18))
+                return LoiNhap("Học viên phải từ đủ 18 tuổi trở lên.", dtpNgaySinh, out error, out control);
+            if (d.ngayNop > DateTime.Today) return LoiNhap("Ngày nộp học phí không được ở tương lai.", dtpNgayNopHocPhi, out error, out control);
+            error = "";
+            control = this;
+            return true;
+        }
+
+        private static bool LoiNhap(string message, Control control, out string error, out Control controlCanSua)
+        {
+            error = message;
+            controlCanSua = control;
+            return false;
+        }
+
+        private void BaoLoiNhap(string message, Control control)
+        {
+            MessageBox.Show(message + "\nVui lòng sửa thông tin rồi thử lại.", "Thông tin chưa hợp lệ",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            control.Focus();
+            if (control is TextBox textBox) textBox.SelectAll();
+        }
+
+        private static void ChiChoNhapChuVaKhoangTrang(object? sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsLetter(e.KeyChar) || e.KeyChar is ' ' or '-' or '\'') return;
+            e.Handled = true;
+        }
+
+        private static void ChiChoNhapSo(object? sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && (e.KeyChar < '0' || e.KeyChar > '9')) e.Handled = true;
+        }
+
+        private static void ChiChoNhapMa(object? sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || (e.KeyChar <= 127 && char.IsLetterOrDigit(e.KeyChar)) || e.KeyChar is '_' or '-') return;
+            e.Handled = true;
         }
 
         private void btnThem_Click(object? sender, EventArgs e)
         {
-            string error = ValidateInput(); if (error != "") { ShowError(error); return; }
+            if (!ValidateInput(out string error, out Control controlCanSua)) { BaoLoiNhap(error, controlCanSua); return; }
             var d = DuLieu();
             try
             {
                 if (_hocVienService.TonTai(d.ma)) { ShowError("Mã học viên đã tồn tại."); return; }
                 _hocVienService.Them(d.ma, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai);
+                if (_repo.TonTai(d.ma)) { BaoLoiNhap("Mã học viên đã tồn tại.", txtMaHocVien); return; }
+                _repo.Them(d.ma, d.ten, d.ngaySinh, d.gioiTinh, d.diaChi, nullIfEmpty(cboNghe), d.dienThoai,
+                    d.ngayNop, d.diem, nullIfEmpty(cboXepLoai), nullIfEmpty(cboLop));
                 Saved("Thêm học viên thành công.");
             }
             catch (SqlException ex) { ShowError("Không thêm được: " + ex.Message); }
@@ -79,7 +172,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         private void btnSua_Click(object? sender, EventArgs e)
         {
             if (maDangChon == "") { ShowError("Hãy chọn học viên trong danh sách để sửa."); return; }
-            string error = ValidateInput(); if (error != "") { ShowError(error); return; }
+            if (!ValidateInput(out string error, out Control controlCanSua)) { BaoLoiNhap(error, controlCanSua); return; }
             var d = DuLieu();
             try
             {
@@ -115,11 +208,14 @@ namespace BTL_LTTQ.Forms.QuanLy
             maDangChon = Convert.ToString(r.Cells["MaHocVien"].Value) ?? "";
             txtMaHocVien.Text = maDangChon; txtMaHocVien.ReadOnly = true;
             txtTenHocVien.Text = Convert.ToString(r.Cells["TenHocVien"].Value) ?? "";
-            txtDiaChi.Text = Convert.ToString(r.Cells["DiaChi"].Value) ?? "";
+            SetSelectedText(cboTinhThanh, r.Cells["DiaChi"].Value);
             txtDienThoai.Text = Convert.ToString(r.Cells["DienThoai"].Value) ?? "";
             SetDate(dtpNgaySinh, r.Cells["NgaySinh"].Value);
             cboGioiTinh.SelectedItem = Convert.ToString(r.Cells["GioiTinh"].Value);
             SetSelected(cboNghe, r.Cells["MaNghe"].Value);
+            SetSelected(cboLop, r.Cells["MaLop"].Value); SetSelected(cboNghe, r.Cells["MaNghe"].Value);
+            if (r.Cells["Diem"].Value != DBNull.Value) nudDiem.Value = Math.Clamp(Convert.ToDecimal(r.Cells["Diem"].Value), nudDiem.Minimum, nudDiem.Maximum);
+            CapNhatXepLoaiTheoDiem();
         }
 
         private static void SetDate(DateTimePicker picker, object? value)
@@ -132,12 +228,21 @@ namespace BTL_LTTQ.Forms.QuanLy
             if (value == null || value == DBNull.Value) combo.SelectedIndex = -1;
             else combo.SelectedValue = value;
         }
+        private static void SetSelectedText(ComboBox combo, object? value)
+        {
+            string text = value == null || value == DBNull.Value ? "" : Convert.ToString(value) ?? "";
+            combo.SelectedIndex = combo.FindStringExact(text);
+        }
         private void LamMoi(bool clearSearch = true)
         {
             txtMaHocVien.Clear(); txtMaHocVien.ReadOnly = false; txtTenHocVien.Clear(); txtDiaChi.Clear(); txtDienThoai.Clear();
             dtpNgaySinh.Value = DateTime.Today; dtpNgaySinh.Checked = false;
             cboGioiTinh.SelectedIndex = cboNghe.SelectedIndex = -1;
             if (clearSearch) txtTimKiem.Clear(); dgvHocVien.ClearSelection(); maDangChon = "";
+            txtMaHocVien.Clear(); txtMaHocVien.ReadOnly = false; txtTenHocVien.Clear(); cboTinhThanh.SelectedIndex = -1; txtDienThoai.Clear();
+            dtpNgaySinh.Value = dtpNgayNopHocPhi.Value = DateTime.Today; dtpNgaySinh.Checked = dtpNgayNopHocPhi.Checked = false;
+            cboGioiTinh.SelectedIndex = cboLop.SelectedIndex = cboNghe.SelectedIndex = cboXepLoai.SelectedIndex = -1;
+            nudDiem.Value = 0; if (clearSearch) txtTimKiem.Clear(); dgvHocVien.ClearSelection(); maDangChon = "";
         }
         private static void ShowError(string message) => MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
