@@ -81,9 +81,13 @@ namespace BTL_LTTQ.BUS
                 }
             }
 
+            // Không có ngày học cấu hình thì chưa thể sinh lịch chính xác.
+            if (thuCuaMau.Count == 0)
+                return 0;
+
             // 3. Số buổi mỗi tuần: không vượt quá số buổi/tuần khai trong lớp.
             int soBuoiTuanThucTe = soBuoiTuan <= 0 ? 3 : soBuoiTuan;
-            if (thuCuaMau.Count > 0 && thuCuaMau.Count < soBuoiTuanThucTe)
+            if (thuCuaMau.Count < soBuoiTuanThucTe)
                 soBuoiTuanThucTe = thuCuaMau.Count;
 
             // 4. Các buổi đã có của lớp (tránh tạo trùng khi đăng ký nhiều lần).
@@ -104,25 +108,30 @@ namespace BTL_LTTQ.BUS
                 ngayKetThuc = ngayKt;
 
             int soBuoiDaTao = 0;
-            var soBuoiTheoThu = new Dictionary<int, int>();
+            DateTime? tuanHienTai = null;
+            int soBuoiTrongTuan = 0;
 
             for (DateTime ngay = ngayBd; ngay <= ngayKetThuc; ngay = ngay.AddDays(1))
             {
                 int thu = ThuTrongTuan(ngay);
-
-                bool thuDuocChon = thuCuaMau.Count > 0
-                    ? thuCuaMau.Contains(thu)
-                    : soBuoiTuanThucTe > 0;
-
-                if (!thuDuocChon)
+                if (!thuCuaMau.Contains(thu))
                     continue;
 
-                // Không sinh quá số buổi mỗi tuần đã khai.
-                soBuoiTheoThu.TryGetValue(thu, out int daTaoTrongTuan);
-                if (daTaoTrongTuan >= soBuoiTuanThucTe)
-                    continue;
+                DateTime dauTuan = ngay.AddDays(-((int)ngay.DayOfWeek + 6) % 7).Date;
+                if (tuanHienTai != dauTuan)
+                {
+                    tuanHienTai = dauTuan;
+                    soBuoiTrongTuan = 0;
+                }
 
                 if (ngayDaCo.Contains(ngay))
+                {
+                    soBuoiTrongTuan++;
+                    continue;
+                }
+
+                // Giới hạn được tính lại theo từng tuần (không phải tích lũy qua cả khóa).
+                if (soBuoiTrongTuan >= soBuoiTuanThucTe)
                     continue;
 
                 // Bỏ qua nếu giáo viên hoặc phòng đã bị lớp khác chiếm trong khung giờ này.
@@ -142,7 +151,7 @@ namespace BTL_LTTQ.BUS
                 }
 
                 ngayDaCo.Add(ngay);
-                soBuoiTheoThu[thu] = daTaoTrongTuan + 1;
+                soBuoiTrongTuan++;
                 soBuoiDaTao++;
             }
 
