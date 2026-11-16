@@ -1,5 +1,6 @@
 using BTL_LTTQ.Services.Ai;
 using System.Data;
+using System.Diagnostics;
 
 namespace BTL_LTTQ.Forms
 {
@@ -11,6 +12,9 @@ namespace BTL_LTTQ.Forms
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
+            // GiaoDien.ApDung đặt ForeColor mặc định cho mọi Label.
+            lblTieuDe.ForeColor = Color.White;
+            lblMoTa.ForeColor = Color.FromArgb(222, 235, 250);
             ThemTinNhan("Chào bạn! Mình có thể giúp gì?", laNguoiDung: false);
         }
 
@@ -32,7 +36,10 @@ namespace BTL_LTTQ.Forms
             }
             catch (Exception ex)
             {
-                ThemTinNhan("Lỗi: " + ex.Message, laNguoiDung: false);
+                // Chi tiết kỹ thuật chỉ dành cho người phát triển; không đưa API response/key
+                // hay thông tin cấu hình vào hội thoại của giáo viên và học viên.
+                Trace.TraceError("Trợ lý AI gặp lỗi: {0}", ex);
+                ThemTinNhan("Trợ lý AI hiện chưa thể trả lời. Bạn vui lòng thử lại sau ít phút. Nếu tình trạng tiếp diễn, hãy báo quản trị viên.", laNguoiDung: false);
             }
             finally
             {
@@ -48,19 +55,20 @@ namespace BTL_LTTQ.Forms
             {
                 Width = Math.Max(100, flpTinNhan.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 12),
                 Height = 1,
-                Margin = new Padding(8, 4, 8, 4),
-                Tag = laNguoiDung
+                Margin = new Padding(8, 7, 8, 7),
+                Tag = laNguoiDung,
+                BackColor = flpTinNhan.BackColor
             };
             var bongBong = new Label
             {
                 AutoSize = true,
                 MaximumSize = new Size(Math.Max(180, (flpTinNhan.ClientSize.Width - 80) * 2 / 3), 0),
-                Padding = new Padding(12, 8, 12, 8),
+                Padding = new Padding(14, 10, 14, 10),
                 Text = noiDung.Trim(),
-                BackColor = laNguoiDung ? Color.FromArgb(220, 238, 255) : Color.FromArgb(242, 244, 247),
-                ForeColor = Color.FromArgb(35, 40, 48),
+                BackColor = laNguoiDung ? Color.FromArgb(35, 91, 155) : Color.White,
+                ForeColor = laNguoiDung ? Color.White : Color.FromArgb(35, 40, 48),
                 Font = new Font("Segoe UI", 10F),
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.None
             };
             dong.Controls.Add(bongBong);
             int chieuCao = bongBong.PreferredHeight + 8;
@@ -84,17 +92,22 @@ namespace BTL_LTTQ.Forms
                         RowHeadersVisible = false,
                         AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                         BackgroundColor = Color.White,
-                        BorderStyle = BorderStyle.FixedSingle,
+                        BorderStyle = BorderStyle.None,
                         CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
-                        ColumnHeadersHeight = 36,
+                        GridColor = Color.FromArgb(229, 234, 241),
+                        ColumnHeadersHeight = 40,
+                        ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None,
                         EnableHeadersVisualStyles = false,
                         Font = new Font("Segoe UI", 9F)
                     };
                     luoi.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(35, 91, 155);
                     luoi.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
                     luoi.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+                    luoi.ColumnHeadersDefaultCellStyle.Padding = new Padding(6, 0, 0, 0);
                     luoi.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(244, 247, 251);
-                    luoi.DefaultCellStyle.SelectionBackColor = Color.FromArgb(215, 231, 248);
+                    luoi.DefaultCellStyle.Padding = new Padding(6, 2, 6, 2);
+                    luoi.DefaultCellStyle.ForeColor = Color.FromArgb(45, 53, 64);
+                    luoi.DefaultCellStyle.SelectionBackColor = Color.FromArgb(225, 238, 252);
                     luoi.DefaultCellStyle.SelectionForeColor = Color.FromArgb(35, 40, 48);
                     luoi.RowTemplate.Height = 30;
                     dong.Controls.Add(luoi);
