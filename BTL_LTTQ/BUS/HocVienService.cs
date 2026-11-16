@@ -16,7 +16,11 @@ namespace BTL_LTTQ.BUS
             string? maNghe = null, string? maXepLoai = null) =>
             _repo.TimKiem(tuKhoa, maLop, maNghe, maXepLoai);
 
-        public DataTable LayDanhSach(string tuKhoa = "") => _repo.LayDanhSach(tuKhoa);
+        public DataTable LayDanhSach(string tuKhoa = "")
+        {
+            PermissionService.YeuCau(ChucNangConst.HOCVIEN_XEM, "Bạn không có quyền xem học viên.");
+            return _repo.LayDanhSach(tuKhoa);
+        }
 
         public DataTable LayDanhSachLop() => _repo.LayDanhSachLop();
 
@@ -51,13 +55,23 @@ namespace BTL_LTTQ.BUS
         public bool TonTai(string maHocVien) => _repo.TonTai(maHocVien);
 
         public void Them(string ma, string ten, DateTime? ngaySinh, string? gioiTinh, string diaChi,
-            string? maNghe, string? dienThoai) =>
+            string? maNghe, string? dienThoai)
+        {
+            PermissionService.YeuCau(ChucNangConst.HOCVIEN_THEM, "Bạn không có quyền thêm học viên.");
             _repo.Them(ma, ten, ngaySinh, gioiTinh, diaChi, maNghe, dienThoai);
+        }
 
         public void Sua(string ma, string ten, DateTime? ngaySinh, string? gioiTinh, string diaChi,
-            string? maNghe, string? dienThoai) =>
+            string? maNghe, string? dienThoai)
+        {
+            PermissionService.YeuCau(ChucNangConst.HOCVIEN_SUA, "Bạn không có quyền sửa học viên.");
             _repo.Sua(ma, ten, ngaySinh, gioiTinh, diaChi, maNghe, dienThoai);
+        }
 
-        public void Xoa(string ma) => _repo.Xoa(ma);
+        public void Xoa(string ma)
+        {
+            PermissionService.YeuCau(ChucNangConst.HOCVIEN_XOA, "Bạn không có quyền xóa học viên.");
+            _repo.Xoa(ma);
+        }
     }
 }

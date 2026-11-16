@@ -192,12 +192,15 @@ namespace BTL_LTTQ
             bool coQuyenPhanQuyen = PermissionService.Can(ChucNangConst.PHANQUYEN);
             bool coQuyenNhap = CoQuyenNhapHangLoat();
             bool coQuyenXuat = PermissionService.Can(ChucNangConst.XUAT_EXCEL);
+            bool coQuyenBackup = PermissionService.Can(ChucNangConst.DATABASE_BACKUP);
             btnPhanQuyen.Visible = coQuyenPhanQuyen;
             btnThemDuLieu.Visible = coQuyenNhap;
             btnXuatExcel.Visible = coQuyenXuat;
+            btnBackupDatabase.Visible = coQuyenBackup;
             btnKhac.Visible = SapXepMenuTheoQuyen(panelKhac,
                 (btnThemDuLieu, coQuyenNhap),
-                (btnXuatExcel, coQuyenXuat));
+                (btnXuatExcel, coQuyenXuat),
+                (btnBackupDatabase, coQuyenBackup));
             panelKhac.Visible = btnKhac.Visible;
             btnHeThong.Visible = SapXepMenu(panelHeThong,
                 (btnPhanQuyen, ChucNangConst.PHANQUYEN));
@@ -301,6 +304,7 @@ namespace BTL_LTTQ
         private static bool CoQuyenNhapHangLoat()
         {
             return !CurrentUser.IsHocVien &&
+                   PermissionService.Can(ChucNangConst.IMPORT_DULIEU) &&
                    (PermissionService.Can(ChucNangConst.HOCVIEN_THEM) ||
                     PermissionService.Can(ChucNangConst.GIAOVIEN_THEM) ||
                     PermissionService.Can(ChucNangConst.DANGKYLOP));
@@ -308,7 +312,7 @@ namespace BTL_LTTQ
 
         private void btnKhac_Click(object? sender, EventArgs e)
         {
-            TogglePanel(panelKhac, btnThemDuLieu, btnXuatExcel);
+            TogglePanel(panelKhac, btnThemDuLieu, btnXuatExcel, btnBackupDatabase);
         }
 
         private void btnThemDuLieu_Click(object? sender, EventArgs e)
@@ -321,6 +325,19 @@ namespace BTL_LTTQ
             }
 
             using var form = new FrmBulkImport();
+            form.ShowDialog(this);
+        }
+
+        private void btnBackupDatabase_Click(object? sender, EventArgs e)
+        {
+            if (!PermissionService.Can(ChucNangConst.DATABASE_BACKUP))
+            {
+                MessageBox.Show("Bạn không có quyền sao lưu database.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var form = new frmBackup();
             form.ShowDialog(this);
         }
 

@@ -1,5 +1,6 @@
 ﻿using BTL_LTTQ.BUS;
 using Microsoft.Data.SqlClient;
+using BTL_LTTQ.Common;
 using System.Data;
 using System.Text.RegularExpressions;
 
@@ -25,6 +26,17 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void frmHocVien_Load(object? sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.HOCVIEN_XEM))
+            {
+                MessageBox.Show("Bạn không có quyền xem học viên.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Close();
+                return;
+            }
+
+            PhanQuyenUi.AnNutThemSuaXoa(btnThem, btnSua, btnXoa,
+                ChucNangConst.HOCVIEN_THEM, ChucNangConst.HOCVIEN_SUA, ChucNangConst.HOCVIEN_XOA);
+
             try
             {
                 NapCombo(cboNghe, _hocVienService.LayDanhSachNghe(), "MaNghe", "TenNghe");
@@ -58,9 +70,9 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private (string ma, string ten, DateTime? ngaySinh, string? gioiTinh, string? diaChi, string? dienThoai) DuLieu()
         {
-            DateTime? ngaySinh = dtpNgaySinh.ShowCheckBox && !dtpNgaySinh.Checked ? null : dtpNgaySinh.Value.Date;
+            DateTime? ngaySinh = dtpNgaySinh.Value.Date;
             return (txtMaHocVien.Text.Trim(), txtTenHocVien.Text.Trim(), ngaySinh,
-                cboGioiTinh.SelectedItem?.ToString(), cboDiaChi.SelectedValue?.ToString(), txtDienThoai.Text.Trim()); // Sửa chỗ này thành cboDiaChi
+                cboGioiTinh.SelectedItem?.ToString(), cboDiaChi.SelectedValue?.ToString(), txtDienThoai.Text.Trim());
         }
 
         private bool ValidateInput(out string error, out Control control)
@@ -112,6 +124,12 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void btnThem_Click(object? sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.HOCVIEN_THEM))
+            {
+                ShowError("Bạn không có quyền thêm học viên.");
+                return;
+            }
+
             if (!ValidateInput(out string error, out Control controlCanSua)) { BaoLoiNhap(error, controlCanSua); return; }
             var d = DuLieu();
             try
@@ -121,10 +139,17 @@ namespace BTL_LTTQ.Forms.QuanLy
                 Saved("Thêm học viên thành công.");
             }
             catch (SqlException ex) { ShowError("Không thêm được: " + ex.Message); }
+            catch (UnauthorizedAccessException ex) { ShowError(ex.Message); }
         }
 
         private void btnSua_Click(object? sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.HOCVIEN_SUA))
+            {
+                ShowError("Bạn không có quyền sửa học viên.");
+                return;
+            }
+
             if (maDangChon == "") { ShowError("Hãy chọn học viên trong danh sách để sửa."); return; }
             if (!ValidateInput(out string error, out Control controlCanSua)) { BaoLoiNhap(error, controlCanSua); return; }
             var d = DuLieu();
@@ -134,14 +159,22 @@ namespace BTL_LTTQ.Forms.QuanLy
                 Saved("Cập nhật học viên thành công.");
             }
             catch (SqlException ex) { ShowError("Không sửa được: " + ex.Message); }
+            catch (UnauthorizedAccessException ex) { ShowError(ex.Message); }
         }
 
         private void btnXoa_Click(object? sender, EventArgs e)
         {
+            if (!PermissionService.Can(ChucNangConst.HOCVIEN_XOA))
+            {
+                ShowError("Bạn không có quyền xóa học viên.");
+                return;
+            }
+
             if (maDangChon == "") { ShowError("Hãy chọn học viên trong danh sách để xóa."); return; }
             if (MessageBox.Show($"Xóa học viên {maDangChon}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             try { _hocVienService.Xoa(maDangChon); Saved("Đã xóa học viên."); }
             catch (SqlException ex) { ShowError("Không xóa được: " + ex.Message); }
+            catch (UnauthorizedAccessException ex) { ShowError(ex.Message); }
         }
 
         private string? nullIfEmpty(ComboBox combo) => combo.SelectedValue?.ToString();
@@ -162,7 +195,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             maDangChon = Convert.ToString(r.Cells["MaHocVien"].Value) ?? "";
             txtMaHocVien.Text = maDangChon; txtMaHocVien.ReadOnly = true;
             txtTenHocVien.Text = Convert.ToString(r.Cells["TenHocVien"].Value) ?? "";
-            SetSelected(cboDiaChi, r.Cells["MaDiaChi"].Value);
+            SetSelected(cboDiaChi, r.Cells["DiaChi"].Value);
             txtDienThoai.Text = Convert.ToString(r.Cells["DienThoai"].Value) ?? "";
             SetDate(dtpNgaySinh, r.Cells["NgaySinh"].Value);
             cboGioiTinh.SelectedItem = Convert.ToString(r.Cells["GioiTinh"].Value);
@@ -171,8 +204,10 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private static void SetDate(DateTimePicker picker, object? value)
         {
-            picker.ShowCheckBox = true; picker.Checked = value != null && value != DBNull.Value;
-            if (picker.Checked) picker.Value = Convert.ToDateTime(value);
+            picker.ShowCheckBox = false;
+            picker.Value = value == null || value == DBNull.Value
+                ? DateTime.Today
+                : Convert.ToDateTime(value);
         }
         private static void SetSelected(ComboBox combo, object? value)
         {
@@ -182,7 +217,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         private void LamMoi(bool clearSearch = true)
         {
             txtMaHocVien.Clear(); txtMaHocVien.ReadOnly = false; txtTenHocVien.Clear(); cboGioiTinh.SelectedIndex = cboNghe.SelectedIndex = cboDiaChi.SelectedIndex = -1;; txtDienThoai.Clear();
-            dtpNgaySinh.Value = DateTime.Today; dtpNgaySinh.Checked = false;
+            dtpNgaySinh.ShowCheckBox = false; dtpNgaySinh.Value = DateTime.Today;
             cboGioiTinh.SelectedIndex = cboNghe.SelectedIndex = -1;
             if (clearSearch) txtTimKiem.Clear(); dgvHocVien.ClearSelection(); maDangChon = "";
         }

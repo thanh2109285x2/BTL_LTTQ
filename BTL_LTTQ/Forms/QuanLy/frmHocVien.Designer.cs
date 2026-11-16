@@ -118,6 +118,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             dtpNgaySinh.CustomFormat = "dd/MM/yyyy";
             dtpNgaySinh.Format = DateTimePickerFormat.Custom;
+            dtpNgaySinh.ShowCheckBox = false;
             dtpNgaySinh.Location = new Point(163, 104);
             dtpNgaySinh.Name = "dtpNgaySinh";
             dtpNgaySinh.Size = new Size(220, 27);

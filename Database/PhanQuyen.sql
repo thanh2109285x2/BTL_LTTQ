@@ -123,8 +123,10 @@ USING (VALUES
     ('BC_LOP_PHONG',    N'Báo cáo lớp theo phòng',   N'Báo cáo', 0, 0, 22),
     ('DANHMUC_KHAC',    N'Danh mục khác',            N'Khác',    0, 0, 23),
     ('XUAT_EXCEL',      N'Xuất Excel',               N'Khác',    0, 0, 24),
-    ('PHANQUYEN',       N'Phân quyền',               N'Hệ thống',1, 0, 25),
-    ('TAIKHOAN',        N'Quản lý tài khoản',        N'Hệ thống',1, 0, 26)
+    ('IMPORT_DULIEU',   N'Thêm dữ liệu',              N'Khác',     0, 0, 25),
+    ('DATABASE_BACKUP',N'Backup database',           N'Khác',     0, 0, 26),
+    ('PHANQUYEN',       N'Phân quyền',               N'Hệ thống',1, 0, 27),
+    ('TAIKHOAN',        N'Quản lý tài khoản',        N'Hệ thống',1, 0, 28)
 ) AS source (MaChucNang, TenChucNang, Nhom, ChiAdmin, HoTroLocTheoChu, ThuTu)
 ON target.MaChucNang = source.MaChucNang
 WHEN MATCHED THEN
@@ -168,6 +170,8 @@ FROM (VALUES
     ('BC_XEPHANG',    0, 0, 0, 0),
     ('BC_LOP_PHONG',  0, 0, 0, 0),
     ('DANHMUC_KHAC',  0, 0, 0, 0),
+    ('IMPORT_DULIEU', 0, 0, 0, 0),
+    ('DATABASE_BACKUP', 0, 0, 0, 0),
     ('XUAT_EXCEL',    1, 0, 1, 0),
     ('DANGKYLOP',     0, 0, 1, 1),
     ('THOIKHOA_XEM',  1, 1, 1, 1)

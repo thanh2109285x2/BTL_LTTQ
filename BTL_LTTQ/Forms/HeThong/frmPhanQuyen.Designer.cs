@@ -59,7 +59,7 @@ namespace BTL_LTTQ.Forms.HeThong
             lblGiaiThich.Name = "lblGiaiThich";
             lblGiaiThich.Size = new Size(1070, 20);
             lblGiaiThich.TabIndex = 0;
-            lblGiaiThich.Text = "Không tích = chỉ Admin; chỉ ô chính = dữ liệu của tất cả; cả hai = chỉ dữ liệu của chính mình.";
+            lblGiaiThich.Text = "Không tích = chỉ Admin; chỉ ô chính = dữ liệu của tất cả; cả hai = chỉ dữ liệu của chủ tài khoản.";
             // 
             // dgvPhanQuyen
             // 
@@ -100,6 +100,7 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colGiaoVien.FillWeight = 90F;
             colGiaoVien.HeaderText = "Giáo viên";
+            colGiaoVien.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             colGiaoVien.MinimumWidth = 6;
             colGiaoVien.Name = "colGiaoVien";
             colGiaoVien.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -107,7 +108,8 @@ namespace BTL_LTTQ.Forms.HeThong
             // colGiaoVienChiCuaMinh
             // 
             colGiaoVienChiCuaMinh.FillWeight = 125F;
-            colGiaoVienChiCuaMinh.HeaderText = "Giáo viên - chỉ của mình";
+            colGiaoVienChiCuaMinh.HeaderText = "Giáo viên - chủ tài khoản";
+            colGiaoVienChiCuaMinh.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             colGiaoVienChiCuaMinh.MinimumWidth = 6;
             colGiaoVienChiCuaMinh.Name = "colGiaoVienChiCuaMinh";
             colGiaoVienChiCuaMinh.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -116,6 +118,7 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colHocVien.FillWeight = 90F;
             colHocVien.HeaderText = "Học viên";
+            colHocVien.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             colHocVien.MinimumWidth = 6;
             colHocVien.Name = "colHocVien";
             colHocVien.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -123,7 +126,8 @@ namespace BTL_LTTQ.Forms.HeThong
             // colHocVienChiCuaMinh
             // 
             colHocVienChiCuaMinh.FillWeight = 125F;
-            colHocVienChiCuaMinh.HeaderText = "Học viên - chỉ của mình";
+            colHocVienChiCuaMinh.HeaderText = "Học viên - chủ tài khoản";
+            colHocVienChiCuaMinh.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             colHocVienChiCuaMinh.MinimumWidth = 6;
             colHocVienChiCuaMinh.Name = "colHocVienChiCuaMinh";
             colHocVienChiCuaMinh.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -163,6 +167,7 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             // btnLuu
             // 
+            btnLuu.ForeColor = Color.White;
             btnLuu.Location = new Point(707, 13);
             btnLuu.Name = "btnLuu";
             btnLuu.Size = new Size(112, 38);

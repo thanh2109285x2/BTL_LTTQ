@@ -27,6 +27,8 @@ namespace BTL_LTTQ.Common
         public const string BC_XEPHANG = "BC_XEPHANG";
         public const string BC_LOP_PHONG = "BC_LOP_PHONG";
         public const string XUAT_EXCEL = "XUAT_EXCEL";
+        public const string IMPORT_DULIEU = "IMPORT_DULIEU";
+        public const string DATABASE_BACKUP = "DATABASE_BACKUP";
         public const string DANGKYLOP = "DANGKYLOP";
         public const string DONGHOCPHI = "DONGHOCPHI";
         public const string HOCPHI_XACNHAN = "HOCPHI_XACNHAN";

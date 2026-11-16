@@ -100,6 +100,8 @@ INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu],
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'TIM_HOCVIEN', N'Tìm học viên', N'Tra cứu', 0, 0, 62);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'TIM_LOP', N'Tìm lớp', N'Tra cứu', 1, 0, 60);
 INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'XUAT_EXCEL', N'Xuất file Excel', N'Khác', 0, 0, 80);
+INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'IMPORT_DULIEU', N'Thêm dữ liệu', N'Khác', 0, 0, 81);
+INSERT [dbo].[ChucNang] ([MaChucNang], [TenChucNang], [Nhom], [HoTroLocTheoChu], [ChiAdmin], [ThuTu]) VALUES (N'DATABASE_BACKUP', N'Backup database', N'Khác', 0, 0, 82);
 INSERT [dbo].[ChuyenMon] ([MaChuyenMon], [TenChuyenMon]) VALUES (N'CM01', N'Công nghệ thông tin');
 INSERT [dbo].[ChuyenMon] ([MaChuyenMon], [TenChuyenMon]) VALUES (N'CM02', N'Ngôn ngữ Anh');
 INSERT [dbo].[CoQuan] ([MaCQ], [TenCQ], [DiaChi], [DienThoai]) VALUES (N'CQ01', N'Đại học Công Nghệ', N'Hà Nội', N'0243123456');
@@ -197,6 +199,10 @@ INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUE
 INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'TIM_LOP', N'HocVien', 0, 0);
 INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'XUAT_EXCEL', N'GiaoVien', 1, 0);
 INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'XUAT_EXCEL', N'HocVien', 0, 0);
+INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'IMPORT_DULIEU', N'GiaoVien', 0, 0);
+INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'IMPORT_DULIEU', N'HocVien', 0, 0);
+INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'DATABASE_BACKUP', N'GiaoVien', 0, 0);
+INSERT [dbo].[PhanQuyen] ([MaChucNang], [VaiTro], [CoQuyen], [ChiCuaMinh]) VALUES (N'DATABASE_BACKUP', N'HocVien', 0, 0);
 INSERT [dbo].[TaiKhoan] ([TenDangNhap], [MatKhauHash], [Salt], [VaiTro], [MaGV], [MaHocVien], [TrangThai]) VALUES (N'admin', N'BRasfHE/q6vEeb2vX+26cAM5lCCO73TsQa1sp63oTMU=', N'AQIDBAUGBwgJCgsMDQ4PEA==', N'Admin', NULL, NULL, 1);
 
     COMMIT TRANSACTION;

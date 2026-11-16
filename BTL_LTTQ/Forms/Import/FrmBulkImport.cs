@@ -582,6 +582,9 @@ namespace BTL_LTTQ.Forms.Import
 
         private static bool CoQuyenLoai(ImportLoai loai)
         {
+            if (!PermissionService.Can(ChucNangConst.IMPORT_DULIEU))
+                return false;
+
             // Học viên không được nhập dữ liệu hàng loạt: học viên tự đăng ký lớp
             // bằng chức năng "Đăng ký lớp", không phải bằng nhập tệp.
             if (CurrentUser.IsHocVien)

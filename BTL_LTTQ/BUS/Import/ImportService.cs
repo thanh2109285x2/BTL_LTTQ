@@ -155,6 +155,9 @@ namespace BTL_LTTQ.BUS.Import
 
         private static void KiemTraQuyen(ImportLoai loai)
         {
+            PermissionService.YeuCau(ChucNangConst.IMPORT_DULIEU,
+                "Bạn không có quyền nhập dữ liệu hàng loạt.");
+
             // Lớp bảo vệ cuối: học viên không được nhập dữ liệu hàng loạt.
             if (CurrentUser.IsHocVien)
                 throw new UnauthorizedAccessException("Học viên không có quyền nhập dữ liệu hàng loạt.");

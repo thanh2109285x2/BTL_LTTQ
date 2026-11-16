@@ -57,6 +57,7 @@
             btnReportBuilder = new AppButton();
             btnBaoCaoMenu = new AppButton();
             panelKhac = new Panel();
+            btnBackupDatabase = new AppButton();
             btnXuatExcel = new AppButton();
             btnThemDuLieu = new AppButton();
             btnKhac = new AppButton();
@@ -82,9 +83,9 @@
             panelThoat.SuspendLayout();
             panelSidebar.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // flowLayoutPanel1
-            // 
+            //
             flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.Controls.Add(panel1);
             flowLayoutPanel1.Controls.Add(panelCRUD);
@@ -633,17 +634,39 @@
             // 
             // panelKhac
             // 
+            panelKhac.Controls.Add(btnBackupDatabase);
             panelKhac.Controls.Add(btnXuatExcel);
             panelKhac.Controls.Add(btnThemDuLieu);
             panelKhac.Controls.Add(btnKhac);
             panelKhac.Location = new Point(3, 412);
             panelKhac.Name = "panelKhac";
-            panelKhac.Size = new Size(271, 105);
+            panelKhac.Size = new Size(271, 140);
             panelKhac.TabIndex = 5;
             panelKhac.Visible = false;
             // 
-            // btnXuatExcel
+            // btnBackupDatabase
+            //
+            btnBackupDatabase.BackColor = Color.FromArgb(232, 240, 251);
+            btnBackupDatabase.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnBackupDatabase.FlatAppearance.BorderSize = 0;
+            btnBackupDatabase.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnBackupDatabase.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnBackupDatabase.FlatStyle = FlatStyle.Flat;
+            btnBackupDatabase.Font = new Font("Segoe UI", 9F);
+            btnBackupDatabase.ForeColor = Color.FromArgb(33, 37, 41);
+            btnBackupDatabase.Kieu = KieuNut.MenuCon;
+            btnBackupDatabase.Location = new Point(52, 108);
+            btnBackupDatabase.Name = "btnBackupDatabase";
+            btnBackupDatabase.Padding = new Padding(48, 0, 0, 0);
+            btnBackupDatabase.Size = new Size(192, 29);
+            btnBackupDatabase.TabIndex = 4;
+            btnBackupDatabase.Text = "Backup database";
+            btnBackupDatabase.TextAlign = ContentAlignment.MiddleLeft;
+            btnBackupDatabase.UseVisualStyleBackColor = false;
+            btnBackupDatabase.Click += btnBackupDatabase_Click;
             // 
+            // btnXuatExcel
+            //
             btnXuatExcel.BackColor = Color.FromArgb(232, 240, 251);
             btnXuatExcel.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
             btnXuatExcel.FlatAppearance.BorderSize = 0;
@@ -929,6 +952,7 @@
         private AppButton btnDongHocPhi;
         private AppButton btnNhapDiem;
         private AppButton btnXuatExcel;
+        private AppButton btnBackupDatabase;
         private AppButton btnDoiMatKhau;
         private AppButton btnDangXuat;
         private Label lblChao;

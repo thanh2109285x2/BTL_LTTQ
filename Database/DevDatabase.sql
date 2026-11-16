@@ -321,6 +321,8 @@ FROM (VALUES
     ('BC_XEPHANG', N'Báo cáo xếp hạng', N'Báo cáo', 0, 22, 0), 
     ('BC_LOP_PHONG', N'Thống kê lớp theo phòng', N'Báo cáo', 0, 23, 0), 
     ('XUAT_EXCEL', N'Xuất Excel', N'Khác', 0, 24, 0), 
+    ('IMPORT_DULIEU', N'Thêm dữ liệu', N'Khác', 0, 27, 0),
+    ('DATABASE_BACKUP', N'Backup database', N'Khác', 0, 28, 0),
     ('PHANQUYEN', N'Phân quyền', N'Khác', 0, 25, 1), 
     ('TAIKHOAN', N'Quản lý tài khoản', N'Khác', 0, 26, 1)
 ) s (Ma, Ten, Nhom, Loc, ThuTu, AdminOnly)
@@ -342,7 +344,11 @@ FROM (VALUES
     ('BC_XEPHANG', 'GiaoVien', 1, 0),
     ('BC_XEPHANG', 'HocVien', 0, 0),
     ('BC_LOP_PHONG', 'GiaoVien', 1, 0),
-    ('BC_LOP_PHONG', 'HocVien', 0, 0)
+    ('BC_LOP_PHONG', 'HocVien', 0, 0),
+    ('IMPORT_DULIEU', 'GiaoVien', 0, 0),
+    ('IMPORT_DULIEU', 'HocVien', 0, 0),
+    ('DATABASE_BACKUP', 'GiaoVien', 0, 0),
+    ('DATABASE_BACKUP', 'HocVien', 0, 0)
 ) p (MaChucNang, VaiTro, CoQuyen, ChiCuaMinh)
 WHERE NOT EXISTS (
     SELECT 1 FROM dbo.PhanQuyen q

@@ -69,6 +69,8 @@ namespace BTL_LTTQ.Forms.HeThong
             rowNhom.ReadOnly = true;
             rowNhom.DefaultCellStyle.BackColor = Color.FromArgb(224, 232, 240);
             rowNhom.DefaultCellStyle.Font = new Font(dgvPhanQuyen.Font, FontStyle.Bold);
+            for (int i = 1; i < rowNhom.Cells.Count; i++)
+                rowNhom.Cells[i] = new DataGridViewTextBoxCell { Value = string.Empty };
 
             foreach (PhanQuyenChucNang item in cacChucNang)
             {
