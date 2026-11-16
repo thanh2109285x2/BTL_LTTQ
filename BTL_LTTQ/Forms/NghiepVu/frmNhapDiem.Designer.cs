@@ -62,7 +62,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             // 
             // panelTieuDe
             // 
-            panelTieuDe.BackColor = Color.White;
+            panelTieuDe.BackColor = Color.FromArgb(43, 98, 164);
             panelTieuDe.Controls.Add(lblMoTa);
             panelTieuDe.Controls.Add(lblTieuDe);
             panelTieuDe.Dock = DockStyle.Top;
@@ -75,6 +75,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             // lblMoTa
             // 
             lblMoTa.AutoSize = true;
+            lblMoTa.ForeColor = Color.FromArgb(225, 235, 248);
             lblMoTa.Location = new Point(35, 54);
             lblMoTa.Name = "lblMoTa";
             lblMoTa.Size = new Size(247, 20);
@@ -85,7 +86,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             // 
             lblTieuDe.AutoSize = true;
             lblTieuDe.Font = new Font("Segoe UI", 17F, FontStyle.Bold);
-            lblTieuDe.ForeColor = Color.FromArgb(30, 74, 130);
+            lblTieuDe.ForeColor = Color.White;
             lblTieuDe.Location = new Point(32, 12);
             lblTieuDe.Name = "lblTieuDe";
             lblTieuDe.Size = new Size(168, 40);

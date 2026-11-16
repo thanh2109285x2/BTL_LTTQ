@@ -158,7 +158,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnLamMoi.Size = new Size(105, 42);
             btnLamMoi.TabIndex = 3;
             btnLamMoi.Text = "Làm mới";
-            btnLamMoi.UseVisualStyleBackColor = true;
             btnLamMoi.Click += btnLamMoi_Click;
             // 
             // btnXoa
@@ -168,7 +167,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnXoa.Size = new Size(105, 42);
             btnXoa.TabIndex = 2;
             btnXoa.Text = "Xóa";
-            btnXoa.UseVisualStyleBackColor = true;
             btnXoa.Click += btnXoa_Click;
             // 
             // btnSua
@@ -178,7 +176,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnSua.Size = new Size(105, 42);
             btnSua.TabIndex = 1;
             btnSua.Text = "Sửa";
-            btnSua.UseVisualStyleBackColor = true;
             btnSua.Click += btnSua_Click;
             // 
             // btnThem
@@ -188,7 +185,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnThem.Size = new Size(105, 42);
             btnThem.TabIndex = 0;
             btnThem.Text = "Thêm";
-            btnThem.UseVisualStyleBackColor = true;
             btnThem.Click += btnThem_Click;
             // 
             // btnThu
@@ -198,11 +194,11 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnThu.Size = new Size(29, 29);
             btnThu.TabIndex = 1;
             btnThu.Text = "▲";
-            btnThu.UseVisualStyleBackColor = true;
             btnThu.Click += btnThu_Click;
             // 
             // panelTieuDe
             // 
+            panelTieuDe.BackColor = Color.FromArgb(43, 98, 164);
             panelTieuDe.Controls.Add(btnThu);
             panelTieuDe.Controls.Add(label1);
             panelTieuDe.Dock = DockStyle.Top;

@@ -380,6 +380,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // panelTieuDe
             // 
+            panelTieuDe.BackColor = Color.FromArgb(43, 98, 164);
             panelTieuDe.Controls.Add(btnThu);
             panelTieuDe.Controls.Add(label1);
             panelTieuDe.Dock = DockStyle.Top;
@@ -401,6 +402,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // label1
             // 
             label1.AutoSize = true;
+            label1.ForeColor = Color.White;
             label1.Location = new Point(46, 10);
             label1.Margin = new Padding(3);
             label1.Name = "label1";

@@ -19,6 +19,8 @@ namespace BTL_LTTQ.Forms
             _data = data;
             InitializeComponent();
             GiaoDien.ApDung(this);
+            lblTieuDe.ForeColor = Color.White;
+            lblThongTin.ForeColor = Color.FromArgb(225, 235, 248);
             Text = "Xem trước báo cáo";
             lblTieuDe.Text = tieuDe;
             lblThongTin.Text = $"Ngày lập: {DateTime.Now:dd/MM/yyyy HH:mm}     |     Số dòng: {data.Rows.Count}";
