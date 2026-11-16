@@ -80,9 +80,13 @@ namespace BTL_LTTQ.Forms.QuanLy
             var d = DuLieu();
             if (d.ma.Length == 0) return LoiNhap("Vui lòng nhập mã học viên.", txtMaHocVien, out error, out control);
             if (d.ten.Length == 0) return LoiNhap("Vui lòng nhập tên học viên.", txtTenHocVien, out error, out control);
+            if (!d.ngaySinh.HasValue) return LoiNhap("Vui lòng chọn ngày sinh.", dtpNgaySinh, out error, out control);
+            if (string.IsNullOrWhiteSpace(d.gioiTinh)) return LoiNhap("Vui lòng chọn giới tính.", cboGioiTinh, out error, out control);
+            if (string.IsNullOrWhiteSpace(d.diaChi)) return LoiNhap("Vui lòng chọn địa chỉ.", cboDiaChi, out error, out control);
+            if (string.IsNullOrWhiteSpace(d.dienThoai)) return LoiNhap("Vui lòng nhập số điện thoại.", txtDienThoai, out error, out control);
             if (!Regex.IsMatch(d.ma, @"^[A-Za-z0-9_-]+$")) return LoiNhap("Mã học viên chỉ được gồm chữ không dấu, chữ số, dấu gạch dưới hoặc gạch ngang.", txtMaHocVien, out error, out control);
             if (!Regex.IsMatch(d.ten, @"^\p{L}+(?:[ '\-]\p{L}+)*$")) return LoiNhap("Tên học viên chỉ được chứa chữ cái và khoảng trắng, dấu gạch ngang hoặc dấu nháy.", txtTenHocVien, out error, out control);
-            if (d.dienThoai is { Length: > 0 } && !Regex.IsMatch(d.dienThoai, @"^[0-9]{10}$")) return LoiNhap("Số điện thoại phải gồm đúng 10 chữ số.", txtDienThoai, out error, out control);
+            if (!Regex.IsMatch(d.dienThoai, @"^[0-9]{10}$")) return LoiNhap("Số điện thoại phải gồm đúng 10 chữ số.", txtDienThoai, out error, out control);
             if (d.ngaySinh.HasValue && d.ngaySinh.Value.Date > DateTime.Today)
                 return LoiNhap("Ngày sinh không được ở tương lai.", dtpNgaySinh, out error, out control);
             error = "";

@@ -36,9 +36,9 @@ namespace BTL_LTTQ.Forms.Import
             cboLoai = new ComboBox();
             lblTep = new Label();
             txtTep = new TextBox();
-            btnChonTep = new AppButton { Kieu = KieuNut.Chinh };
-            btnTaiMau = new AppButton { Kieu = KieuNut.Phu };
-            btnXemTruoc = new AppButton { Kieu = KieuNut.Phu };
+            btnChonTep = new AppButton();
+            btnTaiMau = new AppButton();
+            btnXemTruoc = new AppButton();
             lblGoiY = new Label();
             panelTomTat = new Panel();
             lblTongDongCaption = new Label();
@@ -53,9 +53,9 @@ namespace BTL_LTTQ.Forms.Import
             dgvDuLieu = new DataGridView();
             panelNut = new Panel();
             progressNhap = new ProgressBar();
-            btnXuatBaoCao = new AppButton { Kieu = KieuNut.Phu };
-            btnXacNhan = new AppButton { Kieu = KieuNut.Chinh };
-            btnDong = new AppButton { Kieu = KieuNut.Phu };
+            btnXuatBaoCao = new AppButton();
+            btnXacNhan = new AppButton();
+            btnDong = new AppButton();
             panelTieuDe.SuspendLayout();
             panelCauHinh.SuspendLayout();
             panelTomTat.SuspendLayout();
@@ -82,7 +82,7 @@ namespace BTL_LTTQ.Forms.Import
             lblTieuDe.ForeColor = Color.White;
             lblTieuDe.Location = new Point(24, 10);
             lblTieuDe.Name = "lblTieuDe";
-            lblTieuDe.Size = new Size(310, 35);
+            lblTieuDe.Size = new Size(285, 35);
             lblTieuDe.TabIndex = 0;
             lblTieuDe.Text = "Nhập dữ liệu hàng loạt";
             // 
@@ -92,7 +92,7 @@ namespace BTL_LTTQ.Forms.Import
             lblMoTa.ForeColor = Color.FromArgb(225, 235, 248);
             lblMoTa.Location = new Point(27, 44);
             lblMoTa.Name = "lblMoTa";
-            lblMoTa.Size = new Size(620, 20);
+            lblMoTa.Size = new Size(762, 20);
             lblMoTa.TabIndex = 1;
             lblMoTa.Text = "Chọn một loại dữ liệu, tải tệp Excel hoặc CSV, xem trước rồi xác nhận nhập. Toàn bộ tệp được nhập trong một lần.";
             // 
@@ -117,7 +117,7 @@ namespace BTL_LTTQ.Forms.Import
             lblLoai.AutoSize = true;
             lblLoai.Location = new Point(24, 18);
             lblLoai.Name = "lblLoai";
-            lblLoai.Size = new Size(88, 20);
+            lblLoai.Size = new Size(90, 20);
             lblLoai.TabIndex = 0;
             lblLoai.Text = "Loại dữ liệu:";
             // 
@@ -136,7 +136,7 @@ namespace BTL_LTTQ.Forms.Import
             lblTep.AutoSize = true;
             lblTep.Location = new Point(24, 58);
             lblTep.Name = "lblTep";
-            lblTep.Size = new Size(80, 20);
+            lblTep.Size = new Size(87, 20);
             lblTep.TabIndex = 2;
             lblTep.Text = "Tệp dữ liệu:";
             // 
@@ -153,31 +153,56 @@ namespace BTL_LTTQ.Forms.Import
             // btnChonTep
             // 
             btnChonTep.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnChonTep.BackColor = Color.FromArgb(41, 98, 168);
+            btnChonTep.FlatAppearance.BorderColor = Color.FromArgb(41, 98, 168);
+            btnChonTep.FlatAppearance.MouseDownBackColor = Color.FromArgb(30, 74, 130);
+            btnChonTep.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 74, 130);
+            btnChonTep.FlatStyle = FlatStyle.Flat;
+            btnChonTep.ForeColor = Color.White;
+            btnChonTep.Kieu = KieuNut.Chinh;
             btnChonTep.Location = new Point(662, 53);
             btnChonTep.Name = "btnChonTep";
             btnChonTep.Size = new Size(112, 30);
             btnChonTep.TabIndex = 4;
             btnChonTep.Text = "Chọn tệp...";
+            btnChonTep.UseVisualStyleBackColor = false;
             btnChonTep.Click += btnChonTep_Click;
             // 
             // btnTaiMau
             // 
             btnTaiMau.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnTaiMau.BackColor = Color.FromArgb(232, 240, 251);
+            btnTaiMau.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnTaiMau.FlatAppearance.BorderSize = 0;
+            btnTaiMau.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnTaiMau.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnTaiMau.FlatStyle = FlatStyle.Flat;
+            btnTaiMau.Font = new Font("Segoe UI", 9F);
+            btnTaiMau.ForeColor = Color.FromArgb(41, 98, 168);
+            btnTaiMau.Kieu = KieuNut.MenuTienIch;
             btnTaiMau.Location = new Point(784, 53);
             btnTaiMau.Name = "btnTaiMau";
             btnTaiMau.Size = new Size(124, 30);
             btnTaiMau.TabIndex = 5;
             btnTaiMau.Text = "Tải tệp mẫu";
+            btnTaiMau.UseVisualStyleBackColor = false;
             btnTaiMau.Click += btnTaiMau_Click;
             // 
             // btnXemTruoc
             // 
             btnXemTruoc.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnXemTruoc.BackColor = Color.White;
+            btnXemTruoc.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnXemTruoc.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnXemTruoc.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnXemTruoc.FlatStyle = FlatStyle.Flat;
+            btnXemTruoc.ForeColor = Color.FromArgb(33, 37, 41);
             btnXemTruoc.Location = new Point(918, 53);
             btnXemTruoc.Name = "btnXemTruoc";
             btnXemTruoc.Size = new Size(112, 30);
             btnXemTruoc.TabIndex = 6;
             btnXemTruoc.Text = "Xem trước";
+            btnXemTruoc.UseVisualStyleBackColor = false;
             btnXemTruoc.Click += btnXemTruoc_Click;
             // 
             // lblGoiY
@@ -212,7 +237,7 @@ namespace BTL_LTTQ.Forms.Import
             lblTongDongCaption.AutoSize = true;
             lblTongDongCaption.Location = new Point(24, 12);
             lblTongDongCaption.Name = "lblTongDongCaption";
-            lblTongDongCaption.Size = new Size(48, 20);
+            lblTongDongCaption.Size = new Size(85, 20);
             lblTongDongCaption.TabIndex = 0;
             lblTongDongCaption.Text = "Tổng dòng:";
             // 
@@ -231,7 +256,7 @@ namespace BTL_LTTQ.Forms.Import
             lblHopLeCaption.AutoSize = true;
             lblHopLeCaption.Location = new Point(210, 12);
             lblHopLeCaption.Name = "lblHopLeCaption";
-            lblHopLeCaption.Size = new Size(58, 20);
+            lblHopLeCaption.Size = new Size(57, 20);
             lblHopLeCaption.TabIndex = 2;
             lblHopLeCaption.Text = "Hợp lệ:";
             // 
@@ -251,7 +276,7 @@ namespace BTL_LTTQ.Forms.Import
             lblLoiCaption.AutoSize = true;
             lblLoiCaption.Location = new Point(368, 12);
             lblLoiCaption.Name = "lblLoiCaption";
-            lblLoiCaption.Size = new Size(35, 20);
+            lblLoiCaption.Size = new Size(32, 20);
             lblLoiCaption.TabIndex = 4;
             lblLoiCaption.Text = "Lỗi:";
             // 
@@ -272,7 +297,7 @@ namespace BTL_LTTQ.Forms.Import
             lblTrangThai.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblTrangThai.Location = new Point(506, 11);
             lblTrangThai.Name = "lblTrangThai";
-            lblTrangThai.Size = new Size(190, 23);
+            lblTrangThai.Size = new Size(187, 23);
             lblTrangThai.TabIndex = 6;
             lblTrangThai.Text = "Chưa chọn tệp dữ liệu";
             // 
@@ -300,7 +325,6 @@ namespace BTL_LTTQ.Forms.Import
             // 
             dgvDuLieu.AllowUserToAddRows = false;
             dgvDuLieu.AllowUserToDeleteRows = false;
-            dgvDuLieu.AutoGenerateColumns = false;
             dgvDuLieu.BackgroundColor = Color.White;
             dgvDuLieu.BorderStyle = BorderStyle.None;
             dgvDuLieu.ColumnHeadersHeight = 34;
@@ -310,6 +334,7 @@ namespace BTL_LTTQ.Forms.Import
             dgvDuLieu.Name = "dgvDuLieu";
             dgvDuLieu.ReadOnly = true;
             dgvDuLieu.RowHeadersVisible = false;
+            dgvDuLieu.RowHeadersWidth = 51;
             dgvDuLieu.RowTemplate.Height = 28;
             dgvDuLieu.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDuLieu.Size = new Size(1052, 382);
@@ -340,32 +365,53 @@ namespace BTL_LTTQ.Forms.Import
             // btnXuatBaoCao
             // 
             btnXuatBaoCao.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnXuatBaoCao.BackColor = Color.White;
+            btnXuatBaoCao.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnXuatBaoCao.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnXuatBaoCao.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnXuatBaoCao.FlatStyle = FlatStyle.Flat;
+            btnXuatBaoCao.ForeColor = Color.FromArgb(33, 37, 41);
             btnXuatBaoCao.Location = new Point(642, 12);
             btnXuatBaoCao.Name = "btnXuatBaoCao";
             btnXuatBaoCao.Size = new Size(150, 32);
             btnXuatBaoCao.TabIndex = 1;
             btnXuatBaoCao.Text = "Xuất báo cáo lỗi";
+            btnXuatBaoCao.UseVisualStyleBackColor = false;
             btnXuatBaoCao.Click += btnXuatBaoCao_Click;
             // 
             // btnXacNhan
             // 
             btnXacNhan.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnXacNhan.BackColor = Color.White;
             btnXacNhan.Enabled = false;
+            btnXacNhan.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnXacNhan.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnXacNhan.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnXacNhan.FlatStyle = FlatStyle.Flat;
+            btnXacNhan.ForeColor = Color.FromArgb(33, 37, 41);
             btnXacNhan.Location = new Point(802, 12);
             btnXacNhan.Name = "btnXacNhan";
             btnXacNhan.Size = new Size(160, 32);
             btnXacNhan.TabIndex = 2;
             btnXacNhan.Text = "Xác nhận nhập";
+            btnXacNhan.UseVisualStyleBackColor = false;
             btnXacNhan.Click += btnXacNhan_Click;
             // 
             // btnDong
             // 
             btnDong.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDong.BackColor = Color.White;
+            btnDong.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnDong.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnDong.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnDong.FlatStyle = FlatStyle.Flat;
+            btnDong.ForeColor = Color.FromArgb(33, 37, 41);
             btnDong.Location = new Point(972, 12);
             btnDong.Name = "btnDong";
             btnDong.Size = new Size(104, 32);
             btnDong.TabIndex = 3;
             btnDong.Text = "Đóng";
+            btnDong.UseVisualStyleBackColor = false;
             btnDong.Click += btnDong_Click;
             // 
             // FrmBulkImport

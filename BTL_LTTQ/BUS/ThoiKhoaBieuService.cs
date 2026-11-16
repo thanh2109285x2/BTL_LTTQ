@@ -9,6 +9,8 @@ namespace BTL_LTTQ.BUS
     {
         private readonly ThoiKhoaBieuRepository _repo = new ThoiKhoaBieuRepository();
 
+        public List<CaHoc> LayDanhSachCaHoc() => _repo.LayDanhSachCaHoc();
+
         public List<BuoiHoc> LayLich(string? maGV, string? maHocVien)
         {
             if (!PermissionService.Can(ChucNangConst.THOIKHOA_XEM))

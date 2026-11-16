@@ -34,12 +34,14 @@ namespace BTL_LTTQ.DAL
 
         public DataTable LayDoanhThu(string? maLop) => DbHelper.ExecuteQuery(@"
             SELECT l.MaLop, l.TenLop, m.TenMon,
-                   COUNT(hv.MaHocVien) AS SoHocVienDaNop,
+                   COUNT(DISTINCT CASE WHEN p.MaPhieu IS NOT NULL THEN d.MaHocVien END) AS SoHocVienDaNop,
                    CAST(COALESCE(m.HocPhi, 0) AS decimal(18,2)) AS HocPhiMoiHocVien,
-                   CAST(COUNT(hv.MaHocVien) * COALESCE(m.HocPhi, 0) AS decimal(18,2)) AS DoanhThu
+                   CAST(COALESCE(SUM(CASE WHEN p.MaPhieu IS NOT NULL THEN COALESCE(m.HocPhi, 0) ELSE 0 END), 0)
+                        AS decimal(18,2)) AS DoanhThu
             FROM LopHoc l
             LEFT JOIN MonHoc m ON m.MaMon = l.MaMon
-            LEFT JOIN HocVien hv ON hv.MaLop = l.MaLop AND hv.NgayNopHocPhi IS NOT NULL
+            LEFT JOIN DangKy d ON d.MaLop = l.MaLop
+            LEFT JOIN PhieuThu p ON p.MaPhieu = d.MaPhieu AND p.TrangThai = 1
             WHERE (@MaLop IS NULL OR l.MaLop = @MaLop)
             GROUP BY l.MaLop, l.TenLop, m.TenMon, m.HocPhi
             ORDER BY l.TenLop",

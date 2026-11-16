@@ -31,8 +31,8 @@ namespace BTL_LTTQ.Forms.HeThong
             txtMatKhauCu = new TextBox();
             txtMatKhauMoi = new TextBox();
             txtNhapLaiMatKhauMoi = new TextBox();
-            btnDoiMatKhau = new AppButton { Kieu = KieuNut.Chinh };
-            btnHuy = new AppButton { Kieu = KieuNut.Phu };
+            btnDoiMatKhau = new AppButton();
+            btnHuy = new AppButton();
             SuspendLayout();
             // 
             // lblTieuDe
@@ -50,7 +50,7 @@ namespace BTL_LTTQ.Forms.HeThong
             lblMatKhauCu.AutoSize = true;
             lblMatKhauCu.Location = new Point(38, 82);
             lblMatKhauCu.Name = "lblMatKhauCu";
-            lblMatKhauCu.Size = new Size(92, 20);
+            lblMatKhauCu.Size = new Size(123, 20);
             lblMatKhauCu.TabIndex = 1;
             lblMatKhauCu.Text = "Mật khẩu hiện tại";
             // 
@@ -59,7 +59,7 @@ namespace BTL_LTTQ.Forms.HeThong
             lblMatKhauMoi.AutoSize = true;
             lblMatKhauMoi.Location = new Point(38, 126);
             lblMatKhauMoi.Name = "lblMatKhauMoi";
-            lblMatKhauMoi.Size = new Size(86, 20);
+            lblMatKhauMoi.Size = new Size(100, 20);
             lblMatKhauMoi.TabIndex = 2;
             lblMatKhauMoi.Text = "Mật khẩu mới";
             // 
@@ -68,7 +68,7 @@ namespace BTL_LTTQ.Forms.HeThong
             lblNhapLaiMatKhauMoi.AutoSize = true;
             lblNhapLaiMatKhauMoi.Location = new Point(38, 170);
             lblNhapLaiMatKhauMoi.Name = "lblNhapLaiMatKhauMoi";
-            lblNhapLaiMatKhauMoi.Size = new Size(112, 20);
+            lblNhapLaiMatKhauMoi.Size = new Size(130, 20);
             lblNhapLaiMatKhauMoi.TabIndex = 3;
             lblNhapLaiMatKhauMoi.Text = "Nhập lại mật khẩu";
             // 
@@ -98,23 +98,36 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             // btnDoiMatKhau
             // 
+            btnDoiMatKhau.BackColor = Color.FromArgb(41, 98, 168);
+            btnDoiMatKhau.FlatAppearance.BorderColor = Color.FromArgb(41, 98, 168);
+            btnDoiMatKhau.FlatAppearance.MouseDownBackColor = Color.FromArgb(30, 74, 130);
+            btnDoiMatKhau.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 74, 130);
+            btnDoiMatKhau.FlatStyle = FlatStyle.Flat;
+            btnDoiMatKhau.ForeColor = Color.White;
+            btnDoiMatKhau.Kieu = KieuNut.Chinh;
             btnDoiMatKhau.Location = new Point(172, 220);
             btnDoiMatKhau.Name = "btnDoiMatKhau";
             btnDoiMatKhau.Size = new Size(132, 36);
             btnDoiMatKhau.TabIndex = 3;
             btnDoiMatKhau.Text = "Đổi mật khẩu";
-            btnDoiMatKhau.UseVisualStyleBackColor = true;
+            btnDoiMatKhau.UseVisualStyleBackColor = false;
             btnDoiMatKhau.Click += btnDoiMatKhau_Click;
             // 
             // btnHuy
             // 
+            btnHuy.BackColor = Color.White;
             btnHuy.DialogResult = DialogResult.Cancel;
+            btnHuy.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnHuy.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnHuy.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnHuy.FlatStyle = FlatStyle.Flat;
+            btnHuy.ForeColor = Color.FromArgb(33, 37, 41);
             btnHuy.Location = new Point(322, 220);
             btnHuy.Name = "btnHuy";
             btnHuy.Size = new Size(86, 36);
             btnHuy.TabIndex = 4;
             btnHuy.Text = "Hủy";
-            btnHuy.UseVisualStyleBackColor = true;
+            btnHuy.UseVisualStyleBackColor = false;
             btnHuy.Click += btnHuy_Click;
             // 
             // frmDoiMatKhau
@@ -122,6 +135,7 @@ namespace BTL_LTTQ.Forms.HeThong
             AcceptButton = btnDoiMatKhau;
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = btnHuy;
             ClientSize = new Size(460, 284);
             Controls.Add(btnHuy);
             Controls.Add(btnDoiMatKhau);
@@ -139,7 +153,6 @@ namespace BTL_LTTQ.Forms.HeThong
             Name = "frmDoiMatKhau";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Đổi mật khẩu";
-            CancelButton = btnHuy;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -24,9 +24,9 @@ namespace BTL_LTTQ.Forms.HeThong
             colHocVien = new DataGridViewCheckBoxColumn();
             colHocVienChiCuaMinh = new DataGridViewCheckBoxColumn();
             panelButtons = new FlowLayoutPanel();
-            btnDong = new AppButton { Kieu = KieuNut.Phu };
-            btnHoanTac = new AppButton { Kieu = KieuNut.Phu };
-            btnLuu = new AppButton { Kieu = KieuNut.Chinh };
+            btnDong = new AppButton();
+            btnHoanTac = new AppButton();
+            btnLuu = new AppButton();
             layoutRoot.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPhanQuyen).BeginInit();
             panelButtons.SuspendLayout();
@@ -100,7 +100,6 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colGiaoVien.FillWeight = 90F;
             colGiaoVien.HeaderText = "Giáo viên";
-            colGiaoVien.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             colGiaoVien.MinimumWidth = 6;
             colGiaoVien.Name = "colGiaoVien";
             colGiaoVien.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -109,7 +108,6 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colGiaoVienChiCuaMinh.FillWeight = 125F;
             colGiaoVienChiCuaMinh.HeaderText = "Giáo viên - chủ tài khoản";
-            colGiaoVienChiCuaMinh.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             colGiaoVienChiCuaMinh.MinimumWidth = 6;
             colGiaoVienChiCuaMinh.Name = "colGiaoVienChiCuaMinh";
             colGiaoVienChiCuaMinh.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -118,7 +116,6 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colHocVien.FillWeight = 90F;
             colHocVien.HeaderText = "Học viên";
-            colHocVien.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             colHocVien.MinimumWidth = 6;
             colHocVien.Name = "colHocVien";
             colHocVien.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -127,7 +124,6 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colHocVienChiCuaMinh.FillWeight = 125F;
             colHocVienChiCuaMinh.HeaderText = "Học viên - chủ tài khoản";
-            colHocVienChiCuaMinh.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             colHocVienChiCuaMinh.MinimumWidth = 6;
             colHocVienChiCuaMinh.Name = "colHocVienChiCuaMinh";
             colHocVienChiCuaMinh.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -149,30 +145,59 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             // btnDong
             // 
+            btnDong.BackColor = Color.FromArgb(232, 240, 251);
+            btnDong.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnDong.FlatAppearance.BorderSize = 0;
+            btnDong.FlatAppearance.MouseDownBackColor = Color.FromArgb(250, 225, 222);
+            btnDong.FlatAppearance.MouseOverBackColor = Color.FromArgb(250, 225, 222);
+            btnDong.FlatStyle = FlatStyle.Flat;
+            btnDong.Font = new Font("Segoe UI", 9F);
+            btnDong.ForeColor = Color.FromArgb(192, 57, 43);
+            btnDong.Kieu = KieuNut.MenuThoat;
             btnDong.Location = new Point(955, 13);
             btnDong.Name = "btnDong";
             btnDong.Size = new Size(112, 38);
             btnDong.TabIndex = 4;
             btnDong.Text = "Đóng";
+            btnDong.UseVisualStyleBackColor = false;
             btnDong.Click += btnDong_Click;
             // 
             // btnHoanTac
             // 
+            btnHoanTac.BackColor = Color.FromArgb(232, 240, 251);
+            btnHoanTac.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnHoanTac.FlatAppearance.BorderSize = 0;
+            btnHoanTac.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnHoanTac.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnHoanTac.FlatStyle = FlatStyle.Flat;
+            btnHoanTac.Font = new Font("Segoe UI", 9F);
+            btnHoanTac.ForeColor = Color.FromArgb(41, 98, 168);
+            btnHoanTac.Kieu = KieuNut.MenuTienIch;
             btnHoanTac.Location = new Point(825, 13);
             btnHoanTac.Name = "btnHoanTac";
             btnHoanTac.Size = new Size(124, 38);
             btnHoanTac.TabIndex = 3;
             btnHoanTac.Text = "Hoàn tác";
+            btnHoanTac.UseVisualStyleBackColor = false;
             btnHoanTac.Click += btnHoanTac_Click;
             // 
             // btnLuu
             // 
-            btnLuu.ForeColor = Color.White;
+            btnLuu.BackColor = Color.FromArgb(232, 240, 251);
+            btnLuu.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnLuu.FlatAppearance.BorderSize = 0;
+            btnLuu.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnLuu.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnLuu.FlatStyle = FlatStyle.Flat;
+            btnLuu.Font = new Font("Segoe UI", 9F);
+            btnLuu.ForeColor = Color.FromArgb(41, 98, 168);
+            btnLuu.Kieu = KieuNut.MenuTienIch;
             btnLuu.Location = new Point(707, 13);
             btnLuu.Name = "btnLuu";
             btnLuu.Size = new Size(112, 38);
             btnLuu.TabIndex = 2;
             btnLuu.Text = "Lưu";
+            btnLuu.UseVisualStyleBackColor = false;
             btnLuu.Click += btnLuu_Click;
             // 
             // frmPhanQuyen

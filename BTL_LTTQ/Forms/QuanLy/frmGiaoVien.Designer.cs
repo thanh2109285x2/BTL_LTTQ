@@ -66,8 +66,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             _search = new FlowLayoutPanel();
             _lblTim = new Label();
             _txtTim = new TextBox();
-            _btnTim = new AppButton { Kieu = KieuNut.Chinh };
-            _btnTatCa = new AppButton { Kieu = KieuNut.Phu };
+            _btnTim = new AppButton();
+            _btnTatCa = new AppButton();
             _content = new TableLayoutPanel();
             _thongTin = new GroupBox();
             _thongTinLayout = new TableLayoutPanel();
@@ -100,14 +100,14 @@ namespace BTL_LTTQ.Forms.QuanLy
             _anhPanel = new Panel();
             _lblAnh = new Label();
             _previewAnh = new PictureBox();
-            _btnChonAnh = new AppButton { Kieu = KieuNut.Chinh };
+            _btnChonAnh = new AppButton();
             _monBox = new GroupBox();
             _monDay = new CheckedListBox();
             _actions = new FlowLayoutPanel();
-            _btnThem = new AppButton { Kieu = KieuNut.Chinh };
-            _btnSua = new AppButton { Kieu = KieuNut.Chinh };
-            _btnXoa = new AppButton { Kieu = KieuNut.NguyHiem };
-            _btnMoi = new AppButton { Kieu = KieuNut.Phu };
+            _btnThem = new AppButton();
+            _btnSua = new AppButton();
+            _btnXoa = new AppButton();
+            _btnMoi = new AppButton();
             _grid = new DataGridView();
             _root.SuspendLayout();
             _search.SuspendLayout();
@@ -182,21 +182,35 @@ namespace BTL_LTTQ.Forms.QuanLy
             // _btnTim
             // 
             _btnTim.AutoSize = true;
+            _btnTim.BackColor = Color.White;
+            _btnTim.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            _btnTim.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            _btnTim.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            _btnTim.FlatStyle = FlatStyle.Flat;
+            _btnTim.ForeColor = Color.FromArgb(33, 37, 41);
             _btnTim.Location = new Point(544, 9);
             _btnTim.Margin = new Padding(3, 4, 3, 4);
             _btnTim.Name = "_btnTim";
             _btnTim.Size = new Size(86, 32);
             _btnTim.TabIndex = 1;
             _btnTim.Text = "Tìm";
+            _btnTim.UseVisualStyleBackColor = false;
             // 
             // _btnTatCa
             // 
             _btnTatCa.AutoSize = true;
+            _btnTatCa.BackColor = Color.White;
+            _btnTatCa.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            _btnTatCa.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            _btnTatCa.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            _btnTatCa.FlatStyle = FlatStyle.Flat;
+            _btnTatCa.ForeColor = Color.FromArgb(33, 37, 41);
             _btnTatCa.Location = new Point(636, 8);
             _btnTatCa.Name = "_btnTatCa";
             _btnTatCa.Size = new Size(86, 32);
             _btnTatCa.TabIndex = 2;
             _btnTatCa.Text = "Tất cả";
+            _btnTatCa.UseVisualStyleBackColor = false;
             // 
             // _content
             // 
@@ -563,12 +577,19 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             _btnChonAnh.Anchor = AnchorStyles.Top;
             _btnChonAnh.AutoSize = true;
+            _btnChonAnh.BackColor = Color.White;
+            _btnChonAnh.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            _btnChonAnh.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            _btnChonAnh.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            _btnChonAnh.FlatStyle = FlatStyle.Flat;
+            _btnChonAnh.ForeColor = Color.FromArgb(33, 37, 41);
             _btnChonAnh.Location = new Point(71, 268);
             _btnChonAnh.Margin = new Padding(3, 4, 3, 4);
             _btnChonAnh.Name = "_btnChonAnh";
             _btnChonAnh.Size = new Size(103, 35);
             _btnChonAnh.TabIndex = 2;
             _btnChonAnh.Text = "Chọn ảnh...";
+            _btnChonAnh.UseVisualStyleBackColor = false;
             // 
             // _monBox
             // 
@@ -610,39 +631,74 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // _btnThem
             // 
+            _btnThem.BackColor = Color.FromArgb(232, 240, 251);
+            _btnThem.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            _btnThem.FlatAppearance.BorderSize = 0;
+            _btnThem.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            _btnThem.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            _btnThem.FlatStyle = FlatStyle.Flat;
+            _btnThem.Font = new Font("Segoe UI", 9F);
+            _btnThem.ForeColor = Color.FromArgb(41, 98, 168);
+            _btnThem.Kieu = KieuNut.MenuTienIch;
             _btnThem.Location = new Point(8, 9);
             _btnThem.Margin = new Padding(3, 4, 3, 4);
             _btnThem.Name = "_btnThem";
             _btnThem.Size = new Size(120, 40);
             _btnThem.TabIndex = 0;
             _btnThem.Text = "Thêm";
+            _btnThem.UseVisualStyleBackColor = false;
             // 
             // _btnSua
             // 
+            _btnSua.BackColor = Color.FromArgb(232, 240, 251);
+            _btnSua.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            _btnSua.FlatAppearance.BorderSize = 0;
+            _btnSua.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            _btnSua.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            _btnSua.FlatStyle = FlatStyle.Flat;
+            _btnSua.Font = new Font("Segoe UI", 9F);
+            _btnSua.ForeColor = Color.FromArgb(41, 98, 168);
+            _btnSua.Kieu = KieuNut.MenuTienIch;
             _btnSua.Location = new Point(134, 9);
             _btnSua.Margin = new Padding(3, 4, 3, 4);
             _btnSua.Name = "_btnSua";
             _btnSua.Size = new Size(120, 40);
             _btnSua.TabIndex = 1;
             _btnSua.Text = "Sửa";
+            _btnSua.UseVisualStyleBackColor = false;
             // 
             // _btnXoa
             // 
+            _btnXoa.BackColor = Color.FromArgb(192, 57, 43);
+            _btnXoa.FlatAppearance.BorderColor = Color.FromArgb(192, 57, 43);
+            _btnXoa.FlatAppearance.MouseDownBackColor = Color.FromArgb(150, 40, 30);
+            _btnXoa.FlatAppearance.MouseOverBackColor = Color.FromArgb(150, 40, 30);
+            _btnXoa.FlatStyle = FlatStyle.Flat;
+            _btnXoa.ForeColor = Color.White;
+            _btnXoa.Kieu = KieuNut.NguyHiem;
             _btnXoa.Location = new Point(260, 9);
             _btnXoa.Margin = new Padding(3, 4, 3, 4);
             _btnXoa.Name = "_btnXoa";
             _btnXoa.Size = new Size(120, 40);
             _btnXoa.TabIndex = 2;
             _btnXoa.Text = "Xóa";
+            _btnXoa.UseVisualStyleBackColor = false;
             // 
             // _btnMoi
             // 
+            _btnMoi.BackColor = Color.White;
+            _btnMoi.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            _btnMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            _btnMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            _btnMoi.FlatStyle = FlatStyle.Flat;
+            _btnMoi.ForeColor = Color.FromArgb(33, 37, 41);
             _btnMoi.Location = new Point(386, 9);
             _btnMoi.Margin = new Padding(3, 4, 3, 4);
             _btnMoi.Name = "_btnMoi";
             _btnMoi.Size = new Size(120, 40);
             _btnMoi.TabIndex = 3;
             _btnMoi.Text = "Làm mới";
+            _btnMoi.UseVisualStyleBackColor = false;
             // 
             // _grid
             // 

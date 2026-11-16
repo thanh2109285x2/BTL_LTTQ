@@ -93,7 +93,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             cboDiaChi.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cboDiaChi.AutoCompleteSource = AutoCompleteSource.ListItems;
-            cboDiaChi.DropDownStyle = ComboBoxStyle.DropDown;
             cboDiaChi.Location = new Point(200, 218);
             cboDiaChi.Name = "cboDiaChi";
             cboDiaChi.Size = new Size(220, 28);
@@ -118,7 +117,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             dtpNgaySinh.CustomFormat = "dd/MM/yyyy";
             dtpNgaySinh.Format = DateTimePickerFormat.Custom;
-            dtpNgaySinh.ShowCheckBox = false;
             dtpNgaySinh.Location = new Point(163, 104);
             dtpNgaySinh.Name = "dtpNgaySinh";
             dtpNgaySinh.Size = new Size(220, 27);
@@ -154,12 +152,15 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // btnThem
             // 
-            btnThem.BackColor = Color.White;
-            btnThem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnThem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnThem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnThem.BackColor = Color.FromArgb(232, 240, 251);
+            btnThem.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnThem.FlatAppearance.BorderSize = 0;
+            btnThem.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnThem.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
             btnThem.FlatStyle = FlatStyle.Flat;
-            btnThem.ForeColor = Color.FromArgb(33, 37, 41);
+            btnThem.Font = new Font("Segoe UI", 9F);
+            btnThem.ForeColor = Color.FromArgb(41, 98, 168);
+            btnThem.Kieu = KieuNut.MenuTienIch;
             btnThem.Location = new Point(155, 5);
             btnThem.Margin = new Padding(5, 0, 5, 0);
             btnThem.Name = "btnThem";
@@ -171,12 +172,15 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // btnSua
             // 
-            btnSua.BackColor = Color.White;
-            btnSua.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnSua.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnSua.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnSua.BackColor = Color.FromArgb(232, 240, 251);
+            btnSua.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnSua.FlatAppearance.BorderSize = 0;
+            btnSua.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnSua.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
             btnSua.FlatStyle = FlatStyle.Flat;
-            btnSua.ForeColor = Color.FromArgb(33, 37, 41);
+            btnSua.Font = new Font("Segoe UI", 9F);
+            btnSua.ForeColor = Color.FromArgb(41, 98, 168);
+            btnSua.Kieu = KieuNut.MenuTienIch;
             btnSua.Location = new Point(265, 5);
             btnSua.Margin = new Padding(5, 0, 5, 0);
             btnSua.Name = "btnSua";
@@ -188,12 +192,13 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // btnXoa
             // 
-            btnXoa.BackColor = Color.White;
-            btnXoa.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnXoa.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnXoa.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnXoa.BackColor = Color.FromArgb(192, 57, 43);
+            btnXoa.FlatAppearance.BorderColor = Color.FromArgb(192, 57, 43);
+            btnXoa.FlatAppearance.MouseDownBackColor = Color.FromArgb(150, 40, 30);
+            btnXoa.FlatAppearance.MouseOverBackColor = Color.FromArgb(150, 40, 30);
             btnXoa.FlatStyle = FlatStyle.Flat;
-            btnXoa.ForeColor = Color.FromArgb(33, 37, 41);
+            btnXoa.ForeColor = Color.White;
+            btnXoa.Kieu = KieuNut.NguyHiem;
             btnXoa.Location = new Point(375, 5);
             btnXoa.Margin = new Padding(5, 0, 5, 0);
             btnXoa.Name = "btnXoa";
@@ -222,12 +227,15 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // btnTimKiem
             // 
-            btnTimKiem.BackColor = Color.White;
-            btnTimKiem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnTimKiem.BackColor = Color.FromArgb(232, 240, 251);
+            btnTimKiem.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnTimKiem.FlatAppearance.BorderSize = 0;
+            btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
             btnTimKiem.FlatStyle = FlatStyle.Flat;
-            btnTimKiem.ForeColor = Color.FromArgb(33, 37, 41);
+            btnTimKiem.Font = new Font("Segoe UI", 9F);
+            btnTimKiem.ForeColor = Color.FromArgb(41, 98, 168);
+            btnTimKiem.Kieu = KieuNut.MenuTienIch;
             btnTimKiem.Location = new Point(520, 4);
             btnTimKiem.Name = "btnTimKiem";
             btnTimKiem.Size = new Size(110, 34);

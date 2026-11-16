@@ -30,6 +30,7 @@ namespace BTL_LTTQ.Forms.TraCuu
         private string? _maHocVien;
 
         private List<BuoiHoc> _tatCaBuoi = new List<BuoiHoc>();
+        private List<CaHoc> _cacCaHoc = new List<CaHoc>();
 
         // Ngày Thứ 2 của tuần đang xem
         private DateTime _tuanBatDau = TinhThuHai(DateTime.Today);
@@ -92,6 +93,7 @@ namespace BTL_LTTQ.Forms.TraCuu
 
         private void NapLich()
         {
+            _cacCaHoc = _service.LayDanhSachCaHoc();
             _tatCaBuoi = _service.LayLich(_maGV, _maHocVien);
 
             lblMoTa.Text = TaoMoTa(_tatCaBuoi);
@@ -173,21 +175,7 @@ namespace BTL_LTTQ.Forms.TraCuu
             if (soTuan <= 0)
                 return dt;
 
-            // Danh sách ca lấy từ toàn bộ lịch
-            List<BuoiHoc> dsCa = ds
-                .GroupBy(b => new
-                {
-                    b.MaCa,
-                    b.TenCa,
-                    b.KhungGio,
-                    Gio = b.GioBatDau ?? TimeSpan.MaxValue
-                })
-                .OrderBy(g => g.Key.Gio)
-                .ThenBy(g => g.Key.TenCa)
-                .Select(g => g.First())
-                .ToList();
-
-            if (dsCa.Count == 0)
+            if (_cacCaHoc.Count == 0)
                 return dt;
 
             for (int i = 0; i < soTuan; i++)
@@ -204,7 +192,7 @@ namespace BTL_LTTQ.Forms.TraCuu
 
                 bool daGanNhanTuan = false;
 
-                foreach (BuoiHoc ca in dsCa)
+                foreach (CaHoc ca in _cacCaHoc)
                 {
                     DataRow dong = dt.NewRow();
 
@@ -251,7 +239,7 @@ namespace BTL_LTTQ.Forms.TraCuu
         }
 
         // Tên ca đã có sẵn giờ thì không chèn thêm khung giờ
-        private static string TaoNhanCa(BuoiHoc ca)
+        private static string TaoNhanCa(CaHoc ca)
         {
             string tenCa = string.IsNullOrWhiteSpace(ca.TenCa)
                 ? ca.MaCa

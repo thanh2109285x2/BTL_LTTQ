@@ -30,20 +30,20 @@ namespace BTL_LTTQ.Forms.TraCuu
         /// </summary>
         private void InitializeComponent()
         {
-            grpDieuKien = new System.Windows.Forms.GroupBox();
-            lblTenGV = new System.Windows.Forms.Label();
-            txtTenGV = new System.Windows.Forms.TextBox();
-            lblTrinhDo = new System.Windows.Forms.Label();
-            cboTrinhDo = new System.Windows.Forms.ComboBox();
-            lblChuyenMon = new System.Windows.Forms.Label();
-            cboChuyenMon = new System.Windows.Forms.ComboBox();
-            lblMonDay = new System.Windows.Forms.Label();
-            cboMonDay = new System.Windows.Forms.ComboBox();
-            panelNut = new System.Windows.Forms.Panel();
-            btnTimKiem = new AppButton { Kieu = KieuNut.Chinh };
-            btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
-            grpKetQua = new System.Windows.Forms.GroupBox();
-            dgvKetQua = new System.Windows.Forms.DataGridView();
+            grpDieuKien = new GroupBox();
+            lblTenGV = new Label();
+            txtTenGV = new TextBox();
+            lblTrinhDo = new Label();
+            cboTrinhDo = new ComboBox();
+            lblChuyenMon = new Label();
+            cboChuyenMon = new ComboBox();
+            lblMonDay = new Label();
+            cboMonDay = new ComboBox();
+            panelNut = new Panel();
+            btnTimKiem = new AppButton();
+            btnLamMoi = new AppButton();
+            grpKetQua = new GroupBox();
+            dgvKetQua = new DataGridView();
             grpDieuKien.SuspendLayout();
             panelNut.SuspendLayout();
             grpKetQua.SuspendLayout();
@@ -60,11 +60,11 @@ namespace BTL_LTTQ.Forms.TraCuu
             grpDieuKien.Controls.Add(cboChuyenMon);
             grpDieuKien.Controls.Add(lblMonDay);
             grpDieuKien.Controls.Add(cboMonDay);
-            grpDieuKien.Dock = System.Windows.Forms.DockStyle.Top;
-            grpDieuKien.Location = new System.Drawing.Point(0, 0);
+            grpDieuKien.Dock = DockStyle.Top;
+            grpDieuKien.Location = new Point(0, 0);
             grpDieuKien.Name = "grpDieuKien";
-            grpDieuKien.Padding = new System.Windows.Forms.Padding(10);
-            grpDieuKien.Size = new System.Drawing.Size(984, 140);
+            grpDieuKien.Padding = new Padding(10);
+            grpDieuKien.Size = new Size(984, 140);
             grpDieuKien.TabIndex = 0;
             grpDieuKien.TabStop = false;
             grpDieuKien.Text = "Điều kiện tìm kiếm";
@@ -72,110 +72,127 @@ namespace BTL_LTTQ.Forms.TraCuu
             // lblTenGV
             // 
             lblTenGV.AutoSize = true;
-            lblTenGV.Location = new System.Drawing.Point(60, 40);
+            lblTenGV.Location = new Point(60, 40);
             lblTenGV.Name = "lblTenGV";
-            lblTenGV.Size = new System.Drawing.Size(95, 20);
+            lblTenGV.Size = new Size(97, 20);
             lblTenGV.TabIndex = 0;
             lblTenGV.Text = "Tên giáo viên";
             // 
             // txtTenGV
             // 
-            txtTenGV.Location = new System.Drawing.Point(180, 36);
+            txtTenGV.Location = new Point(180, 36);
             txtTenGV.Name = "txtTenGV";
-            txtTenGV.Size = new System.Drawing.Size(220, 27);
+            txtTenGV.Size = new Size(220, 27);
             txtTenGV.TabIndex = 1;
             txtTenGV.KeyDown += txtTenGV_KeyDown;
             // 
             // lblTrinhDo
             // 
             lblTrinhDo.AutoSize = true;
-            lblTrinhDo.Location = new System.Drawing.Point(60, 90);
+            lblTrinhDo.Location = new Point(60, 90);
             lblTrinhDo.Name = "lblTrinhDo";
-            lblTrinhDo.Size = new System.Drawing.Size(60, 20);
+            lblTrinhDo.Size = new Size(63, 20);
             lblTrinhDo.TabIndex = 2;
             lblTrinhDo.Text = "Trình độ";
             // 
             // cboTrinhDo
             // 
-            cboTrinhDo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cboTrinhDo.DropDownStyle = ComboBoxStyle.DropDownList;
             cboTrinhDo.FormattingEnabled = true;
-            cboTrinhDo.Location = new System.Drawing.Point(180, 86);
+            cboTrinhDo.Location = new Point(180, 86);
             cboTrinhDo.Name = "cboTrinhDo";
-            cboTrinhDo.Size = new System.Drawing.Size(220, 28);
+            cboTrinhDo.Size = new Size(220, 28);
             cboTrinhDo.TabIndex = 3;
             // 
             // lblChuyenMon
             // 
             lblChuyenMon.AutoSize = true;
-            lblChuyenMon.Location = new System.Drawing.Point(520, 40);
+            lblChuyenMon.Location = new Point(520, 40);
             lblChuyenMon.Name = "lblChuyenMon";
-            lblChuyenMon.Size = new System.Drawing.Size(83, 20);
+            lblChuyenMon.Size = new Size(91, 20);
             lblChuyenMon.TabIndex = 4;
             lblChuyenMon.Text = "Chuyên môn";
             // 
             // cboChuyenMon
             // 
-            cboChuyenMon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cboChuyenMon.DropDownStyle = ComboBoxStyle.DropDownList;
             cboChuyenMon.FormattingEnabled = true;
-            cboChuyenMon.Location = new System.Drawing.Point(640, 36);
+            cboChuyenMon.Location = new Point(640, 36);
             cboChuyenMon.Name = "cboChuyenMon";
-            cboChuyenMon.Size = new System.Drawing.Size(220, 28);
+            cboChuyenMon.Size = new Size(220, 28);
             cboChuyenMon.TabIndex = 5;
             // 
             // lblMonDay
             // 
             lblMonDay.AutoSize = true;
-            lblMonDay.Location = new System.Drawing.Point(520, 90);
+            lblMonDay.Location = new Point(520, 90);
             lblMonDay.Name = "lblMonDay";
-            lblMonDay.Size = new System.Drawing.Size(61, 20);
+            lblMonDay.Size = new Size(67, 20);
             lblMonDay.TabIndex = 6;
             lblMonDay.Text = "Môn dạy";
             // 
             // cboMonDay
             // 
-            cboMonDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cboMonDay.DropDownStyle = ComboBoxStyle.DropDownList;
             cboMonDay.FormattingEnabled = true;
-            cboMonDay.Location = new System.Drawing.Point(640, 86);
+            cboMonDay.Location = new Point(640, 86);
             cboMonDay.Name = "cboMonDay";
-            cboMonDay.Size = new System.Drawing.Size(220, 28);
+            cboMonDay.Size = new Size(220, 28);
             cboMonDay.TabIndex = 7;
             // 
             // panelNut
             // 
             panelNut.Controls.Add(btnTimKiem);
             panelNut.Controls.Add(btnLamMoi);
-            panelNut.Dock = System.Windows.Forms.DockStyle.Top;
-            panelNut.Location = new System.Drawing.Point(0, 140);
+            panelNut.Dock = DockStyle.Top;
+            panelNut.Location = new Point(0, 140);
             panelNut.Name = "panelNut";
-            panelNut.Size = new System.Drawing.Size(984, 60);
+            panelNut.Size = new Size(984, 60);
             panelNut.TabIndex = 1;
             // 
             // btnTimKiem
             // 
-            btnTimKiem.Location = new System.Drawing.Point(300, 10);
+            btnTimKiem.BackColor = Color.FromArgb(232, 240, 251);
+            btnTimKiem.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnTimKiem.FlatAppearance.BorderSize = 0;
+            btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnTimKiem.FlatStyle = FlatStyle.Flat;
+            btnTimKiem.Font = new Font("Segoe UI", 9F);
+            btnTimKiem.ForeColor = Color.FromArgb(41, 98, 168);
+            btnTimKiem.Kieu = KieuNut.MenuTienIch;
+            btnTimKiem.Location = new Point(300, 10);
             btnTimKiem.Name = "btnTimKiem";
-            btnTimKiem.Size = new System.Drawing.Size(120, 40);
+            btnTimKiem.Size = new Size(120, 40);
             btnTimKiem.TabIndex = 0;
             btnTimKiem.Text = "Tìm kiếm";
+            btnTimKiem.UseVisualStyleBackColor = false;
             btnTimKiem.Click += btnTimKiem_Click;
             // 
             // btnLamMoi
             // 
-            btnLamMoi.Location = new System.Drawing.Point(480, 10);
+            btnLamMoi.BackColor = Color.White;
+            btnLamMoi.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnLamMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnLamMoi.FlatStyle = FlatStyle.Flat;
+            btnLamMoi.ForeColor = Color.FromArgb(33, 37, 41);
+            btnLamMoi.Location = new Point(480, 10);
             btnLamMoi.Name = "btnLamMoi";
-            btnLamMoi.Size = new System.Drawing.Size(120, 40);
+            btnLamMoi.Size = new Size(120, 40);
             btnLamMoi.TabIndex = 1;
             btnLamMoi.Text = "Làm mới";
+            btnLamMoi.UseVisualStyleBackColor = false;
             btnLamMoi.Click += btnLamMoi_Click;
             // 
             // grpKetQua
             // 
             grpKetQua.Controls.Add(dgvKetQua);
-            grpKetQua.Dock = System.Windows.Forms.DockStyle.Fill;
-            grpKetQua.Location = new System.Drawing.Point(0, 200);
+            grpKetQua.Dock = DockStyle.Fill;
+            grpKetQua.Location = new Point(0, 200);
             grpKetQua.Name = "grpKetQua";
-            grpKetQua.Padding = new System.Windows.Forms.Padding(10);
-            grpKetQua.Size = new System.Drawing.Size(984, 361);
+            grpKetQua.Padding = new Padding(10);
+            grpKetQua.Size = new Size(984, 361);
             grpKetQua.TabIndex = 2;
             grpKetQua.TabStop = false;
             grpKetQua.Text = "Kết quả tìm kiếm";
@@ -184,25 +201,25 @@ namespace BTL_LTTQ.Forms.TraCuu
             // 
             dgvKetQua.AllowUserToAddRows = false;
             dgvKetQua.AllowUserToDeleteRows = false;
-            dgvKetQua.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dgvKetQua.BackgroundColor = System.Drawing.Color.White;
-            dgvKetQua.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvKetQua.Dock = System.Windows.Forms.DockStyle.Fill;
-            dgvKetQua.Location = new System.Drawing.Point(10, 30);
+            dgvKetQua.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvKetQua.BackgroundColor = Color.White;
+            dgvKetQua.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvKetQua.Dock = DockStyle.Fill;
+            dgvKetQua.Location = new Point(10, 30);
             dgvKetQua.MultiSelect = false;
             dgvKetQua.Name = "dgvKetQua";
             dgvKetQua.ReadOnly = true;
             dgvKetQua.RowHeadersVisible = false;
             dgvKetQua.RowHeadersWidth = 51;
-            dgvKetQua.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            dgvKetQua.Size = new System.Drawing.Size(964, 321);
+            dgvKetQua.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvKetQua.Size = new Size(964, 321);
             dgvKetQua.TabIndex = 0;
             // 
             // frmTimKiemGiaoVien
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(984, 561);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(984, 561);
             Controls.Add(grpKetQua);
             Controls.Add(panelNut);
             Controls.Add(grpDieuKien);

@@ -21,8 +21,8 @@ namespace BTL_LTTQ.Forms.HeThong
         {
             lblTieuDe = new Label();
             lblNoiDung = new Label();
-            btnKhoiPhuc = new AppButton { Kieu = KieuNut.Phu };
-            btnHuy = new AppButton { Kieu = KieuNut.Phu };
+            btnKhoiPhuc = new AppButton();
+            btnHuy = new AppButton();
             SuspendLayout();
             // 
             // lblTieuDe
@@ -46,21 +46,36 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             // btnKhoiPhuc
             // 
+            btnKhoiPhuc.BackColor = Color.FromArgb(41, 98, 168);
+            btnKhoiPhuc.FlatAppearance.BorderColor = Color.FromArgb(41, 98, 168);
+            btnKhoiPhuc.FlatAppearance.MouseDownBackColor = Color.FromArgb(30, 74, 130);
+            btnKhoiPhuc.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 74, 130);
+            btnKhoiPhuc.FlatStyle = FlatStyle.Flat;
+            btnKhoiPhuc.ForeColor = Color.White;
+            btnKhoiPhuc.Kieu = KieuNut.Chinh;
             btnKhoiPhuc.Location = new Point(54, 196);
             btnKhoiPhuc.Name = "btnKhoiPhuc";
             btnKhoiPhuc.Size = new Size(132, 36);
             btnKhoiPhuc.TabIndex = 2;
             btnKhoiPhuc.Text = "Khôi phục";
+            btnKhoiPhuc.UseVisualStyleBackColor = false;
             btnKhoiPhuc.Click += btnKhoiPhuc_Click;
             // 
             // btnHuy
             // 
+            btnHuy.BackColor = Color.White;
             btnHuy.DialogResult = DialogResult.Cancel;
+            btnHuy.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnHuy.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnHuy.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnHuy.FlatStyle = FlatStyle.Flat;
+            btnHuy.ForeColor = Color.FromArgb(33, 37, 41);
             btnHuy.Location = new Point(266, 196);
             btnHuy.Name = "btnHuy";
             btnHuy.Size = new Size(86, 36);
             btnHuy.TabIndex = 3;
             btnHuy.Text = "Hủy";
+            btnHuy.UseVisualStyleBackColor = false;
             btnHuy.Click += btnHuy_Click;
             // 
             // frmRestore

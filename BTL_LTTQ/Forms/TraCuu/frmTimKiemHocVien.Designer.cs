@@ -80,12 +80,15 @@ namespace BTL_LTTQ.Forms.TraCuu
             // 
             // btnTimKiem
             // 
-            btnTimKiem.BackColor = Color.White;
-            btnTimKiem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnTimKiem.BackColor = Color.FromArgb(232, 240, 251);
+            btnTimKiem.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnTimKiem.FlatAppearance.BorderSize = 0;
+            btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
             btnTimKiem.FlatStyle = FlatStyle.Flat;
-            btnTimKiem.ForeColor = Color.FromArgb(33, 37, 41);
+            btnTimKiem.Font = new Font("Segoe UI", 9F);
+            btnTimKiem.ForeColor = Color.FromArgb(41, 98, 168);
+            btnTimKiem.Kieu = KieuNut.MenuTienIch;
             btnTimKiem.Location = new Point(8, 6);
             btnTimKiem.Name = "btnTimKiem";
             btnTimKiem.Size = new Size(120, 36);

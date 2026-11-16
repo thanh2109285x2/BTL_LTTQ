@@ -59,7 +59,8 @@ namespace BTL_LTTQ.BUS
 
         public string DangKy(string tenDangNhap, string matKhau, string vaiTro, string? maGV, string? maHocVien)
         {
-            if (string.IsNullOrWhiteSpace(vaiTro) || (vaiTro != "Admin" && vaiTro != "GiangVien" && vaiTro != "HocVien"))
+            if (string.IsNullOrWhiteSpace(vaiTro) ||
+                (vaiTro != VaiTroConst.Admin && vaiTro != VaiTroConst.GiaoVien && vaiTro != VaiTroConst.HocVien))
             {
                 return "Vui lòng chọn vai trò hợp lệ.";
             }

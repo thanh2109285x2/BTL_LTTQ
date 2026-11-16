@@ -10,6 +10,29 @@ namespace BTL_LTTQ.DAL
     public class ThoiKhoaBieuRepository
     {
 
+        public List<CaHoc> LayDanhSachCaHoc()
+        {
+            const string sql = @"SELECT MaCa, TenCa, GioBatDau, GioKetThuc
+                                 FROM CaHoc
+                                 ORDER BY CASE WHEN TenCa LIKE N'%cuối tuần%' THEN 1 ELSE 0 END,
+                                          CASE WHEN GioBatDau IS NULL THEN 1 ELSE 0 END,
+                                          GioBatDau, MaCa";
+            DataTable dt = DbHelper.ExecuteQuery(sql);
+            var ketQua = new List<CaHoc>();
+            foreach (DataRow dong in dt.Rows)
+            {
+                ketQua.Add(new CaHoc
+                {
+                    MaCa = dong["MaCa"].ToString() ?? "",
+                    TenCa = dong["TenCa"].ToString() ?? "",
+                    GioBatDau = dong["GioBatDau"] == DBNull.Value ? null : (TimeSpan)dong["GioBatDau"],
+                    GioKetThuc = dong["GioKetThuc"] == DBNull.Value ? null : (TimeSpan)dong["GioKetThuc"]
+                });
+            }
+
+            return ketQua;
+        }
+
         //Ghi đè toàn bộ lịch trong một transaction
 
         public void XoaTatCa()

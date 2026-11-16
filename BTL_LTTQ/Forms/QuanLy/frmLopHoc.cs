@@ -130,7 +130,6 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             bool coQuyenThem = PermissionService.Can(ChucNangConst.LOPHOC_THEM);
             bool coQuyenSua = PermissionService.Can(ChucNangConst.LOPHOC_SUA);
-            btnSinhLaiLich.Visible = CurrentUser.IsAdmin;
             _chiSuaLopCuaMinh = coQuyenSua && PermissionService.ChiCuaMinh(ChucNangConst.LOPHOC_SUA);
             _chiXem = !coQuyenThem && !coQuyenSua;
             PhanQuyenUi.AnNutThemSuaXoa(
@@ -159,32 +158,6 @@ namespace BTL_LTTQ.Forms.QuanLy
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
             LamMoi();
-        }
-
-        private void btnSinhLaiLich_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(maLopDangChon))
-            {
-                MessageBox.Show("Vui lòng chọn một lớp trong danh sách để sinh lại lịch.", "Chưa chọn lớp",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            DialogResult hoi = MessageBox.Show(
-                $"Bạn có chắc chắn muốn xóa lịch hiện tại và sinh lại lịch cho lớp {maLopDangChon}?",
-                "Xác nhận sinh lại lịch", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (hoi != DialogResult.Yes) return;
-
-            try
-            {
-                int soBuoiDaTao = LichHocService.TaoLaiBuoiHocChoLop(maLopDangChon);
-                MessageBox.Show($"Đã sinh lại lịch cho lớp {maLopDangChon}: {soBuoiDaTao} buổi học.",
-                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Không thể sinh lại lịch", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         private void btnThem_Click(object sender, EventArgs e)
