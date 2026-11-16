@@ -34,10 +34,11 @@ namespace BTL_LTTQ.Forms.QuanLy
             panelNoiDung = new Panel();
             groupBox1 = new GroupBox();
             panelNut = new Panel();
-            btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
-            btnXoa = new AppButton { Kieu = KieuNut.NguyHiem };
-            btnSua = new AppButton { Kieu = KieuNut.Chinh };
-            btnThem = new AppButton { Kieu = KieuNut.Chinh };
+            btnLamMoi = new AppButton();
+            btnSinhLaiLich = new AppButton();
+            btnXoa = new AppButton();
+            btnSua = new AppButton();
+            btnThem = new AppButton();
             cboThoiGian = new ComboBox();
             cboCaHoc = new ComboBox();
             numSoBuoiTuan = new NumericUpDown();
@@ -61,7 +62,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             txtTenLop = new TextBox();
             txtMaLop = new TextBox();
             panelTieuDe = new Panel();
-            btnThu = new AppButton { Kieu = KieuNut.Phu };
+            btnThu = new AppButton();
             label1 = new Label();
             panelDanhSach = new Panel();
             txtTimKiem = new TextBox();
@@ -72,12 +73,12 @@ namespace BTL_LTTQ.Forms.QuanLy
             panelNoiDung.SuspendLayout();
             groupBox1.SuspendLayout();
             panelNut.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numSoBuoiTuan).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numSiSoToiDa).BeginInit();
             panelTieuDe.SuspendLayout();
             panelDanhSach.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLopHoc).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numSoBuoiTuan).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numSiSoToiDa).BeginInit();
             SuspendLayout();
             // 
             // panelNhapLieu
@@ -87,7 +88,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             panelNhapLieu.Dock = DockStyle.Top;
             panelNhapLieu.Location = new Point(0, 0);
             panelNhapLieu.Name = "panelNhapLieu";
-            panelNhapLieu.Size = new Size(1332, 333);
+            panelNhapLieu.Size = new Size(1387, 333);
             panelNhapLieu.TabIndex = 0;
             // 
             // panelNoiDung
@@ -96,7 +97,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             panelNoiDung.Dock = DockStyle.Bottom;
             panelNoiDung.Location = new Point(0, 40);
             panelNoiDung.Name = "panelNoiDung";
-            panelNoiDung.Size = new Size(1332, 293);
+            panelNoiDung.Size = new Size(1387, 293);
             panelNoiDung.TabIndex = 1;
             // 
             // groupBox1
@@ -126,7 +127,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             groupBox1.Controls.Add(txtMaLop);
             groupBox1.Location = new Point(0, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1300, 293);
+            groupBox1.Size = new Size(1372, 293);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin lớp học";
@@ -134,53 +135,96 @@ namespace BTL_LTTQ.Forms.QuanLy
             // panelNut
             // 
             panelNut.Controls.Add(btnLamMoi);
+            panelNut.Controls.Add(btnSinhLaiLich);
             panelNut.Controls.Add(btnXoa);
             panelNut.Controls.Add(btnSua);
             panelNut.Controls.Add(btnThem);
             panelNut.Dock = DockStyle.Bottom;
             panelNut.Location = new Point(3, 230);
             panelNut.Name = "panelNut";
-            panelNut.Size = new Size(1294, 60);
+            panelNut.Size = new Size(1366, 60);
             panelNut.TabIndex = 1;
             // 
             // btnLamMoi
             // 
+            btnLamMoi.BackColor = Color.White;
+            btnLamMoi.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnLamMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnLamMoi.FlatStyle = FlatStyle.Flat;
+            btnLamMoi.ForeColor = Color.FromArgb(33, 37, 41);
             btnLamMoi.Location = new Point(612, 7);
             btnLamMoi.Name = "btnLamMoi";
             btnLamMoi.Size = new Size(105, 42);
             btnLamMoi.TabIndex = 3;
             btnLamMoi.Text = "Làm mới";
-            btnLamMoi.UseVisualStyleBackColor = true;
+            btnLamMoi.UseVisualStyleBackColor = false;
             btnLamMoi.Click += btnLamMoi_Click;
+            // 
+            // btnSinhLaiLich
+            // 
+            btnSinhLaiLich.BackColor = Color.White;
+            btnSinhLaiLich.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnSinhLaiLich.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnSinhLaiLich.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnSinhLaiLich.FlatStyle = FlatStyle.Flat;
+            btnSinhLaiLich.ForeColor = Color.FromArgb(33, 37, 41);
+            btnSinhLaiLich.Kieu = KieuNut.Phu;
+            btnSinhLaiLich.Location = new Point(764, 7);
+            btnSinhLaiLich.Name = "btnSinhLaiLich";
+            btnSinhLaiLich.Size = new Size(125, 42);
+            btnSinhLaiLich.TabIndex = 4;
+            btnSinhLaiLich.Text = "Sinh lại lịch";
+            btnSinhLaiLich.UseVisualStyleBackColor = false;
+            btnSinhLaiLich.Visible = false;
+            btnSinhLaiLich.Click += btnSinhLaiLich_Click;
             // 
             // btnXoa
             // 
+            btnXoa.BackColor = Color.White;
+            btnXoa.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnXoa.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnXoa.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnXoa.FlatStyle = FlatStyle.Flat;
+            btnXoa.ForeColor = Color.FromArgb(33, 37, 41);
             btnXoa.Location = new Point(460, 7);
             btnXoa.Name = "btnXoa";
             btnXoa.Size = new Size(105, 42);
             btnXoa.TabIndex = 2;
             btnXoa.Text = "Xóa";
-            btnXoa.UseVisualStyleBackColor = true;
+            btnXoa.UseVisualStyleBackColor = false;
             btnXoa.Click += btnXoa_Click;
             // 
             // btnSua
             // 
+            btnSua.BackColor = Color.White;
+            btnSua.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnSua.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnSua.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnSua.FlatStyle = FlatStyle.Flat;
+            btnSua.ForeColor = Color.FromArgb(33, 37, 41);
             btnSua.Location = new Point(308, 7);
             btnSua.Name = "btnSua";
             btnSua.Size = new Size(105, 42);
             btnSua.TabIndex = 1;
             btnSua.Text = "Sửa";
-            btnSua.UseVisualStyleBackColor = true;
+            btnSua.UseVisualStyleBackColor = false;
             btnSua.Click += btnSua_Click;
             // 
             // btnThem
             // 
+            btnThem.BackColor = Color.White;
+            btnThem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnThem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnThem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnThem.FlatStyle = FlatStyle.Flat;
+            btnThem.ForeColor = Color.FromArgb(33, 37, 41);
             btnThem.Location = new Point(145, 7);
             btnThem.Name = "btnThem";
             btnThem.Size = new Size(105, 42);
             btnThem.TabIndex = 0;
             btnThem.Text = "Thêm";
-            btnThem.UseVisualStyleBackColor = true;
+            btnThem.UseVisualStyleBackColor = false;
             btnThem.Click += btnThem_Click;
             // 
             // cboThoiGian
@@ -224,7 +268,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             label12.AutoSize = true;
             label12.Location = new Point(475, 176);
             label12.Name = "label12";
-            label12.Size = new Size(87, 20);
+            label12.Size = new Size(95, 20);
             label12.TabIndex = 19;
             label12.Text = "Số buổi/tuần";
             // 
@@ -233,7 +277,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             label13.AutoSize = true;
             label13.Location = new Point(475, 210);
             label13.Name = "label13";
-            label13.Size = new Size(85, 20);
+            label13.Size = new Size(83, 20);
             label13.TabIndex = 20;
             label13.Text = "Sĩ số tối đa";
             // 
@@ -377,18 +421,24 @@ namespace BTL_LTTQ.Forms.QuanLy
             panelTieuDe.Dock = DockStyle.Top;
             panelTieuDe.Location = new Point(0, 0);
             panelTieuDe.Name = "panelTieuDe";
-            panelTieuDe.Size = new Size(1332, 47);
+            panelTieuDe.Size = new Size(1387, 47);
             panelTieuDe.TabIndex = 0;
             panelTieuDe.Paint += panel2_Paint;
             // 
             // btnThu
             // 
+            btnThu.BackColor = Color.White;
+            btnThu.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnThu.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnThu.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnThu.FlatStyle = FlatStyle.Flat;
+            btnThu.ForeColor = Color.FromArgb(33, 37, 41);
             btnThu.Location = new Point(179, 3);
             btnThu.Name = "btnThu";
             btnThu.Size = new Size(29, 29);
             btnThu.TabIndex = 1;
             btnThu.Text = "▲";
-            btnThu.UseVisualStyleBackColor = true;
+            btnThu.UseVisualStyleBackColor = false;
             btnThu.Click += btnThu_Click;
             // 
             // label1
@@ -409,7 +459,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             panelDanhSach.Dock = DockStyle.Fill;
             panelDanhSach.Location = new Point(0, 333);
             panelDanhSach.Name = "panelDanhSach";
-            panelDanhSach.Size = new Size(1332, 179);
+            panelDanhSach.Size = new Size(1387, 214);
             panelDanhSach.TabIndex = 1;
             // 
             // txtTimKiem
@@ -435,7 +485,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             groupBox2.Controls.Add(dgvLopHoc);
             groupBox2.Location = new Point(3, 47);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(1300, 179);
+            groupBox2.Size = new Size(1372, 179);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "Danh sách lớp học";
@@ -447,7 +497,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             dgvLopHoc.Location = new Point(3, 23);
             dgvLopHoc.Name = "dgvLopHoc";
             dgvLopHoc.RowHeadersWidth = 51;
-            dgvLopHoc.Size = new Size(1294, 153);
+            dgvLopHoc.Size = new Size(1366, 153);
             dgvLopHoc.TabIndex = 0;
             dgvLopHoc.CellClick += dgvLopHoc_CellClick;
             // 
@@ -455,7 +505,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1332, 512);
+            ClientSize = new Size(1387, 547);
             Controls.Add(panelDanhSach);
             Controls.Add(panelNhapLieu);
             Name = "frmLopHoc";
@@ -466,14 +516,14 @@ namespace BTL_LTTQ.Forms.QuanLy
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             panelNut.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numSoBuoiTuan).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numSiSoToiDa).EndInit();
             panelTieuDe.ResumeLayout(false);
             panelTieuDe.PerformLayout();
             panelDanhSach.ResumeLayout(false);
             panelDanhSach.PerformLayout();
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvLopHoc).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numSoBuoiTuan).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numSiSoToiDa).EndInit();
             ResumeLayout(false);
         }
 
@@ -506,6 +556,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         private ComboBox cboThoiGian;
         private ComboBox cboCaHoc;
         private AppButton btnLamMoi;
+        private AppButton btnSinhLaiLich;
         private AppButton btnXoa;
         private AppButton btnSua;
         private GroupBox groupBox2;

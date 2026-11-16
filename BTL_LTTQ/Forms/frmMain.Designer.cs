@@ -55,13 +55,16 @@
             btnDoanhThu = new AppButton();
             btnBaoCaoDiem = new AppButton();
             btnBaoCaoMenu = new AppButton();
+            panelKhac = new Panel();
+            btnXuatExcel = new AppButton();
+            btnThemDuLieu = new AppButton();
+            btnKhac = new AppButton();
             panelHeThong = new Panel();
             btnPhanQuyen = new AppButton();
             btnHeThong = new AppButton();
             panelContent = new Panel();
             lblChao = new Label();
             panelThoat = new Panel();
-            btnXuatExcel = new AppButton();
             btnDangXuat = new AppButton();
             btnDoiMatKhau = new AppButton();
             btnThoat = new AppButton();
@@ -72,6 +75,7 @@
             panelNghiepVu.SuspendLayout();
             panelTraCuu.SuspendLayout();
             panelBaoCao.SuspendLayout();
+            panelKhac.SuspendLayout();
             panelHeThong.SuspendLayout();
             panelContent.SuspendLayout();
             panelThoat.SuspendLayout();
@@ -86,12 +90,13 @@
             flowLayoutPanel1.Controls.Add(panelNghiepVu);
             flowLayoutPanel1.Controls.Add(panelTraCuu);
             flowLayoutPanel1.Controls.Add(panelBaoCao);
+            flowLayoutPanel1.Controls.Add(panelKhac);
             flowLayoutPanel1.Controls.Add(panelHeThong);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(320, 383);
+            flowLayoutPanel1.Size = new Size(320, 427);
             flowLayoutPanel1.TabIndex = 0;
             flowLayoutPanel1.WrapContents = false;
             // 
@@ -136,7 +141,7 @@
             panelCRUD.Controls.Add(btnQuanLyMenu);
             panelCRUD.Location = new Point(3, 61);
             panelCRUD.Name = "panelCRUD";
-            panelCRUD.Size = new Size(271, 222);
+            panelCRUD.Size = new Size(271, 209);
             panelCRUD.TabIndex = 1;
             panelCRUD.Paint += panelCRUD_Paint;
             // 
@@ -159,6 +164,7 @@
             btnDanhMucKhac.Text = "Danh mục khác";
             btnDanhMucKhac.TextAlign = ContentAlignment.MiddleLeft;
             btnDanhMucKhac.UseVisualStyleBackColor = false;
+            btnDanhMucKhac.Click += btnDanhMucKhac_Click;
             // 
             // btnMonHoc
             // 
@@ -273,9 +279,9 @@
             panelNghiepVu.Controls.Add(btnDongHocPhi);
             panelNghiepVu.Controls.Add(btnDangKyLop);
             panelNghiepVu.Controls.Add(btnNghiepVuMenu);
-            panelNghiepVu.Location = new Point(3, 289);
+            panelNghiepVu.Location = new Point(3, 276);
             panelNghiepVu.Name = "panelNghiepVu";
-            panelNghiepVu.Size = new Size(271, 140);
+            panelNghiepVu.Size = new Size(271, 38);
             panelNghiepVu.TabIndex = 2;
             // 
             // btnNhapDiem
@@ -371,9 +377,9 @@
             panelTraCuu.Controls.Add(btnTimHocVien);
             panelTraCuu.Controls.Add(btnTimLop);
             panelTraCuu.Controls.Add(btnTraCuuMenu);
-            panelTraCuu.Location = new Point(3, 435);
+            panelTraCuu.Location = new Point(3, 320);
             panelTraCuu.Name = "panelTraCuu";
-            panelTraCuu.Size = new Size(271, 38);
+            panelTraCuu.Size = new Size(271, 42);
             panelTraCuu.TabIndex = 2;
             // 
             // btnThoiKhoaBieu
@@ -490,7 +496,7 @@
             panelBaoCao.Controls.Add(btnDoanhThu);
             panelBaoCao.Controls.Add(btnBaoCaoDiem);
             panelBaoCao.Controls.Add(btnBaoCaoMenu);
-            panelBaoCao.Location = new Point(3, 479);
+            panelBaoCao.Location = new Point(3, 368);
             panelBaoCao.Name = "panelBaoCao";
             panelBaoCao.Size = new Size(271, 38);
             panelBaoCao.TabIndex = 3;
@@ -602,13 +608,91 @@
             btnBaoCaoMenu.UseVisualStyleBackColor = false;
             btnBaoCaoMenu.Click += btnBaoCaoMenu_Click;
             // 
+            // panelKhac
+            // 
+            panelKhac.Controls.Add(btnXuatExcel);
+            panelKhac.Controls.Add(btnThemDuLieu);
+            panelKhac.Controls.Add(btnKhac);
+            panelKhac.Location = new Point(3, 412);
+            panelKhac.Name = "panelKhac";
+            panelKhac.Size = new Size(271, 105);
+            panelKhac.TabIndex = 5;
+            panelKhac.Visible = false;
+            // 
+            // btnXuatExcel
+            // 
+            btnXuatExcel.BackColor = Color.FromArgb(232, 240, 251);
+            btnXuatExcel.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnXuatExcel.FlatAppearance.BorderSize = 0;
+            btnXuatExcel.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnXuatExcel.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnXuatExcel.FlatStyle = FlatStyle.Flat;
+            btnXuatExcel.Font = new Font("Segoe UI", 9F);
+            btnXuatExcel.ForeColor = Color.FromArgb(33, 37, 41);
+            btnXuatExcel.Kieu = KieuNut.MenuCon;
+            btnXuatExcel.Location = new Point(52, 73);
+            btnXuatExcel.Name = "btnXuatExcel";
+            btnXuatExcel.Padding = new Padding(48, 0, 0, 0);
+            btnXuatExcel.Size = new Size(192, 29);
+            btnXuatExcel.TabIndex = 3;
+            btnXuatExcel.Text = "Xuất Excel";
+            btnXuatExcel.TextAlign = ContentAlignment.MiddleLeft;
+            btnXuatExcel.UseVisualStyleBackColor = false;
+            btnXuatExcel.Click += btnXuatExcel_Click;
+            // 
+            // btnThemDuLieu
+            // 
+            btnThemDuLieu.BackColor = Color.FromArgb(232, 240, 251);
+            btnThemDuLieu.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
+            btnThemDuLieu.FlatAppearance.BorderSize = 0;
+            btnThemDuLieu.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnThemDuLieu.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnThemDuLieu.FlatStyle = FlatStyle.Flat;
+            btnThemDuLieu.Font = new Font("Segoe UI", 9F);
+            btnThemDuLieu.ForeColor = Color.FromArgb(33, 37, 41);
+            btnThemDuLieu.Kieu = KieuNut.MenuCon;
+            btnThemDuLieu.Location = new Point(52, 38);
+            btnThemDuLieu.Name = "btnThemDuLieu";
+            btnThemDuLieu.Padding = new Padding(48, 0, 0, 0);
+            btnThemDuLieu.Size = new Size(192, 29);
+            btnThemDuLieu.TabIndex = 2;
+            btnThemDuLieu.Text = "Thêm dữ liệu";
+            btnThemDuLieu.TextAlign = ContentAlignment.MiddleLeft;
+            btnThemDuLieu.UseVisualStyleBackColor = false;
+            btnThemDuLieu.Visible = false;
+            btnThemDuLieu.Click += btnThemDuLieu_Click;
+            // 
+            // btnKhac
+            // 
+            btnKhac.BackColor = Color.FromArgb(210, 225, 246);
+            btnKhac.FlatAppearance.BorderColor = Color.FromArgb(210, 225, 246);
+            btnKhac.FlatAppearance.BorderSize = 0;
+            btnKhac.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
+            btnKhac.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
+            btnKhac.FlatStyle = FlatStyle.Flat;
+            btnKhac.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnKhac.ForeColor = Color.FromArgb(30, 74, 130);
+            btnKhac.ImageAlign = ContentAlignment.MiddleLeft;
+            btnKhac.Kieu = KieuNut.MenuCha;
+            btnKhac.Location = new Point(3, 3);
+            btnKhac.Name = "btnKhac";
+            btnKhac.Padding = new Padding(8, 0, 0, 0);
+            btnKhac.Size = new Size(169, 29);
+            btnKhac.TabIndex = 1;
+            btnKhac.Text = "\U0001f9e9      Khác";
+            btnKhac.TextAlign = ContentAlignment.MiddleLeft;
+            btnKhac.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnKhac.UseVisualStyleBackColor = false;
+            btnKhac.Visible = false;
+            btnKhac.Click += btnKhac_Click;
+            // 
             // panelHeThong
             // 
             panelHeThong.Controls.Add(btnPhanQuyen);
             panelHeThong.Controls.Add(btnHeThong);
             panelHeThong.Location = new Point(3, 523);
             panelHeThong.Name = "panelHeThong";
-            panelHeThong.Size = new Size(271, 71);
+            panelHeThong.Size = new Size(271, 74);
             panelHeThong.TabIndex = 4;
             panelHeThong.Visible = false;
             // 
@@ -681,34 +765,14 @@
             // 
             // panelThoat
             // 
-            panelThoat.Controls.Add(btnXuatExcel);
             panelThoat.Controls.Add(btnDangXuat);
             panelThoat.Controls.Add(btnDoiMatKhau);
             panelThoat.Controls.Add(btnThoat);
             panelThoat.Dock = DockStyle.Bottom;
-            panelThoat.Location = new Point(0, 383);
+            panelThoat.Location = new Point(0, 427);
             panelThoat.Name = "panelThoat";
-            panelThoat.Size = new Size(320, 170);
+            panelThoat.Size = new Size(320, 126);
             panelThoat.TabIndex = 5;
-            // 
-            // btnXuatExcel
-            // 
-            btnXuatExcel.BackColor = Color.FromArgb(232, 240, 251);
-            btnXuatExcel.FlatAppearance.BorderColor = Color.FromArgb(232, 240, 251);
-            btnXuatExcel.FlatAppearance.BorderSize = 0;
-            btnXuatExcel.FlatAppearance.MouseDownBackColor = Color.FromArgb(193, 214, 242);
-            btnXuatExcel.FlatAppearance.MouseOverBackColor = Color.FromArgb(193, 214, 242);
-            btnXuatExcel.FlatStyle = FlatStyle.Flat;
-            btnXuatExcel.Font = new Font("Segoe UI", 9F);
-            btnXuatExcel.ForeColor = Color.FromArgb(41, 98, 168);
-            btnXuatExcel.Kieu = KieuNut.MenuTienIch;
-            btnXuatExcel.Location = new Point(55, 3);
-            btnXuatExcel.Name = "btnXuatExcel";
-            btnXuatExcel.Size = new Size(219, 38);
-            btnXuatExcel.TabIndex = 1;
-            btnXuatExcel.Text = "Xuất File &Excel";
-            btnXuatExcel.UseVisualStyleBackColor = false;
-            btnXuatExcel.Click += btnXuatExcel_Click;
             // 
             // btnDangXuat
             // 
@@ -721,7 +785,7 @@
             btnDangXuat.Font = new Font("Segoe UI", 9F);
             btnDangXuat.ForeColor = Color.FromArgb(41, 98, 168);
             btnDangXuat.Kieu = KieuNut.MenuTienIch;
-            btnDangXuat.Location = new Point(55, 91);
+            btnDangXuat.Location = new Point(55, 47);
             btnDangXuat.Name = "btnDangXuat";
             btnDangXuat.Size = new Size(219, 38);
             btnDangXuat.TabIndex = 3;
@@ -740,7 +804,7 @@
             btnDoiMatKhau.Font = new Font("Segoe UI", 9F);
             btnDoiMatKhau.ForeColor = Color.FromArgb(41, 98, 168);
             btnDoiMatKhau.Kieu = KieuNut.MenuTienIch;
-            btnDoiMatKhau.Location = new Point(55, 47);
+            btnDoiMatKhau.Location = new Point(55, 3);
             btnDoiMatKhau.Name = "btnDoiMatKhau";
             btnDoiMatKhau.Size = new Size(219, 38);
             btnDoiMatKhau.TabIndex = 2;
@@ -759,7 +823,7 @@
             btnThoat.Font = new Font("Segoe UI", 9F);
             btnThoat.ForeColor = Color.FromArgb(192, 57, 43);
             btnThoat.Kieu = KieuNut.MenuThoat;
-            btnThoat.Location = new Point(55, 136);
+            btnThoat.Location = new Point(55, 91);
             btnThoat.Name = "btnThoat";
             btnThoat.Size = new Size(219, 32);
             btnThoat.TabIndex = 0;
@@ -794,6 +858,7 @@
             panelNghiepVu.ResumeLayout(false);
             panelTraCuu.ResumeLayout(false);
             panelBaoCao.ResumeLayout(false);
+            panelKhac.ResumeLayout(false);
             panelHeThong.ResumeLayout(false);
             panelContent.ResumeLayout(false);
             panelContent.PerformLayout();
@@ -808,12 +873,15 @@
         private Panel panelNghiepVu;
         private Panel panelTraCuu;
         private Panel panelBaoCao;
+        private Panel panelKhac;
 private Panel panelHeThong;
 private AppButton btnTrangChu;
 private AppButton btnTraCuuMenu;
 private AppButton btnBaoCaoMenu;
 private AppButton btnHeThong;
 private AppButton btnPhanQuyen;
+private AppButton btnKhac;
+private AppButton btnThemDuLieu;
 private AppButton btnTimGiaoVien;
 private AppButton btnTimHocVien;
 private AppButton btnTimLop;

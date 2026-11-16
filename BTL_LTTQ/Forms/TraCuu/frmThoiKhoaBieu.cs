@@ -15,8 +15,8 @@ namespace BTL_LTTQ.Forms.TraCuu
     // Xem thời khóa biểu nhiều tuần liên tiếp và danh sách buổi học chi tiết
     public partial class frmThoiKhoaBieu : Form, IXuatExcel
     {
-        private static readonly string[] TenCacThu =
-            { "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật" };
+        private static readonly string[] TenCacThu = ThuTrongTuanConst.CacThu
+            .Select(ThuTrongTuanConst.TenHienThi).ToArray();
 
         private const int SoTuanMacDinh = 1;
 
@@ -48,7 +48,7 @@ namespace BTL_LTTQ.Forms.TraCuu
         // Thứ 2 của tuần chứa ngày truyền vào
         private static DateTime TinhThuHai(DateTime ngay)
         {
-            int lech = ((int)ngay.DayOfWeek + 6) % 7;
+            int lech = ThuTrongTuanConst.TuNgay(ngay) - ThuTrongTuanConst.ThuHai;
             return ngay.Date.AddDays(-lech);
         }
 

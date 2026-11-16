@@ -2,6 +2,8 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using BTL_LTTQ.DAL;
+using BTL_LTTQ.Common;
 
 namespace BTL_LTTQ.BUS
 {
@@ -18,6 +20,7 @@ namespace BTL_LTTQ.BUS
     {
         /// <summary>Số tuần tối đa sinh lịch cho một lớp (tránh sinh hàng nghìn dòng cho lớp kéo dài nhiều năm).</summary>
         private const int SoTuanSinhLichToiDa = 12;
+        internal const string ThongBaoChuaCoThuHoc = "Thời gian này chưa có thứ học nào";
 
         /// <summary>
         /// Tạo các buổi học còn thiếu cho lớp. Trả về số buổi đã tạo.
@@ -57,15 +60,8 @@ namespace BTL_LTTQ.BUS
                 ngayKt = reader.IsDBNull(6) ? DateTime.Today : Convert.ToDateTime(reader.GetValue(6)).Date;
             }
 
-            // Lớp chưa đủ thông tin (chưa có giáo viên / ca / phòng) thì chưa sinh được lịch.
-            if (maGv == "" || maCa == "" || maPhong == "")
-                return 0;
-
-            if (ngayKt < ngayBd)
-                return 0;
-
             // 2. Các thứ trong tuần của mẫu thời gian (2 = T2 ... 8 = CN).
-            var thuCuaMau = new List<int>();
+            var thuCuaMau = new List<byte>();
             using (var cmd = new SqlCommand(
                 "SELECT Thu FROM dbo.ThoiGian_Thu WHERE MaThoiGian = @MaThoiGian ORDER BY Thu", conn, tran))
             {
@@ -75,15 +71,25 @@ namespace BTL_LTTQ.BUS
                 while (reader.Read())
                 {
                     if (reader.IsDBNull(0)) continue;
-                    int thu = Convert.ToInt32(reader.GetValue(0));
-                    if (thu >= 2 && thu <= 8)
+                    byte thu = Convert.ToByte(reader.GetValue(0));
+                    if (ThuTrongTuanConst.CacThu.Contains(thu))
                         thuCuaMau.Add(thu);
                 }
             }
 
+            if (thuCuaMau.Count == 0)
+                throw new InvalidOperationException(ThongBaoChuaCoThuHoc);
+
+            // Lớp chưa đủ thông tin (chưa có giáo viên / ca / phòng) thì chưa sinh được lịch.
+            if (maGv == "" || maCa == "" || maPhong == "")
+                return 0;
+
+            if (ngayKt < ngayBd)
+                return 0;
+
             // 3. Số buổi mỗi tuần: không vượt quá số buổi/tuần khai trong lớp.
             int soBuoiTuanThucTe = soBuoiTuan <= 0 ? 3 : soBuoiTuan;
-            if (thuCuaMau.Count > 0 && thuCuaMau.Count < soBuoiTuanThucTe)
+            if (thuCuaMau.Count < soBuoiTuanThucTe)
                 soBuoiTuanThucTe = thuCuaMau.Count;
 
             // 4. Các buổi đã có của lớp (tránh tạo trùng khi đăng ký nhiều lần).
@@ -104,15 +110,13 @@ namespace BTL_LTTQ.BUS
                 ngayKetThuc = ngayKt;
 
             int soBuoiDaTao = 0;
-            var soBuoiTheoThu = new Dictionary<int, int>();
+            var soBuoiTheoThu = new Dictionary<byte, int>();
 
             for (DateTime ngay = ngayBd; ngay <= ngayKetThuc; ngay = ngay.AddDays(1))
             {
-                int thu = ThuTrongTuan(ngay);
+                byte thu = ThuTrongTuanConst.TuNgay(ngay);
 
-                bool thuDuocChon = thuCuaMau.Count > 0
-                    ? thuCuaMau.Contains(thu)
-                    : soBuoiTuanThucTe > 0;
+                bool thuDuocChon = thuCuaMau.Contains(thu);
 
                 if (!thuDuocChon)
                     continue;
@@ -149,6 +153,28 @@ namespace BTL_LTTQ.BUS
             return soBuoiDaTao;
         }
 
+        /// <summary>Xóa và sinh lại toàn bộ buổi học trong cùng một transaction; chỉ Admin có quyền.</summary>
+        public static int TaoLaiBuoiHocChoLop(string maLop)
+        {
+            if (!CurrentUser.IsAdmin ||
+                !PermissionService.Can(ChucNangConst.LOPHOC_SUA) ||
+                PermissionService.ChiCuaMinh(ChucNangConst.LOPHOC_SUA))
+                throw new UnauthorizedAccessException("Chức năng sinh lại lịch chỉ dành cho Admin.");
+
+            if (string.IsNullOrWhiteSpace(maLop))
+                throw new InvalidOperationException("Vui lòng chọn một lớp để sinh lại lịch.");
+
+            int soBuoiDaTao = 0;
+            var repository = new BuoiHocRepository();
+            DbHelper.ExecuteTransaction((conn, tran) =>
+            {
+                repository.XoaTatCaCuaLop(conn, tran, maLop);
+                soBuoiDaTao = TaoBuoiHocChoLop(conn, tran, maLop);
+            });
+
+            return soBuoiDaTao;
+        }
+
         /// <summary>Xóa toàn bộ buổi học của lớp (dùng khi lớp không còn học viên nào).</summary>
         public static void XoaBuoiHocCuaLop(SqlConnection conn, SqlTransaction tran, string maLop)
         {
@@ -175,10 +201,5 @@ namespace BTL_LTTQ.BUS
             return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
         }
 
-        /// <summary>Đổi ngày trong tuần sang số theo quy ước của bảng ThoiGian_Thu (2 = T2 ... 8 = CN).</summary>
-        private static int ThuTrongTuan(DateTime ngay)
-        {
-            return ((int)ngay.DayOfWeek + 6) % 7 + 2;
-        }
     }
 }

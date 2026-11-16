@@ -137,6 +137,12 @@ namespace BTL_LTTQ.BUS.Import
                 ketQua.SoDongDaThem = 0;
                 ketQua.ThongDiep = "Dữ liệu tham chiếu không hợp lệ. Không có dòng nào được ghi.";
             }
+            catch (InvalidOperationException ex) when (ex.Message == LichHocService.ThongBaoChuaCoThuHoc)
+            {
+                ketQua.ThanhCong = false;
+                ketQua.SoDongDaThem = 0;
+                ketQua.ThongDiep = ex.Message;
+            }
             catch (Exception ex)
             {
                 ketQua.ThanhCong = false;

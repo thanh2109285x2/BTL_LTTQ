@@ -1,4 +1,5 @@
 using System;
+using BTL_LTTQ.Common;
 
 namespace BTL_LTTQ.Models
 {
@@ -19,19 +20,9 @@ namespace BTL_LTTQ.Models
         public string MaPhong { get; set; } = "";
         public string TenPhong { get; set; } = "";
 
-        //0 = Thứ 2 ... 5 = Thứ 7, 6 = Chủ nhật
-        public int Thu => Ngay.DayOfWeek == DayOfWeek.Sunday ? 6 : (int)Ngay.DayOfWeek - 1;
+        public int Thu => ThuTrongTuanConst.TuNgay(Ngay);
 
-        public string TenThu => Thu switch
-        {
-            0 => "Thứ 2",
-            1 => "Thứ 3",
-            2 => "Thứ 4",
-            3 => "Thứ 5",
-            4 => "Thứ 6",
-            5 => "Thứ 7",
-            _ => "Chủ nhật"
-        };
+        public string TenThu => ThuTrongTuanConst.TenHienThi((byte)Thu);
 
         public string KhungGio => GioBatDau.HasValue && GioKetThuc.HasValue
             ? $"{GioBatDau.Value:hh\\:mm}-{GioKetThuc.Value:hh\\:mm}"

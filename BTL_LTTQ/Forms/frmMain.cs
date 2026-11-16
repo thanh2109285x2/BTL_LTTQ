@@ -2,6 +2,7 @@ using BTL_LTTQ.Common;
 using BTL_LTTQ.Forms.HeThong;
 using BTL_LTTQ.Forms;
 using BTL_LTTQ.Forms.QuanLy;
+using BTL_LTTQ.Forms.Import;
 using BTL_LTTQ.Forms.BaoCao;
 using BTL_LTTQ.Forms.NghiepVu;
 using BTL_LTTQ.Forms.TraCuu;
@@ -16,9 +17,8 @@ namespace BTL_LTTQ
         private readonly System.Windows.Forms.Timer sidebarTimer;
         private readonly System.Windows.Forms.Timer menuTimer;
         private bool sidebarExpand = true;
-        private bool menuExpand;
         private Panel? panelMenuDangHoatDong;
-        private int menuMaxHeight;
+        private int menuTargetHeight = PANEL_COLLAPSED_HEIGHT;
 
         public bool DangXuat { get; private set; }
         private Form? activeForm;
@@ -79,33 +79,25 @@ namespace BTL_LTTQ
                 return;
             }
 
-            if (menuExpand)
-            {
-                panelMenuDangHoatDong.Height += 10;
-                if (panelMenuDangHoatDong.Height >= menuMaxHeight)
-                {
-                    panelMenuDangHoatDong.Height = menuMaxHeight;
-                    menuTimer.Stop();
-                }
-            }
-            else
-            {
-                panelMenuDangHoatDong.Height -= 10;
-                if (panelMenuDangHoatDong.Height <= PANEL_COLLAPSED_HEIGHT)
-                {
-                    panelMenuDangHoatDong.Height = PANEL_COLLAPSED_HEIGHT;
-                    menuTimer.Stop();
-                }
-            }
+            int height = panelMenuDangHoatDong.Height;
+            if (height < menuTargetHeight)
+                panelMenuDangHoatDong.Height = Math.Min(height + 10, menuTargetHeight);
+            else if (height > menuTargetHeight)
+                panelMenuDangHoatDong.Height = Math.Max(height - 10, menuTargetHeight);
+
+            if (panelMenuDangHoatDong.Height == menuTargetHeight)
+                menuTimer.Stop();
         }
         private void CollapseAllPanels()
         {
             menuTimer.Stop();
             panelMenuDangHoatDong = null;
+            menuTargetHeight = PANEL_COLLAPSED_HEIGHT;
             panelCRUD.Height = PANEL_COLLAPSED_HEIGHT;
             panelNghiepVu.Height = PANEL_COLLAPSED_HEIGHT;
             panelTraCuu.Height = PANEL_COLLAPSED_HEIGHT;
             panelBaoCao.Height = PANEL_COLLAPSED_HEIGHT;
+            panelKhac.Height = PANEL_COLLAPSED_HEIGHT;
             panelHeThong.Height = PANEL_COLLAPSED_HEIGHT;
         }
 
@@ -167,7 +159,6 @@ namespace BTL_LTTQ
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDoanhThu, ChucNangConst.BC_DOANHTHU);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTop3, ChucNangConst.BC_XEPHANG);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG);
-            PhanQuyenUi.AnNeuKhongCoQuyen(btnDangKyLop, ChucNangConst.DANGKYLOP);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDongHocPhi, ChucNangConst.DONGHOCPHI);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnNhapDiem, ChucNangConst.HOCVIEN_NHAPDIEM);
 
@@ -182,10 +173,10 @@ namespace BTL_LTTQ
                 (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
                 (btnTimHocVien, ChucNangConst.TIM_HOCVIEN),
                 (btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM));
-            btnNghiepVuMenu.Visible = SapXepMenu(panelNghiepVu,
-                (btnDangKyLop, ChucNangConst.DANGKYLOP),
-                (btnDongHocPhi, ChucNangConst.DONGHOCPHI),
-                (btnNhapDiem, ChucNangConst.HOCVIEN_NHAPDIEM));
+            btnNghiepVuMenu.Visible = SapXepMenuTheoQuyen(panelNghiepVu,
+                (btnDangKyLop, CurrentUser.IsHocVien && PermissionService.Can(ChucNangConst.DANGKYLOP)),
+                (btnDongHocPhi, PermissionService.Can(ChucNangConst.DONGHOCPHI)),
+                (btnNhapDiem, PermissionService.Can(ChucNangConst.HOCVIEN_NHAPDIEM)));
             btnBaoCaoMenu.Visible = SapXepMenu(panelBaoCao,
                 (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
                 (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
@@ -193,34 +184,40 @@ namespace BTL_LTTQ
                 (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG));
 
             bool coQuyenPhanQuyen = PermissionService.Can(ChucNangConst.PHANQUYEN);
+            bool coQuyenNhap = CoQuyenNhapHangLoat();
+            bool coQuyenXuat = PermissionService.Can(ChucNangConst.XUAT_EXCEL);
             btnPhanQuyen.Visible = coQuyenPhanQuyen;
-            btnHeThong.Visible = coQuyenPhanQuyen;
-            panelHeThong.Visible = coQuyenPhanQuyen;
-            panelHeThong.Height = coQuyenPhanQuyen ? PANEL_COLLAPSED_HEIGHT + 35 : PANEL_COLLAPSED_HEIGHT;
+            btnThemDuLieu.Visible = coQuyenNhap;
+            btnXuatExcel.Visible = coQuyenXuat;
+            btnKhac.Visible = SapXepMenuTheoQuyen(panelKhac,
+                (btnThemDuLieu, coQuyenNhap),
+                (btnXuatExcel, coQuyenXuat));
+            panelKhac.Visible = btnKhac.Visible;
+            btnHeThong.Visible = SapXepMenu(panelHeThong,
+                (btnPhanQuyen, ChucNangConst.PHANQUYEN));
+            panelHeThong.Visible = btnHeThong.Visible;
         }
 
         private void btnHeThong_Click(object? sender, EventArgs e)
         {
-            TogglePanel(panelHeThong, (btnPhanQuyen, ChucNangConst.PHANQUYEN));
+            TogglePanel(panelHeThong, btnPhanQuyen);
         }
 
         private void btnPhanQuyen_Click(object? sender, EventArgs e)
         {
-            if (!PhanQuyenUi.CoQuyenMo(ChucNangConst.PHANQUYEN))
-            {
-                MessageBox.Show("Bạn không có quyền sử dụng chức năng này.", "Không có quyền",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            using var form = new frmPhanQuyen();
-            form.ShowDialog(this);
+            OpenChildForm(() => new frmPhanQuyen(), btnPhanQuyen, ChucNangConst.PHANQUYEN);
         }
 
         private static bool SapXepMenu(Panel panel, params (Button Nut, string MaChucNang)[] muc)
         {
+            return SapXepMenuTheoQuyen(panel,
+                muc.Select(m => (m.Nut, PermissionService.Can(m.MaChucNang))).ToArray());
+        }
+
+        private static bool SapXepMenuTheoQuyen(Panel panel, params (Button Nut, bool CoQuyen)[] muc)
+        {
             Button[] mucCoQuyen = muc
-                .Where(m => PermissionService.Can(m.MaChucNang))
+                .Where(m => m.CoQuyen)
                 .Select(m => m.Nut)
                 .ToArray();
             bool canSapXepLai = mucCoQuyen.Length != muc.Length;
@@ -238,34 +235,37 @@ namespace BTL_LTTQ
             return mucCoQuyen.Length > 0;
         }
 
-        private void TogglePanel(Panel panelToToggle, params (Button Nut, string MaChucNang)[] muc)
+        private void TogglePanel(Panel panelToToggle, params Button[] muc)
         {
-            int maxHeight = Math.Max(PANEL_COLLAPSED_HEIGHT,
-                muc.Where(m => m.Nut.Visible)
-                    .Select(m => m.Nut.Bottom + 3)
+            int expandedHeight = Math.Max(PANEL_COLLAPSED_HEIGHT,
+                muc.Where(button => button.Visible)
+                    .Select(button => button.Bottom + 3)
                     .DefaultIfEmpty(PANEL_COLLAPSED_HEIGHT)
                     .Max());
             panelToToggle.MinimumSize = new Size(0, PANEL_COLLAPSED_HEIGHT);
 
-            if (menuTimer.Enabled && panelMenuDangHoatDong == panelToToggle)
+            if (panelMenuDangHoatDong == panelToToggle && menuTimer.Enabled)
             {
-                menuExpand = !menuExpand;
+                menuTargetHeight = menuTargetHeight > PANEL_COLLAPSED_HEIGHT
+                    ? PANEL_COLLAPSED_HEIGHT
+                    : expandedHeight;
             }
             else
             {
                 menuTimer.Stop();
                 CollapseOtherPanels(panelToToggle);
-                menuExpand = panelToToggle.Height <= PANEL_COLLAPSED_HEIGHT;
+                menuTargetHeight = panelToToggle.Height <= PANEL_COLLAPSED_HEIGHT
+                    ? expandedHeight
+                    : PANEL_COLLAPSED_HEIGHT;
             }
 
             panelMenuDangHoatDong = panelToToggle;
-            menuMaxHeight = maxHeight;
             menuTimer.Start();
         }
 
         private void CollapseOtherPanels(Panel panelToKeep)
         {
-            foreach (Panel panel in new[] { panelCRUD, panelNghiepVu, panelTraCuu, panelBaoCao, panelHeThong })
+            foreach (Panel panel in new[] { panelCRUD, panelNghiepVu, panelTraCuu, panelBaoCao, panelKhac, panelHeThong })
             {
                 if (panel != panelToKeep)
                     panel.Height = PANEL_COLLAPSED_HEIGHT;
@@ -274,10 +274,7 @@ namespace BTL_LTTQ
 
         private void btnNghiepVuMenu_Click(object sender, EventArgs e)
         {
-            TogglePanel(panelNghiepVu,
-                (btnDangKyLop, ChucNangConst.DANGKYLOP),
-                (btnDongHocPhi, ChucNangConst.DONGHOCPHI),
-                (btnNhapDiem, ChucNangConst.HOCVIEN_NHAPDIEM));
+            TogglePanel(panelNghiepVu, btnDangKyLop, btnDongHocPhi, btnNhapDiem);
         }
 
         private void btnDangKyLop_Click(object sender, EventArgs e)
@@ -293,6 +290,32 @@ namespace BTL_LTTQ
         private void btnNhapDiem_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmNhapDiem(), btnNhapDiem, ChucNangConst.HOCVIEN_NHAPDIEM);
+        }
+
+        private static bool CoQuyenNhapHangLoat()
+        {
+            return !CurrentUser.IsHocVien &&
+                   (PermissionService.Can(ChucNangConst.HOCVIEN_THEM) ||
+                    PermissionService.Can(ChucNangConst.GIAOVIEN_THEM) ||
+                    PermissionService.Can(ChucNangConst.DANGKYLOP));
+        }
+
+        private void btnKhac_Click(object? sender, EventArgs e)
+        {
+            TogglePanel(panelKhac, btnThemDuLieu, btnXuatExcel);
+        }
+
+        private void btnThemDuLieu_Click(object? sender, EventArgs e)
+        {
+            if (!CoQuyenNhapHangLoat())
+            {
+                MessageBox.Show("Bạn không có quyền nhập dữ liệu hàng loạt.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var form = new FrmBulkImport();
+            form.ShowDialog(this);
         }
 
         private void btnDoiMatKhau_Click(object? sender, EventArgs e)
@@ -329,30 +352,17 @@ namespace BTL_LTTQ
 
         private void btnQuanLyMenu_Click(object sender, EventArgs e)
         {
-            TogglePanel(panelCRUD,
-                (btnLopHoc, ChucNangConst.LOPHOC_XEM),
-                (btnHocVien, ChucNangConst.HOCVIEN_XEM),
-                (btnGiaoVien, ChucNangConst.GIAOVIEN_XEM),
-                (btnMonHoc, ChucNangConst.MONHOC_XEM),
-                (btnDanhMucKhac, ChucNangConst.DANHMUC_KHAC));
+            TogglePanel(panelCRUD, btnLopHoc, btnHocVien, btnGiaoVien, btnMonHoc, btnDanhMucKhac);
         }
 
         private void btnTraCuuMenu_Click(object sender, EventArgs e)
         {
-            TogglePanel(panelTraCuu,
-                (btnTimLop, ChucNangConst.TIM_LOP),
-                (btnTimGiaoVien, ChucNangConst.TIM_GIAOVIEN),
-                (btnTimHocVien, ChucNangConst.TIM_HOCVIEN),
-                (btnThoiKhoaBieu, ChucNangConst.THOIKHOA_XEM));
+            TogglePanel(panelTraCuu, btnTimLop, btnTimGiaoVien, btnTimHocVien, btnThoiKhoaBieu);
         }
 
         private void btnBaoCaoMenu_Click(object sender, EventArgs e)
         {
-            TogglePanel(panelBaoCao,
-                (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
-                (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
-                (btnTop3, ChucNangConst.BC_XEPHANG),
-                (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG));
+            TogglePanel(panelBaoCao, btnBaoCaoDiem, btnDoanhThu, btnTop3, btnLopTheoPhong);
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -462,6 +472,11 @@ namespace BTL_LTTQ
         private void btnGiaoVien_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmGiaoVien(), btnGiaoVien, ChucNangConst.GIAOVIEN_XEM);
+        }
+
+        private void btnDanhMucKhac_Click(object? sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmDanhMucKhac(), btnDanhMucKhac, ChucNangConst.DANHMUC_KHAC);
         }
 
         private void btnTimLop_Click(object sender, EventArgs e)

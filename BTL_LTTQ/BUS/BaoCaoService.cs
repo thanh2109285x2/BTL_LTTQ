@@ -12,9 +12,22 @@ namespace BTL_LTTQ.BUS
     {
         private readonly BaoCaoRepository _repo = new();
 
-        public DataTable LayDanhSachLop() => _repo.LayDanhSachLop();
+        public DataTable LayDanhSachLop(string maChucNang)
+        {
+            KiemTraQuyenBaoCao(maChucNang);
+            if (!string.Equals(maChucNang, ChucNangConst.BC_DIEM, StringComparison.OrdinalIgnoreCase))
+                return _repo.LayDanhSachLop("", Array.Empty<SqlParameter>());
 
-        public DataTable LayBangDiem(string? maLop) => _repo.LayBangDiem(maLop);
+            var phamVi = PhamViDuLieu.ChoHocVien(ChucNangConst.BC_DIEM, "hv");
+            return _repo.LayDanhSachLop(phamVi.DieuKienSql, phamVi.ThamSo);
+        }
+
+        public DataTable LayBangDiem(string? maLop)
+        {
+            KiemTraQuyenBaoCao(ChucNangConst.BC_DIEM);
+            var phamVi = PhamViDuLieu.ChoHocVien(ChucNangConst.BC_DIEM, "hv");
+            return _repo.LayBangDiem(maLop, phamVi.DieuKienSql, phamVi.ThamSo);
+        }
 
         public DataTable LayDoanhThu(string? maLop) => _repo.LayDoanhThu(maLop);
 

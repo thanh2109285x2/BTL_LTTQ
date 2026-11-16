@@ -6,18 +6,31 @@ namespace BTL_LTTQ.DAL
 {
     internal sealed class BaoCaoRepository
     {
-        public DataTable LayDanhSachLop() => DbHelper.ExecuteQuery(
-            "SELECT MaLop, TenLop FROM LopHoc ORDER BY TenLop");
+        public DataTable LayDanhSachLop(string? dieuKienPhamVi, SqlParameter[] thamSo)
+        {
+            string locPhamVi = string.IsNullOrWhiteSpace(dieuKienPhamVi) ? "" : " AND " + dieuKienPhamVi;
+            return DbHelper.ExecuteQuery($@"
+                SELECT DISTINCT l.MaLop, l.TenLop
+                FROM LopHoc l
+                LEFT JOIN HocVien hv ON hv.MaLop = l.MaLop
+                WHERE 1 = 1 {locPhamVi}
+                ORDER BY l.TenLop", thamSo);
+        }
 
-        public DataTable LayBangDiem(string? maLop) => DbHelper.ExecuteQuery(@"
-            SELECT l.MaLop, l.TenLop, hv.MaHocVien, hv.TenHocVien,
-                   hv.Diem, xl.TenLoai AS XepLoai
-            FROM LopHoc l
-            LEFT JOIN HocVien hv ON hv.MaLop = l.MaLop
-            LEFT JOIN XepLoai xl ON xl.MaXepLoai = hv.MaXepLoai
-            WHERE (@MaLop IS NULL OR l.MaLop = @MaLop)
-            ORDER BY l.TenLop, hv.TenHocVien",
-            new SqlParameter("@MaLop", (object?)maLop ?? DBNull.Value));
+        public DataTable LayBangDiem(string? maLop, string? dieuKienPhamVi, SqlParameter[] thamSo)
+        {
+            string locPhamVi = string.IsNullOrWhiteSpace(dieuKienPhamVi) ? "" : " AND " + dieuKienPhamVi;
+            var thamSoTruyVan = thamSo.ToList();
+            thamSoTruyVan.Add(new SqlParameter("@MaLop", (object?)maLop ?? DBNull.Value));
+            return DbHelper.ExecuteQuery($@"
+                SELECT l.MaLop, l.TenLop, hv.MaHocVien, hv.TenHocVien,
+                       hv.Diem, xl.TenLoai AS XepLoai
+                FROM LopHoc l
+                LEFT JOIN HocVien hv ON hv.MaLop = l.MaLop
+                LEFT JOIN XepLoai xl ON xl.MaXepLoai = hv.MaXepLoai
+                WHERE (@MaLop IS NULL OR l.MaLop = @MaLop) {locPhamVi}
+                ORDER BY l.TenLop, hv.TenHocVien", thamSoTruyVan.ToArray());
+        }
 
         public DataTable LayDoanhThu(string? maLop) => DbHelper.ExecuteQuery(@"
             SELECT l.MaLop, l.TenLop, m.TenMon,

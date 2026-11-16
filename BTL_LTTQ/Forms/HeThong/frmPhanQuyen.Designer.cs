@@ -16,7 +16,6 @@ namespace BTL_LTTQ.Forms.HeThong
         private void InitializeComponent()
         {
             layoutRoot = new TableLayoutPanel();
-            panelButtons = new FlowLayoutPanel();
             lblGiaiThich = new Label();
             dgvPhanQuyen = new DataGridView();
             colChucNang = new DataGridViewTextBoxColumn();
@@ -24,11 +23,12 @@ namespace BTL_LTTQ.Forms.HeThong
             colGiaoVienChiCuaMinh = new DataGridViewCheckBoxColumn();
             colHocVien = new DataGridViewCheckBoxColumn();
             colHocVienChiCuaMinh = new DataGridViewCheckBoxColumn();
-            btnLuu = new AppButton { Kieu = KieuNut.Chinh };
-            btnHoanTac = new AppButton { Kieu = KieuNut.Phu };
-            btnDong = new AppButton { Kieu = KieuNut.Phu };
-            ((System.ComponentModel.ISupportInitialize)dgvPhanQuyen).BeginInit();
+            panelButtons = new FlowLayoutPanel();
+            btnDong = new AppButton();
+            btnHoanTac = new AppButton();
+            btnLuu = new AppButton();
             layoutRoot.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPhanQuyen).BeginInit();
             panelButtons.SuspendLayout();
             SuspendLayout();
             // 
@@ -44,35 +44,20 @@ namespace BTL_LTTQ.Forms.HeThong
             layoutRoot.Name = "layoutRoot";
             layoutRoot.Padding = new Padding(12);
             layoutRoot.RowCount = 3;
-            layoutRoot.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            layoutRoot.RowStyles.Add(new RowStyle());
             layoutRoot.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            layoutRoot.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            layoutRoot.RowStyles.Add(new RowStyle());
             layoutRoot.Size = new Size(1100, 680);
             layoutRoot.TabIndex = 0;
-            // 
-            // panelButtons
-            // 
-            panelButtons.AutoSize = true;
-            panelButtons.Controls.Add(btnDong);
-            panelButtons.Controls.Add(btnHoanTac);
-            panelButtons.Controls.Add(btnLuu);
-            panelButtons.Dock = DockStyle.Fill;
-            panelButtons.FlowDirection = FlowDirection.RightToLeft;
-            panelButtons.Location = new Point(15, 618);
-            panelButtons.Name = "panelButtons";
-            panelButtons.Padding = new Padding(0, 10, 0, 0);
-            panelButtons.Size = new Size(1070, 51);
-            panelButtons.TabIndex = 2;
-            panelButtons.WrapContents = false;
             // 
             // lblGiaiThich
             // 
             lblGiaiThich.AutoSize = true;
             lblGiaiThich.Dock = DockStyle.Fill;
-            lblGiaiThich.Margin = new Padding(3, 3, 3, 10);
             lblGiaiThich.Location = new Point(15, 15);
+            lblGiaiThich.Margin = new Padding(3, 3, 3, 10);
             lblGiaiThich.Name = "lblGiaiThich";
-            lblGiaiThich.Size = new Size(800, 20);
+            lblGiaiThich.Size = new Size(1070, 20);
             lblGiaiThich.TabIndex = 0;
             lblGiaiThich.Text = "Không tích = chỉ Admin; chỉ ô chính = dữ liệu của tất cả; cả hai = chỉ dữ liệu của chính mình.";
             // 
@@ -90,23 +75,24 @@ namespace BTL_LTTQ.Forms.HeThong
             dgvPhanQuyen.Dock = DockStyle.Fill;
             dgvPhanQuyen.EnableHeadersVisualStyles = false;
             dgvPhanQuyen.GridColor = Color.FromArgb(200, 208, 220);
-            dgvPhanQuyen.Location = new Point(15, 45);
-            dgvPhanQuyen.Margin = new Padding(3);
+            dgvPhanQuyen.Location = new Point(15, 48);
             dgvPhanQuyen.MultiSelect = false;
             dgvPhanQuyen.Name = "dgvPhanQuyen";
             dgvPhanQuyen.RowHeadersVisible = false;
+            dgvPhanQuyen.RowHeadersWidth = 51;
             dgvPhanQuyen.RowTemplate.Height = 28;
             dgvPhanQuyen.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dgvPhanQuyen.Size = new Size(1068, 553);
+            dgvPhanQuyen.Size = new Size(1070, 557);
             dgvPhanQuyen.TabIndex = 1;
-            dgvPhanQuyen.CurrentCellDirtyStateChanged += Grid_CurrentCellDirtyStateChanged;
-            dgvPhanQuyen.CellValueChanged += Grid_CellValueChanged;
             dgvPhanQuyen.CellClick += Grid_CellClick;
+            dgvPhanQuyen.CellValueChanged += Grid_CellValueChanged;
+            dgvPhanQuyen.CurrentCellDirtyStateChanged += Grid_CurrentCellDirtyStateChanged;
             // 
             // colChucNang
             // 
             colChucNang.FillWeight = 180F;
             colChucNang.HeaderText = "Chức năng";
+            colChucNang.MinimumWidth = 6;
             colChucNang.Name = "colChucNang";
             colChucNang.ReadOnly = true;
             // 
@@ -114,6 +100,7 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colGiaoVien.FillWeight = 90F;
             colGiaoVien.HeaderText = "Giáo viên";
+            colGiaoVien.MinimumWidth = 6;
             colGiaoVien.Name = "colGiaoVien";
             colGiaoVien.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
@@ -121,6 +108,7 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colGiaoVienChiCuaMinh.FillWeight = 125F;
             colGiaoVienChiCuaMinh.HeaderText = "Giáo viên - chỉ của mình";
+            colGiaoVienChiCuaMinh.MinimumWidth = 6;
             colGiaoVienChiCuaMinh.Name = "colGiaoVienChiCuaMinh";
             colGiaoVienChiCuaMinh.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
@@ -128,6 +116,7 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colHocVien.FillWeight = 90F;
             colHocVien.HeaderText = "Học viên";
+            colHocVien.MinimumWidth = 6;
             colHocVien.Name = "colHocVien";
             colHocVien.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
@@ -135,41 +124,72 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             colHocVienChiCuaMinh.FillWeight = 125F;
             colHocVienChiCuaMinh.HeaderText = "Học viên - chỉ của mình";
+            colHocVienChiCuaMinh.MinimumWidth = 6;
             colHocVienChiCuaMinh.Name = "colHocVienChiCuaMinh";
             colHocVienChiCuaMinh.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
+            // panelButtons
+            // 
+            panelButtons.AutoSize = true;
+            panelButtons.Controls.Add(btnDong);
+            panelButtons.Controls.Add(btnHoanTac);
+            panelButtons.Controls.Add(btnLuu);
+            panelButtons.Dock = DockStyle.Fill;
+            panelButtons.FlowDirection = FlowDirection.RightToLeft;
+            panelButtons.Location = new Point(15, 611);
+            panelButtons.Name = "panelButtons";
+            panelButtons.Padding = new Padding(0, 10, 0, 0);
+            panelButtons.Size = new Size(1070, 54);
+            panelButtons.TabIndex = 2;
+            panelButtons.WrapContents = false;
+            // 
+            // btnDong
+            // 
+            btnDong.BackColor = Color.White;
+            btnDong.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnDong.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnDong.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnDong.FlatStyle = FlatStyle.Flat;
+            btnDong.ForeColor = Color.FromArgb(33, 37, 41);
+            btnDong.Location = new Point(955, 13);
+            btnDong.Name = "btnDong";
+            btnDong.Size = new Size(112, 38);
+            btnDong.TabIndex = 4;
+            btnDong.Text = "Đóng";
+            btnDong.UseVisualStyleBackColor = false;
+            btnDong.Click += btnDong_Click;
+            // 
+            // btnHoanTac
+            // 
+            btnHoanTac.BackColor = Color.White;
+            btnHoanTac.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnHoanTac.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnHoanTac.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnHoanTac.FlatStyle = FlatStyle.Flat;
+            btnHoanTac.ForeColor = Color.FromArgb(33, 37, 41);
+            btnHoanTac.Location = new Point(825, 13);
+            btnHoanTac.Name = "btnHoanTac";
+            btnHoanTac.Size = new Size(124, 38);
+            btnHoanTac.TabIndex = 3;
+            btnHoanTac.Text = "Hoàn tác";
+            btnHoanTac.UseVisualStyleBackColor = false;
+            btnHoanTac.Click += btnHoanTac_Click;
+            // 
             // btnLuu
             // 
-            btnLuu.BackColor = Color.FromArgb(41, 98, 168);
+            btnLuu.BackColor = Color.White;
+            btnLuu.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnLuu.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnLuu.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
             btnLuu.FlatStyle = FlatStyle.Flat;
-            btnLuu.ForeColor = Color.White;
-            btnLuu.Location = new Point(955, 13);
+            btnLuu.ForeColor = Color.FromArgb(33, 37, 41);
+            btnLuu.Location = new Point(707, 13);
             btnLuu.Name = "btnLuu";
             btnLuu.Size = new Size(112, 38);
             btnLuu.TabIndex = 2;
             btnLuu.Text = "Lưu";
             btnLuu.UseVisualStyleBackColor = false;
             btnLuu.Click += btnLuu_Click;
-            // 
-            // btnHoanTac
-            // 
-            btnHoanTac.Location = new Point(825, 13);
-            btnHoanTac.Name = "btnHoanTac";
-            btnHoanTac.Size = new Size(124, 38);
-            btnHoanTac.TabIndex = 3;
-            btnHoanTac.Text = "Hoàn tác";
-            btnHoanTac.UseVisualStyleBackColor = true;
-            btnHoanTac.Click += btnHoanTac_Click;
-            // 
-            // btnDong
-            // 
-            btnDong.Location = new Point(707, 13);
-            btnDong.Name = "btnDong";
-            btnDong.Size = new Size(112, 38);
-            btnDong.TabIndex = 4;
-            btnDong.Text = "Đóng";
-            btnDong.UseVisualStyleBackColor = true;
-            btnDong.Click += btnDong_Click;
             // 
             // frmPhanQuyen
             // 
@@ -184,11 +204,10 @@ namespace BTL_LTTQ.Forms.HeThong
             Text = "Quản lý phân quyền";
             FormClosing += frmPhanQuyen_FormClosing;
             Load += frmPhanQuyen_Load;
-            ((System.ComponentModel.ISupportInitialize)dgvPhanQuyen).EndInit();
-            panelButtons.ResumeLayout(false);
-            panelButtons.PerformLayout();
             layoutRoot.ResumeLayout(false);
             layoutRoot.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPhanQuyen).EndInit();
+            panelButtons.ResumeLayout(false);
             ResumeLayout(false);
         }
 
