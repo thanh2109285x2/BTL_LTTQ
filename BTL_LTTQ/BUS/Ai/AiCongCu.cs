@@ -6,7 +6,7 @@ using System.Text.Json.Nodes;
 using BTL_LTTQ.Common;
 using BTL_LTTQ.DAL;
 using Microsoft.Data.SqlClient;
-namespace BTL_LTTQ.Services.Ai
+namespace BTL_LTTQ.BUS.Ai
 {
     public static class AiCongCu
     {

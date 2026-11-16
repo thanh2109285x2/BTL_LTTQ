@@ -3,7 +3,7 @@ using System.Data;
 using System.Text;
 using System.Text.Json.Nodes;
 using BTL_LTTQ.Common;
-namespace BTL_LTTQ.Services.Ai
+namespace BTL_LTTQ.BUS.Ai
 {
     public sealed record TroLyAiResponse(string Text, List<DataTable> Tables);
 

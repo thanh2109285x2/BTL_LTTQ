@@ -1,4 +1,4 @@
-using BTL_LTTQ.Services.Ai;
+using BTL_LTTQ.BUS.Ai;
 using System.Data;
 using System.Diagnostics;
 

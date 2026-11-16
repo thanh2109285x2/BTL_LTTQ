@@ -1,6 +1,6 @@
 using System.Configuration;
 
-namespace BTL_LTTQ.Services.Ai
+namespace BTL_LTTQ.BUS.Ai
 {
     public static class AiCauHinh
     {
