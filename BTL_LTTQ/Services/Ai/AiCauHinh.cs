@@ -27,9 +27,9 @@ namespace BTL_LTTQ.Services.Ai
         public static string? LoiThieuCauHinh()
         {
             if (ApiKey.Length == 0)
-                return "Chưa có API key. Đặt biến môi trường AI_API_KEY hoặc điền AiApiKey trong App.config, rồi build lại.";
+                return "Trợ lý AI hiện chưa sẵn sàng. Bạn vui lòng thử lại sau; nếu tình trạng tiếp diễn, hãy báo quản trị viên.";
             if (BaseUrl.Length == 0)
-                return "Chưa có AiBaseUrl trong App.config.";
+                return "Trợ lý AI hiện chưa sẵn sàng. Bạn vui lòng thử lại sau; nếu tình trạng tiếp diễn, hãy báo quản trị viên.";
             return null;
         }
     }
