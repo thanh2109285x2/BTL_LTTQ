@@ -2,6 +2,7 @@ using BTL_LTTQ.Common;
 using BTL_LTTQ.Forms.HeThong;
 using BTL_LTTQ.Forms.Import;
 using BTL_LTTQ.Forms.QuanLy;
+using BTL_LTTQ.Forms.Reports;
 using BTL_LTTQ.Forms.TraCuu;
 
 namespace BTL_LTTQ
@@ -59,6 +60,7 @@ namespace BTL_LTTQ
             PhanQuyenUi.AnNeuKhongCoQuyen(btnDoanhThu, ChucNangConst.BC_DOANHTHU);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnTop3, ChucNangConst.BC_XEPHANG);
             PhanQuyenUi.AnNeuKhongCoQuyen(btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG);
+            PhanQuyenUi.AnNeuKhongCoQuyen(btnReportBuilder, ChucNangConst.BAOCAO_TAO);
 
             // Chức năng đăng ký lớp chỉ dành cho học viên.
             btnDangKyLop.Visible = CurrentUser.IsHocVien && PermissionService.Can(ChucNangConst.DANGKYLOP);
@@ -88,7 +90,8 @@ namespace BTL_LTTQ
                 (btnBaoCaoDiem, ChucNangConst.BC_DIEM),
                 (btnDoanhThu, ChucNangConst.BC_DOANHTHU),
                 (btnTop3, ChucNangConst.BC_XEPHANG),
-                (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG));
+                (btnLopTheoPhong, ChucNangConst.BC_LOP_PHONG),
+                (btnReportBuilder, ChucNangConst.BAOCAO_TAO));
 
             bool coQuyenHeThong = PermissionService.Can(ChucNangConst.PHANQUYEN);
 
@@ -245,7 +248,8 @@ namespace BTL_LTTQ
                 (Nut: btnBaoCaoDiem, MaChucNang: ChucNangConst.BC_DIEM),
                 (Nut: btnDoanhThu, MaChucNang: ChucNangConst.BC_DOANHTHU),
                 (Nut: btnTop3, MaChucNang: ChucNangConst.BC_XEPHANG),
-                (Nut: btnLopTheoPhong, MaChucNang: ChucNangConst.BC_LOP_PHONG));
+                (Nut: btnLopTheoPhong, MaChucNang: ChucNangConst.BC_LOP_PHONG),
+                (Nut: btnReportBuilder, MaChucNang: ChucNangConst.BAOCAO_TAO));
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -373,6 +377,11 @@ namespace BTL_LTTQ
         private void btnPhongHoc_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmPhongHoc(), btnPhongHoc, ChucNangConst.DANHMUC_KHAC);
+        }
+
+        private void btnReportBuilder_Click(object? sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmReportBuilder(), btnReportBuilder, ChucNangConst.BAOCAO_TAO);
         }
 
 
