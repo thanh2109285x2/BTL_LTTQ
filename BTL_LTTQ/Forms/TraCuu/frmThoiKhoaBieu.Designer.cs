@@ -57,6 +57,7 @@ namespace BTL_LTTQ.Forms.TraCuu
             // 
             // panelTieuDe
             // 
+            panelTieuDe.BackColor = Color.FromArgb(43, 98, 164);
             panelTieuDe.Controls.Add(lblMoTa);
             panelTieuDe.Controls.Add(label1);
             panelTieuDe.Dock = DockStyle.Top;
@@ -68,6 +69,7 @@ namespace BTL_LTTQ.Forms.TraCuu
             // lblMoTa
             // 
             lblMoTa.AutoSize = true;
+            lblMoTa.ForeColor = Color.FromArgb(225, 235, 248);
             lblMoTa.Location = new Point(42, 50);
             lblMoTa.Name = "lblMoTa";
             lblMoTa.Size = new Size(0, 20);
@@ -77,6 +79,7 @@ namespace BTL_LTTQ.Forms.TraCuu
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label1.ForeColor = Color.White;
             label1.Location = new Point(39, 14);
             label1.Name = "label1";
             label1.Size = new Size(154, 28);

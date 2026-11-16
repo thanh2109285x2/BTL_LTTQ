@@ -48,6 +48,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // panelTieuDe
             // 
+            panelTieuDe.BackColor = Color.FromArgb(43, 98, 164);
             panelTieuDe.Controls.Add(txtTimKiem);
             panelTieuDe.Controls.Add(label2);
             panelTieuDe.Controls.Add(label1);
@@ -68,6 +69,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // label2
             // 
             label2.AutoSize = true;
+            label2.ForeColor = Color.White;
             label2.Location = new Point(420, 24);
             label2.Name = "label2";
             label2.Size = new Size(91, 20);
@@ -78,6 +80,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label1.ForeColor = Color.White;
             label1.Location = new Point(39, 16);
             label1.Name = "label1";
             label1.Size = new Size(174, 28);

@@ -24,6 +24,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
+            label1.ForeColor = Color.White;
         }
 
         private void NapDanhSach(string tuKhoa = "")

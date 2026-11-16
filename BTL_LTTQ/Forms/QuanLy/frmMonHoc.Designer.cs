@@ -191,6 +191,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // panelTieuDe
             // 
+            panelTieuDe.BackColor = Color.FromArgb(43, 98, 164);
             panelTieuDe.Controls.Add(btnThu);
             panelTieuDe.Controls.Add(label1);
             panelTieuDe.Dock = DockStyle.Top;

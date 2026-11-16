@@ -30,6 +30,8 @@ namespace BTL_LTTQ.Forms.Import
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
+            lblTieuDe.ForeColor = Color.White;
+            lblMoTa.ForeColor = Color.FromArgb(225, 235, 248);
         }
 
         private ImportLoai LoaiDangChon =>
@@ -44,13 +46,6 @@ namespace BTL_LTTQ.Forms.Import
 
             cboLoai.SelectedIndex = 0;
             _dangKhoiTao = false;
-
-            lblTieuDe.ForeColor = GiaoDien.MauChinh;
-            btnXacNhan.BackColor = GiaoDien.MauChinh;
-            btnXacNhan.ForeColor = Color.White;
-            btnXacNhan.FlatStyle = FlatStyle.Flat;
-            btnXacNhan.FlatAppearance.BorderColor = GiaoDien.MauChinhDam;
-            btnXacNhan.UseVisualStyleBackColor = false;
 
             DatLaiTrangThai();
         }

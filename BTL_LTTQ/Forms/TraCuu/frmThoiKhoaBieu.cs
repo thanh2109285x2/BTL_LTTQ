@@ -43,6 +43,8 @@ namespace BTL_LTTQ.Forms.TraCuu
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
+            label1.ForeColor = Color.White;
+            lblMoTa.ForeColor = Color.FromArgb(225, 235, 248);
         }
 
         // Thứ 2 của tuần chứa ngày truyền vào

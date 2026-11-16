@@ -157,7 +157,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             btnTimKiem.Size = new System.Drawing.Size(120, 40);
             btnTimKiem.TabIndex = 0;
             btnTimKiem.Text = "Tìm kiếm";
-            btnTimKiem.UseVisualStyleBackColor = true;
             btnTimKiem.Click += btnTimKiem_Click;
             // 
             // btnLamMoi
@@ -167,7 +166,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             btnLamMoi.Size = new System.Drawing.Size(120, 40);
             btnLamMoi.TabIndex = 1;
             btnLamMoi.Text = "Làm mới";
-            btnLamMoi.UseVisualStyleBackColor = true;
             btnLamMoi.Click += btnLamMoi_Click;
             // 
             // grpKetQua

@@ -40,7 +40,7 @@ namespace BTL_LTTQ.Forms.Reports
             txtTenBaoCao = new System.Windows.Forms.TextBox();
             lblCot = new System.Windows.Forms.Label();
             clbCot = new System.Windows.Forms.CheckedListBox();
-            btnChonTatCaCot = new AppButton { Kieu = KieuNut.Phu };
+            btnChonTatCaCot = new AppButton { Kieu = KieuNut.Chinh };
             btnBoChonTatCaCot = new AppButton { Kieu = KieuNut.Phu };
             lblCotLoc = new System.Windows.Forms.Label();
             cboCotLoc = new System.Windows.Forms.ComboBox();
@@ -53,8 +53,8 @@ namespace BTL_LTTQ.Forms.Reports
             chkGiamDan = new System.Windows.Forms.CheckBox();
             panelNut = new System.Windows.Forms.Panel();
             btnXemBaoCao = new AppButton { Kieu = KieuNut.Chinh };
-            btnXuatExcel = new AppButton { Kieu = KieuNut.Phu };
-            btnLuuBaoCao = new AppButton { Kieu = KieuNut.Phu };
+            btnXuatExcel = new AppButton { Kieu = KieuNut.Chinh };
+            btnLuuBaoCao = new AppButton { Kieu = KieuNut.Chinh };
             btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
             lblThongKe = new System.Windows.Forms.Label();
             grpKetQua = new System.Windows.Forms.GroupBox();
@@ -180,7 +180,6 @@ namespace BTL_LTTQ.Forms.Reports
             btnChonTatCaCot.Size = new System.Drawing.Size(130, 34);
             btnChonTatCaCot.TabIndex = 8;
             btnChonTatCaCot.Text = "Chọn tất cả";
-            btnChonTatCaCot.UseVisualStyleBackColor = true;
             btnChonTatCaCot.Click += btnChonTatCaCot_Click;
             // 
             // btnBoChonTatCaCot
@@ -191,7 +190,6 @@ namespace BTL_LTTQ.Forms.Reports
             btnBoChonTatCaCot.Size = new System.Drawing.Size(130, 34);
             btnBoChonTatCaCot.TabIndex = 9;
             btnBoChonTatCaCot.Text = "Bỏ chọn hết";
-            btnBoChonTatCaCot.UseVisualStyleBackColor = true;
             btnBoChonTatCaCot.Click += btnBoChonTatCaCot_Click;
             // 
             // lblCotLoc
@@ -294,7 +292,6 @@ namespace BTL_LTTQ.Forms.Reports
             btnXemBaoCao.Size = new System.Drawing.Size(150, 36);
             btnXemBaoCao.TabIndex = 0;
             btnXemBaoCao.Text = "🔍 Xem báo cáo";
-            btnXemBaoCao.UseVisualStyleBackColor = true;
             btnXemBaoCao.Click += btnXemBaoCao_Click;
             // 
             // btnXuatExcel
@@ -304,7 +301,6 @@ namespace BTL_LTTQ.Forms.Reports
             btnXuatExcel.Size = new System.Drawing.Size(140, 36);
             btnXuatExcel.TabIndex = 1;
             btnXuatExcel.Text = "📊 Xuất Excel";
-            btnXuatExcel.UseVisualStyleBackColor = true;
             btnXuatExcel.Click += btnXuatExcel_Click;
             // 
             // btnLuuBaoCao
@@ -314,7 +310,6 @@ namespace BTL_LTTQ.Forms.Reports
             btnLuuBaoCao.Size = new System.Drawing.Size(130, 36);
             btnLuuBaoCao.TabIndex = 2;
             btnLuuBaoCao.Text = "💾 Lưu cấu hình";
-            btnLuuBaoCao.UseVisualStyleBackColor = true;
             btnLuuBaoCao.Click += btnLuuBaoCao_Click;
             // 
             // btnLamMoi
@@ -324,7 +319,6 @@ namespace BTL_LTTQ.Forms.Reports
             btnLamMoi.Size = new System.Drawing.Size(110, 36);
             btnLamMoi.TabIndex = 3;
             btnLamMoi.Text = "↻ Làm mới";
-            btnLamMoi.UseVisualStyleBackColor = true;
             btnLamMoi.Click += btnLamMoi_Click;
             // 
             // lblThongKe

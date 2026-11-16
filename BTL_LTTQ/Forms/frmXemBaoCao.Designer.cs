@@ -43,7 +43,7 @@ namespace BTL_LTTQ.Forms
             // 
             // panelTieuDe
             // 
-            panelTieuDe.BackColor = Color.White;
+            panelTieuDe.BackColor = Color.FromArgb(43, 98, 164);
             panelTieuDe.Controls.Add(lblTieuDe);
             panelTieuDe.Controls.Add(lblThongTin);
             panelTieuDe.Controls.Add(flowHanhDong);
@@ -59,7 +59,7 @@ namespace BTL_LTTQ.Forms
             // 
             lblTieuDe.Dock = DockStyle.Top;
             lblTieuDe.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            lblTieuDe.ForeColor = Color.FromArgb(41, 98, 168);
+            lblTieuDe.ForeColor = Color.White;
             lblTieuDe.Location = new Point(21, 46);
             lblTieuDe.Name = "lblTieuDe";
             lblTieuDe.Size = new Size(1311, 56);

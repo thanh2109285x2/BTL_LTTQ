@@ -66,6 +66,7 @@ namespace BTL_LTTQ.Forms.Import
             // 
             // panelTieuDe
             // 
+            panelTieuDe.BackColor = Color.FromArgb(43, 98, 164);
             panelTieuDe.Controls.Add(lblTieuDe);
             panelTieuDe.Controls.Add(lblMoTa);
             panelTieuDe.Dock = DockStyle.Top;
@@ -78,6 +79,7 @@ namespace BTL_LTTQ.Forms.Import
             // 
             lblTieuDe.AutoSize = true;
             lblTieuDe.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
+            lblTieuDe.ForeColor = Color.White;
             lblTieuDe.Location = new Point(24, 10);
             lblTieuDe.Name = "lblTieuDe";
             lblTieuDe.Size = new Size(310, 35);
@@ -87,7 +89,7 @@ namespace BTL_LTTQ.Forms.Import
             // lblMoTa
             // 
             lblMoTa.AutoSize = true;
-            lblMoTa.ForeColor = Color.FromArgb(90, 98, 110);
+            lblMoTa.ForeColor = Color.FromArgb(225, 235, 248);
             lblMoTa.Location = new Point(27, 44);
             lblMoTa.Name = "lblMoTa";
             lblMoTa.Size = new Size(620, 20);

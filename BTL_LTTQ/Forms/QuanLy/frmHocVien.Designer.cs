@@ -49,11 +49,11 @@ namespace BTL_LTTQ.Forms.QuanLy
             cboGioiTinh = new ComboBox();
             cboNghe = new ComboBox();
             dgvHocVien = new DataGridView();
-            btnThem = new AppButton { Kieu = KieuNut.Chinh };
-            btnSua = new AppButton { Kieu = KieuNut.Chinh };
-            btnXoa = new AppButton { Kieu = KieuNut.NguyHiem };
-            btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
-            btnTimKiem = new AppButton { Kieu = KieuNut.Chinh };
+            btnThem = new AppButton();
+            btnSua = new AppButton();
+            btnXoa = new AppButton();
+            btnLamMoi = new AppButton();
+            btnTimKiem = new AppButton();
             grpThongTin = new GroupBox();
             lblMaHocVien = new Label();
             lblTenHocVien = new Label();
@@ -105,7 +105,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // txtTimKiem
             // 
-            txtTimKiem.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             txtTimKiem.Location = new Point(210, 7);
             txtTimKiem.Name = "txtTimKiem";
             txtTimKiem.Size = new Size(300, 27);
@@ -151,52 +150,86 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // btnThem
             // 
+            btnThem.BackColor = Color.White;
+            btnThem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnThem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnThem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnThem.FlatStyle = FlatStyle.Flat;
+            btnThem.ForeColor = Color.FromArgb(33, 37, 41);
             btnThem.Location = new Point(155, 5);
             btnThem.Margin = new Padding(5, 0, 5, 0);
             btnThem.Name = "btnThem";
             btnThem.Size = new Size(100, 36);
             btnThem.TabIndex = 0;
             btnThem.Text = "Thêm";
+            btnThem.UseVisualStyleBackColor = false;
             btnThem.Click += btnThem_Click;
             // 
             // btnSua
             // 
+            btnSua.BackColor = Color.White;
+            btnSua.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnSua.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnSua.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnSua.FlatStyle = FlatStyle.Flat;
+            btnSua.ForeColor = Color.FromArgb(33, 37, 41);
             btnSua.Location = new Point(265, 5);
             btnSua.Margin = new Padding(5, 0, 5, 0);
             btnSua.Name = "btnSua";
             btnSua.Size = new Size(100, 36);
             btnSua.TabIndex = 1;
             btnSua.Text = "Sửa";
+            btnSua.UseVisualStyleBackColor = false;
             btnSua.Click += btnSua_Click;
             // 
             // btnXoa
             // 
+            btnXoa.BackColor = Color.White;
+            btnXoa.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnXoa.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnXoa.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnXoa.FlatStyle = FlatStyle.Flat;
+            btnXoa.ForeColor = Color.FromArgb(33, 37, 41);
             btnXoa.Location = new Point(375, 5);
             btnXoa.Margin = new Padding(5, 0, 5, 0);
             btnXoa.Name = "btnXoa";
             btnXoa.Size = new Size(100, 36);
             btnXoa.TabIndex = 2;
             btnXoa.Text = "Xóa";
+            btnXoa.UseVisualStyleBackColor = false;
             btnXoa.Click += btnXoa_Click;
             // 
             // btnLamMoi
             // 
+            btnLamMoi.BackColor = Color.White;
+            btnLamMoi.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnLamMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnLamMoi.FlatStyle = FlatStyle.Flat;
+            btnLamMoi.ForeColor = Color.FromArgb(33, 37, 41);
             btnLamMoi.Location = new Point(485, 5);
             btnLamMoi.Margin = new Padding(5, 0, 5, 0);
             btnLamMoi.Name = "btnLamMoi";
             btnLamMoi.Size = new Size(100, 36);
             btnLamMoi.TabIndex = 3;
             btnLamMoi.Text = "Làm mới";
+            btnLamMoi.UseVisualStyleBackColor = false;
             btnLamMoi.Click += btnLamMoi_Click;
             // 
             // btnTimKiem
             // 
-            btnTimKiem.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            btnTimKiem.BackColor = Color.White;
+            btnTimKiem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
+            btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
+            btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
+            btnTimKiem.FlatStyle = FlatStyle.Flat;
+            btnTimKiem.ForeColor = Color.FromArgb(33, 37, 41);
             btnTimKiem.Location = new Point(520, 4);
             btnTimKiem.Name = "btnTimKiem";
             btnTimKiem.Size = new Size(110, 34);
             btnTimKiem.TabIndex = 2;
             btnTimKiem.Text = "Tìm kiếm";
+            btnTimKiem.UseVisualStyleBackColor = false;
             btnTimKiem.Click += btnTimKiem_Click;
             // 
             // grpThongTin
@@ -268,7 +301,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             lblDiaChi.Location = new Point(18, 223);
             lblDiaChi.Name = "lblDiaChi";
-            lblDiaChi.Size = new Size(170, 22);
+            lblDiaChi.Size = new Size(145, 22);
             lblDiaChi.TabIndex = 10;
             lblDiaChi.Text = "Địa chỉ (Tỉnh/Thành phố)";
             // 

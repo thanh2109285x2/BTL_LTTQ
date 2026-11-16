@@ -22,6 +22,8 @@ namespace BTL_LTTQ.Forms.NghiepVu
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
+            lblTieuDe.ForeColor = Color.White;
+            lblMoTa.ForeColor = Color.FromArgb(225, 235, 248);
             Load += frmNhapDiem_Load;
             cboLop.SelectionChangeCommitted += cboLop_SelectionChangeCommitted;
             dgvHocVien.SelectionChanged += dgvHocVien_SelectionChanged;
