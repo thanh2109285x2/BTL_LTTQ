@@ -151,6 +151,16 @@ namespace BTL_LTTQ.Forms.QuanLy
         }
         private void btnLamMoi_Click(object? sender, EventArgs e) => LamMoi();
         private void btnTimKiem_Click(object? sender, EventArgs e) => Search();
+        private void btnTatCa_Click(object? sender, EventArgs e)
+        {
+            try
+            {
+                txtTimKiem.Clear();
+                NapDanhSach();
+                LamMoi(false);
+            }
+            catch (SqlException ex) { ShowError(ex.Message); }
+        }
         private void txtTimKiem_KeyDown(object? sender, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; Search(); } }
         private void Search() { try { NapDanhSach(txtTimKiem.Text.Trim()); LamMoi(false); } catch (SqlException ex) { ShowError(ex.Message); } }
 

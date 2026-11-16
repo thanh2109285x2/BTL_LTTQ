@@ -18,6 +18,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         private Button btnXoa = null!;
         private Button btnLamMoi = null!;
         private Button btnTimKiem = null!;
+        private Button btnTatCa = null!;
         private GroupBox grpThongTin = null!;
         private GroupBox grpDanhSach = null!;
         private Panel pnlNhap = null!;
@@ -54,6 +55,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnXoa = new Button();
             btnLamMoi = new Button();
             btnTimKiem = new Button();
+            btnTatCa = new Button();
             grpThongTin = new GroupBox();
             lblMaHocVien = new Label();
             lblTenHocVien = new Label();
@@ -198,6 +200,16 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnTimKiem.TabIndex = 2;
             btnTimKiem.Text = "Tìm kiếm";
             btnTimKiem.Click += btnTimKiem_Click;
+            //
+            // btnTatCa
+            //
+            btnTatCa.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            btnTatCa.Location = new Point(640, 4);
+            btnTatCa.Name = "btnTatCa";
+            btnTatCa.Size = new Size(100, 34);
+            btnTatCa.TabIndex = 3;
+            btnTatCa.Text = "Tất cả";
+            btnTatCa.Click += btnTatCa_Click;
             // 
             // grpThongTin
             // 
@@ -321,6 +333,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             pnlTim.Controls.Add(lblTimKiem);
             pnlTim.Controls.Add(txtTimKiem);
             pnlTim.Controls.Add(btnTimKiem);
+            pnlTim.Controls.Add(btnTatCa);
             pnlTim.Dock = DockStyle.Top;
             pnlTim.Location = new Point(0, 324);
             pnlTim.Name = "pnlTim";
