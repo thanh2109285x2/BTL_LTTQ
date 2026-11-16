@@ -1,5 +1,6 @@
 using BTL_LTTQ.Models;
 using BTL_LTTQ.DAL;
+using BTL_LTTQ.Common;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -25,12 +26,32 @@ namespace BTL_LTTQ.BUS
 
         public string Sua(GiaoVien g)
         {
+            if (CurrentUser.IsGiaoVien && PermissionService.ChiCuaMinh(ChucNangConst.GIAOVIEN_SUA))
+                return SuaHoSoCaNhan(g.MaGV, g.DienThoai, g.DiaChi, g.Anh);
+
             ChuanHoa(g);
             string loi = KiemTra(g);
             if (loi != "") return loi;
             try { _repo.Sua(g); return ""; }
             catch (SqlException ex) { return LoiSql(ex, "sửa"); }
             catch (InvalidOperationException ex) { return ex.Message; }
+        }
+
+        public string SuaHoSoCaNhan(string maGV, string? dienThoai, string? diaChi, string? anh)
+        {
+            dienThoai = BlankToNull(dienThoai);
+            diaChi = BlankToNull(diaChi);
+            anh = BlankToNull(anh);
+            if (dienThoai?.Length > 20) return "Số điện thoại tối đa 20 ký tự.";
+            if (!string.IsNullOrWhiteSpace(dienThoai) &&
+                (dienThoai.Any(c => !char.IsDigit(c)) || dienThoai.Length is < 9 or > 11))
+                return "Số điện thoại phải gồm 9 đến 11 chữ số.";
+            if (diaChi?.Length > 200) return "Địa chỉ tối đa 200 ký tự.";
+            if (anh?.Length > 255) return "Đường dẫn ảnh tối đa 255 ký tự.";
+            try { _repo.SuaHoSoCaNhan(maGV, dienThoai, diaChi, anh); return ""; }
+            catch (UnauthorizedAccessException ex) { return ex.Message; }
+            catch (InvalidOperationException ex) { return ex.Message; }
+            catch (SqlException ex) { return "Không cập nhật được hồ sơ: " + ex.Message; }
         }
 
         public string Xoa(string maGV)

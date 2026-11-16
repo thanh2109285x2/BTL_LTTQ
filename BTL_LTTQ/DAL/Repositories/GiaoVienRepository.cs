@@ -1,4 +1,5 @@
 using BTL_LTTQ.DAL;
+using BTL_LTTQ.Common;
 using BTL_LTTQ.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -9,6 +10,10 @@ namespace BTL_LTTQ.DAL
     {
         public DataTable LayDanhSach(string tuKhoa = "")
         {
+            bool chiCuaMinh = CurrentUser.IsGiaoVien &&
+                ((PermissionService.Can(ChucNangConst.GIAOVIEN_SUA) && PermissionService.ChiCuaMinh(ChucNangConst.GIAOVIEN_SUA)) ||
+                 PermissionService.ChiCuaMinh(ChucNangConst.GIAOVIEN_XEM));
+            string dieuKienCaNhan = chiCuaMinh ? " AND g.MaGV = @MaGVHienTai" : "";
             const string sql = @"SELECT g.MaGV, g.TenGV, g.NgaySinh, g.GioiTinh, g.DiaChi, g.DienThoai,
                                         g.MaChucDanh, cd.TenChucDanh,
                                         g.MaChuyenMon, cm.TenChuyenMon,
@@ -22,14 +27,18 @@ namespace BTL_LTTQ.DAL
                                  LEFT JOIN dbo.TrinhDo td ON td.MaTrinhDo = g.MaTrinhDo
                                  LEFT JOIN dbo.GiaoVien_MonHoc gm ON gm.MaGV = g.MaGV
                                  LEFT JOIN dbo.MonHoc m ON m.MaMon = gm.MaMon
-                                 WHERE @TuKhoa = '' OR g.MaGV COLLATE Vietnamese_CI_AI LIKE '%' + @TuKhoa + '%'
+                                 WHERE (@TuKhoa = '' OR g.MaGV COLLATE Vietnamese_CI_AI LIKE '%' + @TuKhoa + '%'
                                     OR g.TenGV COLLATE Vietnamese_CI_AI LIKE '%' + @TuKhoa + '%'
-                                    OR g.DienThoai LIKE '%' + @TuKhoa + '%'
+                                    OR g.DienThoai LIKE '%' + @TuKhoa + '%')";
+            string sqlCoPhamVi = sql + dieuKienCaNhan + @"
                                  GROUP BY g.MaGV, g.TenGV, g.NgaySinh, g.GioiTinh, g.DiaChi, g.DienThoai,
                                           g.MaChucDanh, cd.TenChucDanh, g.MaChuyenMon, cm.TenChuyenMon,
                                           g.MaCQ, cq.TenCQ, g.MaTrinhDo, td.TenTrinhDo, g.Anh
                                  ORDER BY g.TenGV, g.MaGV";
-            return DbHelper.ExecuteQuery(sql, new SqlParameter("@TuKhoa", tuKhoa));
+            var thamSo = new List<SqlParameter> { new("@TuKhoa", tuKhoa) };
+            if (chiCuaMinh)
+                thamSo.Add(new SqlParameter("@MaGVHienTai", CurrentUser.MaGV ?? ""));
+            return DbHelper.ExecuteQuery(sqlCoPhamVi, thamSo.ToArray());
         }
 
         public DataTable LayDanhMuc(string tenBang, string cotMa, string cotTen)
@@ -64,6 +73,7 @@ namespace BTL_LTTQ.DAL
 
         public void Them(GiaoVien g)
         {
+            PermissionService.YeuCau(ChucNangConst.GIAOVIEN_THEM, "Bạn không có quyền thêm giáo viên.");
             DbHelper.ExecuteTransaction((conn, tran) =>
             {
                 using var cmd = new SqlCommand(@"INSERT dbo.GiaoVien
@@ -77,6 +87,12 @@ namespace BTL_LTTQ.DAL
 
         public void Sua(GiaoVien g)
         {
+            if (CurrentUser.IsGiaoVien && PermissionService.ChiCuaMinh(ChucNangConst.GIAOVIEN_SUA))
+            {
+                SuaHoSoCaNhan(g.MaGV, g.DienThoai, g.DiaChi, g.Anh);
+                return;
+            }
+            PermissionService.YeuCau(ChucNangConst.GIAOVIEN_SUA, "Bạn không có quyền sửa giáo viên.");
             DbHelper.ExecuteTransaction((conn, tran) =>
             {
                 using var cmd = new SqlCommand(@"UPDATE dbo.GiaoVien SET TenGV=@TenGV, NgaySinh=@NgaySinh,
@@ -92,8 +108,27 @@ namespace BTL_LTTQ.DAL
             });
         }
 
+        public void SuaHoSoCaNhan(string maGV, string? dienThoai, string? diaChi, string? anh)
+        {
+            PermissionService.YeuCau(ChucNangConst.GIAOVIEN_SUA, "Bạn không có quyền sửa hồ sơ cá nhân.");
+            if (!CurrentUser.IsGiaoVien || !PermissionService.ChiCuaMinh(ChucNangConst.GIAOVIEN_SUA) ||
+                string.IsNullOrWhiteSpace(CurrentUser.MaGV) ||
+                !string.Equals(maGV, CurrentUser.MaGV, StringComparison.OrdinalIgnoreCase))
+                throw new UnauthorizedAccessException("Bạn chỉ được sửa hồ sơ của chính mình.");
+
+            const string sql = @"UPDATE dbo.GiaoVien SET DienThoai=@DienThoai, DiaChi=@DiaChi, Anh=@Anh
+                                 WHERE MaGV=@MaGV";
+            int affected = DbHelper.ExecuteNonQuery(sql,
+                new SqlParameter("@DienThoai", (object?)dienThoai ?? DBNull.Value),
+                new SqlParameter("@DiaChi", (object?)diaChi ?? DBNull.Value),
+                new SqlParameter("@Anh", (object?)anh ?? DBNull.Value),
+                new SqlParameter("@MaGV", maGV));
+            if (affected != 1) throw new InvalidOperationException("Không tìm thấy hồ sơ giáo viên.");
+        }
+
         public void Xoa(string maGV)
         {
+            PermissionService.YeuCau(ChucNangConst.GIAOVIEN_XOA, "Bạn không có quyền xóa giáo viên.");
             DbHelper.ExecuteTransaction((conn, tran) =>
             {
                 using var delMon = new SqlCommand("DELETE FROM dbo.GiaoVien_MonHoc WHERE MaGV=@MaGV", conn, tran);

@@ -78,7 +78,7 @@ namespace BTL_LTTQ.Services.Ai
                         return new TroLyAiResponse(cauDan, bangKetQua);
                     }
                     return new TroLyAiResponse(
-                        tinNhan["content"]?.ToString() ?? "(API không trả nội dung.)", bangKetQua);
+                        tinNhan["content"]?.ToString() ?? "Trợ lý AI hiện chưa thể trả lời. Bạn vui lòng thử lại sau.", bangKetQua);
                 }
                 foreach (JsonNode? nut in loiGoi)
                 {
@@ -100,7 +100,7 @@ namespace BTL_LTTQ.Services.Ai
                     });
                 }
             }
-            return new TroLyAiResponse("Trợ lý đã gọi quá nhiều hàm. Hãy hỏi ngắn và cụ thể hơn.", bangKetQua);
+            return new TroLyAiResponse("Trợ lý AI hiện chưa thể xử lý yêu cầu này. Bạn vui lòng thử lại sau.", bangKetQua);
         }
 
         private static string TaoCauDanBang(List<string> tenCongCu)
@@ -153,10 +153,18 @@ namespace BTL_LTTQ.Services.Ai
             string phamVi = chucNang.Count == 0
                 ? "Tài khoản hiện tại không được cấp công cụ truy vấn dữ liệu của phần mềm."
                 : "Tài khoản hiện tại chỉ được dùng các chức năng sau: " + string.Join("; ", chucNang);
+            string nguCanhTaiKhoan = CurrentUser.IsGiaoVien
+                ? $"Ngữ cảnh tài khoản: người dùng đang đăng nhập với vai trò giáo viên, tên đăng nhập '{CurrentUser.TenDangNhap}', mã giáo viên liên kết '{CurrentUser.MaGV ?? "chưa được liên kết"}'. " +
+                  "Khi họ nói 'tôi', 'của tôi', 'lớp tôi đang dạy' hoặc cách nói tương tự về lớp học, hãy hiểu đó là giáo viên có mã liên kết này. " +
+                  "Với công cụ tim_lop, đặt cua_toi=true; không hỏi lại tên giáo viên. "
+                : CurrentUser.IsHocVien
+                    ? $"Ngữ cảnh tài khoản: người dùng đang đăng nhập với vai trò học viên, tên đăng nhập '{CurrentUser.TenDangNhap}', mã học viên liên kết '{CurrentUser.MaHocVien ?? "chưa được liên kết"}'. " +
+                      "Khi họ nói 'tôi' hoặc 'của tôi' về dữ liệu cá nhân, hãy hiểu là học viên có mã liên kết này. "
+                    : $"Ngữ cảnh tài khoản: người dùng đang đăng nhập với vai trò quản trị viên, tên đăng nhập '{CurrentUser.TenDangNhap}'. ";
 
             return "Bạn là trợ lý AI tiếng Việt thân thiện trong phần mềm quản lý lớp tin học và ngoại ngữ ngắn hạn. " +
                    "Có thể trả lời câu hỏi kiến thức chung, giải thích, hướng dẫn và trò chuyện bình thường bằng hiểu biết sẵn có. " +
-                   phamVi + " Không giới thiệu hoặc suy đoán chức năng ngoài danh sách quyền này. " +
+                   nguCanhTaiKhoan + phamVi + " Không giới thiệu hoặc suy đoán chức năng ngoài danh sách quyền này. " +
                    "Trả lời ngắn gọn, đi thẳng vào ý chính, thường trong 1-3 câu. Không tự liệt kê khả năng nếu người dùng không hỏi. " +
                    "Chỉ dùng công cụ cho dữ liệu cụ thể; với dữ liệu ứng dụng chỉ nêu kết quả công cụ, không suy đoán quyền hoặc số liệu. " +
                    "Nếu người dùng hỏi dữ liệu/chức năng không được cấp, nói ngắn gọn rằng tài khoản hiện không có quyền hoặc phần mềm chưa hỗ trợ. " +

@@ -15,6 +15,8 @@ namespace BTL_LTTQ.Common.Reports
         public static readonly Color NenHeader = Color.FromArgb(240, 244, 250);
         public static readonly Color NenChon = GiaoDien.MauChon;
         public static readonly Color ChuChinh = GiaoDien.MauChu;
+        public static readonly Color ChuBaoCao = Color.FromArgb(39, 54, 77);
+        public static readonly Color ChuTieuDeBaoCao = GiaoDien.MauChinhDam;
         public static readonly Color ChuPhu = Color.FromArgb(108, 117, 125);
         public static readonly Color ChuMo = Color.FromArgb(150, 158, 168);
         public static readonly Color Vien = GiaoDien.MauVien;

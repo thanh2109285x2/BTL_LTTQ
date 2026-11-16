@@ -13,6 +13,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         private string? _anhDaChon;
         private string _maDangChon = "";
         private bool _chiXem;
+        private bool _chiSuaCaNhan;
         private bool _ngaySinhRong;
 
         public frmGiaoVien()
@@ -47,7 +48,16 @@ namespace BTL_LTTQ.Forms.QuanLy
             }
             _ngaySinh.MaxDate = DateTime.Today.AddYears(-18);
             _ngaySinh.Value = _ngaySinh.MaxDate;
-            _chiXem = !PermissionService.Can(ChucNangConst.GIAOVIEN_THEM) && !PermissionService.Can(ChucNangConst.GIAOVIEN_SUA);
+            _chiSuaCaNhan = CurrentUser.IsGiaoVien && PermissionService.ChiCuaMinh(ChucNangConst.GIAOVIEN_SUA);
+            _chiXem = !PermissionService.Can(ChucNangConst.GIAOVIEN_THEM) &&
+                !PermissionService.Can(ChucNangConst.GIAOVIEN_SUA);
+            if (_chiSuaCaNhan)
+            {
+                _search.Visible = false;
+                _btnThem.Visible = false;
+                _btnXoa.Visible = false;
+                _btnMoi.Visible = false;
+            }
             PhanQuyenUi.AnNutThemSuaXoa(_btnThem, _btnSua, _btnXoa,
                 ChucNangConst.GIAOVIEN_THEM, ChucNangConst.GIAOVIEN_SUA, ChucNangConst.GIAOVIEN_XOA);
             NapCombo(_chucDanh, "ChucDanh", "MaChucDanh", "TenChucDanh");
@@ -190,6 +200,19 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             if (!PermissionService.Can(ChucNangConst.GIAOVIEN_SUA)) return;
             if (_maDangChon == "") { BaoLoi("Chọn giáo viên trong danh sách để sửa."); return; }
+            if (_chiSuaCaNhan)
+            {
+                string loiCaNhan = _service.SuaHoSoCaNhan(_maDangChon, _txtDienThoai.Text, _txtDiaChi.Text, _anhDaChon);
+                if (loiCaNhan != "") { BaoLoi(loiCaNhan); return; }
+                MessageBox.Show("Đã cập nhật hồ sơ cá nhân.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                NapDanhSach();
+                if (_grid.Rows.Count > 0)
+                {
+                    _grid.Rows[0].Selected = true;
+                    Grid_CellClick(_grid, new DataGridViewCellEventArgs(0, 0));
+                }
+                return;
+            }
             GiaoVien g = LayDuLieu();
             g.MaGV = _maDangChon;
             string loi = _service.Sua(g);
@@ -295,6 +318,18 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             _txtMa.ReadOnly = _chiXem || _maDangChon != "";
             bool sua = _maDangChon != "";
+            if (_chiSuaCaNhan)
+            {
+                foreach (Control c in new Control[] { _txtTen, _ngaySinh, _gioiTinh, _chucDanh, _chuyenMon,
+                             _coQuan, _trinhDo, _monDay }) c.Enabled = false;
+                _txtDienThoai.Enabled = true;
+                _txtDiaChi.Enabled = true;
+                _anhPanel.Enabled = true;
+                _btnThem.Enabled = false;
+                _btnSua.Enabled = sua && PermissionService.Can(ChucNangConst.GIAOVIEN_SUA);
+                _btnXoa.Enabled = false;
+                return;
+            }
             foreach (Control c in new Control[] { _txtTen, _ngaySinh, _gioiTinh, _txtDienThoai, _txtDiaChi,
                          _chucDanh, _chuyenMon, _coQuan, _trinhDo, _anhPanel, _gioiTinh, _monDay }) c.Enabled = !_chiXem;
             _btnThem.Enabled = !_chiXem && !sua && PermissionService.Can(ChucNangConst.GIAOVIEN_THEM);

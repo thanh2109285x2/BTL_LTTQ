@@ -18,14 +18,14 @@ namespace BTL_LTTQ.BUS
             if (!string.Equals(maChucNang, ChucNangConst.BC_DIEM, StringComparison.OrdinalIgnoreCase))
                 return _repo.LayDanhSachLop("", Array.Empty<SqlParameter>());
 
-            var phamVi = PhamViDuLieu.ChoHocVien(ChucNangConst.BC_DIEM, "hv");
+            var phamVi = PhamViDiemTheoLop("l", "d");
             return _repo.LayDanhSachLop(phamVi.DieuKienSql, phamVi.ThamSo);
         }
 
         public DataTable LayBangDiem(string? maLop)
         {
             KiemTraQuyenBaoCao(ChucNangConst.BC_DIEM);
-            var phamVi = PhamViDuLieu.ChoHocVien(ChucNangConst.BC_DIEM, "hv");
+            var phamVi = PhamViDiemTheoLop("l", "d");
             return _repo.LayBangDiem(maLop, phamVi.DieuKienSql, phamVi.ThamSo);
         }
 
@@ -78,6 +78,20 @@ namespace BTL_LTTQ.BUS
         {
             if (!PermissionService.Can(maChucNang))
                 throw new UnauthorizedAccessException("Bạn không có quyền sử dụng chức năng này.");
+        }
+
+        private static (string DieuKienSql, SqlParameter[] ThamSo) PhamViDiemTheoLop(string aliasLop, string aliasDangKy)
+        {
+            if (!PermissionService.ChiCuaMinh(ChucNangConst.BC_DIEM))
+                return ("", Array.Empty<SqlParameter>());
+
+            if (CurrentUser.IsGiaoVien && !string.IsNullOrWhiteSpace(CurrentUser.MaGV))
+                return ($"{aliasLop}.MaGV = @PV_MaGV", [new SqlParameter("@PV_MaGV", SqlDbType.VarChar, 20) { Value = CurrentUser.MaGV }]);
+
+            if (CurrentUser.IsHocVien && !string.IsNullOrWhiteSpace(CurrentUser.MaHocVien))
+                return ($"{aliasDangKy}.MaHocVien = @PV_MaHocVien", [new SqlParameter("@PV_MaHocVien", SqlDbType.VarChar, 20) { Value = CurrentUser.MaHocVien }]);
+
+            return ("1 = 0", Array.Empty<SqlParameter>());
         }
     }
 }
