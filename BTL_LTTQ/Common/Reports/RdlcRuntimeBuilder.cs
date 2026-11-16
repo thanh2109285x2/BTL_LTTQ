@@ -105,6 +105,15 @@ namespace BTL_LTTQ.Common.Reports
             double width, double height, bool bold)
         {
             bool laTextBoxTrang = name is "ReportTitle" or "ReportDate";
+            bool laTieuDeBaoCao = name == "ReportTitle";
+            bool laNgayLap = name == "ReportDate";
+            bool laTieuDeCot = name.StartsWith("Header", StringComparison.Ordinal);
+            string mauChu = laTieuDeCot
+                ? "#FFFFFF"
+                : laTieuDeBaoCao
+                    ? "#1E4A82"
+                    : laNgayLap ? "#6C757D" : "#27364D";
+            string coChu = laTieuDeBaoCao ? "18pt" : laNgayLap ? "8pt" : "9pt";
             var noiDung = new List<object>
             {
                 new XElement(Rdl + "CanGrow", true),
@@ -116,12 +125,16 @@ namespace BTL_LTTQ.Common.Reports
                                 new XElement(Rdl + "Value", value),
                                 new XElement(Rdl + "Style",
                                     bold ? new XElement(Rdl + "FontWeight", "Bold") : null,
-                                    new XElement(Rdl + "FontSize", "9pt")))),
+                                    new XElement(Rdl + "FontSize", coChu),
+                                    new XElement(Rdl + "Color", mauChu)))),
                         new XElement(Rdl + "Style"))),
                 new XElement(Rdl + "Style",
                     new XElement(Rdl + "Border",
                         new XElement(Rdl + "Style", "Solid")),
-                    bold ? new XElement(Rdl + "BackgroundColor", "#DCE8F7") : null,
+                    laTieuDeCot ? new XElement(Rdl + "BackgroundColor", "#2962A8") : null,
+                    laTextBoxTrang || laTieuDeCot
+                        ? new XElement(Rdl + "TextAlign", "Center")
+                        : null,
                     new XElement(Rdl + "PaddingLeft", "4pt"),
                     new XElement(Rdl + "PaddingRight", "4pt"),
                     new XElement(Rdl + "PaddingTop", "2pt"),

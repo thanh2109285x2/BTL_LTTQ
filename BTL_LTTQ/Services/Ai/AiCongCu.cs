@@ -23,6 +23,7 @@ namespace BTL_LTTQ.Services.Ai
                 "properties": {
                   "ten_mon": { "type": ["string", "null"], "description": "Một phần tên môn." },
                   "ten_giao_vien": { "type": ["string", "null"], "description": "Một phần tên giáo viên." },
+                  "cua_toi": { "type": "boolean", "description": "Đặt true khi người dùng hỏi lớp của mình/lớp tôi đang dạy. Công cụ sẽ tự lọc theo giáo viên đang đăng nhập; không cần hỏi tên giáo viên." },
                   "ten_ca": { "type": ["string", "null"], "description": "Một phần tên ca, ví dụ sáng hoặc tối." },
                   "si_so_tu": { "type": ["integer", "null"] },
                   "si_so_den": { "type": ["integer", "null"] }
@@ -155,7 +156,7 @@ namespace BTL_LTTQ.Services.Ai
                     "xep_hang_hoc_vien" => XepHangHocVien(thamSo, out bangKetQua),
                     "doanh_thu_mon" => DoanhThuMon(thamSo, out bangKetQua),
                     "lop_theo_phong" => LopTheoPhong(thamSo, out bangKetQua),
-                    _ => Loi("Không có hàm " + tenHam)
+                    _ => Loi("Trợ lý AI hiện chưa thể xử lý yêu cầu này. Bạn vui lòng thử lại sau.")
                 };
             }
             catch (Exception)
@@ -171,12 +172,21 @@ namespace BTL_LTTQ.Services.Ai
             if (quyen == null)
                 return Loi("Tài khoản đang đăng nhập không được tìm lớp.");
             var phamVi = PhamViSqlBuilder.TaoDieuKienLopHoc(PhamViDuLieu.ChoLopHoc(quyen), "l");
-            string dieuKienPhamVi = phamVi.DieuKienSql == "" ? "" : " AND " + phamVi.DieuKienSql;
+            string locCuaToi = "";
+            var thamSoPhamVi = phamVi.ThamSo.ToList();
+            if (DocBoolean(thamSo, "cua_toi"))
+            {
+                if (!CurrentUser.IsGiaoVien || string.IsNullOrWhiteSpace(CurrentUser.MaGV))
+                    return Loi("Chỉ tài khoản giáo viên đã liên kết mã giáo viên mới tra cứu được lớp mình đang dạy.");
+                locCuaToi = " AND l.MaGV = @MaGVCuaToi";
+                thamSoPhamVi.Add(new SqlParameter("@MaGVCuaToi", SqlDbType.VarChar, 20) { Value = CurrentUser.MaGV });
+            }
+            string dieuKienPhamVi = phamVi.DieuKienSql == "" ? locCuaToi : " AND " + phamVi.DieuKienSql + locCuaToi;
             string sql = $"""
                 SELECT l.MaLop AS [Mã lớp], l.TenLop AS [Tên lớp], m.TenMon AS [Môn học],
                        g.TenGV AS [Giáo viên], c.TenCa AS [Ca học], tg.TenThoiGian AS [Lịch học],
                        p.TenPhong AS [Phòng], l.NgayBD AS [Ngày bắt đầu], l.NgayKT AS [Ngày kết thúc],
-                       (SELECT COUNT(*) FROM HocVien d WHERE d.MaLop = l.MaLop) AS [Sĩ số]
+                       (SELECT COUNT(*) FROM DangKy d WHERE d.MaLop = l.MaLop) AS [Sĩ số]
                 FROM LopHoc l
                 LEFT JOIN MonHoc m ON l.MaMon = m.MaMon
                 LEFT JOIN GiaoVien g ON l.MaGV = g.MaGV
@@ -186,7 +196,7 @@ namespace BTL_LTTQ.Services.Ai
                 WHERE (@TenMon IS NULL OR m.TenMon COLLATE Vietnamese_CI_AI LIKE '%' + @TenMon + '%')
                   AND (@TenGV IS NULL OR g.TenGV COLLATE Vietnamese_CI_AI LIKE '%' + @TenGV + '%')
                   AND (@TenCa IS NULL OR c.TenCa COLLATE Vietnamese_CI_AI LIKE '%' + @TenCa + '%')
-                  AND (SELECT COUNT(*) FROM HocVien d WHERE d.MaLop = l.MaLop)
+                  AND (SELECT COUNT(*) FROM DangKy d WHERE d.MaLop = l.MaLop)
                       BETWEEN @SiSoTu AND @SiSoDen
                 {dieuKienPhamVi}
                 ORDER BY l.NgayBD DESC
@@ -199,7 +209,7 @@ namespace BTL_LTTQ.Services.Ai
                 new("@SiSoTu", DocSo(thamSo, "si_so_tu", 0)),
                 new("@SiSoDen", DocSo(thamSo, "si_so_den", 1000))
             };
-            dsThamSo.AddRange(phamVi.ThamSo);
+            dsThamSo.AddRange(thamSoPhamVi);
             bangKetQua = DbHelper.ExecuteQuery(sql, dsThamSo.ToArray());
             return DinhDangBang(bangKetQua);
         }
@@ -399,6 +409,10 @@ namespace BTL_LTTQ.Services.Ai
                 return macDinh;
             return nut.TryGetInt32(out int so) ? so : macDinh;
         }
+        private static bool DocBoolean(JsonElement thamSo, string ten) =>
+            thamSo.TryGetProperty(ten, out JsonElement nut) &&
+            (nut.ValueKind == JsonValueKind.True ||
+             (nut.ValueKind == JsonValueKind.String && bool.TryParse(nut.GetString(), out bool giaTri) && giaTri));
         private static SqlParameter ThamSoChuoi(string ten, string? giaTri)
         {
             return new SqlParameter(ten, (object?)giaTri ?? DBNull.Value);

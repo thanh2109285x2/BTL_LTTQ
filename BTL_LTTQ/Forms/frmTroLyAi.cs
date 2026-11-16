@@ -1,5 +1,6 @@
 using BTL_LTTQ.Services.Ai;
 using System.Data;
+using System.Diagnostics;
 
 namespace BTL_LTTQ.Forms
 {
@@ -11,6 +12,9 @@ namespace BTL_LTTQ.Forms
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
+            // GiaoDien.ApDung đặt ForeColor mặc định cho các nhãn.
+            lblTieuDe.ForeColor = Color.White;
+            lblMoTa.ForeColor = Color.FromArgb(220, 233, 250);
             ThemTinNhan("Chào bạn! Mình có thể giúp gì?", laNguoiDung: false);
         }
 
@@ -32,7 +36,8 @@ namespace BTL_LTTQ.Forms
             }
             catch (Exception ex)
             {
-                ThemTinNhan("Lỗi: " + ex.Message, laNguoiDung: false);
+                Trace.TraceError("Trợ lý AI gặp lỗi: {0}", ex);
+                ThemTinNhan("Trợ lý AI hiện chưa thể trả lời. Bạn vui lòng thử lại sau ít phút; nếu tình trạng tiếp diễn, hãy báo quản trị viên.", laNguoiDung: false);
             }
             finally
             {
@@ -48,19 +53,20 @@ namespace BTL_LTTQ.Forms
             {
                 Width = Math.Max(100, flpTinNhan.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 12),
                 Height = 1,
-                Margin = new Padding(8, 4, 8, 4),
-                Tag = laNguoiDung
+                Margin = new Padding(8, 7, 8, 7),
+                Tag = laNguoiDung,
+                BackColor = flpTinNhan.BackColor
             };
             var bongBong = new Label
             {
                 AutoSize = true,
                 MaximumSize = new Size(Math.Max(180, (flpTinNhan.ClientSize.Width - 80) * 2 / 3), 0),
-                Padding = new Padding(12, 8, 12, 8),
+                Padding = new Padding(14, 10, 14, 10),
                 Text = noiDung.Trim(),
-                BackColor = laNguoiDung ? Color.FromArgb(220, 238, 255) : Color.FromArgb(242, 244, 247),
-                ForeColor = Color.FromArgb(35, 40, 48),
+                BackColor = laNguoiDung ? Color.FromArgb(35, 91, 155) : Color.White,
+                ForeColor = laNguoiDung ? Color.White : Color.FromArgb(35, 40, 48),
                 Font = new Font("Segoe UI", 10F),
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.None
             };
             dong.Controls.Add(bongBong);
             int chieuCao = bongBong.PreferredHeight + 8;
@@ -129,6 +135,12 @@ namespace BTL_LTTQ.Forms
         {
             foreach (Panel dong in flpTinNhan.Controls.OfType<Panel>())
                 CanChinhTinNhan(dong);
+        }
+
+        private void panelNhap_Paint(object? sender, PaintEventArgs e)
+        {
+            using var but = new Pen(Color.FromArgb(224, 230, 239));
+            e.Graphics.DrawLine(but, 0, 0, panelNhap.Width, 0);
         }
 
         private async void btnGui_Click(object? sender, EventArgs e) => await Gui();

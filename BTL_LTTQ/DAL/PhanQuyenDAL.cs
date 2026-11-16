@@ -11,7 +11,8 @@ namespace BTL_LTTQ.DAL
         public List<PhanQuyenChucNang> LayDanhSachChucNang()
         {
             const string sql = @"SELECT c.MaChucNang, c.TenChucNang, c.Nhom,
-                                        c.HoTroLocTheoChu, c.ThuTu,
+                                        CASE WHEN c.MaChucNang = 'GIAOVIEN_SUA' THEN 1 ELSE c.HoTroLocTheoChu END AS HoTroLocTheoChu,
+                                        c.ThuTu,
                                         ISNULL(gv.CoQuyen, 0) AS GV_CoQuyen,
                                         ISNULL(gv.ChiCuaMinh, 0) AS GV_ChiCuaMinh,
                                         ISNULL(hv.CoQuyen, 0) AS HV_CoQuyen,

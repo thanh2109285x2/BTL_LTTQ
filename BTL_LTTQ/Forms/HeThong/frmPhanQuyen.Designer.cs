@@ -59,7 +59,7 @@ namespace BTL_LTTQ.Forms.HeThong
             lblGiaiThich.Name = "lblGiaiThich";
             lblGiaiThich.Size = new Size(1070, 20);
             lblGiaiThich.TabIndex = 0;
-            lblGiaiThich.Text = "Không tích = chỉ Admin; chỉ ô chính = dữ liệu của tất cả; cả hai = chỉ dữ liệu của chính mình.";
+            lblGiaiThich.Text = "Không tích = chỉ Admin; tích quyền + 'chỉ của mình' = giới hạn hồ sơ. Với Sửa giáo viên, giáo viên chỉ sửa điện thoại, địa chỉ và ảnh của mình.";
             // 
             // dgvPhanQuyen
             // 

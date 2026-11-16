@@ -15,6 +15,8 @@ namespace BTL_LTTQ.Common.Reports
         private static readonly XLColor MauNhanNhat = XLColor.FromArgb(234, 241, 250);
         private static readonly XLColor MauTong = XLColor.FromArgb(240, 244, 250);
         private static readonly XLColor MauChuPhu = XLColor.FromArgb(108, 117, 125);
+        private static readonly XLColor MauChuBaoCao = XLColor.FromArgb(39, 54, 77);
+        private static readonly XLColor MauTieuDeBaoCao = XLColor.FromArgb(30, 74, 130);
 
         public static bool Xuat(ReportResult ketQua, string duongDan, out string loi)
         {
@@ -24,6 +26,7 @@ namespace BTL_LTTQ.Common.Reports
             {
                 using var wb = new XLWorkbook();
                 var ws = wb.Worksheets.Add("Bao cao");
+                ws.Style.Font.FontColor = MauChuBaoCao;
 
                 int soCot = Math.Max(1, ketQua.Cot.Count);
                 int dong = 1;
@@ -35,6 +38,7 @@ namespace BTL_LTTQ.Common.Reports
                 oTieuDe.Value = tieuDe;
                 oTieuDe.Style.Font.Bold = true;
                 oTieuDe.Style.Font.FontSize = 14;
+                oTieuDe.Style.Font.FontColor = MauTieuDeBaoCao;
                 oTieuDe.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 dong++;
 
@@ -74,6 +78,7 @@ namespace BTL_LTTQ.Common.Reports
                         var o = ws.Cell(dong, 1);
                         o.Value = row.NhanNhom ?? Convert.ToString(row.GiaTri.FirstOrDefault()) ?? "";
                         o.Style.Font.Bold = true;
+                        o.Style.Font.FontColor = MauTieuDeBaoCao;
                         o.Style.Fill.BackgroundColor = MauNhanNhat;
                         dong++;
                         continue;

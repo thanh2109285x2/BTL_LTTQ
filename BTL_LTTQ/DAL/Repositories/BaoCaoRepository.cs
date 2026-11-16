@@ -12,7 +12,7 @@ namespace BTL_LTTQ.DAL
             return DbHelper.ExecuteQuery($@"
                 SELECT DISTINCT l.MaLop, l.TenLop
                 FROM LopHoc l
-                LEFT JOIN HocVien hv ON hv.MaLop = l.MaLop
+                LEFT JOIN DangKy d ON d.MaLop = l.MaLop
                 WHERE 1 = 1 {locPhamVi}
                 ORDER BY l.TenLop", thamSo);
         }
@@ -24,10 +24,11 @@ namespace BTL_LTTQ.DAL
             thamSoTruyVan.Add(new SqlParameter("@MaLop", (object?)maLop ?? DBNull.Value));
             return DbHelper.ExecuteQuery($@"
                 SELECT l.MaLop, l.TenLop, hv.MaHocVien, hv.TenHocVien,
-                       hv.Diem, xl.TenLoai AS XepLoai
+                       d.Diem, xl.TenLoai AS XepLoai
                 FROM LopHoc l
-                LEFT JOIN HocVien hv ON hv.MaLop = l.MaLop
-                LEFT JOIN XepLoai xl ON xl.MaXepLoai = hv.MaXepLoai
+                INNER JOIN DangKy d ON d.MaLop = l.MaLop
+                INNER JOIN HocVien hv ON hv.MaHocVien = d.MaHocVien
+                LEFT JOIN XepLoai xl ON xl.MaXepLoai = d.MaXepLoai
                 WHERE (@MaLop IS NULL OR l.MaLop = @MaLop) {locPhamVi}
                 ORDER BY l.TenLop, hv.TenHocVien", thamSoTruyVan.ToArray());
         }

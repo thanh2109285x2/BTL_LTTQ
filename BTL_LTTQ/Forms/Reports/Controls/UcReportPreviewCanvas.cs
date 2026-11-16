@@ -148,7 +148,7 @@ namespace BTL_LTTQ.Forms.Reports.Controls
 
                 // ----- Tiêu đề -----
                 string tieuDe = string.IsNullOrWhiteSpace(kq.TieuDe) ? "BÁO CÁO" : kq.TieuDe.ToUpper();
-                VeChuGiua(g, tieuDe, chuTieuDe, ReportDesignTokens.ChuChinh, leTrai, y, vungRong);
+                VeChuGiua(g, tieuDe, chuTieuDe, ReportDesignTokens.ChuTieuDeBaoCao, leTrai, y, vungRong);
                 y += (int)(chuTieuDe.GetHeight(g) + 4);
 
                 if (!string.IsNullOrWhiteSpace(kq.PhuDe))
@@ -251,7 +251,7 @@ namespace BTL_LTTQ.Forms.Reports.Controls
                             ? ContentAlignment.MiddleLeft
                             : CanLe(kq.Cot[c].CanLe);
 
-                        VeChuOCo(g, chu, font, ReportDesignTokens.ChuChinh,
+                        VeChuOCo(g, chu, font, ReportDesignTokens.ChuBaoCao,
                             xCot[c], y, xCot[c + 1] - xCot[c], caoDong, canLe);
                     }
 

@@ -14,6 +14,8 @@ namespace BTL_LTTQ.Forms.BaoCao
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
+            lblTieuDe.ForeColor = Color.White;
+            lblMoTa.ForeColor = Color.FromArgb(226, 237, 250);
             Load += (_, _) => NapDuLieu();
         }
 

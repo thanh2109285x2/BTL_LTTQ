@@ -325,7 +325,7 @@ FROM (VALUES
     ('TAIKHOAN', N'Quản lý tài khoản', N'Khác', 0, 26, 1)
 ) s (Ma, Ten, Nhom, Loc, ThuTu, AdminOnly)
 WHERE NOT EXISTS (SELECT 1 FROM dbo.ChucNang c WHERE c.MaChucNang=s.Ma);
-UPDATE dbo.ChucNang SET HoTroLocTheoChu = 1 WHERE MaChucNang IN ('BC_XEPHANG', 'BC_LOP_PHONG');
+UPDATE dbo.ChucNang SET HoTroLocTheoChu = 1 WHERE MaChucNang IN ('BC_XEPHANG', 'BC_LOP_PHONG', 'GIAOVIEN_SUA');
 
 /* Quyền tra cứu AI mặc định. Doanh thu mặc định chỉ Admin; không cấp cho giáo viên/học viên. */
 INSERT dbo.PhanQuyen (MaChucNang, VaiTro, CoQuyen, ChiCuaMinh)
