@@ -6,9 +6,9 @@ namespace BTL_LTTQ.Forms.BaoCao
         private System.ComponentModel.IContainer? components = null;
         private DataGridView dgvBaoCao = null!;
         private Label lblTong = null!;
-        private Button btnLamMoi = null!;
-        private Button btnXuatExcel = null!;
-        private Button btnXemIn = null!;
+        private AppButton btnLamMoi = null!;
+        private AppButton btnXuatExcel = null!;
+        private AppButton btnXemIn = null!;
         private Panel pnlCongCu = null!;
         private Label lblLop = null!;
         private ComboBox cboLop = null!;
@@ -16,7 +16,7 @@ namespace BTL_LTTQ.Forms.BaoCao
         private TextBox txtTimKiem = null!;
         private Label lblSapXep = null!;
         private ComboBox cboSapXep = null!;
-        private Button btnSapXep = null!;
+        private AppButton btnSapXep = null!;
         private Panel pnlTieuDe = null!;
         private Label lblTieuDe = null!;
         private Label lblMoTa = null!;
@@ -25,9 +25,9 @@ namespace BTL_LTTQ.Forms.BaoCao
         {
             dgvBaoCao = new DataGridView();
             lblTong = new Label();
-            btnLamMoi = new Button();
-            btnXuatExcel = new Button();
-            btnXemIn = new Button();
+            btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
+            btnXuatExcel = new AppButton { Kieu = KieuNut.Chinh };
+            btnXemIn = new AppButton { Kieu = KieuNut.Phu };
             pnlCongCu = new Panel();
             lblLop = new Label();
             cboLop = new ComboBox();
@@ -35,7 +35,7 @@ namespace BTL_LTTQ.Forms.BaoCao
             txtTimKiem = new TextBox();
             lblSapXep = new Label();
             cboSapXep = new ComboBox();
-            btnSapXep = new Button();
+            btnSapXep = new AppButton { Kieu = KieuNut.Phu };
             pnlTieuDe = new Panel();
             lblTieuDe = new Label();
             lblMoTa = new Label();

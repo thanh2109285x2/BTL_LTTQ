@@ -39,9 +39,9 @@ namespace BTL_LTTQ.Forms.TraCuu
             panelDieuHuong = new Panel();
             panelChonTuan = new Panel();
             lblKhoang = new Label();
-            btnTuanSau = new Button();
-            btnTuanNay = new Button();
-            btnTuanTruoc = new Button();
+            btnTuanSau = new AppButton { Kieu = KieuNut.Phu };
+            btnTuanNay = new AppButton { Kieu = KieuNut.Phu };
+            btnTuanTruoc = new AppButton { Kieu = KieuNut.Phu };
             calThang = new MonthCalendar();
             tabPageChiTiet = new TabPage();
             dgvChiTiet = new DataGridView();
@@ -174,7 +174,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             btnTuanSau.Size = new Size(130, 40);
             btnTuanSau.TabIndex = 2;
             btnTuanSau.Text = "Tuần sau ▶";
-            btnTuanSau.UseVisualStyleBackColor = true;
             btnTuanSau.Click += btnTuanSau_Click;
             // 
             // btnTuanNay
@@ -184,7 +183,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             btnTuanNay.Size = new Size(110, 40);
             btnTuanNay.TabIndex = 1;
             btnTuanNay.Text = "Tuần này";
-            btnTuanNay.UseVisualStyleBackColor = true;
             btnTuanNay.Click += btnTuanNay_Click;
             // 
             // btnTuanTruoc
@@ -194,7 +192,6 @@ namespace BTL_LTTQ.Forms.TraCuu
             btnTuanTruoc.Size = new Size(130, 40);
             btnTuanTruoc.TabIndex = 0;
             btnTuanTruoc.Text = "◀ Tuần trước";
-            btnTuanTruoc.UseVisualStyleBackColor = true;
             btnTuanTruoc.Click += btnTuanTruoc_Click;
             // 
             // calThang
@@ -259,9 +256,9 @@ namespace BTL_LTTQ.Forms.TraCuu
         private Panel panelDieuHuong;
         private Panel panelChonTuan;
         private MonthCalendar calThang;
-        private Button btnTuanTruoc;
-        private Button btnTuanNay;
-        private Button btnTuanSau;
+        private AppButton btnTuanTruoc;
+        private AppButton btnTuanNay;
+        private AppButton btnTuanSau;
         private Label lblKhoang;
         private TabPage tabPageChiTiet;
         private DataGridView dgvChiTiet;

@@ -78,7 +78,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             panelTieuDe.Location = new Point(0, 0);
             panelTieuDe.Name = "panelTieuDe";
             panelTieuDe.Padding = new Padding(32, 12, 32, 8);
-            panelTieuDe.Size = new Size(1334, 88);
+            panelTieuDe.Size = new Size(1391, 88);
             panelTieuDe.TabIndex = 0;
             // 
             // lblMoTa
@@ -121,12 +121,12 @@ namespace BTL_LTTQ.Forms.NghiepVu
             panelNoiDung.Location = new Point(0, 88);
             panelNoiDung.Name = "panelNoiDung";
             panelNoiDung.Padding = new Padding(24);
-            panelNoiDung.Size = new Size(1334, 645);
+            panelNoiDung.Size = new Size(1391, 645);
             panelNoiDung.TabIndex = 1;
             // 
             // lblNhacThanhToan
             // 
-            lblNhacThanhToan.Location = new Point(938, 519);
+            lblNhacThanhToan.Location = new Point(1034, 519);
             lblNhacThanhToan.Name = "lblNhacThanhToan";
             lblNhacThanhToan.Size = new Size(330, 65);
             lblNhacThanhToan.TabIndex = 0;
@@ -134,7 +134,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             // 
             // lblNganHang
             // 
-            lblNganHang.Location = new Point(926, 419);
+            lblNganHang.Location = new Point(1034, 419);
             lblNganHang.Name = "lblNganHang";
             lblNganHang.Size = new Size(330, 100);
             lblNganHang.TabIndex = 1;
@@ -143,7 +143,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             // 
             picQr.BackColor = Color.White;
             picQr.BorderStyle = BorderStyle.FixedSingle;
-            picQr.Location = new Point(1036, 191);
+            picQr.Location = new Point(1144, 191);
             picQr.Name = "picQr";
             picQr.Size = new Size(220, 220);
             picQr.SizeMode = PictureBoxSizeMode.Zoom;
@@ -225,7 +225,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             dgvPhieuThu.RowHeadersVisible = false;
             dgvPhieuThu.RowHeadersWidth = 51;
             dgvPhieuThu.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPhieuThu.Size = new Size(896, 150);
+            dgvPhieuThu.Size = new Size(1004, 150);
             dgvPhieuThu.TabIndex = 5;
             dgvPhieuThu.SelectionChanged += dgvPhieuThu_SelectionChanged;
             // 
@@ -246,7 +246,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             btnTaoQR.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
             btnTaoQR.FlatStyle = FlatStyle.Flat;
             btnTaoQR.ForeColor = Color.FromArgb(33, 37, 41);
-            btnTaoQR.Location = new Point(851, 342);
+            btnTaoQR.Location = new Point(929, 342);
             btnTaoQR.Name = "btnTaoQR";
             btnTaoQR.Size = new Size(139, 36);
             btnTaoQR.TabIndex = 3;
@@ -276,7 +276,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             dgvLopChuaLap.RowHeadersVisible = false;
             dgvLopChuaLap.RowHeadersWidth = 51;
             dgvLopChuaLap.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvLopChuaLap.Size = new Size(966, 145);
+            dgvLopChuaLap.Size = new Size(1044, 145);
             dgvLopChuaLap.TabIndex = 1;
             dgvLopChuaLap.CellValueChanged += dgvLopChuaLap_SelectionChanged;
             dgvLopChuaLap.CurrentCellDirtyStateChanged += dgvLopChuaLap_CurrentCellDirtyStateChanged;
@@ -348,7 +348,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(244, 247, 251);
-            ClientSize = new Size(1334, 733);
+            ClientSize = new Size(1391, 733);
             Controls.Add(panelNoiDung);
             Controls.Add(panelTieuDe);
             Name = "frmDongHocPhi";

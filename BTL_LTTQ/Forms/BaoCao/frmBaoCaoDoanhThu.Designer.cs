@@ -5,7 +5,7 @@ namespace BTL_LTTQ.Forms.BaoCao
     {
         private System.ComponentModel.IContainer? components = null;
         private ComboBox _cboLop = null!;
-        private Button btnXemBaoCao = null!;
+        private AppButton btnXemBaoCao = null!;
         private DataGridView _dgvBaoCao = null!;
         private Label _lblTong = null!;
         private GroupBox grpDieuKien = null!;
@@ -14,10 +14,10 @@ namespace BTL_LTTQ.Forms.BaoCao
         private Label lblLop = null!;
         private TextBox txtTimKiemBaoCao = null!;
         private ComboBox cboSapXepBaoCao = null!;
-        private Button btnSapXepBaoCao = null!;
-        private Button btnLamMoiBaoCao = null!;
-        private Button btnXuatExcelBaoCao = null!;
-        private Button btnXemInPdfBaoCao = null!;
+        private AppButton btnSapXepBaoCao = null!;
+        private AppButton btnLamMoiBaoCao = null!;
+        private AppButton btnXuatExcelBaoCao = null!;
+        private AppButton btnXemInPdfBaoCao = null!;
         private Label lblTimKiemBaoCao = null!;
         private Label lblSapXepBaoCao = null!;
         private Panel pnlBanner = null!;
@@ -26,7 +26,7 @@ namespace BTL_LTTQ.Forms.BaoCao
         private void InitializeComponent()
         {
             _cboLop = new ComboBox();
-            btnXemBaoCao = new Button();
+            btnXemBaoCao = new AppButton { Kieu = KieuNut.Chinh };
             _dgvBaoCao = new DataGridView();
             _lblTong = new Label();
             grpDieuKien = new GroupBox();
@@ -36,10 +36,10 @@ namespace BTL_LTTQ.Forms.BaoCao
             txtTimKiemBaoCao = new TextBox();
             lblSapXepBaoCao = new Label();
             cboSapXepBaoCao = new ComboBox();
-            btnSapXepBaoCao = new Button();
-            btnLamMoiBaoCao = new Button();
-            btnXuatExcelBaoCao = new Button();
-            btnXemInPdfBaoCao = new Button();
+            btnSapXepBaoCao = new AppButton { Kieu = KieuNut.Phu };
+            btnLamMoiBaoCao = new AppButton { Kieu = KieuNut.Phu };
+            btnXuatExcelBaoCao = new AppButton { Kieu = KieuNut.Chinh };
+            btnXemInPdfBaoCao = new AppButton { Kieu = KieuNut.Chinh };
             grpKetQua = new GroupBox();
             pnlBanner = new Panel();
             lblBannerTieuDe = new Label();

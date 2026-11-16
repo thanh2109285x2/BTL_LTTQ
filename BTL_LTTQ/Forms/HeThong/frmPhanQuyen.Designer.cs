@@ -24,9 +24,9 @@ namespace BTL_LTTQ.Forms.HeThong
             colHocVien = new DataGridViewCheckBoxColumn();
             colHocVienChiCuaMinh = new DataGridViewCheckBoxColumn();
             panelButtons = new FlowLayoutPanel();
-            btnDong = new AppButton();
-            btnHoanTac = new AppButton();
-            btnLuu = new AppButton();
+            btnDong = new AppButton { Kieu = KieuNut.Phu };
+            btnHoanTac = new AppButton { Kieu = KieuNut.Phu };
+            btnLuu = new AppButton { Kieu = KieuNut.Chinh };
             layoutRoot.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPhanQuyen).BeginInit();
             panelButtons.SuspendLayout();
@@ -145,50 +145,29 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             // btnDong
             // 
-            btnDong.BackColor = Color.White;
-            btnDong.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnDong.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnDong.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
-            btnDong.FlatStyle = FlatStyle.Flat;
-            btnDong.ForeColor = Color.FromArgb(33, 37, 41);
             btnDong.Location = new Point(955, 13);
             btnDong.Name = "btnDong";
             btnDong.Size = new Size(112, 38);
             btnDong.TabIndex = 4;
             btnDong.Text = "Đóng";
-            btnDong.UseVisualStyleBackColor = false;
             btnDong.Click += btnDong_Click;
             // 
             // btnHoanTac
             // 
-            btnHoanTac.BackColor = Color.White;
-            btnHoanTac.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnHoanTac.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnHoanTac.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
-            btnHoanTac.FlatStyle = FlatStyle.Flat;
-            btnHoanTac.ForeColor = Color.FromArgb(33, 37, 41);
             btnHoanTac.Location = new Point(825, 13);
             btnHoanTac.Name = "btnHoanTac";
             btnHoanTac.Size = new Size(124, 38);
             btnHoanTac.TabIndex = 3;
             btnHoanTac.Text = "Hoàn tác";
-            btnHoanTac.UseVisualStyleBackColor = false;
             btnHoanTac.Click += btnHoanTac_Click;
             // 
             // btnLuu
             // 
-            btnLuu.BackColor = Color.White;
-            btnLuu.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnLuu.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnLuu.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
-            btnLuu.FlatStyle = FlatStyle.Flat;
-            btnLuu.ForeColor = Color.FromArgb(33, 37, 41);
             btnLuu.Location = new Point(707, 13);
             btnLuu.Name = "btnLuu";
             btnLuu.Size = new Size(112, 38);
             btnLuu.TabIndex = 2;
             btnLuu.Text = "Lưu";
-            btnLuu.UseVisualStyleBackColor = false;
             btnLuu.Click += btnLuu_Click;
             // 
             // frmPhanQuyen

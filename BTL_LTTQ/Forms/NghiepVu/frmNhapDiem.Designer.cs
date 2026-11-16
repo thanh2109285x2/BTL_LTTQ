@@ -39,11 +39,11 @@ namespace BTL_LTTQ.Forms.NghiepVu
             lblTieuDe = new Label();
             panelNoiDung = new Panel();
             dgvHocVien = new DataGridView();
-            btnTimKiem = new AppButton();
+            btnTimKiem = new AppButton { Kieu = KieuNut.Chinh };
             txtTimTenHocVien = new TextBox();
             txtTimMaHocVien = new TextBox();
-            btnLamMoi = new AppButton();
-            btnSuaDiem = new AppButton();
+            btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
+            btnSuaDiem = new AppButton { Kieu = KieuNut.Chinh };
             grpThongTinDiem = new GroupBox();
             lblMaHocVien = new Label();
             lblTenHocVien = new Label();
@@ -128,18 +128,11 @@ namespace BTL_LTTQ.Forms.NghiepVu
             // 
             // btnTimKiem
             // 
-            btnTimKiem.BackColor = Color.White;
-            btnTimKiem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnTimKiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnTimKiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
-            btnTimKiem.FlatStyle = FlatStyle.Flat;
-            btnTimKiem.ForeColor = Color.FromArgb(33, 37, 41);
             btnTimKiem.Location = new Point(462, 238);
             btnTimKiem.Name = "btnTimKiem";
             btnTimKiem.Size = new Size(100, 36);
             btnTimKiem.TabIndex = 5;
             btnTimKiem.Text = "Tìm kiếm";
-            btnTimKiem.UseVisualStyleBackColor = false;
             // 
             // txtTimTenHocVien
             // 
@@ -159,33 +152,19 @@ namespace BTL_LTTQ.Forms.NghiepVu
             // 
             // btnLamMoi
             // 
-            btnLamMoi.BackColor = Color.White;
-            btnLamMoi.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnLamMoi.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnLamMoi.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
-            btnLamMoi.FlatStyle = FlatStyle.Flat;
-            btnLamMoi.ForeColor = Color.FromArgb(33, 37, 41);
             btnLamMoi.Location = new Point(172, 157);
             btnLamMoi.Name = "btnLamMoi";
             btnLamMoi.Size = new Size(110, 38);
             btnLamMoi.TabIndex = 3;
             btnLamMoi.Text = "Làm mới";
-            btnLamMoi.UseVisualStyleBackColor = false;
             // 
             // btnSuaDiem
             // 
-            btnSuaDiem.BackColor = Color.White;
-            btnSuaDiem.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnSuaDiem.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnSuaDiem.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
-            btnSuaDiem.FlatStyle = FlatStyle.Flat;
-            btnSuaDiem.ForeColor = Color.FromArgb(33, 37, 41);
             btnSuaDiem.Location = new Point(32, 157);
             btnSuaDiem.Name = "btnSuaDiem";
             btnSuaDiem.Size = new Size(130, 38);
             btnSuaDiem.TabIndex = 2;
             btnSuaDiem.Text = "Sửa điểm";
-            btnSuaDiem.UseVisualStyleBackColor = false;
             // 
             // grpThongTinDiem
             // 

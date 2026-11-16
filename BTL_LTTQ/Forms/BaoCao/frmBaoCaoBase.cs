@@ -81,10 +81,10 @@ namespace BTL_LTTQ.Forms.BaoCao
         {
             var txtTimKiem = TimDieuKhien<TextBox>("txtTimKiemBaoCao");
             var cboSapXep = TimDieuKhien<ComboBox>("cboSapXepBaoCao");
-            var btnSapXep = TimDieuKhien<Button>("btnSapXepBaoCao");
-            var btnLamMoi = TimDieuKhien<Button>("btnLamMoiBaoCao");
-            var btnExcel = TimDieuKhien<Button>("btnXuatExcelBaoCao");
-            var btnIn = TimDieuKhien<Button>("btnXemInPdfBaoCao");
+            var btnSapXep = TimDieuKhien<AppButton>("btnSapXepBaoCao");
+            var btnLamMoi = TimDieuKhien<AppButton>("btnLamMoiBaoCao");
+            var btnExcel = TimDieuKhien<AppButton>("btnXuatExcelBaoCao");
+            var btnIn = TimDieuKhien<AppButton>("btnXemInPdfBaoCao");
 
             txtTimKiem!.PlaceholderText = _laBaoCaoDiem ? "Mã hoặc tên học viên" : "Tên lớp hoặc môn học";
             cboSapXep!.Items.AddRange(_laBaoCaoDiem
@@ -211,6 +211,11 @@ namespace BTL_LTTQ.Forms.BaoCao
                 if (_laBaoCaoDiem && col.Name == "Diem") col.DefaultCellStyle.Format = "0.##";
                 if (!_laBaoCaoDiem && (col.Name == "DoanhThu" || col.Name == "HocPhiMoiHocVien")) col.DefaultCellStyle.Format = "N0";
             }
+        }
+
+        private void InitializeComponent()
+        {
+
         }
 
         private static void HienLoi(Exception ex) => MessageBox.Show(

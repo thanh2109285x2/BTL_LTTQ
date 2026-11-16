@@ -7,7 +7,7 @@ namespace BTL_LTTQ.Forms
         private System.Windows.Forms.FlowLayoutPanel flpTinNhan = null!;
         private System.Windows.Forms.Panel panelNhap = null!;
         private System.Windows.Forms.TextBox txtCauHoi = null!;
-        private System.Windows.Forms.Button btnGui = null!;
+        private AppButton btnGui = null!;
 
         protected override void Dispose(bool disposing)
         {
@@ -21,7 +21,7 @@ namespace BTL_LTTQ.Forms
             flpTinNhan = new FlowLayoutPanel();
             panelNhap = new Panel();
             txtCauHoi = new TextBox();
-            btnGui = new Button();
+            btnGui = new AppButton { Kieu = KieuNut.Phu };
             panelNhap.SuspendLayout();
             SuspendLayout();
             // 
@@ -73,7 +73,6 @@ namespace BTL_LTTQ.Forms
             btnGui.Size = new Size(103, 48);
             btnGui.TabIndex = 1;
             btnGui.Text = "Gửi";
-            btnGui.UseVisualStyleBackColor = true;
             btnGui.Click += btnGui_Click;
             // 
             // frmTroLyAi

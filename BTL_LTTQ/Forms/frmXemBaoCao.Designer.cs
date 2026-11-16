@@ -8,10 +8,10 @@ namespace BTL_LTTQ.Forms
         private System.Windows.Forms.Label lblTieuDe = null!;
         private System.Windows.Forms.Label lblThongTin = null!;
         private System.Windows.Forms.FlowLayoutPanel flowHanhDong = null!;
-        private System.Windows.Forms.Button btnDong = null!;
-        private System.Windows.Forms.Button btnXuatExcel = null!;
-        private System.Windows.Forms.Button btnXuatPdf = null!;
-        private System.Windows.Forms.Button btnInBaoCao = null!;
+        private AppButton btnDong = null!;
+        private AppButton btnXuatExcel = null!;
+        private AppButton btnXuatPdf = null!;
+        private AppButton btnInBaoCao = null!;
         private System.Windows.Forms.DataGridView dgvBaoCao = null!;
 
         protected override void Dispose(bool disposing)
@@ -31,10 +31,10 @@ namespace BTL_LTTQ.Forms
             lblTieuDe = new Label();
             lblThongTin = new Label();
             flowHanhDong = new FlowLayoutPanel();
-            btnInBaoCao = new Button();
-            btnXuatPdf = new Button();
-            btnXuatExcel = new Button();
-            btnDong = new Button();
+            btnInBaoCao = new AppButton { Kieu = KieuNut.Phu };
+            btnXuatPdf = new AppButton { Kieu = KieuNut.Phu };
+            btnXuatExcel = new AppButton { Kieu = KieuNut.Chinh };
+            btnDong = new AppButton { Kieu = KieuNut.Phu };
             dgvBaoCao = new DataGridView();
             panelTieuDe.SuspendLayout();
             flowHanhDong.SuspendLayout();
@@ -101,7 +101,6 @@ namespace BTL_LTTQ.Forms
             btnInBaoCao.Size = new Size(128, 43);
             btnInBaoCao.TabIndex = 0;
             btnInBaoCao.Text = "In báo cáo";
-            btnInBaoCao.UseVisualStyleBackColor = true;
             btnInBaoCao.Click += btnInBaoCao_Click;
             // 
             // btnXuatPdf
@@ -112,7 +111,6 @@ namespace BTL_LTTQ.Forms
             btnXuatPdf.Size = new Size(128, 43);
             btnXuatPdf.TabIndex = 1;
             btnXuatPdf.Text = "Xuất PDF";
-            btnXuatPdf.UseVisualStyleBackColor = true;
             btnXuatPdf.Click += btnXuatPdf_Click;
             // 
             // btnXuatExcel
@@ -123,7 +121,6 @@ namespace BTL_LTTQ.Forms
             btnXuatExcel.Size = new Size(128, 43);
             btnXuatExcel.TabIndex = 2;
             btnXuatExcel.Text = "Xuất Excel";
-            btnXuatExcel.UseVisualStyleBackColor = true;
             btnXuatExcel.Click += btnXuatExcel_Click;
             // 
             // btnDong
@@ -134,7 +131,6 @@ namespace BTL_LTTQ.Forms
             btnDong.Size = new Size(128, 43);
             btnDong.TabIndex = 3;
             btnDong.Text = "Đóng";
-            btnDong.UseVisualStyleBackColor = true;
             btnDong.Click += btnDong_Click;
             // 
             // dgvBaoCao

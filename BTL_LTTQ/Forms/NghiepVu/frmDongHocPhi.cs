@@ -124,6 +124,7 @@ namespace BTL_LTTQ.Forms.NghiepVu
             dgvLopChuaLap.Columns["Chon"].SortMode = DataGridViewColumnSortMode.NotSortable;
             dgvLopChuaLap.Columns["Chon"].DisplayIndex = 0;
             dgvLopChuaLap.Columns["Chon"].HeaderText = "Chọn";
+            dgvLopChuaLap.Columns["Chon"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             lblTongTien.Text = "Tổng tiền: " + TongTienChon().ToString("N0", CultureInfo.CurrentCulture) + " đ";
         }
 

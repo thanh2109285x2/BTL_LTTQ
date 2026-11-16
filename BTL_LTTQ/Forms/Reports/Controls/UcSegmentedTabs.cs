@@ -15,7 +15,7 @@ namespace BTL_LTTQ.Forms.Reports.Controls
     {
         private readonly FlowLayoutPanel _thanh;
         private readonly Panel _noiDung;
-        private readonly List<Button> _nut = new();
+        private readonly List<AppButton> _nut = new();
         private readonly List<Control> _trang = new();
         private int _chon = -1;
 
@@ -60,21 +60,17 @@ namespace BTL_LTTQ.Forms.Reports.Controls
             ArgumentNullException.ThrowIfNull(noiDung);
 
             int chiSo = _trang.Count;
-            var nut = new Button
+            var nut = new AppButton
             {
+                Kieu = KieuNut.Phu,
                 Text = tieuDe,
                 AutoSize = true,
                 AutoSizeMode = AutoSizeMode.GrowAndShrink,
                 Height = 30,
-                FlatStyle = FlatStyle.Flat,
-                UseVisualStyleBackColor = false,
-                Font = ReportDesignTokens.ChuThuong,
-                Cursor = Cursors.Hand,
                 Margin = new Padding(0, 0, ReportDesignTokens.Khoang4, 0),
                 Padding = new Padding(ReportDesignTokens.Khoang12, 0, ReportDesignTokens.Khoang12, 0),
                 Tag = chiSo
             };
-            nut.FlatAppearance.BorderSize = 0;
             nut.Click += (_, _) => Chon(chiSo);
 
             noiDung.Dock = DockStyle.Fill;
@@ -87,8 +83,6 @@ namespace BTL_LTTQ.Forms.Reports.Controls
 
             if (_chon < 0)
                 Chon(0);
-            else
-                CapNhatDinhDang();
         }
 
         public void Chon(int chiSo)
@@ -102,22 +96,8 @@ namespace BTL_LTTQ.Forms.Reports.Controls
             for (int i = 0; i < _trang.Count; i++)
                 _trang[i].Visible = i == chiSo;
 
-            CapNhatDinhDang();
-
             if (doi)
                 DoiTrang?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void CapNhatDinhDang()
-        {
-            for (int i = 0; i < _nut.Count; i++)
-            {
-                bool chon = i == _chon;
-                var nut = _nut[i];
-                nut.BackColor = chon ? ReportDesignTokens.Nhan : ReportDesignTokens.NenHeader;
-                nut.ForeColor = chon ? Color.White : ReportDesignTokens.ChuPhu;
-                nut.Font = chon ? ReportDesignTokens.ChuNhan : ReportDesignTokens.ChuThuong;
-            }
         }
     }
 }

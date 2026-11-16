@@ -36,9 +36,9 @@ namespace BTL_LTTQ.Forms.QuanLy
             groupBox1 = new GroupBox();
             dgvLopHoc = new DataGridView();
             panelNut = new Panel();
-            btnLamMoi = new Button();
-            btnXoa = new Button();
-            btnThem = new Button();
+            btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
+            btnXoa = new AppButton { Kieu = KieuNut.NguyHiem };
+            btnThem = new AppButton { Kieu = KieuNut.Chinh };
             panelTieuDe.SuspendLayout();
             panelDanhSach.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -134,7 +134,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnLamMoi.Size = new Size(120, 40);
             btnLamMoi.TabIndex = 2;
             btnLamMoi.Text = "Làm mới";
-            btnLamMoi.UseVisualStyleBackColor = true;
             btnLamMoi.Click += btnLamMoi_Click;
             // 
             // btnXoa
@@ -144,7 +143,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnXoa.Size = new Size(140, 40);
             btnXoa.TabIndex = 1;
             btnXoa.Text = "Hủy đăng ký";
-            btnXoa.UseVisualStyleBackColor = true;
             btnXoa.Click += btnXoa_Click;
             // 
             // btnThem
@@ -154,7 +152,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             btnThem.Size = new Size(140, 40);
             btnThem.TabIndex = 0;
             btnThem.Text = "Đăng ký lớp";
-            btnThem.UseVisualStyleBackColor = true;
             btnThem.Click += btnThem_Click;
             // 
             // frmDangKyLop
@@ -187,8 +184,8 @@ namespace BTL_LTTQ.Forms.QuanLy
         private GroupBox groupBox1;
         private DataGridView dgvLopHoc;
         private Panel panelNut;
-        private Button btnThem;
-        private Button btnXoa;
-        private Button btnLamMoi;
+        private AppButton btnThem;
+        private AppButton btnXoa;
+        private AppButton btnLamMoi;
     }
 }

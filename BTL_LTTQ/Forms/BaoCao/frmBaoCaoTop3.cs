@@ -16,22 +16,7 @@ namespace BTL_LTTQ.Forms.BaoCao
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
-            lblTieuDe.ForeColor = Color.White;
-            lblMoTa.ForeColor = Color.FromArgb(226, 237, 250);
-            DinhDangNutChinh(btnSapXep);
             Load += (_, _) => NapDuLieu();
-        }
-
-        private static void DinhDangNutChinh(Button nut)
-        {
-            nut.BackColor = GiaoDien.MauChinh;
-            nut.ForeColor = Color.White;
-            nut.FlatStyle = FlatStyle.Flat;
-            nut.FlatAppearance.BorderSize = 0;
-            nut.FlatAppearance.MouseOverBackColor = GiaoDien.MauChinhDam;
-            nut.FlatAppearance.MouseDownBackColor = GiaoDien.MauChinhDam;
-            nut.Cursor = Cursors.Hand;
-            nut.Font = new Font(nut.Font, FontStyle.Bold);
         }
 
         private void NapDuLieu()

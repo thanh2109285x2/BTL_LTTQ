@@ -9,8 +9,8 @@ namespace BTL_LTTQ.Forms.QuanLy
         private FlowLayoutPanel _search = null!;
         private Label _lblTim = null!;
         private TextBox _txtTim = null!;
-        private Button _btnTim = null!;
-        private Button _btnTatCa = null!;
+        private AppButton _btnTim = null!;
+        private AppButton _btnTatCa = null!;
         private TableLayoutPanel _content = null!;
         private GroupBox _thongTin = null!;
         private TableLayoutPanel _thongTinLayout = null!;
@@ -43,14 +43,14 @@ namespace BTL_LTTQ.Forms.QuanLy
         private Panel _anhPanel = null!;
         private Label _lblAnh = null!;
         private PictureBox _previewAnh = null!;
-        private Button _btnChonAnh = null!;
+        private AppButton _btnChonAnh = null!;
         private GroupBox _monBox = null!;
         private CheckedListBox _monDay = null!;
         private FlowLayoutPanel _actions = null!;
-        private Button _btnThem = null!;
-        private Button _btnSua = null!;
-        private Button _btnXoa = null!;
-        private Button _btnMoi = null!;
+        private AppButton _btnThem = null!;
+        private AppButton _btnSua = null!;
+        private AppButton _btnXoa = null!;
+        private AppButton _btnMoi = null!;
         private DataGridView _grid = null!;
 
         protected override void Dispose(bool disposing)
@@ -66,8 +66,8 @@ namespace BTL_LTTQ.Forms.QuanLy
             _search = new FlowLayoutPanel();
             _lblTim = new Label();
             _txtTim = new TextBox();
-            _btnTim = new Button();
-            _btnTatCa = new Button();
+            _btnTim = new AppButton { Kieu = KieuNut.Chinh };
+            _btnTatCa = new AppButton { Kieu = KieuNut.Phu };
             _content = new TableLayoutPanel();
             _thongTin = new GroupBox();
             _thongTinLayout = new TableLayoutPanel();
@@ -100,14 +100,14 @@ namespace BTL_LTTQ.Forms.QuanLy
             _anhPanel = new Panel();
             _lblAnh = new Label();
             _previewAnh = new PictureBox();
-            _btnChonAnh = new Button();
+            _btnChonAnh = new AppButton { Kieu = KieuNut.Chinh };
             _monBox = new GroupBox();
             _monDay = new CheckedListBox();
             _actions = new FlowLayoutPanel();
-            _btnThem = new Button();
-            _btnSua = new Button();
-            _btnXoa = new Button();
-            _btnMoi = new Button();
+            _btnThem = new AppButton { Kieu = KieuNut.Chinh };
+            _btnSua = new AppButton { Kieu = KieuNut.Chinh };
+            _btnXoa = new AppButton { Kieu = KieuNut.NguyHiem };
+            _btnMoi = new AppButton { Kieu = KieuNut.Phu };
             _grid = new DataGridView();
             _root.SuspendLayout();
             _search.SuspendLayout();
@@ -182,31 +182,21 @@ namespace BTL_LTTQ.Forms.QuanLy
             // _btnTim
             // 
             _btnTim.AutoSize = true;
-            _btnTim.BackColor = Color.FromArgb(41, 98, 168);
-            _btnTim.FlatAppearance.BorderColor = Color.FromArgb(41, 98, 168);
-            _btnTim.FlatStyle = FlatStyle.Flat;
-            _btnTim.ForeColor = Color.White;
             _btnTim.Location = new Point(544, 9);
             _btnTim.Margin = new Padding(3, 4, 3, 4);
             _btnTim.Name = "_btnTim";
             _btnTim.Size = new Size(86, 32);
             _btnTim.TabIndex = 1;
             _btnTim.Text = "Tìm";
-            _btnTim.UseVisualStyleBackColor = false;
             // 
             // _btnTatCa
             // 
             _btnTatCa.AutoSize = true;
-            _btnTatCa.BackColor = Color.White;
-            _btnTatCa.FlatAppearance.BorderColor = Color.FromArgb(41, 98, 168);
-            _btnTatCa.FlatStyle = FlatStyle.Flat;
-            _btnTatCa.ForeColor = Color.FromArgb(41, 98, 168);
             _btnTatCa.Location = new Point(636, 8);
             _btnTatCa.Name = "_btnTatCa";
             _btnTatCa.Size = new Size(86, 32);
             _btnTatCa.TabIndex = 2;
             _btnTatCa.Text = "Tất cả";
-            _btnTatCa.UseVisualStyleBackColor = false;
             // 
             // _content
             // 
@@ -579,7 +569,6 @@ namespace BTL_LTTQ.Forms.QuanLy
             _btnChonAnh.Size = new Size(103, 35);
             _btnChonAnh.TabIndex = 2;
             _btnChonAnh.Text = "Chọn ảnh...";
-            _btnChonAnh.UseVisualStyleBackColor = true;
             // 
             // _monBox
             // 
@@ -621,59 +610,39 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             // _btnThem
             // 
-            _btnThem.BackColor = Color.FromArgb(41, 98, 168);
-            _btnThem.FlatAppearance.BorderColor = Color.FromArgb(41, 98, 168);
-            _btnThem.FlatStyle = FlatStyle.Flat;
-            _btnThem.ForeColor = Color.White;
             _btnThem.Location = new Point(8, 9);
             _btnThem.Margin = new Padding(3, 4, 3, 4);
             _btnThem.Name = "_btnThem";
             _btnThem.Size = new Size(120, 40);
             _btnThem.TabIndex = 0;
             _btnThem.Text = "Thêm";
-            _btnThem.UseVisualStyleBackColor = false;
             // 
             // _btnSua
             // 
-            _btnSua.BackColor = Color.FromArgb(41, 98, 168);
-            _btnSua.FlatAppearance.BorderColor = Color.FromArgb(41, 98, 168);
-            _btnSua.FlatStyle = FlatStyle.Flat;
-            _btnSua.ForeColor = Color.White;
             _btnSua.Location = new Point(134, 9);
             _btnSua.Margin = new Padding(3, 4, 3, 4);
             _btnSua.Name = "_btnSua";
             _btnSua.Size = new Size(120, 40);
             _btnSua.TabIndex = 1;
             _btnSua.Text = "Sửa";
-            _btnSua.UseVisualStyleBackColor = false;
             // 
             // _btnXoa
             // 
-            _btnXoa.BackColor = Color.FromArgb(192, 57, 43);
-            _btnXoa.FlatAppearance.BorderColor = Color.FromArgb(192, 57, 43);
-            _btnXoa.FlatStyle = FlatStyle.Flat;
-            _btnXoa.ForeColor = Color.White;
             _btnXoa.Location = new Point(260, 9);
             _btnXoa.Margin = new Padding(3, 4, 3, 4);
             _btnXoa.Name = "_btnXoa";
             _btnXoa.Size = new Size(120, 40);
             _btnXoa.TabIndex = 2;
             _btnXoa.Text = "Xóa";
-            _btnXoa.UseVisualStyleBackColor = false;
             // 
             // _btnMoi
             // 
-            _btnMoi.BackColor = Color.White;
-            _btnMoi.FlatAppearance.BorderColor = Color.FromArgb(41, 98, 168);
-            _btnMoi.FlatStyle = FlatStyle.Flat;
-            _btnMoi.ForeColor = Color.FromArgb(41, 98, 168);
             _btnMoi.Location = new Point(386, 9);
             _btnMoi.Margin = new Padding(3, 4, 3, 4);
             _btnMoi.Name = "_btnMoi";
             _btnMoi.Size = new Size(120, 40);
             _btnMoi.TabIndex = 3;
             _btnMoi.Text = "Làm mới";
-            _btnMoi.UseVisualStyleBackColor = false;
             // 
             // _grid
             // 

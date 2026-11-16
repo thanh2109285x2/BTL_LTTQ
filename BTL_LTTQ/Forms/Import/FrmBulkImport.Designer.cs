@@ -36,9 +36,9 @@ namespace BTL_LTTQ.Forms.Import
             cboLoai = new ComboBox();
             lblTep = new Label();
             txtTep = new TextBox();
-            btnChonTep = new Button();
-            btnTaiMau = new Button();
-            btnXemTruoc = new Button();
+            btnChonTep = new AppButton { Kieu = KieuNut.Chinh };
+            btnTaiMau = new AppButton { Kieu = KieuNut.Phu };
+            btnXemTruoc = new AppButton { Kieu = KieuNut.Phu };
             lblGoiY = new Label();
             panelTomTat = new Panel();
             lblTongDongCaption = new Label();
@@ -53,9 +53,9 @@ namespace BTL_LTTQ.Forms.Import
             dgvDuLieu = new DataGridView();
             panelNut = new Panel();
             progressNhap = new ProgressBar();
-            btnXuatBaoCao = new Button();
-            btnXacNhan = new Button();
-            btnDong = new Button();
+            btnXuatBaoCao = new AppButton { Kieu = KieuNut.Phu };
+            btnXacNhan = new AppButton { Kieu = KieuNut.Chinh };
+            btnDong = new AppButton { Kieu = KieuNut.Phu };
             panelTieuDe.SuspendLayout();
             panelCauHinh.SuspendLayout();
             panelTomTat.SuspendLayout();
@@ -156,7 +156,6 @@ namespace BTL_LTTQ.Forms.Import
             btnChonTep.Size = new Size(112, 30);
             btnChonTep.TabIndex = 4;
             btnChonTep.Text = "Chọn tệp...";
-            btnChonTep.UseVisualStyleBackColor = true;
             btnChonTep.Click += btnChonTep_Click;
             // 
             // btnTaiMau
@@ -167,7 +166,6 @@ namespace BTL_LTTQ.Forms.Import
             btnTaiMau.Size = new Size(124, 30);
             btnTaiMau.TabIndex = 5;
             btnTaiMau.Text = "Tải tệp mẫu";
-            btnTaiMau.UseVisualStyleBackColor = true;
             btnTaiMau.Click += btnTaiMau_Click;
             // 
             // btnXemTruoc
@@ -178,7 +176,6 @@ namespace BTL_LTTQ.Forms.Import
             btnXemTruoc.Size = new Size(112, 30);
             btnXemTruoc.TabIndex = 6;
             btnXemTruoc.Text = "Xem trước";
-            btnXemTruoc.UseVisualStyleBackColor = true;
             btnXemTruoc.Click += btnXemTruoc_Click;
             // 
             // lblGoiY
@@ -346,7 +343,6 @@ namespace BTL_LTTQ.Forms.Import
             btnXuatBaoCao.Size = new Size(150, 32);
             btnXuatBaoCao.TabIndex = 1;
             btnXuatBaoCao.Text = "Xuất báo cáo lỗi";
-            btnXuatBaoCao.UseVisualStyleBackColor = true;
             btnXuatBaoCao.Click += btnXuatBaoCao_Click;
             // 
             // btnXacNhan
@@ -358,7 +354,6 @@ namespace BTL_LTTQ.Forms.Import
             btnXacNhan.Size = new Size(160, 32);
             btnXacNhan.TabIndex = 2;
             btnXacNhan.Text = "Xác nhận nhập";
-            btnXacNhan.UseVisualStyleBackColor = true;
             btnXacNhan.Click += btnXacNhan_Click;
             // 
             // btnDong
@@ -369,7 +364,6 @@ namespace BTL_LTTQ.Forms.Import
             btnDong.Size = new Size(104, 32);
             btnDong.TabIndex = 3;
             btnDong.Text = "Đóng";
-            btnDong.UseVisualStyleBackColor = true;
             btnDong.Click += btnDong_Click;
             // 
             // FrmBulkImport
@@ -412,9 +406,9 @@ namespace BTL_LTTQ.Forms.Import
         private ComboBox cboLoai;
         private Label lblTep;
         private TextBox txtTep;
-        private Button btnChonTep;
-        private Button btnTaiMau;
-        private Button btnXemTruoc;
+        private AppButton btnChonTep;
+        private AppButton btnTaiMau;
+        private AppButton btnXemTruoc;
         private Label lblGoiY;
         private Panel panelTomTat;
         private Label lblTongDongCaption;
@@ -429,8 +423,8 @@ namespace BTL_LTTQ.Forms.Import
         private DataGridView dgvDuLieu;
         private Panel panelNut;
         private ProgressBar progressNhap;
-        private Button btnXuatBaoCao;
-        private Button btnXacNhan;
-        private Button btnDong;
+        private AppButton btnXuatBaoCao;
+        private AppButton btnXacNhan;
+        private AppButton btnDong;
     }
 }

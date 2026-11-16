@@ -21,8 +21,8 @@ namespace BTL_LTTQ.Forms.HeThong
         {
             lblTieuDe = new Label();
             lblNoiDung = new Label();
-            btnSaoLuu = new AppButton();
-            btnHuy = new AppButton();
+            btnSaoLuu = new AppButton { Kieu = KieuNut.Phu };
+            btnHuy = new AppButton { Kieu = KieuNut.Phu };
             SuspendLayout();
             // 
             // lblTieuDe
@@ -47,35 +47,21 @@ namespace BTL_LTTQ.Forms.HeThong
             // 
             // btnSaoLuu
             // 
-            btnSaoLuu.BackColor = Color.White;
-            btnSaoLuu.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnSaoLuu.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnSaoLuu.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
-            btnSaoLuu.FlatStyle = FlatStyle.Flat;
-            btnSaoLuu.ForeColor = Color.FromArgb(33, 37, 41);
             btnSaoLuu.Location = new Point(70, 188);
             btnSaoLuu.Name = "btnSaoLuu";
             btnSaoLuu.Size = new Size(132, 36);
             btnSaoLuu.TabIndex = 2;
             btnSaoLuu.Text = "Sao lưu";
-            btnSaoLuu.UseVisualStyleBackColor = false;
             btnSaoLuu.Click += btnSaoLuu_Click;
             // 
             // btnHuy
             // 
-            btnHuy.BackColor = Color.White;
             btnHuy.DialogResult = DialogResult.Cancel;
-            btnHuy.FlatAppearance.BorderColor = Color.FromArgb(200, 208, 220);
-            btnHuy.FlatAppearance.MouseDownBackColor = Color.FromArgb(234, 241, 250);
-            btnHuy.FlatAppearance.MouseOverBackColor = Color.FromArgb(234, 241, 250);
-            btnHuy.FlatStyle = FlatStyle.Flat;
-            btnHuy.ForeColor = Color.FromArgb(33, 37, 41);
             btnHuy.Location = new Point(270, 188);
             btnHuy.Name = "btnHuy";
             btnHuy.Size = new Size(86, 36);
             btnHuy.TabIndex = 3;
             btnHuy.Text = "Hủy";
-            btnHuy.UseVisualStyleBackColor = false;
             btnHuy.Click += btnHuy_Click;
             // 
             // frmBackup
