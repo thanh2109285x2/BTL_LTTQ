@@ -17,21 +17,21 @@ namespace BTL_LTTQ.BUS.Reports
         public static PhamViInfo ChoNguon(DataSourceDefinition? nguon)
         {
             if (nguon == null || nguon.PhamVi == PhamViNguon.Khong)
-                return new PhamViInfo { Loai = LoaiPhamVi.TatCa };
+                return new PhamViInfo(LoaiPhamVi.TatCa);
 
             if (!PermissionService.Can(ChucNangConst.BAOCAO_TAO))
-                return new PhamViInfo { Loai = LoaiPhamVi.TuChoi };
+                return new PhamViInfo(LoaiPhamVi.TuChoi);
 
             if (!PermissionService.ChiCuaMinh(ChucNangConst.BAOCAO_TAO))
-                return new PhamViInfo { Loai = LoaiPhamVi.TatCa };
+                return new PhamViInfo(LoaiPhamVi.TatCa);
 
             if (CurrentUser.IsGiaoVien && !string.IsNullOrWhiteSpace(CurrentUser.MaGV))
-                return new PhamViInfo { Loai = LoaiPhamVi.GiaoVien, Ma = CurrentUser.MaGV };
+                return new PhamViInfo(LoaiPhamVi.GiaoVien, MaGiaoVien: CurrentUser.MaGV);
 
             if (CurrentUser.IsHocVien && !string.IsNullOrWhiteSpace(CurrentUser.MaHocVien))
-                return new PhamViInfo { Loai = LoaiPhamVi.HocVien, Ma = CurrentUser.MaHocVien };
+                return new PhamViInfo(LoaiPhamVi.HocVien, MaHocVien: CurrentUser.MaHocVien);
 
-            return new PhamViInfo { Loai = LoaiPhamVi.TuChoi };
+            return new PhamViInfo(LoaiPhamVi.TuChoi);
         }
     }
 }

@@ -85,7 +85,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             }
             if (moTa.CoThuTrongTuan)
             {
-                _dayLabel = new Label { Text = "Các thứ", AutoSize = true, Location = new Point(18, y + 5) };
+                _dayLabel = new Label { Text = "Ngày học", AutoSize = true, Location = new Point(18, y + 5) };
                 grpThongTin.Controls.Add(_dayLabel);
                 for (int i = 0; i < ThuTrongTuanConst.CacThu.Count; i++)
                 {
@@ -263,5 +263,10 @@ namespace BTL_LTTQ.Forms.QuanLy
         }
 
         private void BaoLoi(string message) => MessageBox.Show(message, "Danh mục khác", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+        private void grpThongTin_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

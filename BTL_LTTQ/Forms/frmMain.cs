@@ -167,14 +167,6 @@ namespace BTL_LTTQ
             // Chức năng đăng ký lớp chỉ dành cho học viên.
             btnDangKyLop.Visible = CurrentUser.IsHocVien && PermissionService.Can(ChucNangConst.DANGKYLOP);
 
-            // Nhập hàng loạt là chức năng quản trị dữ liệu: học viên không được dùng
-            // (học viên tự đăng ký lớp bằng chức năng Đăng ký lớp, không nhập hàng loạt).
-            bool coQuyenNhapHangLoat = !CurrentUser.IsHocVien &&
-                                       (PermissionService.Can(ChucNangConst.HOCVIEN_THEM) ||
-                                        PermissionService.Can(ChucNangConst.GIAOVIEN_THEM) ||
-                                        PermissionService.Can(ChucNangConst.DANGKYLOP));
-            btnNhapDuLieu.Visible = coQuyenNhapHangLoat;
-
             btnQuanLyMenu.Visible = SapXepMenu(panelCRUD,
                 (btnLopHoc, ChucNangConst.LOPHOC_XEM),
                 (btnHocVien, ChucNangConst.HOCVIEN_XEM),
@@ -376,13 +368,8 @@ namespace BTL_LTTQ
 
         private void btnBaoCaoMenu_Click(object sender, EventArgs e)
         {
-            TogglePanel(panelBaoCao, btnBaoCaoDiem, btnDoanhThu, btnTop3, btnLopTheoPhong);
             TogglePanel(panelBaoCao,
-                (Nut: btnBaoCaoDiem, MaChucNang: ChucNangConst.BC_DIEM),
-                (Nut: btnDoanhThu, MaChucNang: ChucNangConst.BC_DOANHTHU),
-                (Nut: btnTop3, MaChucNang: ChucNangConst.BC_XEPHANG),
-                (Nut: btnLopTheoPhong, MaChucNang: ChucNangConst.BC_LOP_PHONG),
-                (Nut: btnReportBuilder, MaChucNang: ChucNangConst.BAOCAO_TAO));
+                btnBaoCaoDiem, btnDoanhThu, btnTop3, btnLopTheoPhong, btnReportBuilder);
         }
 
         private void btnThoat_Click(object sender, EventArgs e)

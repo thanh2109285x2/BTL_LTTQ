@@ -110,10 +110,18 @@ namespace BTL_LTTQ.BUS
                 ngayKetThuc = ngayKt;
 
             int soBuoiDaTao = 0;
-            var soBuoiTheoThu = new Dictionary<byte, int>();
+            DateTime ngayDauTuanHienTai = ngayBd.AddDays(-(((int)ngayBd.DayOfWeek + 6) % 7));
+            int soBuoiTrongTuan = 0;
 
             for (DateTime ngay = ngayBd; ngay <= ngayKetThuc; ngay = ngay.AddDays(1))
             {
+                DateTime ngayDauTuan = ngay.AddDays(-(((int)ngay.DayOfWeek + 6) % 7));
+                if (ngayDauTuan != ngayDauTuanHienTai)
+                {
+                    ngayDauTuanHienTai = ngayDauTuan;
+                    soBuoiTrongTuan = 0;
+                }
+
                 byte thu = ThuTrongTuanConst.TuNgay(ngay);
 
                 bool thuDuocChon = thuCuaMau.Contains(thu);

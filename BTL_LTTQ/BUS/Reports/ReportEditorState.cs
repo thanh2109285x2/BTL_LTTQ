@@ -24,7 +24,7 @@ namespace BTL_LTTQ.BUS.Reports
 
         public DataSourceDefinition? Nguon { get; private set; }
 
-        public PhamViInfo PhamVi { get; private set; } = new();
+        public PhamViInfo PhamVi { get; private set; } = new(LoaiPhamVi.TuChoi);
 
         public string NguoiDung { get; }
 

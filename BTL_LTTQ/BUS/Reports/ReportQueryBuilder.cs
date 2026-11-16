@@ -159,7 +159,7 @@ namespace BTL_LTTQ.BUS.Reports
             return nguon.PhamVi switch
             {
                 PhamViNguon.ChoHocVien => PhamViSqlBuilder.ChoHocVien(phamVi, nguon.AliasChinh),
-                PhamViNguon.ChoLopHoc => PhamViSqlBuilder.ChoLopHoc(phamVi, nguon.AliasChinh),
+                PhamViNguon.ChoLopHoc => PhamViSqlBuilder.TaoDieuKienLopHoc(phamVi, nguon.AliasChinh),
                 _ => ("", Array.Empty<SqlParameter>())
             };
         }
