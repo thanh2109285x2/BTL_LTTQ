@@ -172,6 +172,7 @@ namespace BTL_LTTQ
                 (btnHocVien, ChucNangConst.HOCVIEN_XEM),
                 (btnGiaoVien, ChucNangConst.GIAOVIEN_XEM),
                 (btnMonHoc, ChucNangConst.MONHOC_XEM),
+                (btnPhongHoc, ChucNangConst.DANHMUC_KHAC),
                 (btnDanhMucKhac, ChucNangConst.DANHMUC_KHAC));
             btnTraCuuMenu.Visible = SapXepMenu(panelTraCuu,
                 (btnTimLop, ChucNangConst.TIM_LOP),
@@ -200,18 +201,32 @@ namespace BTL_LTTQ
                 (btnXuatExcel, coQuyenXuat));
             panelKhac.Visible = btnKhac.Visible;
             btnHeThong.Visible = SapXepMenu(panelHeThong,
-                (btnPhanQuyen, ChucNangConst.PHANQUYEN));
+                (btnPhanQuyen, ChucNangConst.PHANQUYEN),
+                (btnBackup, ChucNangConst.PHANQUYEN));
             panelHeThong.Visible = btnHeThong.Visible;
         }
 
         private void btnHeThong_Click(object? sender, EventArgs e)
         {
-            TogglePanel(panelHeThong, btnPhanQuyen);
+            TogglePanel(panelHeThong, btnPhanQuyen, btnBackup);
         }
 
         private void btnPhanQuyen_Click(object? sender, EventArgs e)
         {
             OpenChildForm(() => new frmPhanQuyen(), btnPhanQuyen, ChucNangConst.PHANQUYEN);
+        }
+
+        private void btnBackup_Click(object? sender, EventArgs e)
+        {
+            if (!PermissionService.Can(ChucNangConst.PHANQUYEN))
+            {
+                MessageBox.Show("Bạn không có quyền sao lưu dữ liệu.", "Không có quyền",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var form = new frmBackup();
+            form.ShowDialog(this);
         }
 
         private static bool SapXepMenu(Panel panel, params (Button Nut, string MaChucNang)[] muc)
@@ -358,7 +373,7 @@ namespace BTL_LTTQ
 
         private void btnQuanLyMenu_Click(object sender, EventArgs e)
         {
-            TogglePanel(panelCRUD, btnLopHoc, btnHocVien, btnGiaoVien, btnMonHoc, btnDanhMucKhac);
+            TogglePanel(panelCRUD, btnLopHoc, btnHocVien, btnGiaoVien, btnMonHoc, btnPhongHoc, btnDanhMucKhac);
         }
 
         private void btnTraCuuMenu_Click(object sender, EventArgs e)
@@ -469,6 +484,11 @@ namespace BTL_LTTQ
         private void btnMonHoc_Click(object sender, EventArgs e)
         {
             OpenChildForm(() => new frmMonHoc(), btnMonHoc, ChucNangConst.MONHOC_XEM);
+        }
+
+        private void btnPhongHoc_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(() => new frmPhongHoc(), btnPhongHoc, ChucNangConst.DANHMUC_KHAC);
         }
 
         private void btnHocVien_Click(object sender, EventArgs e)

@@ -54,7 +54,6 @@ namespace BTL_LTTQ.Forms.Reports
             panelNut = new System.Windows.Forms.Panel();
             btnXemBaoCao = new AppButton { Kieu = KieuNut.Chinh };
             btnXuatExcel = new AppButton { Kieu = KieuNut.Phu };
-            btnLuuBaoCao = new AppButton { Kieu = KieuNut.Phu };
             btnLamMoi = new AppButton { Kieu = KieuNut.Phu };
             lblThongKe = new System.Windows.Forms.Label();
             grpKetQua = new System.Windows.Forms.GroupBox();
@@ -278,7 +277,6 @@ namespace BTL_LTTQ.Forms.Reports
             // 
             panelNut.Controls.Add(btnXemBaoCao);
             panelNut.Controls.Add(btnXuatExcel);
-            panelNut.Controls.Add(btnLuuBaoCao);
             panelNut.Controls.Add(btnLamMoi);
             panelNut.Controls.Add(lblThongKe);
             panelNut.Dock = System.Windows.Forms.DockStyle.Top;
@@ -307,19 +305,10 @@ namespace BTL_LTTQ.Forms.Reports
             btnXuatExcel.UseVisualStyleBackColor = true;
             btnXuatExcel.Click += btnXuatExcel_Click;
             // 
-            // btnLuuBaoCao
-            // 
-            btnLuuBaoCao.Location = new System.Drawing.Point(330, 10);
-            btnLuuBaoCao.Name = "btnLuuBaoCao";
-            btnLuuBaoCao.Size = new System.Drawing.Size(130, 36);
-            btnLuuBaoCao.TabIndex = 2;
-            btnLuuBaoCao.Text = "💾 Lưu cấu hình";
-            btnLuuBaoCao.UseVisualStyleBackColor = true;
-            btnLuuBaoCao.Click += btnLuuBaoCao_Click;
             // 
             // btnLamMoi
             // 
-            btnLamMoi.Location = new System.Drawing.Point(470, 10);
+            btnLamMoi.Location = new System.Drawing.Point(330, 10);
             btnLamMoi.Name = "btnLamMoi";
             btnLamMoi.Size = new System.Drawing.Size(110, 36);
             btnLamMoi.TabIndex = 3;
@@ -414,7 +403,6 @@ namespace BTL_LTTQ.Forms.Reports
         private System.Windows.Forms.Panel panelNut;
         private AppButton btnXemBaoCao;
         private AppButton btnXuatExcel;
-        private AppButton btnLuuBaoCao;
         private AppButton btnLamMoi;
         private System.Windows.Forms.Label lblThongKe;
         private System.Windows.Forms.GroupBox grpKetQua;

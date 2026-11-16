@@ -18,7 +18,6 @@ namespace BTL_LTTQ.Forms.Reports
     {
         private readonly ReportViewer _reportViewer;
         private readonly ReportCatalogService _danhMuc = new();
-        private readonly ReportDefinitionService _dichVu;
         private readonly ReportDataService _duLieu;
 
         // IXuatExcel interface cho nút xuất Excel ở thanh menu sidebar của frmMain
@@ -39,7 +38,6 @@ namespace BTL_LTTQ.Forms.Reports
             grpKetQua.Controls.Add(_reportViewer);
             _reportViewer.BringToFront();
             dgvKetQua.Visible = false;
-            _dichVu = new ReportDefinitionService(_danhMuc);
             _duLieu = new ReportDataService(_danhMuc);
             GiaoDien.ApDung(this);
         }
@@ -322,40 +320,6 @@ namespace BTL_LTTQ.Forms.Reports
 
         private static string TenFile(string ten) => string.Concat((ten ?? "BaoCao").Select(c =>
             Path.GetInvalidFileNameChars().Contains(c) ? '_' : c));
-
-        private void btnLuuBaoCao_Click(object? sender, EventArgs e)
-        {
-            if (clbCot.CheckedItems.Count == 0 || cboNguon.SelectedItem is not DataSourceDefinition nguon)
-            {
-                MessageBox.Show("Vui lòng cấu hình nguồn và cột trước khi lưu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var cotDaChon = clbCot.CheckedItems.OfType<LuaChonTruong>().Select(x => x.Truong).ToList();
-            var def = new ReportDefinition
-            {
-                Ten = string.IsNullOrWhiteSpace(txtTenBaoCao.Text) ? nguon.Ten : txtTenBaoCao.Text.Trim(),
-                MaNguon = nguon.Ma,
-                NguoiTao = CurrentUser.TenDangNhap ?? "admin",
-                Cot = cotDaChon.Select((f, idx) => new ReportColumnDef
-                {
-                    MaTruong = f.Ma,
-                    TieuDe = f.TieuDe,
-                    ThuTu = idx,
-                    HienThi = true
-                }).ToList()
-            };
-
-            int ma = _dichVu.Luu(def, CurrentUser.TenDangNhap ?? "admin", out string loi);
-            if (ma > 0)
-            {
-                MessageBox.Show($"Đã lưu cấu hình báo cáo '{def.Ten}' thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("Không thể lưu cấu hình báo cáo: " + loi, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
 
         private void btnLamMoi_Click(object? sender, EventArgs e)
         {
