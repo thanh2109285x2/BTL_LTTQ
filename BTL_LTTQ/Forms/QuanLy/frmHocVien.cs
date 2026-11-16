@@ -9,11 +9,21 @@ namespace BTL_LTTQ.Forms.QuanLy
     {
         private readonly HocVienService _hocVienService = new();
         private string maDangChon = "";
+        private static readonly string[] TinhThanhVietNam =
+        {
+            "An Giang", "Bắc Ninh", "Cà Mau", "Cao Bằng", "Cần Thơ", "Đà Nẵng",
+            "Đắk Lắk", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Nội",
+            "Hà Tĩnh", "Hải Phòng", "Huế", "Hưng Yên", "Khánh Hòa", "Lai Châu",
+            "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Nghệ An", "Ninh Bình", "Phú Thọ",
+            "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sơn La", "Tây Ninh",
+            "Thái Nguyên", "Thanh Hóa", "TP. Hồ Chí Minh", "Tuyên Quang", "Vĩnh Long"
+        };
 
         public frmHocVien()
         {
             InitializeComponent();
             GiaoDien.ApDung(this);
+            cboDiaChi.Items.AddRange(TinhThanhVietNam);
             Load += frmHocVien_Load;
             txtTenHocVien.KeyPress += ChiChoNhapChuVaKhoangTrang;
             txtDienThoai.KeyPress += ChiChoNhapSo;
@@ -59,7 +69,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             DateTime? ngaySinh = dtpNgaySinh.ShowCheckBox && !dtpNgaySinh.Checked ? null : dtpNgaySinh.Value.Date;
             return (txtMaHocVien.Text.Trim(), txtTenHocVien.Text.Trim(), ngaySinh,
-                cboGioiTinh.SelectedItem?.ToString(), txtDiaChi.Text.Trim(), txtDienThoai.Text.Trim());
+                cboGioiTinh.SelectedItem?.ToString(), cboDiaChi.SelectedItem?.ToString() ?? "", txtDienThoai.Text.Trim());
         }
 
         private bool ValidateInput(out string error, out Control control)
@@ -161,7 +171,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             maDangChon = Convert.ToString(r.Cells["MaHocVien"].Value) ?? "";
             txtMaHocVien.Text = maDangChon; txtMaHocVien.ReadOnly = true;
             txtTenHocVien.Text = Convert.ToString(r.Cells["TenHocVien"].Value) ?? "";
-            txtDiaChi.Text = Convert.ToString(r.Cells["DiaChi"].Value) ?? "";
+            ChonDiaChi(Convert.ToString(r.Cells["DiaChi"].Value));
             txtDienThoai.Text = Convert.ToString(r.Cells["DienThoai"].Value) ?? "";
             SetDate(dtpNgaySinh, r.Cells["NgaySinh"].Value);
             cboGioiTinh.SelectedItem = Convert.ToString(r.Cells["GioiTinh"].Value);
@@ -178,9 +188,26 @@ namespace BTL_LTTQ.Forms.QuanLy
             if (value == null || value == DBNull.Value) combo.SelectedIndex = -1;
             else combo.SelectedValue = value;
         }
+        private void ChonDiaChi(string? diaChi)
+        {
+            if (string.IsNullOrWhiteSpace(diaChi))
+            {
+                cboDiaChi.SelectedIndex = -1;
+                return;
+            }
+
+            int index = cboDiaChi.FindStringExact(diaChi);
+            if (index < 0)
+            {
+                // Giữ nguyên địa chỉ lịch sử nếu chưa thuộc danh sách tỉnh/thành hiện hành.
+                cboDiaChi.Items.Add(diaChi);
+                index = cboDiaChi.Items.Count - 1;
+            }
+            cboDiaChi.SelectedIndex = index;
+        }
         private void LamMoi(bool clearSearch = true)
         {
-            txtMaHocVien.Clear(); txtMaHocVien.ReadOnly = false; txtTenHocVien.Clear(); txtDiaChi.Clear(); txtDienThoai.Clear();
+            txtMaHocVien.Clear(); txtMaHocVien.ReadOnly = false; txtTenHocVien.Clear(); cboDiaChi.SelectedIndex = -1; txtDienThoai.Clear();
             dtpNgaySinh.Value = DateTime.Today; dtpNgaySinh.Checked = false;
             cboGioiTinh.SelectedIndex = cboNghe.SelectedIndex = -1;
             if (clearSearch) txtTimKiem.Clear(); dgvHocVien.ClearSelection(); maDangChon = "";

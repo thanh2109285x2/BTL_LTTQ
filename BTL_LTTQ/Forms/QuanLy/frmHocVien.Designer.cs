@@ -6,7 +6,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         private System.ComponentModel.IContainer? components = null;
         private TextBox txtMaHocVien = null!;
         private TextBox txtTenHocVien = null!;
-        private TextBox txtDiaChi = null!;
+        private ComboBox cboDiaChi = null!;
         private TextBox txtDienThoai = null!;
         private TextBox txtTimKiem = null!;
         private DateTimePicker dtpNgaySinh = null!;
@@ -42,7 +42,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         {
             txtMaHocVien = new TextBox();
             txtTenHocVien = new TextBox();
-            txtDiaChi = new TextBox();
+            cboDiaChi = new ComboBox();
             txtDienThoai = new TextBox();
             txtTimKiem = new TextBox();
             dtpNgaySinh = new DateTimePicker();
@@ -89,12 +89,13 @@ namespace BTL_LTTQ.Forms.QuanLy
             txtTenHocVien.Size = new Size(220, 27);
             txtTenHocVien.TabIndex = 3;
             // 
-            // txtDiaChi
+            // cboDiaChi
             // 
-            txtDiaChi.Location = new Point(163, 218);
-            txtDiaChi.Name = "txtDiaChi";
-            txtDiaChi.Size = new Size(220, 27);
-            txtDiaChi.TabIndex = 11;
+            cboDiaChi.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboDiaChi.Location = new Point(200, 218);
+            cboDiaChi.Name = "cboDiaChi";
+            cboDiaChi.Size = new Size(220, 28);
+            cboDiaChi.TabIndex = 11;
             // 
             // txtDienThoai
             // 
@@ -212,7 +213,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             grpThongTin.Controls.Add(lblDienThoai);
             grpThongTin.Controls.Add(txtDienThoai);
             grpThongTin.Controls.Add(lblDiaChi);
-            grpThongTin.Controls.Add(txtDiaChi);
+            grpThongTin.Controls.Add(cboDiaChi);
             grpThongTin.Controls.Add(lblNghe);
             grpThongTin.Controls.Add(cboNghe);
             grpThongTin.Controls.Add(pnlNut);
@@ -268,7 +269,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             // 
             lblDiaChi.Location = new Point(18, 223);
             lblDiaChi.Name = "lblDiaChi";
-            lblDiaChi.Size = new Size(170, 22);
+            lblDiaChi.Size = new Size(175, 22);
             lblDiaChi.TabIndex = 10;
             lblDiaChi.Text = "Địa chỉ (Tỉnh/Thành phố)";
             // 
