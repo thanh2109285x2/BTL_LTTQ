@@ -28,6 +28,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             try
             {
                 NapCombo(cboNghe, _hocVienService.LayDanhSachNghe(), "MaNghe", "TenNghe");
+                NapCombo(cboDiaChi, _hocVienService.LayDanhSachDiaChi(), "MaDiaChi", "TenDiaChi");
                 NapDanhSach();
             }
             catch (SqlException ex)
@@ -55,11 +56,11 @@ namespace BTL_LTTQ.Forms.QuanLy
 
         private void SetHeader(string column, string header) => dgvHocVien.Columns[column].HeaderText = header;
 
-        private (string ma, string ten, DateTime? ngaySinh, string? gioiTinh, string diaChi, string? dienThoai) DuLieu()
+        private (string ma, string ten, DateTime? ngaySinh, string? gioiTinh, string? diaChi, string? dienThoai) DuLieu()
         {
             DateTime? ngaySinh = dtpNgaySinh.ShowCheckBox && !dtpNgaySinh.Checked ? null : dtpNgaySinh.Value.Date;
             return (txtMaHocVien.Text.Trim(), txtTenHocVien.Text.Trim(), ngaySinh,
-                cboGioiTinh.SelectedItem?.ToString(), txtDiaChi.Text.Trim(), txtDienThoai.Text.Trim());
+                cboGioiTinh.SelectedItem?.ToString(), cboDiaChi.SelectedValue?.ToString(), txtDienThoai.Text.Trim()); // Sửa chỗ này thành cboDiaChi
         }
 
         private bool ValidateInput(out string error, out Control control)
@@ -161,7 +162,7 @@ namespace BTL_LTTQ.Forms.QuanLy
             maDangChon = Convert.ToString(r.Cells["MaHocVien"].Value) ?? "";
             txtMaHocVien.Text = maDangChon; txtMaHocVien.ReadOnly = true;
             txtTenHocVien.Text = Convert.ToString(r.Cells["TenHocVien"].Value) ?? "";
-            txtDiaChi.Text = Convert.ToString(r.Cells["DiaChi"].Value) ?? "";
+            SetSelected(cboDiaChi, r.Cells["MaDiaChi"].Value);
             txtDienThoai.Text = Convert.ToString(r.Cells["DienThoai"].Value) ?? "";
             SetDate(dtpNgaySinh, r.Cells["NgaySinh"].Value);
             cboGioiTinh.SelectedItem = Convert.ToString(r.Cells["GioiTinh"].Value);
@@ -180,7 +181,7 @@ namespace BTL_LTTQ.Forms.QuanLy
         }
         private void LamMoi(bool clearSearch = true)
         {
-            txtMaHocVien.Clear(); txtMaHocVien.ReadOnly = false; txtTenHocVien.Clear(); txtDiaChi.Clear(); txtDienThoai.Clear();
+            txtMaHocVien.Clear(); txtMaHocVien.ReadOnly = false; txtTenHocVien.Clear(); cboGioiTinh.SelectedIndex = cboNghe.SelectedIndex = cboDiaChi.SelectedIndex = -1;; txtDienThoai.Clear();
             dtpNgaySinh.Value = DateTime.Today; dtpNgaySinh.Checked = false;
             cboGioiTinh.SelectedIndex = cboNghe.SelectedIndex = -1;
             if (clearSearch) txtTimKiem.Clear(); dgvHocVien.ClearSelection(); maDangChon = "";
